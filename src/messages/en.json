@@ -1,1 +1,9 @@
-{ "HomePage": { "title": "Welcome!" } }
+{
+  "HomePage": {
+    "title": "Welcome!",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    }
+  }
+}

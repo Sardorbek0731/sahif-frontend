@@ -1,1 +1,9 @@
-{ "HomePage": { "title": "Xush kelibsiz!" } }
+{
+  "HomePage": {
+    "title": "Xush kelibsiz!",
+    "theme": {
+      "light": "Yorug'",
+      "dark": "Qorong'u"
+    }
+  }
+}
