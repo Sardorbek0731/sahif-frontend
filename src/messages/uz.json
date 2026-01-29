@@ -1,9 +1,10 @@
 {
-  "HomePage": {
-    "title": "Xush kelibsiz!",
-    "theme": {
-      "light": "Yorug'",
-      "dark": "Qorong'u"
-    }
+  "metadata": {
+    "title": "Sahif | Eng sara kitoblar, tez yetkazib berish va qulay narxlar!",
+    "description": "O‘zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do‘konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan."
+  },
+  "theme": {
+    "light": "Yorug'",
+    "dark": "Qorong'u"
   }
 }

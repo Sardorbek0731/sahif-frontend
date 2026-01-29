@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const t = useTranslations("HomePage");
+  const t = useTranslations("theme");
 
   useEffect(() => {
     startTransition(() => {
@@ -44,7 +44,7 @@ export default function ThemeToggle() {
             <circle cx="12" cy="12" r="4" />
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
           </svg>
-          <span className="text-sm font-medium">{t("theme.light")}</span>
+          <span className="text-sm font-medium">{t("light")}</span>
         </div>
       ) : (
         <div className="flex items-center gap-2">
@@ -60,7 +60,7 @@ export default function ThemeToggle() {
           >
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
           </svg>
-          <span className="text-sm font-medium">{t("theme.dark")}</span>
+          <span className="text-sm font-medium">{t("dark")}</span>
         </div>
       )}
     </button>

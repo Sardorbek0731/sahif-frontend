@@ -1,9 +1,10 @@
 {
-  "HomePage": {
-    "title": "Welcome!",
-    "theme": {
-      "light": "Light",
-      "dark": "Dark"
-    }
+  "metadata": {
+    "title": "Sahif | Best books, fast delivery and great prices!",
+    "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
   }
 }

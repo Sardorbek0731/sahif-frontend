@@ -5,6 +5,24 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
+import { Roboto } from "next/font/google";
+import type { Metadata } from "next";
+
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-roboto",
+  display: "swap",
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: {
+      default: "Sahif",
+      template: "%s | Sahif",
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -22,8 +40,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="antialiased bg-background text-foreground">
+    <html lang={locale} className={roboto.variable} suppressHydrationWarning>
+      <body>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages} locale={locale}>
             {children}
