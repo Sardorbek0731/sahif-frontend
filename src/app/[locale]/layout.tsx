@@ -18,8 +18,8 @@ const roboto = Roboto({
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: {
-      default: "Sahif",
-      template: "%s | Sahif",
+      default: "sahif",
+      template: "%s | sahif",
     },
   };
 }

@@ -1,24 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Asimovian&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: #d4a373;
+  --color-card: var(--card-bg);
   --font-roboto: var(--font-roboto);
+  --font-asimovian: "Asimovian", sans-serif;
 }
 
 :root {
   --background: #ffffff;
   --foreground: #121212;
+  --card-bg: #f4f4f5;
 }
 
 .dark {
   --background: #121212;
   --foreground: #ffffff;
+  --card-bg: #202020;
 }
 
 @layer base {
   body {
     font-family: var(--font-roboto), sans-serif;
     @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .my-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @media (min-width: 1024px) {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
   }
 }

@@ -1,10 +1,9 @@
 {
   "metadata": {
-    "title": "Sahif | Best books, fast delivery and great prices!",
+    "title": "sahif | Best books, fast delivery and great prices!",
     "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
   },
-  "theme": {
-    "light": "Light",
-    "dark": "Dark"
+  "header": {
+    "location": "Location"
   }
 }
