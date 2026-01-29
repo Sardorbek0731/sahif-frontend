@@ -1,9 +1,13 @@
 {
+  "common": {
+    "login": "Login"
+  },
   "metadata": {
     "title": "sahif | Best books, fast delivery and great prices!",
     "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
   },
   "header": {
-    "location": "Location"
+    "location": "Location",
+    "search": "Find your favorite book..."
   }
 }
