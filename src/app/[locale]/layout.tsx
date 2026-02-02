@@ -7,11 +7,18 @@ import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
 import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin", "cyrillic"],
   variable: "--font-roboto",
+  display: "swap",
+});
+
+const asimovian = localFont({
+  src: "../../../public/fonts/Asimovian-Regular.ttf",
+  variable: "--font-asimovian",
   display: "swap",
 });
 
@@ -40,8 +47,12 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={roboto.variable} suppressHydrationWarning>
-      <body>
+    <html
+      lang={locale}
+      className={`${roboto.variable} ${asimovian.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
         <ThemeProvider>
           <NextIntlClientProvider messages={messages} locale={locale}>
             {children}

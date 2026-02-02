@@ -32,8 +32,7 @@ export default function LanguageSwitcher() {
 
   const changeLanguage = (newLocale: string) => {
     if (newLocale === locale) return;
-
-    router.replace(pathname, { locale: newLocale });
+    router.replace(pathname, { locale: newLocale, scroll: false });
     setIsOpen(false);
   };
 
@@ -74,14 +73,14 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute bg-card rounded-lg overflow-hidden mt-2 pt-2 w-full left-0">
+        <div className="absolute bg-card rounded-lg overflow-hidden mt-2 pt-2 pb-1 w-full left-0">
           {languages
             .filter((lang) => lang.code !== locale)
             .map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
-                className="flex items-center justify-between mb-2 w-full px-4 py-2 transition-colors cursor-pointer hover:bg-[#ebebed] dark:hover:bg-[#282828]"
+                className="flex items-center justify-between w-full mb-1 px-4 h-10 transition-colors cursor-pointer hover:bg-[#ebebed] dark:hover:bg-[#282828]"
               >
                 <span className="flex items-center">
                   <Image
