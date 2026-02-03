@@ -1,9 +1,7 @@
-import uz from "@/assets/icons/flag/uz.png";
-import us from "@/assets/icons/flag/us.png";
-import ru from "@/assets/icons/flag/ru.png";
+import { images } from "./images";
 
 export const languages = [
-  { code: "uz", name: "O'zbek", flag: uz },
-  { code: "en", name: "English", flag: us },
-  { code: "ru", name: "Русский", flag: ru },
+  { code: "uz", name: "O'zbek", flag: images.header.flags.uz },
+  { code: "en", name: "English", flag: images.header.flags.us },
+  { code: "ru", name: "Русский", flag: images.header.flags.ru },
 ];
