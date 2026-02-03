@@ -6,6 +6,12 @@
     "title": "sahif | Eng sara kitoblar, tez yetkazib berish va qulay narxlar!",
     "description": "O‘zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do‘konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan."
   },
+  "notFound": {
+    "title": "Sahifa topilmadi",
+    "description": "Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko'chirilgan.",
+    "goHome": "Bosh sahifaga qaytish",
+    "searchSomething": "E'lonlarni qidirish"
+  },
   "header": {
     "location": "Toshkent",
     "search": "Sevimli kitobingizni toping..."

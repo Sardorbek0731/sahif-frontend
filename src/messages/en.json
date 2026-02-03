@@ -6,6 +6,12 @@
     "title": "sahif | Best books, fast delivery and great prices!",
     "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
   },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist or has been moved to another address.",
+    "goHome": "Back to Home",
+    "searchSomething": "Search listings"
+  },
   "header": {
     "location": "Tashkent",
     "search": "Find your favorite book..."
