@@ -7,6 +7,7 @@ import { MoonIcon } from "./list/moon";
 import { ChevronDownIcon } from "./list/chevron-down";
 import { LogInIcon } from "./list/log-in";
 import { HomeIcon } from "./list/home";
+import { XIcon } from "./list/x";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -16,6 +17,7 @@ export const ICON_LIST = {
   chevronDown: ChevronDownIcon,
   login: LogInIcon,
   home: HomeIcon,
+  x: XIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

@@ -26,13 +26,13 @@ export default function NotFound() {
 
       <div className="flex flex-wrap gap-4 justify-center">
         <Link href="/">
-          <Button leftIcon="home" variant="primary">
+          <Button leftIcon="home" className="bg-primary">
             {t("goHome")}
           </Button>
         </Link>
 
         <Link href="/search">
-          <Button leftIcon="search" variant="card">
+          <Button leftIcon="search" className="bg-card hover:bg-card-hover">
             {t("searchSomething")}
           </Button>
         </Link>

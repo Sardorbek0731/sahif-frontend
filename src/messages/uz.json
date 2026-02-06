@@ -7,13 +7,31 @@
     "description": "O‘zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do‘konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan."
   },
   "notFound": {
-    "title": "Sahifa topilmadi",
+    "title": "Sahifa topilmadi !",
     "description": "Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko'chirilgan.",
     "goHome": "Bosh sahifaga qaytish",
     "searchSomething": "E'lonlarni qidirish"
   },
   "header": {
-    "location": "Toshkent",
-    "search": "Sevimli kitobingizni toping..."
+    "searchBook": "Sevimli kitobingizni toping...",
+    "selectLocation": "Hududni tanlang",
+    "searchRegion": "Viloyatni qidirish...",
+    "noResults": "Hech narsa topilmadi !"
+  },
+  "regions": {
+    "tashkentCity": "Toshkent sh.",
+    "tashkentRegion": "Toshkent vil.",
+    "andijan": "Andijon",
+    "fergana": "Farg'ona",
+    "namangan": "Namangan",
+    "samarkand": "Samarqand",
+    "bukhara": "Buxoro",
+    "navoi": "Navoiy",
+    "jizzakh": "Jizzax",
+    "sirdaryo": "Sirdaryo",
+    "kashkadarya": "Qashqadaryo",
+    "surkhandarya": "Surxondaryo",
+    "khorezm": "Xorazm",
+    "karakalpakstan": "Qoraqalpog'iston"
   }
 }

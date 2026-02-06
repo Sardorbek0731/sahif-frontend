@@ -6,6 +6,7 @@ import ThemeToggle from "../theme/Theme";
 import LangSwitcher from "../lang/Lang";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
+import Location from "@/components/location/Location";
 
 export default function Header() {
   const t = useTranslations("header");
@@ -19,16 +20,14 @@ export default function Header() {
           <span className="font-asimovian text-2xl">sahif</span>
         </Link>
 
-        <Button leftIcon="location" className="mr-3">
-          {t("location")}
-        </Button>
+        <Location />
 
-        <div className="relative flex items-center">
-          <Icon name="search" size={16} className="absolute left-3" />
+        <div className="flex w-100 items-center bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+          <Icon name="search" size={16} className="mr-2" />
           <input
             type="text"
-            placeholder={t("search")}
-            className="h-10 bg-card pl-10 pr-4 rounded-lg outline-none w-100 hover:bg-[#ebebed] dark:hover:bg-[#282828] focus:bg-[#ebebed] dark:focus:bg-[#282828] transition-all"
+            placeholder={t("searchBook")}
+            className="flex-1 h-full bg-transparent outline-none"
           />
         </div>
       </div>
@@ -38,7 +37,12 @@ export default function Header() {
         <LangSwitcher />
 
         <Link href="/login">
-          <Button leftIcon="login">{tCommon("login")}</Button>
+          <Button
+            leftIcon="login"
+            className="bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {tCommon("login")}
+          </Button>
         </Link>
       </div>
     </header>

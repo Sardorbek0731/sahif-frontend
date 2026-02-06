@@ -1,0 +1,16 @@
+export const regions = [
+  { id: "tashkent-city", key: "tashkentCity" },
+  { id: "tashkent-reg", key: "tashkentRegion" },
+  { id: "andijan", key: "andijan" },
+  { id: "fergana", key: "fergana" },
+  { id: "namangan", key: "namangan" },
+  { id: "samarkand", key: "samarkand" },
+  { id: "bukhara", key: "bukhara" },
+  { id: "navoi", key: "navoi" },
+  { id: "jizzakh", key: "jizzakh" },
+  { id: "sirdaryo", key: "sirdaryo" },
+  { id: "kashkadarya", key: "kashkadarya" },
+  { id: "surkhandarya", key: "surkhandarya" },
+  { id: "khorezm", key: "khorezm" },
+  { id: "karakalpakstan", key: "karakalpakstan" },
+];

@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/providers/theme";
 import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { cookies } from "next/headers";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -45,11 +46,13 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("theme")?.value || "system";
 
   return (
     <html
       lang={locale}
-      className={`${roboto.variable} ${asimovian.variable}`}
+      className={`${roboto.variable} ${asimovian.variable} ${themeCookie === "dark" ? "dark" : ""}`}
       suppressHydrationWarning
     >
       <body className="antialiased">

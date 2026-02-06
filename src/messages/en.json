@@ -7,13 +7,31 @@
     "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
   },
   "notFound": {
-    "title": "Page Not Found",
+    "title": "Page Not Found !",
     "description": "Sorry, the page you are looking for does not exist or has been moved to another address.",
     "goHome": "Back to Home",
     "searchSomething": "Search listings"
   },
   "header": {
-    "location": "Tashkent",
-    "search": "Find your favorite book..."
+    "searchBook": "Find your favorite book...",
+    "selectLocation": "Select location",
+    "searchRegion": "Search region...",
+    "noResults": "No results found !"
+  },
+  "regions": {
+    "tashkentCity": "Tashkent city",
+    "tashkentRegion": "Tashkent reg.",
+    "andijan": "Andijan",
+    "fergana": "Fergana",
+    "namangan": "Namangan",
+    "samarkand": "Samarkand",
+    "bukhara": "Bukhara",
+    "navoi": "Navoi",
+    "jizzakh": "Jizzakh",
+    "sirdaryo": "Sirdaryo",
+    "kashkadarya": "Kashkadarya",
+    "surkhandarya": "Surkhandarya",
+    "khorezm": "Khorezm",
+    "karakalpakstan": "Karakalpakstan"
   }
 }

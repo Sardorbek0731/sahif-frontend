@@ -5,7 +5,7 @@ import { useEffect, useState, startTransition } from "react";
 import { Icon } from "@/components/ui/icons/icon";
 
 export default function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,21 +14,33 @@ export default function ThemeToggle() {
     });
   }, []);
 
-  if (!mounted) {
-    return <div className="w-10 h-10" aria-hidden="true" />;
-  }
+  useEffect(() => {
+    if (theme) {
+      document.cookie = `theme=${theme}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    }
+  }, [theme]);
+
+  if (!mounted)
+    return <div className="w-10 h-10 mr-3 rounded-xl bg-card animate-pulse" />;
+
+  const toggleTheme = () => {
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+  };
 
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="flex items-center justify-center w-10 h-10 mr-3 rounded-xl bg-card transition-all active:scale-85 cursor-pointer hover:bg-[#ebebed] dark:hover:bg-[#282828]"
+      onClick={toggleTheme}
+      className="flex items-center justify-center w-10 h-10 mr-3 rounded-lg bg-card transition-all cursor-pointer hover:bg-card-hover"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
-      {resolvedTheme === "dark" ? (
-        <Icon name="sun" size={18} className="text-yellow-500" />
-      ) : (
-        <Icon name="moon" size={18} className="text-indigo-600" />
-      )}
+      <Icon
+        name={resolvedTheme === "dark" ? "sun" : "moon"}
+        size={20}
+        className={
+          resolvedTheme === "dark" ? "text-yellow-500" : "text-indigo-600"
+        }
+      />
     </button>
   );
 }

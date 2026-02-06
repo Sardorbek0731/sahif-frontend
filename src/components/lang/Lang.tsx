@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
 import { languages } from "@/data/lang";
+import { Icon } from "@/components/ui/icons/icon";
 import Image from "next/image";
 
 export default function LanguageSwitcher() {
@@ -25,9 +26,18 @@ export default function LanguageSwitcher() {
         setIsOpen(false);
       }
     };
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
     document.addEventListener("pointerdown", handleClickOutside);
-    return () =>
+    document.addEventListener("keydown", handleEsc);
+
+    return () => {
       document.removeEventListener("pointerdown", handleClickOutside);
+      document.removeEventListener("keydown", handleEsc);
+    };
   }, []);
 
   const changeLanguage = (newLocale: string) => {
@@ -43,33 +53,26 @@ export default function LanguageSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Change language"
-        className={`flex items-center justify-between bg-card w-35 px-4 h-10 rounded-lg transition-all cursor-pointer hover:bg-[#ebebed] dark:hover:bg-[#282828]`}
+        className="flex items-center justify-between bg-card w-36 px-4 h-10 rounded-lg transition-all cursor-pointer hover:bg-card-hover"
       >
         <span className="flex items-center">
           <Image
             src={currentLanguage.flag}
-            width={15}
-            height={15}
+            width={16}
+            height={16}
             className="mr-2"
             alt={currentLanguage.name + "language flag"}
           />
           {currentLanguage.name}
         </span>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+        <Icon
+          name="chevronDown"
+          size={16}
+          className={`transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
       {isOpen && (
@@ -80,18 +83,16 @@ export default function LanguageSwitcher() {
               <button
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
-                className="flex items-center justify-between w-full mb-1 px-4 h-10 transition-colors cursor-pointer hover:bg-[#ebebed] dark:hover:bg-[#282828]"
+                className="flex items-center w-full mb-1 px-4 h-10 transition-colors cursor-pointer hover:bg-card-hover"
               >
-                <span className="flex items-center">
-                  <Image
-                    src={lang.flag}
-                    width={15}
-                    height={15}
-                    className="mr-2"
-                    alt={lang.name + "language flag"}
-                  />
-                  {lang.name}
-                </span>
+                <Image
+                  src={lang.flag}
+                  width={16}
+                  height={16}
+                  className="mr-2"
+                  alt={lang.name + "language flag"}
+                />
+                {lang.name}
               </button>
             ))}
         </div>
