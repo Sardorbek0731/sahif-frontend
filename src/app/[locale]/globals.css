@@ -8,18 +8,12 @@
   --color-primary: #d4a373;
   --color-card: var(--card-bg);
   --color-card-hover: var(--card-hover);
-  --font-roboto: var(--font-roboto), ui-sans-serif, system-ui;
-  --font-asimovian: var(--font-asimovian), sans-serif;
-  --animate-shimmer: shimmer 2s linear infinite;
-}
-
-@keyframes shimmer {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
+  --font-inter:
+    var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-asimovian:
+    var(--font-asimovian), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
 :root {
@@ -40,7 +34,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-roboto);
+    font-family: var(--font-inter);
   }
 }
 

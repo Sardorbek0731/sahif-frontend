@@ -5,15 +5,15 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { cookies } from "next/headers";
 
-const roboto = Roboto({
-  weight: ["400", "500", "700"],
+const inter = Inter({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin", "cyrillic"],
-  variable: "--font-roboto",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -48,19 +48,25 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   const cookieStore = await cookies();
   const themeCookie = cookieStore.get("theme")?.value || "system";
+  const resolvedThemeCookie = cookieStore.get("theme-resolved")?.value;
+
+  let initialTheme = themeCookie;
+  if (themeCookie === "system" && resolvedThemeCookie) {
+    initialTheme = resolvedThemeCookie;
+  } else if (themeCookie === "system") {
+    initialTheme = "";
+  }
 
   return (
     <html
       lang={locale}
-      className={`${roboto.variable} ${asimovian.variable} ${themeCookie === "dark" ? "dark" : ""}`}
+      className={`${inter.variable} ${asimovian.variable} ${initialTheme === "dark" ? "dark" : ""}`}
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <ThemeProvider>
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            {children}
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <ThemeProvider>{children}</ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -26,6 +26,7 @@ export default function Header() {
           <Icon name="search" size={16} className="mr-2" />
           <input
             type="text"
+            name="search-book"
             placeholder={t("searchBook")}
             className="flex-1 h-full bg-transparent outline-none"
           />

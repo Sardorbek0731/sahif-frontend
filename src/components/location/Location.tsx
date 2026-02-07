@@ -53,8 +53,7 @@ export default function Location() {
 
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
 
-  if (!mounted)
-    return <div className="w-32 h-10 bg-card animate-pulse rounded-lg mr-3" />;
+  if (!mounted) return <div className="w-30 h-10 bg-card rounded-lg mr-3" />;
 
   return (
     <>
@@ -70,7 +69,7 @@ export default function Location() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 transition-all"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
           onClick={() => setIsOpen(false)}
         >
           <div
@@ -87,11 +86,12 @@ export default function Location() {
               </button>
             </div>
 
-            <div className="flex items-center mb-6  bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+            <div className="flex items-center mb-6 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
               <Icon name="search" size={16} className="mr-2" />
               <input
                 ref={inputRef}
                 type="text"
+                name="search-region"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t("searchRegion")}
@@ -99,12 +99,12 @@ export default function Location() {
               />
             </div>
 
-            <div className="max-h-[380px] overflow-y-auto space-y-3 pr-3 custom-scrollbar">
+            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6">
               {filteredRegions.length > 0 ? (
                 filteredRegions.map((region) => (
                   <button
                     key={region.id}
-                    className={`w-full flex items-center justify-between p-3 rounded-lg transition-all cursor-pointer ${
+                    className={`w-full flex items-center justify-between h-10 px-4 rounded-lg transition-all cursor-pointer ${
                       selectedId === region.id
                         ? "text-primary bg-card"
                         : "hover:bg-card"

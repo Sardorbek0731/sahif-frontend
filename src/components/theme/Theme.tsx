@@ -15,17 +15,16 @@ export default function ThemeToggle() {
   }, []);
 
   useEffect(() => {
-    if (theme) {
+    if (theme && resolvedTheme) {
       document.cookie = `theme=${theme}; path=/; max-age=${60 * 60 * 24 * 365}`;
+      document.cookie = `theme-resolved=${resolvedTheme}; path=/; max-age=${60 * 60 * 24 * 365}`;
     }
-  }, [theme]);
+  }, [theme, resolvedTheme]);
 
-  if (!mounted)
-    return <div className="w-10 h-10 mr-3 rounded-xl bg-card animate-pulse" />;
+  if (!mounted) return <div className="w-10 h-10 mr-3 rounded-lg bg-card" />;
 
   const toggleTheme = () => {
-    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -38,7 +37,7 @@ export default function ThemeToggle() {
         name={resolvedTheme === "dark" ? "sun" : "moon"}
         size={20}
         className={
-          resolvedTheme === "dark" ? "text-yellow-500" : "text-indigo-600"
+          resolvedTheme === "dark" ? "text-primary" : "text-foreground"
         }
       />
     </button>
