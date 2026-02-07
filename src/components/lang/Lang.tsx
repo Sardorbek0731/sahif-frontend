@@ -53,9 +53,9 @@ export default function LanguageSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Change language"
-        className="flex items-center justify-between bg-card w-36 px-4 h-10 rounded-lg transition-all cursor-pointer hover:bg-card-hover"
+        className="flex items-center justify-between bg-card px-4 h-10 rounded-lg transition-all cursor-pointer hover:bg-card-hover"
       >
-        <span className="flex items-center">
+        <span className="flex items-center mr-4">
           <Image
             src={currentLanguage.flag}
             width={16}
