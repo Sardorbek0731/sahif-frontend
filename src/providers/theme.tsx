@@ -10,7 +10,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       enableSystem={true}
       disableTransitionOnChange
       storageKey="theme"
-      enableColorScheme={false}
+      enableColorScheme={true}
     >
       {children}
     </NextThemesProvider>
