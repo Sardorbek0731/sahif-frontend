@@ -93,7 +93,7 @@ export default function Location() {
                 confirmLocation();
                 setShowPrompt(false);
               }}
-              className="bg-primary text-xs py-2 px-4 mr-3 rounded-lg font-medium cursor-pointer"
+              className="bg-primary text-sm py-2 px-4 mr-2 rounded-lg cursor-pointer text-nowrap"
             >
               {t("yesCorrect")}
             </button>
@@ -102,7 +102,7 @@ export default function Location() {
                 setShowPrompt(false);
                 setIsOpen(true);
               }}
-              className="bg-card-hover text-xs py-2 px-4 rounded-lg font-medium cursor-pointer"
+              className="bg-card-hover text-sm py-2 px-4 rounded-lg cursor-pointer"
             >
               {t("change")}
             </button>
