@@ -22,7 +22,7 @@ export default function Header() {
 
         <Location />
 
-        <div className="flex w-100 items-center bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+        <div className="flex w-90 items-center bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
           <Icon name="search" size={16} className="mr-2" />
           <input
             type="text"

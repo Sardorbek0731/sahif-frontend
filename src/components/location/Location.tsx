@@ -17,8 +17,11 @@ export default function Location() {
   const t = useTranslations("header");
   const tRegions = useTranslations("regions");
 
-  const { selectedId, setSelectedId } = useLocationStore();
+  const { selectedId, setSelectedId, isConfirmed, confirmLocation } =
+    useLocationStore();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,6 +33,13 @@ export default function Location() {
       setMounted(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (mounted && !isConfirmed) {
+      const timer = setTimeout(() => setShowPrompt(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [mounted, isConfirmed]);
 
   useEffect(() => {
     if (isOpen) {
@@ -53,17 +63,52 @@ export default function Location() {
 
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
 
-  if (!mounted) return <div className="w-30 h-10 bg-card rounded-lg mr-3" />;
+  if (!mounted) return <div className="w-32 h-10 bg-card rounded-lg mr-3" />;
 
   return (
-    <>
+    <div className="relative inline-block">
       <Button
         leftIcon="location"
         className="bg-card hover:bg-card-hover h-10 px-4 mr-3 transition-all duration-200 shrink-0"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          setShowPrompt(false);
+        }}
       >
         {tRegions(currentRegion.key)}
       </Button>
+
+      {showPrompt && !isOpen && (
+        <div className="flex flex-col absolute top-14 left-0 z-40 bg-card p-4 rounded-lg">
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
+          <p className="text-sm text-nowrap mb-4">
+            {t("yourLocation")}:{" "}
+            <span className="text-primary">
+              {tRegions(currentRegion.key)} ?
+            </span>
+          </p>
+          <div className="flex items-center">
+            <button
+              onClick={() => {
+                confirmLocation();
+                setShowPrompt(false);
+              }}
+              className="bg-primary text-xs py-2 px-4 mr-3 rounded-lg font-medium cursor-pointer"
+            >
+              {t("yesCorrect")}
+            </button>
+            <button
+              onClick={() => {
+                setShowPrompt(false);
+                setIsOpen(true);
+              }}
+              className="bg-card-hover text-xs py-2 px-4 rounded-lg font-medium cursor-pointer"
+            >
+              {t("change")}
+            </button>
+          </div>
+        </div>
+      )}
 
       {isOpen && (
         <div
@@ -99,7 +144,7 @@ export default function Location() {
               />
             </div>
 
-            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6">
+            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-card-hover">
               {filteredRegions.length > 0 ? (
                 filteredRegions.map((region) => (
                   <button
@@ -122,14 +167,12 @@ export default function Location() {
                   </button>
                 ))
               ) : (
-                <div className="py-10 text-center">
-                  <span>{t("noResults")}</span>
-                </div>
+                <div className="py-10 text-center">{t("noResults")}</div>
               )}
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -16,7 +16,10 @@
     "searchBook": "Find your favorite book...",
     "selectLocation": "Select location",
     "searchRegion": "Search region...",
-    "noResults": "No results found !"
+    "noResults": "No results found !",
+    "yourLocation": "Your region",
+    "yesCorrect": "Yes, correct",
+    "change": "Change"
   },
   "regions": {
     "tashkentCity": "Tashkent city",

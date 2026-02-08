@@ -16,7 +16,10 @@
     "searchBook": "Sevimli kitobingizni toping...",
     "selectLocation": "Hududni tanlang",
     "searchRegion": "Viloyatni qidirish...",
-    "noResults": "Hech narsa topilmadi !"
+    "noResults": "Hech narsa topilmadi !",
+    "yourLocation": "Sizning hududingiz",
+    "yesCorrect": "Ha, to'g'ri",
+    "change": "O'zgartirish"
   },
   "regions": {
     "tashkentCity": "Toshkent sh.",

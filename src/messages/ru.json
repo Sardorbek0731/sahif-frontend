@@ -16,7 +16,10 @@
     "searchBook": "Найдите свою любимую книгу...",
     "selectLocation": "Выберите регион",
     "searchRegion": "Поиск региона...",
-    "noResults": "Ничего не найдено !"
+    "noResults": "Ничего не найдено !",
+    "yourLocation": "Ваш регион",
+    "yesCorrect": "Да, верно",
+    "change": "Изменить"
   },
   "regions": {
     "tashkentCity": "г. Ташкент",

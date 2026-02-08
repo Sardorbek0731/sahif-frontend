@@ -36,9 +36,7 @@ export default function ThemeToggle() {
       <Icon
         name={resolvedTheme === "dark" ? "sun" : "moon"}
         size={20}
-        className={
-          resolvedTheme === "dark" ? "text-primary" : "text-foreground"
-        }
+        className={resolvedTheme === "dark" ? "text-primary" : ""}
       />
     </button>
   );
