@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/header/Header";
+import Navbar from "@/components/navbar/Navbar";
 
 export async function generateMetadata({
   params,
@@ -21,6 +22,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
+      <Navbar />
     </>
   );
 }

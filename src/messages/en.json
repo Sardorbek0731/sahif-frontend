@@ -19,7 +19,9 @@
     "noResults": "No results found !",
     "yourLocation": "Your region",
     "yesCorrect": "Yes, correct",
-    "change": "Change"
+    "change": "Change",
+    "wishlist": "Wishlist",
+    "cart": "Cart"
   },
   "regions": {
     "tashkentCity": "Tashkent city",

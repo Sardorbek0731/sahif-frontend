@@ -19,7 +19,9 @@
     "noResults": "Ничего не найдено !",
     "yourLocation": "Ваш регион",
     "yesCorrect": "Да, верно",
-    "change": "Изменить"
+    "change": "Изменить",
+    "wishlist": "Избранное",
+    "cart": "Корзина"
   },
   "regions": {
     "tashkentCity": "г. Ташкент",

@@ -19,7 +19,9 @@
     "noResults": "Hech narsa topilmadi !",
     "yourLocation": "Sizning hududingiz",
     "yesCorrect": "Ha, to'g'ri",
-    "change": "O'zgartirish"
+    "change": "O'zgartirish",
+    "wishlist": "Sevimlilar",
+    "cart": "Savatcha"
   },
   "regions": {
     "tashkentCity": "Toshkent sh.",

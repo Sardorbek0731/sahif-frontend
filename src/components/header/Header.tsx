@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { images } from "@/data/images";
 import { useTranslations } from "next-intl";
 import ThemeToggle from "../theme/Theme";
 import LangSwitcher from "../lang/Lang";
@@ -13,16 +11,11 @@ export default function Header() {
   const tCommon = useTranslations("common");
 
   return (
-    <header className="my-container py-3">
+    <header className="my-container py-4 mb-4">
       <div className="flex items-center">
-        <Link className="flex items-center mr-18" href="/">
-          <Image className="mr-3 w-9 h-9" src={images.header.logo} alt="logo" />
-          <span className="font-asimovian text-2xl">sahif</span>
-        </Link>
-
         <Location />
 
-        <div className="flex w-90 items-center bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+        <div className="flex w-90 items-center mr-3 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
           <Icon name="search" size={16} className="mr-2" />
           <input
             type="text"
@@ -31,6 +24,24 @@ export default function Header() {
             className="flex-1 h-full bg-transparent outline-none"
           />
         </div>
+
+        <Link href="/wishlist">
+          <Button
+            leftIcon="wishlist"
+            className="bg-card hover:bg-card-hover h-10 px-4 mr-3"
+          >
+            {t("wishlist")}
+          </Button>
+        </Link>
+
+        <Link href="/cart">
+          <Button
+            leftIcon="cart"
+            className="bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {t("cart")}
+          </Button>
+        </Link>
       </div>
 
       <div className="flex items-center">
