@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "404 | sahif",
     images: ["https://sahif.vercel.app/icon.png"],
   },

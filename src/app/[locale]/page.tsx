@@ -34,7 +34,7 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: title,
       description: t("description"),
       images: [`${baseUrl}/icon.png`],

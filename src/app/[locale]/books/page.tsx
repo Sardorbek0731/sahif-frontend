@@ -16,9 +16,9 @@ export async function generateMetadata({
     openGraph: {
       title: title,
       description: t("description"),
-      url: `${baseUrl}/${locale}/books`, 
+      url: `${baseUrl}/${locale}/books`,
       siteName: "sahif",
-      locale: locale,  
+      locale: locale,
       type: "website",
       images: [
         {
@@ -29,7 +29,7 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: title,
       description: t("description"),
       images: [`${baseUrl}/icon.png`],
