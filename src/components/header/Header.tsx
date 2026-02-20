@@ -7,8 +7,8 @@ import { Icon } from "@/components/ui/icons/icon";
 import Location from "@/components/location/Location";
 
 export default function Header() {
-  const t = useTranslations("header");
-  const tCommon = useTranslations("common");
+  const tHeader = useTranslations("header");
+  const tPages = useTranslations("pages");
 
   return (
     <header className="my-container py-4 mb-4">
@@ -20,7 +20,7 @@ export default function Header() {
           <input
             type="text"
             name="search-book"
-            placeholder={t("searchBook")}
+            placeholder={tHeader("searchBook")}
             className="flex-1 h-full bg-transparent outline-none"
           />
         </div>
@@ -30,7 +30,7 @@ export default function Header() {
             leftIcon="wishlist"
             className="bg-card hover:bg-card-hover h-10 px-4 mr-3"
           >
-            {t("wishlist")}
+            {tPages("wishlist")}
           </Button>
         </Link>
 
@@ -39,7 +39,7 @@ export default function Header() {
             leftIcon="cart"
             className="bg-card hover:bg-card-hover h-10 px-4"
           >
-            {t("cart")}
+            {tPages("cart")}
           </Button>
         </Link>
       </div>
@@ -53,7 +53,7 @@ export default function Header() {
             leftIcon="login"
             className="bg-card hover:bg-card-hover h-10 px-4"
           >
-            {tCommon("login")}
+            {tPages("login")}
           </Button>
         </Link>
       </div>

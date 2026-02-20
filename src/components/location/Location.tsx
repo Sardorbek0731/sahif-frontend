@@ -14,7 +14,7 @@ import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
 
 export default function Location() {
-  const t = useTranslations("header");
+  const tHeader = useTranslations("header");
   const tRegions = useTranslations("regions");
 
   const { selectedId, setSelectedId, isConfirmed, confirmLocation } =
@@ -82,7 +82,7 @@ export default function Location() {
         <div className="flex flex-col absolute top-14 left-0 z-40 bg-card p-4 rounded-lg">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <p className="text-sm text-nowrap mb-4">
-            {t("yourLocation")}:{" "}
+            {tHeader("yourLocation")}:{" "}
             <span className="text-primary">
               {tRegions(currentRegion.key)} ?
             </span>
@@ -95,7 +95,7 @@ export default function Location() {
               }}
               className="bg-primary text-sm py-2 px-4 mr-2 rounded-lg cursor-pointer text-nowrap"
             >
-              {t("yesCorrect")}
+              {tHeader("yesCorrect")}
             </button>
             <button
               onClick={() => {
@@ -104,7 +104,7 @@ export default function Location() {
               }}
               className="bg-card-hover text-sm py-2 px-4 rounded-lg cursor-pointer"
             >
-              {t("change")}
+              {tHeader("change")}
             </button>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Location() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold">{t("selectLocation")}</h2>
+              <h2 className="text-xl font-bold">{tHeader("selectLocation")}</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 hover:bg-card rounded-lg transition-colors cursor-pointer"
@@ -139,7 +139,7 @@ export default function Location() {
                 name="search-region"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("searchRegion")}
+                placeholder={tHeader("searchRegion")}
                 className="flex-1 h-full bg-transparent outline-none"
               />
             </div>
@@ -167,7 +167,7 @@ export default function Location() {
                   </button>
                 ))
               ) : (
-                <div className="py-10 text-center">{t("noResults")}</div>
+                <div className="py-10 text-center">{tHeader("noResults")}</div>
               )}
             </div>
           </div>

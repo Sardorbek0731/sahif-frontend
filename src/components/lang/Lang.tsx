@@ -60,8 +60,8 @@ export default function LanguageSwitcher() {
             src={currentLanguage.flag}
             width={16}
             height={16}
-            className="mr-2"
-            alt={currentLanguage.name + "language flag"}
+            className="mr-2 w-4 h-4"
+            alt={`${currentLanguage.name} language flag`}
           />
           {currentLanguage.name}
         </span>
@@ -89,8 +89,8 @@ export default function LanguageSwitcher() {
                   src={lang.flag}
                   width={16}
                   height={16}
-                  className="mr-2"
-                  alt={lang.name + "language flag"}
+                  className="mr-2 w-4 h-4"
+                  alt={`${lang.name} language flag`}
                 />
                 {lang.name}
               </button>

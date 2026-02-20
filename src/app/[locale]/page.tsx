@@ -13,12 +13,14 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return {
-    title: t("metadata.title"),
-    description: t("metadata.description"),
+    title: `sahif | ${t("home.metadata.title")}`,
+    openGraph: {
+      title: `sahif | ${t("home.metadata.title")}`,
+    },
   };
 }
 
-export default function HomePage() {
+export default function Home() {
   return (
     <>
       <Header />

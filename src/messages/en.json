@@ -1,17 +1,26 @@
 {
-  "common": {
-    "login": "Login"
+  "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices.",
+
+  "pages": {
+    "books": "Books",
+    "cart": "Cart",
+    "login": "Login",
+    "wishlist": "Wishlist"
   },
-  "metadata": {
-    "title": "sahif | Best books, fast delivery and great prices!",
-    "description": "The highest quality and modern books await you in our online store — with fast delivery and affordable prices."
+
+  "home": {
+    "metadata": {
+      "title": "Best books, fast delivery and great prices!"
+    }
   },
+
   "notFound": {
     "title": "Page Not Found !",
     "description": "Sorry, the page you are looking for does not exist or has been moved to another address.",
     "goHome": "Back to Home",
     "searchSomething": "Search listings"
   },
+
   "header": {
     "searchBook": "Find your favorite book...",
     "selectLocation": "Select location",
@@ -19,10 +28,9 @@
     "noResults": "No results found !",
     "yourLocation": "Your region",
     "yesCorrect": "Yes, correct",
-    "change": "Change",
-    "wishlist": "Wishlist",
-    "cart": "Cart"
+    "change": "Change"
   },
+
   "regions": {
     "tashkentCity": "Tashkent city",
     "tashkentRegion": "Tashkent reg.",

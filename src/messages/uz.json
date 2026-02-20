@@ -1,17 +1,26 @@
 {
-  "common": {
-    "login": "Kirish"
+  "description": "O‘zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do‘konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan.",
+
+  "pages": {
+    "books": "Kitoblar",
+    "cart": "Savatcha",
+    "login": "Kirish",
+    "wishlist": "Sevimlilar"
   },
-  "metadata": {
-    "title": "sahif | Eng sara kitoblar, tez yetkazib berish va qulay narxlar!",
-    "description": "O‘zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do‘konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan."
+
+  "home": {
+    "metadata": {
+      "title": "Eng sara kitoblar, tez yetkazib berish va qulay narxlar!"
+    }
   },
+
   "notFound": {
     "title": "Sahifa topilmadi !",
     "description": "Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko'chirilgan.",
     "goHome": "Bosh sahifaga qaytish",
     "searchSomething": "E'lonlarni qidirish"
   },
+
   "header": {
     "searchBook": "Sevimli kitobingizni toping...",
     "selectLocation": "Hududni tanlang",
@@ -19,10 +28,9 @@
     "noResults": "Hech narsa topilmadi !",
     "yourLocation": "Sizning hududingiz",
     "yesCorrect": "Ha, to'g'ri",
-    "change": "O'zgartirish",
-    "wishlist": "Sevimlilar",
-    "cart": "Savatcha"
+    "change": "O'zgartirish"
   },
+
   "regions": {
     "tashkentCity": "Toshkent sh.",
     "tashkentRegion": "Toshkent vil.",
