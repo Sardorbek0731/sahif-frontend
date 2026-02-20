@@ -24,6 +24,9 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(baseUrl),
     description: t("description"),
+    verification: {
+      google: "5ZMAopwyvMuvknczVP7TArFgHEobr6--H-tMxH0pF-E",
+    },
     openGraph: {
       title: title,
       description: t("description"),
