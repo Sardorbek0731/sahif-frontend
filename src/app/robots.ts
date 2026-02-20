@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/cart", "/login", "/wishlist"],
+      disallow: ["/*/cart", "/*/login", "/*/wishlist"],
     },
     sitemap: "https://sahif.vercel.app/sitemap.xml",
   };

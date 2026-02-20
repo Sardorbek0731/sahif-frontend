@@ -15,11 +15,13 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-
+  
   const t = await getTranslations({ locale });
 
+  const baseUrl = "https://sahif.vercel.app";
+
   return {
-    metadataBase: new URL("https://sahif.vercel.app"),
+    metadataBase: new URL(baseUrl),
     description: t("description"),
     openGraph: {
       title: "sahif",
@@ -27,7 +29,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/icon.png",
+          url: `${baseUrl}/icon.png`,
           width: 829,
           height: 829,
           alt: `sahif | ${t("description")}`,
@@ -45,7 +47,7 @@ const inter = Inter({
 });
 
 const asimovian = localFont({
-  src: "../../../public/fonts/Asimovian-Regular.ttf",
+  src: "../../assets/fonts/Asimovian-Regular.ttf",
   variable: "--font-asimovian",
   display: "swap",
 });
