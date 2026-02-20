@@ -12,10 +12,32 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale });
 
+  const baseUrl = "https://sahif.vercel.app";
+  const title = `sahif | ${t("home.metadata.title")}`;
+
   return {
-    title: `sahif | ${t("home.metadata.title")}`,
+    title: title,
+    description: t("description"),
     openGraph: {
-      title: `sahif | ${t("home.metadata.title")}`,
+      title: title,
+      description: t("description"),
+      url: baseUrl,
+      siteName: "sahif",
+      locale: locale,
+      type: "website",
+      images: [
+        {
+          url: `${baseUrl}/icon.png`,
+          width: 829,
+          height: 829,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: t("description"),
+      images: [`${baseUrl}/icon.png`],
     },
   };
 }

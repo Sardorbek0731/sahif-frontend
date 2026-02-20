@@ -15,16 +15,17 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  
+
   const t = await getTranslations({ locale });
 
   const baseUrl = "https://sahif.vercel.app";
+  const title = "sahif";
 
   return {
     metadataBase: new URL(baseUrl),
     description: t("description"),
     openGraph: {
-      title: "sahif",
+      title: title,
       description: t("description"),
       type: "website",
       images: [
@@ -35,6 +36,12 @@ export async function generateMetadata({
           alt: `sahif | ${t("description")}`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: t("description"),
+      images: [`${baseUrl}/icon.png`],
     },
   };
 }
