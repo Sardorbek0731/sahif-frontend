@@ -51,7 +51,7 @@
   "categories": {
     "all": "Barchasi",
     "fiction": {
-      "name": "Badiiy adabiyot",
+      "name": "Badiiy",
       "description": "Hikoyalar, romanlar va badiiy asarlar"
     },
     "science": { "name": "Fan", "description": "Ilmiy va texnik mavzular" },
@@ -67,7 +67,6 @@
       "name": "San'at",
       "description": "San'at, dizayn va ijodiy ishlar"
     },
-
     "business": {
       "name": "Biznes",
       "description": "Biznes, menejment va iqtisod"
@@ -82,24 +81,25 @@
       "name": "Muhandislik",
       "description": "Muhandislik va texnika"
     },
-
-    "cooking": { "name": "Pishirish", "description": "Oshpazlik va taomlar" },
+    "cooking": {
+      "name": "Oshpazlik",
+      "description": "Retseptlar va taom tayyorlash san'ati"
+    },
     "travel": {
       "name": "Sayohat",
-      "description": "Sayohat va sayohat kitoblari"
+      "description": "Sayohat va sarguzasht kitoblari"
     },
     "religion": {
       "name": "Din",
       "description": "Diniy mavzular va ma’naviyat"
     },
     "philosophy": { "name": "Falsafa", "description": "Falsafa va tafakkur" },
-
     "children": {
       "name": "Bolalar",
       "description": "Bolalar uchun kitoblar va ertaklar"
     },
     "mystery": {
-      "name": "Sirli",
+      "name": "Detektiv",
       "description": "Sirli voqealar va detektivlar"
     },
     "fantasy": {
@@ -111,8 +111,8 @@
       "description": "Mashhur insonlar hayoti"
     },
     "non-fiction": {
-      "name": "Nodadabiyot",
-      "description": "Haqiqiy voqealar, faktlar va ma’lumotlar"
+      "name": "Ilmiy-ommabop",
+      "description": "Faktlar va hayotiy tajribaga asoslangan kitoblar"
     }
   }
 }

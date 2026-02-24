@@ -69,7 +69,7 @@ export default function Location() {
     <div className="relative inline-block">
       <Button
         leftIcon="location"
-        className="bg-card hover:bg-card-hover h-10 px-4 mr-3 transition-all duration-200 shrink-0"
+        className="bg-card hover:bg-card-hover h-10 px-4 mr-4 transition-all duration-200 shrink-0"
         onClick={() => {
           setIsOpen(true);
           setShowPrompt(false);

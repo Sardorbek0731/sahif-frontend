@@ -12,11 +12,11 @@ export default function Navbar() {
     <nav className="my-container row-between">
       <Link className="flex items-center" href="/">
         <Image
-          className="mr-3 w-8 h-8"
-          width={32}
-          height={32}
+          className="mr-2 w-7 h-7"
+          width={28}
+          height={28}
           src={images.header.logo}
-          alt="logo"
+          alt="sahif logo"
           priority
         />
         <span className="font-asimovian text-2xl">sahif</span>
@@ -29,7 +29,7 @@ export default function Navbar() {
             className={`items-center ${index > 7 ? "hidden xl:flex" : "flex"}`}
           >
             <Link
-              href={`/category/${cat.slug}`}
+              href={`/books?category=${cat.slug}`}
               className="hover:text-primary transition-all leading-none whitespace-nowrap"
             >
               {categories(`${cat.slug}.name`)}
@@ -42,7 +42,7 @@ export default function Navbar() {
         ))}
 
         <Link
-          href="/categories"
+          href="/books"
           className="flex items-center hover:text-primary transition-all leading-none font-medium shrink-0"
         >
           {categories("all")}

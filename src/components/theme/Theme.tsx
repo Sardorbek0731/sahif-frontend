@@ -30,7 +30,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center justify-center w-10 h-10 mr-3 rounded-lg bg-card transition-all cursor-pointer hover:bg-card-hover"
+      className="flex items-center justify-center w-10 h-10 mr-4 rounded-lg bg-card transition-all cursor-pointer hover:bg-card-hover"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       <Icon

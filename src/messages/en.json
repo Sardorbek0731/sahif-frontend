@@ -81,8 +81,11 @@
       "name": "Engineering",
       "description": "Engineering and technical works"
     },
-    "cooking": { "name": "Cooking", "description": "Cuisine and food" },
-    "travel": { "name": "Travel", "description": "Travel and travelogues" },
+    "cooking": {
+      "name": "Cooking",
+      "description": "Recipes and culinary arts"
+    },
+    "travel": { "name": "Travel", "description": "Travel and adventure books" },
     "religion": {
       "name": "Religion",
       "description": "Religious topics and spirituality"
@@ -92,12 +95,12 @@
       "description": "Philosophy and thought"
     },
     "children": {
-      "name": "Children's Books",
+      "name": "Kids",
       "description": "Books and fairy tales for children"
     },
     "mystery": {
       "name": "Mystery",
-      "description": "Mysterious events and detectives"
+      "description": "Mysterious events and detective stories"
     },
     "fantasy": {
       "name": "Fantasy",

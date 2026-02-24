@@ -47,7 +47,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="relative mr-3" ref={dropdownRef}>
+    <div className="relative mr-4" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"

@@ -15,7 +15,7 @@ export default function Header() {
       <div className="flex items-center">
         <Location />
 
-        <div className="flex w-90 items-center mr-3 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+        <div className="flex w-90 items-center mr-4 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
           <Icon name="search" size={16} className="mr-2" />
           <input
             type="text"
@@ -28,7 +28,7 @@ export default function Header() {
         <Link href="/wishlist">
           <Button
             leftIcon="wishlist"
-            className="bg-card hover:bg-card-hover h-10 px-4 mr-3"
+            className="bg-card hover:bg-card-hover h-10 px-4 mr-4"
           >
             {tPages("wishlist")}
           </Button>
