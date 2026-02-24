@@ -46,5 +46,73 @@
     "surkhandarya": "Surxondaryo",
     "khorezm": "Xorazm",
     "karakalpakstan": "Qoraqalpog'iston"
+  },
+
+  "categories": {
+    "all": "Barchasi",
+    "fiction": {
+      "name": "Badiiy adabiyot",
+      "description": "Hikoyalar, romanlar va badiiy asarlar"
+    },
+    "science": { "name": "Fan", "description": "Ilmiy va texnik mavzular" },
+    "technology": {
+      "name": "Texnologiya",
+      "description": "IT va texnologiya kitoblari"
+    },
+    "history": {
+      "name": "Tarix",
+      "description": "Tarixiy voqealar va shaxslar"
+    },
+    "art": {
+      "name": "San'at",
+      "description": "San'at, dizayn va ijodiy ishlar"
+    },
+
+    "business": {
+      "name": "Biznes",
+      "description": "Biznes, menejment va iqtisod"
+    },
+    "law": { "name": "Huquq", "description": "Qonun va huquqiy mavzular" },
+    "medicine": {
+      "name": "Tibbiyot",
+      "description": "Tibbiyot va sog‘liqni saqlash"
+    },
+    "it": { "name": "IT", "description": "Axborot texnologiyalari" },
+    "engineering": {
+      "name": "Muhandislik",
+      "description": "Muhandislik va texnika"
+    },
+
+    "cooking": { "name": "Pishirish", "description": "Oshpazlik va taomlar" },
+    "travel": {
+      "name": "Sayohat",
+      "description": "Sayohat va sayohat kitoblari"
+    },
+    "religion": {
+      "name": "Din",
+      "description": "Diniy mavzular va ma’naviyat"
+    },
+    "philosophy": { "name": "Falsafa", "description": "Falsafa va tafakkur" },
+
+    "children": {
+      "name": "Bolalar",
+      "description": "Bolalar uchun kitoblar va ertaklar"
+    },
+    "mystery": {
+      "name": "Sirli",
+      "description": "Sirli voqealar va detektivlar"
+    },
+    "fantasy": {
+      "name": "Fantastika",
+      "description": "Sehrli va fantastik hikoyalar"
+    },
+    "biography": {
+      "name": "Biografiya",
+      "description": "Mashhur insonlar hayoti"
+    },
+    "non-fiction": {
+      "name": "Nodadabiyot",
+      "description": "Haqiqiy voqealar, faktlar va ma’lumotlar"
+    }
   }
 }

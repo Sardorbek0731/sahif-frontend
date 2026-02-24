@@ -10,6 +10,7 @@ import { HomeIcon } from "./list/home";
 import { XIcon } from "./list/x";
 import { CartIcon } from "./list/cart";
 import { WishlistIcon } from "./list/wishlist";
+import { ArrowRightIcon } from "./list/arrow-right";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -22,6 +23,7 @@ export const ICON_LIST = {
   x: XIcon,
   cart: CartIcon,
   wishlist: WishlistIcon,
+  arrowRight: ArrowRightIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

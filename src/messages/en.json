@@ -46,5 +46,70 @@
     "surkhandarya": "Surkhandarya",
     "khorezm": "Khorezm",
     "karakalpakstan": "Karakalpakstan"
+  },
+
+  "categories": {
+    "all": "All",
+    "fiction": {
+      "name": "Fiction",
+      "description": "Stories, novels, and artistic works"
+    },
+    "science": {
+      "name": "Science",
+      "description": "Scientific and technical topics"
+    },
+    "technology": {
+      "name": "Technology",
+      "description": "IT and technology books"
+    },
+    "history": {
+      "name": "History",
+      "description": "Historical events and figures"
+    },
+    "art": { "name": "Art", "description": "Art, design, and creative works" },
+    "business": {
+      "name": "Business",
+      "description": "Business, management, and economics"
+    },
+    "law": { "name": "Law", "description": "Law and legal topics" },
+    "medicine": {
+      "name": "Medicine",
+      "description": "Medicine and healthcare"
+    },
+    "it": { "name": "IT", "description": "Information Technology" },
+    "engineering": {
+      "name": "Engineering",
+      "description": "Engineering and technical works"
+    },
+    "cooking": { "name": "Cooking", "description": "Cuisine and food" },
+    "travel": { "name": "Travel", "description": "Travel and travelogues" },
+    "religion": {
+      "name": "Religion",
+      "description": "Religious topics and spirituality"
+    },
+    "philosophy": {
+      "name": "Philosophy",
+      "description": "Philosophy and thought"
+    },
+    "children": {
+      "name": "Children's Books",
+      "description": "Books and fairy tales for children"
+    },
+    "mystery": {
+      "name": "Mystery",
+      "description": "Mysterious events and detectives"
+    },
+    "fantasy": {
+      "name": "Fantasy",
+      "description": "Magical and fantastic stories"
+    },
+    "biography": {
+      "name": "Biography",
+      "description": "Lives of famous people"
+    },
+    "non-fiction": {
+      "name": "Non-fiction",
+      "description": "Real events, facts, and information"
+    }
   }
 }
