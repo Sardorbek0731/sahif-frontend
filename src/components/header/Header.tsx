@@ -11,7 +11,7 @@ export default function Header() {
   const tPages = useTranslations("pages");
 
   return (
-    <header className="my-container py-4 mb-4">
+    <header className="my-container row-between my-4">
       <div className="flex items-center">
         <Location />
 

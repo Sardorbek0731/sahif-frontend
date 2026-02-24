@@ -4,7 +4,7 @@ import { images } from "@/data/images";
 
 export default function Navbar() {
   return (
-    <nav className="my-container">
+    <nav className="my-container row-between">
       <Link className="flex items-center mr-18" href="/">
         <Image
           className="mr-3 w-8 h-8"
