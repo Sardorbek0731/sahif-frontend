@@ -5,6 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: IconName;
   rightIcon?: IconName;
   iconSize?: number;
+  iconStyle?: string;
   children?: ReactNode;
 }
 
@@ -12,6 +13,7 @@ export const Button = ({
   leftIcon,
   rightIcon,
   iconSize = 16,
+  iconStyle = "",
   children,
   className = "",
   ...props
@@ -19,7 +21,7 @@ export const Button = ({
   return (
     <button
       className={`
-        flex items-center justify-center rounded-lg transition-all cursor-pointer
+        flex items-center rounded-lg transition-all cursor-pointer
         ${className}
       `}
       {...props}
@@ -28,7 +30,7 @@ export const Button = ({
         <Icon
           name={leftIcon}
           size={iconSize}
-          className={children ? "mr-2" : ""}
+          className={`${iconStyle} ${children ? "mr-2" : ""}`}
         />
       )}
 
@@ -38,7 +40,7 @@ export const Button = ({
         <Icon
           name={rightIcon}
           size={iconSize}
-          className={children ? "ml-2" : ""}
+          className={`${iconStyle} ${children ? "ml-2" : ""}`}
         />
       )}
     </button>

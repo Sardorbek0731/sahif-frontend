@@ -63,13 +63,14 @@ export default function Location() {
 
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
 
-  if (!mounted) return <div className="w-32 h-10 bg-card rounded-lg mr-3" />;
+  if (!mounted)
+    return <Button className="w-34 h-10 bg-card hover:bg-card-hover mr-4" />;
 
   return (
     <div className="relative inline-block">
       <Button
         leftIcon="location"
-        className="bg-card hover:bg-card-hover h-10 px-4 mr-4 transition-all duration-200 shrink-0"
+        className="bg-card hover:bg-card-hover h-10 px-4 mr-4"
         onClick={() => {
           setIsOpen(true);
           setShowPrompt(false);
@@ -87,25 +88,27 @@ export default function Location() {
               {tRegions(currentRegion.key)} ?
             </span>
           </p>
+
           <div className="flex items-center">
-            <button
+            <Button
+              className="bg-primary text-sm py-2 px-4 mr-2 text-nowrap text-background"
               onClick={() => {
                 confirmLocation();
                 setShowPrompt(false);
               }}
-              className="bg-primary text-sm py-2 px-4 mr-2 rounded-lg cursor-pointer text-nowrap"
             >
               {tHeader("yesCorrect")}
-            </button>
-            <button
+            </Button>
+
+            <Button
+              className="bg-background text-sm py-2 px-4"
               onClick={() => {
                 setShowPrompt(false);
                 setIsOpen(true);
               }}
-              className="bg-card-hover text-sm py-2 px-4 rounded-lg cursor-pointer"
             >
               {tHeader("change")}
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -114,7 +117,7 @@ export default function Location() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 p-4"
           onClick={() => setIsOpen(false)}
         >
           <div
@@ -123,12 +126,13 @@ export default function Location() {
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold">{tHeader("selectLocation")}</h2>
-              <button
+
+              <Button
+                leftIcon="x"
+                iconSize={20}
+                className="bg-card hover:bg-card-hover p-2"
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-card rounded-lg transition-colors cursor-pointer"
-              >
-                <Icon name="x" size={20} />
-              </button>
+              />
             </div>
 
             <div className="flex items-center mb-6 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
@@ -144,12 +148,12 @@ export default function Location() {
               />
             </div>
 
-            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-card-hover">
+            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6">
               {filteredRegions.length > 0 ? (
                 filteredRegions.map((region) => (
-                  <button
+                  <Button
                     key={region.id}
-                    className={`w-full flex items-center justify-between h-10 px-4 rounded-lg transition-all cursor-pointer ${
+                    className={`w-full justify-between h-10 px-4 ${
                       selectedId === region.id
                         ? "text-primary bg-card"
                         : "hover:bg-card"
@@ -164,7 +168,7 @@ export default function Location() {
                     {selectedId === region.id && (
                       <Icon name="location" size={18} />
                     )}
-                  </button>
+                  </Button>
                 ))
               ) : (
                 <div className="py-10 text-center">{tHeader("noResults")}</div>

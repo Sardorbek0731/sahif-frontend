@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState, startTransition } from "react";
-import { Icon } from "@/components/ui/icons/icon";
+import { Button } from "../ui/button";
 
 export default function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -21,23 +21,21 @@ export default function ThemeToggle() {
     }
   }, [theme, resolvedTheme]);
 
-  if (!mounted) return <div className="w-10 h-10 mr-3 rounded-lg bg-card" />;
+  if (!mounted)
+    return <Button className="w-10 h-10 mr-4 bg-card hover:bg-card-hover" />;
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
-    <button
+    <Button
+      leftIcon={resolvedTheme === "dark" ? "sun" : "moon"}
+      iconStyle={resolvedTheme === "dark" ? "text-primary" : ""}
+      iconSize={20}
       onClick={toggleTheme}
-      className="flex items-center justify-center w-10 h-10 mr-4 rounded-lg bg-card transition-all cursor-pointer hover:bg-card-hover"
+      className="w-10 h-10 mr-4 rounded-lg bg-card hover:bg-card-hover"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
-    >
-      <Icon
-        name={resolvedTheme === "dark" ? "sun" : "moon"}
-        size={20}
-        className={resolvedTheme === "dark" ? "text-primary" : ""}
-      />
-    </button>
+    />
   );
 }
