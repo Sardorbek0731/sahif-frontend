@@ -20,7 +20,7 @@ export async function generateMetadata({
   const baseUrl = "https://sahif.vercel.app";
 
   const categoryTitle = category
-    ? `${categoryTranslations(`${category}.name`)} ${t("pages.books").toLowerCase()}`
+    ? `${categoryTranslations(`items.${category}.name`)}`
     : t("pages.books");
 
   const title = `${categoryTitle} | sahif`;

@@ -49,70 +49,175 @@
   },
 
   "categories": {
-    "all": "All",
-    "fiction": {
-      "name": "Fiction",
-      "description": "Stories, novels, and artistic works"
+    "groups": {
+      "fiction": "Fiction",
+      "children": "Children & Young Adult",
+      "selfImprovement": "Psychology & Self-Development",
+      "businessSociety": "Business, Politics & Society",
+      "scienceEducation": "Science & Education",
+      "lifestyle": "Lifestyle & Hobbies"
     },
-    "science": {
-      "name": "Science",
-      "description": "Scientific and technical topics"
-    },
-    "technology": {
-      "name": "Technology",
-      "description": "IT and technology books"
-    },
-    "history": {
-      "name": "History",
-      "description": "Historical events and figures"
-    },
-    "art": { "name": "Art", "description": "Art, design, and creative works" },
-    "business": {
-      "name": "Business",
-      "description": "Business, management, and economics"
-    },
-    "law": { "name": "Law", "description": "Law and legal topics" },
-    "medicine": {
-      "name": "Medicine",
-      "description": "Medicine and healthcare"
-    },
-    "it": { "name": "IT", "description": "Information Technology" },
-    "engineering": {
-      "name": "Engineering",
-      "description": "Engineering and technical works"
-    },
-    "cooking": {
-      "name": "Cooking",
-      "description": "Recipes and culinary arts"
-    },
-    "travel": { "name": "Travel", "description": "Travel and adventure books" },
-    "religion": {
-      "name": "Religion",
-      "description": "Religious topics and spirituality"
-    },
-    "philosophy": {
-      "name": "Philosophy",
-      "description": "Philosophy and thought"
-    },
-    "children": {
-      "name": "Kids",
-      "description": "Books and fairy tales for children"
-    },
-    "mystery": {
-      "name": "Mystery",
-      "description": "Mysterious events and detective stories"
-    },
-    "fantasy": {
-      "name": "Fantasy",
-      "description": "Magical and fantastic stories"
-    },
-    "biography": {
-      "name": "Biography",
-      "description": "Lives of famous people"
-    },
-    "non-fiction": {
-      "name": "Non-fiction",
-      "description": "Real events, facts, and information"
+
+    "items": {
+      "all": "All",
+
+      "classic-literature": {
+        "name": "Classic Literature",
+        "description": "Timeless masterpieces of Uzbek and world literature"
+      },
+      "contemporary-fiction": {
+        "name": "Contemporary Fiction",
+        "description": "Modern literary works by contemporary authors"
+      },
+      "mystery-thriller": {
+        "name": "Mystery & Thriller",
+        "description": "Suspenseful stories, investigations, and thrilling plots"
+      },
+      "fantasy": {
+        "name": "Fantasy",
+        "description": "Magical worlds, legends, and imaginative adventures"
+      },
+      "science-fiction": {
+        "name": "Science Fiction",
+        "description": "Stories about the future, space, and advanced technologies"
+      },
+      "romance": {
+        "name": "Romance",
+        "description": "Love stories and emotional human relationships"
+      },
+      "historical-fiction": {
+        "name": "Historical Fiction",
+        "description": "Fiction based on historical events and eras"
+      },
+      "horror": {
+        "name": "Horror",
+        "description": "Dark, eerie, and suspense-filled stories"
+      },
+      "poetry": {
+        "name": "Poetry",
+        "description": "Poems, verses, and lyrical collections"
+      },
+      "drama": {
+        "name": "Drama & Plays",
+        "description": "Theatrical and dramatic literary works"
+      },
+
+      "children-books": {
+        "name": "Children's Books",
+        "description": "Colorful and engaging books for young readers"
+      },
+      "fairy-tales": {
+        "name": "Fairy Tales",
+        "description": "Classic folk and modern fairy tales"
+      },
+      "young-adult": {
+        "name": "Young Adult",
+        "description": "Stories about teenage life, growth, and challenges"
+      },
+      "comics-graphic-novels": {
+        "name": "Comics & Graphic Novels",
+        "description": "Illustrated stories and visual novels"
+      },
+
+      "psychology": {
+        "name": "Psychology",
+        "description": "The study of the human mind and behavior"
+      },
+      "self-development": {
+        "name": "Self-Development",
+        "description": "Personal growth and life improvement guides"
+      },
+      "motivation": {
+        "name": "Motivation",
+        "description": "Inspiring and empowering books"
+      },
+      "spirituality": {
+        "name": "Spirituality & Religion",
+        "description": "Spiritual growth, ethics, and religious teachings"
+      },
+      "philosophy": {
+        "name": "Philosophy",
+        "description": "Reflections on life, existence, and human thought"
+      },
+
+      "business-finance": {
+        "name": "Business & Finance",
+        "description": "Entrepreneurship, investing, and financial literacy"
+      },
+      "management-marketing": {
+        "name": "Management & Marketing",
+        "description": "Leadership, strategy, and marketing practices"
+      },
+      "economics": {
+        "name": "Economics",
+        "description": "Economic systems, markets, and global trends"
+      },
+      "politics": {
+        "name": "Politics",
+        "description": "Government systems and international relations"
+      },
+      "law": {
+        "name": "Law",
+        "description": "Legal systems, rights, and regulations"
+      },
+      "sociology": {
+        "name": "Sociology",
+        "description": "The study of society and social behavior"
+      },
+
+      "it-programming": {
+        "name": "IT & Programming",
+        "description": "Programming, software development, and digital technologies"
+      },
+      "science-nature": {
+        "name": "Natural Sciences",
+        "description": "Physics, biology, chemistry, and scientific discoveries"
+      },
+      "medicine-health": {
+        "name": "Medicine & Health",
+        "description": "Healthcare, wellness, and medical knowledge"
+      },
+      "engineering": {
+        "name": "Engineering",
+        "description": "Technology, mechanics, and engineering solutions"
+      },
+      "history": {
+        "name": "History",
+        "description": "Human civilization and historical events"
+      },
+      "education-pedagogy": {
+        "name": "Education & Pedagogy",
+        "description": "Teaching methods and educational resources"
+      },
+      "languages": {
+        "name": "Foreign Languages",
+        "description": "Language learning guides and textbooks"
+      },
+
+      "biography-memoirs": {
+        "name": "Biography & Memoirs",
+        "description": "Life stories and personal experiences of notable figures"
+      },
+      "art-design": {
+        "name": "Art & Design",
+        "description": "Creative arts, design, and architecture"
+      },
+      "cooking-culinary": {
+        "name": "Cooking & Culinary",
+        "description": "Recipes, cuisine, and culinary techniques"
+      },
+      "travel-geography": {
+        "name": "Travel & Geography",
+        "description": "World destinations and travel guides"
+      },
+      "sports-hobbies": {
+        "name": "Sports & Hobbies",
+        "description": "Active lifestyle and leisure activities"
+      },
+      "culture": {
+        "name": "Culture",
+        "description": "Traditions, customs, and cultural heritage"
+      }
     }
   }
 }

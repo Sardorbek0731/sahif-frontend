@@ -23,19 +23,16 @@ export default function Navbar() {
       </Link>
 
       <div className="flex items-center">
-        {famousSubCategories.map((cat, index) => (
-          <div
-            key={cat.id}
-            className={`items-center ${index > 7 ? "hidden xl:flex" : "flex"}`}
-          >
+        {famousSubCategories.map((cat) => (
+          <div key={cat.id} className="flex items-center group">
             <Link
               href={`/books?category=${cat.slug}`}
               className="hover:text-primary transition-all leading-none whitespace-nowrap"
             >
-              {categories(`${cat.slug}.name`)}
+              {categories(`items.${cat.slug}.name`)}
             </Link>
             <span
-              className="mx-6 h-4 w-px bg-foreground/20 block"
+              className="mx-4 h-4 w-px bg-foreground/20 block"
               aria-hidden="true"
             />
           </div>
@@ -45,7 +42,7 @@ export default function Navbar() {
           href="/books"
           className="flex items-center hover:text-primary transition-all leading-none font-medium shrink-0"
         >
-          {categories("all")}
+          {categories("items.all")}
           <Icon name="arrowRight" size={16} className="ml-2" />
         </Link>
       </div>
