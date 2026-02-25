@@ -34,7 +34,7 @@ export default function ThemeToggle() {
       iconStyle={resolvedTheme === "dark" ? "text-primary" : ""}
       iconSize={20}
       onClick={toggleTheme}
-      className="w-10 h-10 mr-4 rounded-lg bg-card hover:bg-card-hover"
+      className="justify-center w-10 h-10 mr-4 bg-card hover:bg-card-hover"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     />
   );
