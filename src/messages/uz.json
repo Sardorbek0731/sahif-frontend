@@ -22,7 +22,7 @@
   },
 
   "header": {
-    "searchBook": "Sevimli kitobingizni toping...",
+    "searchBook": "Kitob nomi, muallif yoki janr bo‘yicha qidiring...",
     "selectLocation": "Hududni tanlang",
     "searchRegion": "Viloyatni qidirish...",
     "noResults": "Hech narsa topilmadi !",
@@ -49,6 +49,9 @@
   },
 
   "categories": {
+    "categories": "Katalog",
+    "famousCategories": "Mashhur kategoriyalar",
+
     "groups": {
       "fiction": "Badiiy adabiyot",
       "children": "Bolalar va o‘smirlar adabiyoti",
@@ -59,8 +62,6 @@
     },
 
     "items": {
-      "all": "Barchasi",
-
       "classic-literature": {
         "name": "Mumtoz adabiyot",
         "description": "O‘zbek va jahon adabiyotining bebaho klassik durdonalari"

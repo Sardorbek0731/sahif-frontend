@@ -1,49 +1,47 @@
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { images } from "@/data/images";
-import { Icon } from "@/components/ui/icons/icon";
-import { famousSubCategories } from "@/data/categories";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import Categories from "../categories/Categories";
+import Search from "../search/Search";
 
 export default function Navbar() {
-  const categories = useTranslations("categories");
+  const tPages = useTranslations("pages");
 
   return (
     <nav className="my-container row-between">
-      <Link className="flex items-center" href="/">
-        <Image
-          className="mr-2 w-7 h-7"
-          width={28}
-          height={28}
-          src={images.header.logo}
-          alt="sahif logo"
-          priority
-        />
+      <Link className="mr-4" href="/">
         <span className="font-asimovian text-2xl">sahif</span>
       </Link>
 
-      <div className="flex items-center">
-        {famousSubCategories.map((cat) => (
-          <div key={cat.id} className="flex items-center group">
-            <Link
-              href={`/books?category=${cat.slug}`}
-              className="hover:text-primary transition-all leading-none whitespace-nowrap"
-            >
-              {categories(`items.${cat.slug}.name`)}
-            </Link>
-            <span
-              className="mx-4 h-4 w-px bg-foreground/20 block"
-              aria-hidden="true"
-            />
-          </div>
-        ))}
+      <Categories />
+      <Search />
 
-        <Link
-          href="/books"
-          className="flex items-center hover:text-primary transition-all leading-none font-medium shrink-0"
-        >
-          {categories("items.all")}
-          <Icon name="arrowRight" size={16} className="ml-2" />
+      <div className="flex items-center">
+        <Link href="/wishlist" className="mr-4">
+          <Button
+            leftIcon="wishlist"
+            className="bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {tPages("wishlist")}
+          </Button>
+        </Link>
+
+        <Link href="/cart" className="mr-4">
+          <Button
+            leftIcon="cart"
+            className="bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {tPages("cart")}
+          </Button>
+        </Link>
+
+        <Link href="/login">
+          <Button
+            leftIcon="login"
+            className="bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {tPages("login")}
+          </Button>
         </Link>
       </div>
     </nav>

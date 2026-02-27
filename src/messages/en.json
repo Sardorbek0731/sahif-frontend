@@ -22,7 +22,7 @@
   },
 
   "header": {
-    "searchBook": "Find your favorite book...",
+    "searchBook": "Search by book title, author, or genre...",
     "selectLocation": "Select location",
     "searchRegion": "Search region...",
     "noResults": "No results found !",
@@ -49,6 +49,9 @@
   },
 
   "categories": {
+    "categories": "Catalog",
+    "famousCategories": "Famous Categories",
+
     "groups": {
       "fiction": "Fiction",
       "children": "Children & Young Adult",
@@ -59,8 +62,6 @@
     },
 
     "items": {
-      "all": "All",
-
       "classic-literature": {
         "name": "Classic Literature",
         "description": "Timeless masterpieces of Uzbek and world literature"

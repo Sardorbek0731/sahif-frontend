@@ -47,7 +47,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="relative mr-4" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef}>
       <Button
         rightIcon="chevronDown"
         iconStyle={`transition-transform duration-300 ${

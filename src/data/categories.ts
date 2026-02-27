@@ -84,7 +84,7 @@ export interface CategoryGroup {
 // 4. Category Data (fully typed, immutable)
 // ----------
 
-export const categoryGroups = [
+export const categoryGroups: readonly CategoryGroup[] = [
   {
     name: "fiction",
     subCategories: [
@@ -97,7 +97,7 @@ export const categoryGroups = [
       { id: 107, slug: "historical-fiction" },
       { id: 108, slug: "horror" },
       { id: 109, slug: "poetry" },
-      { id: 110, slug: "drama" },
+      { id: 110, slug: "drama", isFamous: true },
     ],
   },
   {
@@ -135,7 +135,7 @@ export const categoryGroups = [
     subCategories: [
       { id: 501, slug: "it-programming", isFamous: true },
       { id: 502, slug: "science-nature" },
-      { id: 503, slug: "medicine-health" },
+      { id: 503, slug: "medicine-health", isFamous: true },
       { id: 504, slug: "engineering" },
       { id: 505, slug: "history" },
       { id: 506, slug: "education-pedagogy" },
@@ -153,7 +153,7 @@ export const categoryGroups = [
       { id: 606, slug: "culture" },
     ],
   },
-] satisfies readonly CategoryGroup[];
+] as const;
 
 // ----------
 // 5. Derived Helpers (zero duplication, full typing)
