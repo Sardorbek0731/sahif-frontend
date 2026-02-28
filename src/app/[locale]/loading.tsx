@@ -13,10 +13,10 @@ export default function Loading() {
           src={images.header.logo}
           width={40}
           height={40}
-          className="mr-3 w-10 h-10"
-          alt="logo"
+          className="mr-4 w-10 h-10"
+          alt="sahif logo"
         />
-        <h1 className="font-asimovian text-3xl text-primary">sahif</h1>
+        <h1 className="font-asimovian text-3xl">sahif</h1>
       </div>
     </div>
   );
