@@ -15,6 +15,7 @@ export default function Loading() {
           height={40}
           className="mr-4 w-10 h-10"
           alt="sahif logo"
+          priority
         />
         <h1 className="font-asimovian text-3xl">sahif</h1>
       </div>

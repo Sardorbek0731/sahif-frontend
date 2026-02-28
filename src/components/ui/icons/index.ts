@@ -12,6 +12,9 @@ import { CartIcon } from "./list/cart";
 import { WishlistIcon } from "./list/wishlist";
 import { ArrowRightIcon } from "./list/arrow-right";
 import { CategoriesIcon } from "./list/categories";
+import { UzbekistanFlagIcon } from "./list/uz";
+import { UKFlagIcon } from "./list/en";
+import { RussiaFlagIcon } from "./list/ru";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -26,6 +29,9 @@ export const ICON_LIST = {
   wishlist: WishlistIcon,
   arrowRight: ArrowRightIcon,
   categories: CategoriesIcon,
+  uz: UzbekistanFlagIcon,
+  en: UKFlagIcon,
+  ru: RussiaFlagIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

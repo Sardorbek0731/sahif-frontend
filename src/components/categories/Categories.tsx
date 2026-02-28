@@ -45,7 +45,7 @@ export default function Categories() {
       </Button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-4 w-[850px] bg-card rounded-lg p-6 z-50">
+        <div className="absolute top-full left-0 mt-4 w-[850px] bg-card rounded-lg p-6 z-20">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <div className="grid grid-cols-3 gap-8">
             {categoryGroups.map((group) => (

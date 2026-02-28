@@ -1,7 +1,7 @@
-import { images } from "./images";
-
 export const languages = [
-  { code: "uz", name: "O'zbek", flag: images.header.flags.uz },
-  { code: "en", name: "English", flag: images.header.flags.us },
-  { code: "ru", name: "Русский", flag: images.header.flags.ru },
-];
+  { code: "uz", name: "O'zbek" },
+  { code: "en", name: "English" },
+  { code: "ru", name: "Русский" },
+] as const;
+
+export type LanguageCode = (typeof languages)[number]["code"];

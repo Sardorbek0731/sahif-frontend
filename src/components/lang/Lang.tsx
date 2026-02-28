@@ -3,13 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
-import { languages } from "@/data/lang";
-import Image from "next/image";
+import { languages, LanguageCode } from "@/data/lang";
 import { Button } from "../ui/button";
+import { Icon } from "../ui/icons";
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
-  const locale = useLocale();
+  const locale = useLocale() as LanguageCode;
   const router = useRouter();
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,35 +40,24 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
-  const changeLanguage = (newLocale: string) => {
+  const changeLanguage = (newLocale: LanguageCode) => {
     if (newLocale === locale) return;
     router.replace(pathname, { locale: newLocale, scroll: false });
     setIsOpen(false);
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative z-25" ref={dropdownRef}>
       <Button
         rightIcon="chevronDown"
         iconStyle={`transition-transform duration-300 ${
           isOpen ? "rotate-180" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        aria-label="Change language"
         className="justify-between px-4 h-10 bg-card hover:bg-card-hover"
       >
-        <span className="flex items-center mr-2">
-          <Image
-            src={currentLanguage.flag}
-            width={16}
-            height={16}
-            className="mr-2 w-4 h-4"
-            alt={`${currentLanguage.name} language flag`}
-          />
-          {currentLanguage.name}
-        </span>
+        <Icon name={currentLanguage.code} size={16} className="mr-2" />
+        {currentLanguage.name}
       </Button>
 
       {isOpen && (
@@ -81,13 +70,7 @@ export default function LanguageSwitcher() {
                 onClick={() => changeLanguage(lang.code)}
                 className="w-full mb-1 px-4 h-10 hover:bg-card-hover"
               >
-                <Image
-                  src={lang.flag}
-                  width={16}
-                  height={16}
-                  className="mr-2 w-4 h-4"
-                  alt={`${lang.name} language flag`}
-                />
+                <Icon name={lang.code} size={16} className="mr-2" />
                 {lang.name}
               </Button>
             ))}

@@ -64,13 +64,13 @@ export default function Location() {
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
 
   if (!mounted)
-    return <Button className="w-34 h-10 bg-card hover:bg-card-hover mr-4" />;
+    return <Button className="w-34 h-10 bg-card hover:bg-card-hover" />;
 
   return (
-    <div className="relative inline-block">
+    <div className="relative">
       <Button
         leftIcon="location"
-        className="bg-card hover:bg-card-hover h-10 px-4 mr-4"
+        className="bg-card hover:bg-card-hover h-10 px-4"
         onClick={() => {
           setIsOpen(true);
           setShowPrompt(false);
@@ -80,7 +80,7 @@ export default function Location() {
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-40 bg-card p-4 rounded-lg">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-30 bg-card p-4 rounded-lg">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <p className="text-sm text-nowrap mb-4">
             {tHeader("yourLocation")}:{" "}
@@ -115,8 +115,6 @@ export default function Location() {
 
       {isOpen && (
         <div
-          role="dialog"
-          aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={() => setIsOpen(false)}
         >
