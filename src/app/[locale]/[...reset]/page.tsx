@@ -7,16 +7,16 @@ export const metadata: Metadata = {
     title: "404 | sahif",
     images: [
       {
-        url: "https://sahif.vercel.app/icon.png",
-        width: 829,
-        height: 829,
+        url: "https://sahif.vercel.app/logo.png",
+        width: 512,
+        height: 512,
       },
     ],
   },
   twitter: {
     card: "summary",
     title: "404 | sahif",
-    images: ["https://sahif.vercel.app/icon.png"],
+    images: ["https://sahif.vercel.app/logo.png"],
   },
 };
 

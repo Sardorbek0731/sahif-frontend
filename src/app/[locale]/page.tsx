@@ -27,9 +27,9 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: `${baseUrl}/icon.png`,
-          width: 829,
-          height: 829,
+          url: `${baseUrl}/logo.png`,
+          width: 512,
+          height: 512,
         },
       ],
     },
@@ -37,7 +37,7 @@ export async function generateMetadata({
       card: "summary",
       title: title,
       description: t("description"),
-      images: [`${baseUrl}/icon.png`],
+      images: [`${baseUrl}/logo.png`],
     },
   };
 }

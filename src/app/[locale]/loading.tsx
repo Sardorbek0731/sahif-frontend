@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { images } from "@/data/images";
+import { Logo } from "@/data/Logo";
 
 export default function Loading() {
   return (
@@ -9,14 +8,7 @@ export default function Loading() {
       </div>
 
       <div className="flex items-center">
-        <Image
-          src={images.header.logo}
-          width={40}
-          height={40}
-          className="mr-4 w-10 h-10"
-          alt="sahif logo"
-          priority
-        />
+        <Logo className="mr-4 w-10 h-10" />
         <h1 className="font-asimovian text-3xl">sahif</h1>
       </div>
     </div>

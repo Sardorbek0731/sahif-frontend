@@ -3,13 +3,15 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Categories from "../categories/Categories";
 import Search from "../search/Search";
+import { Logo } from "@/data/Logo";
 
 export default function Navbar() {
   const tPages = useTranslations("pages");
 
   return (
     <nav className="my-container row-between">
-      <Link className="mr-4" href="/">
+      <Link className="mr-4 flex items-center" href="/">
+        <Logo className="mr-4 w-10 h-10" />
         <span className="font-asimovian text-2xl">sahif</span>
       </Link>
 
