@@ -2,7 +2,9 @@ import { IconBase, IconProps } from "../icon-base";
 
 export const MapPinIcon = (props: IconProps) => (
   <IconBase {...props}>
-    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-    <circle cx="12" cy="10" r="3" />
+    <path d="M15 22a1 1 0 0 1-1-1v-4a1 1 0 0 1 .445-.832l3-2a1 1 0 0 1 1.11 0l3 2A1 1 0 0 1 22 17v4a1 1 0 0 1-1 1z" />
+    <path d="M18 10a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 .601.2" />
+    <path d="M18 22v-3" />
+    <circle cx="10" cy="10" r="3" />
   </IconBase>
 );

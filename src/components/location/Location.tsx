@@ -67,7 +67,7 @@ export default function Location() {
     return <Button className="w-34 h-10 bg-card hover:bg-card-hover" />;
 
   return (
-    <div className="relative">
+    <div className="relative mr-4">
       <Button
         leftIcon="location"
         className="bg-card hover:bg-card-hover h-10 px-4"

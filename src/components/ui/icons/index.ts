@@ -10,11 +10,11 @@ import { HomeIcon } from "./list/home";
 import { XIcon } from "./list/x";
 import { CartIcon } from "./list/cart";
 import { WishlistIcon } from "./list/wishlist";
-import { ArrowRightIcon } from "./list/arrow-right";
 import { CategoriesIcon } from "./list/categories";
 import { UzFlagIcon } from "./list/uz";
 import { EnFlagIcon } from "./list/en";
 import { RuFlagIcon } from "./list/ru";
+import { CallCenterIcon } from "./list/call-center";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -27,11 +27,11 @@ export const ICON_LIST = {
   x: XIcon,
   cart: CartIcon,
   wishlist: WishlistIcon,
-  arrowRight: ArrowRightIcon,
   categories: CategoriesIcon,
   uz: UzFlagIcon,
   en: EnFlagIcon,
   ru: RuFlagIcon,
+  callCenter: CallCenterIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;
