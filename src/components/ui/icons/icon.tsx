@@ -7,7 +7,10 @@ interface UniversalIconProps extends IconProps {
 export const Icon = ({ name, ...props }: UniversalIconProps) => {
   const SelectedIcon = ICON_LIST[name];
 
-  if (!SelectedIcon) return null;
+  if (!SelectedIcon) {
+    console.warn(`Icon "${name}" topilmadi!`);
+    return null;
+  }
 
   return <SelectedIcon {...props} />;
 };
