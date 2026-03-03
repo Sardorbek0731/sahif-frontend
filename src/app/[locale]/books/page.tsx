@@ -18,33 +18,30 @@ export async function generateMetadata({
   });
 
   const baseUrl = "https://sahif.vercel.app";
-
-  const categoryTitle = category
-    ? `${categoryTranslations(`items.${category}.name`)}`
-    : t("pages.books");
-
-  const title = `${categoryTitle} | sahif`;
+  const categoryName = category
+    ? categoryTranslations(`items.${category}.name`)
+    : null;
+  const title = `${categoryName || t("pages.books")} | sahif`;
 
   return {
-    title: title,
+    title,
+    description: t("description"),
+    applicationName: "sahif",
+    alternates: {
+      canonical: `${baseUrl}/${locale}/books${category ? `?category=${category}` : ""}`,
+    },
     openGraph: {
-      title: title,
+      title,
       description: t("description"),
       url: `${baseUrl}/${locale}/books${category ? `?category=${category}` : ""}`,
       siteName: "sahif",
-      locale: locale,
+      locale,
       type: "website",
-      images: [
-        {
-          url: `${baseUrl}/logo.png`,
-          width: 512,
-          height: 512,
-        },
-      ],
+      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
-      title: title,
+      title,
       description: t("description"),
       images: [`${baseUrl}/logo.png`],
     },

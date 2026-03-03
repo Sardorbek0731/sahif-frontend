@@ -16,26 +16,21 @@ export async function generateMetadata({
   const title = `sahif | ${t("home.metadata.title")}`;
 
   return {
-    title: title,
+    title,
     description: t("description"),
+    applicationName: "sahif",
     openGraph: {
       title: title,
       description: t("description"),
-      url: baseUrl,
+      url: `${baseUrl}/${locale}`,
       siteName: "sahif",
       locale: locale,
       type: "website",
-      images: [
-        {
-          url: `${baseUrl}/logo.png`,
-          width: 512,
-          height: 512,
-        },
-      ],
+      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
-      title: title,
+      title,
       description: t("description"),
       images: [`${baseUrl}/logo.png`],
     },

@@ -3,14 +3,13 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "404 | sahif",
+  description: "Sahifa topilmadi !",
+  applicationName: "sahif",
+  robots: { index: false, follow: true },
   openGraph: {
     title: "404 | sahif",
     images: [
-      {
-        url: "https://sahif.vercel.app/logo.png",
-        width: 512,
-        height: 512,
-      },
+      { url: "https://sahif.vercel.app/logo.png", width: 512, height: 512 },
     ],
   },
   twitter: {

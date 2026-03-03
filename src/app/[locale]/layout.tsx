@@ -19,33 +19,37 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   const baseUrl = "https://sahif.vercel.app";
-  const title = "sahif";
 
   return {
     metadataBase: new URL(baseUrl),
-    title: title,
+    title: "sahif",
     description: t("description"),
-    verification: {
-      google: "5ZMAopwyvMuvknczVP7TArFgHEobr6--H-tMxH0pF-E",
-    },
+    applicationName: "sahif",
+
     openGraph: {
-      title: title,
+      title: "sahif",
       description: t("description"),
+      url: `${baseUrl}/${locale}`,
+      siteName: "sahif",
+      locale: locale,
       type: "website",
       images: [
         {
           url: `${baseUrl}/logo.png`,
           width: 512,
           height: 512,
-          alt: `sahif | ${t("description")}`,
+          alt: "sahif logo",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title: title,
+      title: "sahif",
       description: t("description"),
       images: [`${baseUrl}/logo.png`],
+    },
+    verification: {
+      google: "5ZMAopwyvMuvknczVP7TArFgHEobr6--H-tMxH0pF-E",
     },
   };
 }
@@ -96,6 +100,23 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "sahif",
+              alternateName: ["Sahif", "sahif.vercel.app"],
+              url: `https://sahif.vercel.app/${locale}`,
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `https://sahif.vercel.app/${locale}/books?search={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>{children}</ThemeProvider>
         </NextIntlClientProvider>

@@ -12,25 +12,22 @@ export async function generateMetadata({
   const title = `${t("pages.login")} | sahif`;
 
   return {
-    title: title,
+    title,
+    description: t("description"),
+    applicationName: "sahif",
+    robots: { index: false, follow: false },
     openGraph: {
-      title: title,
+      title,
       description: t("description"),
       url: `${baseUrl}/${locale}/login`,
       siteName: "sahif",
-      locale: locale,
+      locale,
       type: "website",
-      images: [
-        {
-          url: `${baseUrl}/logo.png`,
-          width: 512,
-          height: 512,
-        },
-      ],
+      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
-      title: title,
+      title,
       description: t("description"),
       images: [`${baseUrl}/logo.png`],
     },
