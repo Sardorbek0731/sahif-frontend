@@ -20,7 +20,7 @@ export default function NotFound() {
       <p className="max-w-md mb-8">{t("description")}</p>
 
       <div className="flex items-center">
-        <Link href="/" className="mr-3">
+        <Link href="/" className="mr-4">
           <Button leftIcon="home" className="bg-primary h-10 px-4">
             {t("goHome")}
           </Button>

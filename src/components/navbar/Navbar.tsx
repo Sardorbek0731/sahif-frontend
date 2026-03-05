@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <nav className="my-container row-between">
       <Link className="mr-4 flex items-center" href="/">
-        <Logo className="mr-4 w-10 h-10" />
+        <Logo className="mr-2 w-10 h-10" />
         <span className="font-asimovian text-2xl">sahif</span>
       </Link>
 

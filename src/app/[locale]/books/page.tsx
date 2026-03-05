@@ -6,34 +6,44 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; search?: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const { category } = await searchParams;
+  const { category, search } = await searchParams;
 
   const t = await getTranslations({ locale });
-  const categoryTranslations = await getTranslations({
+  const tCategories = await getTranslations({
     locale,
     namespace: "categories",
   });
 
   const baseUrl = "https://sahif.vercel.app";
-  const categoryName = category
-    ? categoryTranslations(`items.${category}.name`)
-    : null;
-  const title = `${categoryName || t("pages.books")} | sahif`;
+
+  let pageTitle = t("pages.books");
+  if (search) pageTitle = search;
+  else if (category) {
+    try {
+      pageTitle = tCategories(`items.${category}.name`);
+    } catch {
+      pageTitle = t("pages.books");
+    }
+  }
+  const title = `${pageTitle} | sahif`;
+
+  const query = new URLSearchParams();
+  if (search) query.set("search", search);
+  else if (category) query.set("category", category);
+  const url = `${baseUrl}/${locale}/books${query.toString() ? `?${query}` : ""}`;
 
   return {
     title,
     description: t("description"),
     applicationName: "sahif",
-    alternates: {
-      canonical: `${baseUrl}/${locale}/books${category ? `?category=${category}` : ""}`,
-    },
+    alternates: { canonical: url },
     openGraph: {
       title,
       description: t("description"),
-      url: `${baseUrl}/${locale}/books${category ? `?category=${category}` : ""}`,
+      url,
       siteName: "sahif",
       locale,
       type: "website",
@@ -51,16 +61,17 @@ export async function generateMetadata({
 export default async function Books({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; search?: string }>;
 }) {
-  const params = await searchParams;
-  const currentCategory = params.category;
+  const { category, search } = await searchParams;
+
+  let heading = "Barcha kitoblar";
+  if (search) heading = `"${search}" bo‘yicha natijalar`;
+  else if (category) heading = `Kategoriya: ${category}`;
 
   return (
     <div className="my-container py-10">
-      <h1 className="text-3xl font-bold">
-        {currentCategory ? `Kategoriya: ${currentCategory}` : "Barcha kitoblar"}
-      </h1>
+      <h1 className="text-3xl font-bold">{heading}</h1>
     </div>
   );
 }

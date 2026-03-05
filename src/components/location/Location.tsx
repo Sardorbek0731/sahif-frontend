@@ -64,7 +64,7 @@ export default function Location() {
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
 
   if (!mounted)
-    return <Button className="w-34 h-10 bg-card hover:bg-card-hover" />;
+    return <Button className="w-34 h-10 bg-card hover:bg-card-hover mr-4" />;
 
   return (
     <div className="relative mr-4">
