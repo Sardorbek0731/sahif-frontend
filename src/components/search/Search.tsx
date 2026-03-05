@@ -93,7 +93,7 @@ export default function Search() {
                   <div
                     key={item}
                     onClick={() => handleSearch(item)}
-                    className="flex items-center justify-between cursor-pointer hover:bg-background py-2 px-4 rounded-md"
+                    className="row-between cursor-pointer hover:bg-background py-2 px-4 rounded-lg"
                   >
                     <div className="flex items-center">
                       <Icon className="mr-2" name="search" size={16} />

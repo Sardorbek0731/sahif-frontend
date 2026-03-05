@@ -62,7 +62,7 @@ export default function Categories() {
                           pathname: "/books",
                           query: { category: sub.slug },
                         }}
-                        className="group flex items-center justify-between text-foreground/70 hover:text-foreground transition-all"
+                        className="row-between text-foreground/70 hover:text-foreground transition-all"
                         onClick={() => setOpen(false)}
                       >
                         <span>{t(`items.${sub.slug}.name`)}</span>

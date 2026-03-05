@@ -20,10 +20,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`
-        flex items-center rounded-lg transition-all cursor-pointer
-        ${className}
-      `}
+      className={`flex items-center rounded-lg transition-all cursor-pointer ${className}`}
       {...props}
     >
       {leftIcon && (

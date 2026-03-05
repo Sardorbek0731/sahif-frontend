@@ -115,14 +115,14 @@ export default function Location() {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 row-center bg-black/50 p-4"
           onClick={() => setIsOpen(false)}
         >
           <div
             className="bg-background w-full max-w-[420px] p-6 rounded-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-6">
+            <div className="row-between mb-6">
               <h2 className="text-xl font-bold">{tHeader("selectLocation")}</h2>
 
               <Button

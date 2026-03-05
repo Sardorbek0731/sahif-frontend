@@ -45,6 +45,9 @@
 }
 
 @layer utilities {
+  .row-center {
+    @apply flex items-center justify-center;
+  }
   .row-between {
     @apply flex items-center justify-between;
   }
