@@ -86,9 +86,10 @@ export default function Search() {
         <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-50">
           {history.length > 0 && (
             <div className="mb-6">
-              <p className="mb-4 opacity-50">
-                🕒 {t("searchInput.recentSearches")}
-              </p>
+              <span className="flex items-center mb-4 opacity-50">
+                <Icon name="clock" size={16} className="mr-2 text-primary" />
+                {t("searchInput.recentSearches")}
+              </span>
               <div className="flex flex-col">
                 {history.map((item) => (
                   <div
@@ -111,9 +112,10 @@ export default function Search() {
             </div>
           )}
 
-          <p className="mb-4 opacity-50">
-            🔥 {t("categories.famousCategories")}
-          </p>
+          <span className="flex items-center mb-4 opacity-50">
+            <Icon name="flame" size={16} className="mr-2 text-primary" />
+            {t("categories.famousCategories")}
+          </span>
 
           <div className="flex flex-wrap gap-2">
             {famousSubCategories.map((sub) => (
