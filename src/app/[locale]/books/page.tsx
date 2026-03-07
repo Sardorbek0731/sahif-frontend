@@ -40,6 +40,14 @@ export async function generateMetadata({
     description: t("description"),
     applicationName: "sahif",
     alternates: { canonical: url },
+    robots: {
+      index: !search, 
+      follow: true,
+      googleBot: {
+        index: !search,
+        follow: true,
+      },
+    },
     openGraph: {
       title,
       description: t("description"),

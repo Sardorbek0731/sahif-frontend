@@ -19,6 +19,15 @@ export async function generateMetadata({
     title,
     description: t("description"),
     applicationName: "sahif",
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        uz: `${baseUrl}/uz`,
+        ru: `${baseUrl}/ru`,
+        en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/uz`,
+      },
+    },
     openGraph: {
       title: title,
       description: t("description"),

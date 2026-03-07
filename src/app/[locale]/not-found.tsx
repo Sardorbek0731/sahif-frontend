@@ -24,7 +24,7 @@ export default function NotFound() {
           </Button>
         </Link>
 
-        <Link href="/search">
+        <Link href="/books">
           <Button
             leftIcon="search"
             className="bg-card hover:bg-card-hover h-10 px-4"

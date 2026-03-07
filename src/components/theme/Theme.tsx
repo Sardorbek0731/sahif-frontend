@@ -31,7 +31,7 @@ export default function ThemeToggle() {
   return (
     <Button
       leftIcon={resolvedTheme === "dark" ? "sun" : "moon"}
-      iconStyle={resolvedTheme === "dark" ? "text-primary" : ""}
+      iconStyle="text-primary"
       iconSize={20}
       onClick={toggleTheme}
       className="justify-center w-10 h-10 mr-4 bg-card hover:bg-card-hover"

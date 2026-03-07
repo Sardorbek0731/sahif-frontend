@@ -26,14 +26,22 @@ export async function generateMetadata({
     metadataBase: new URL(baseUrl),
     title: "sahif",
     description: t("description"),
-    applicationName: "sahif",
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        uz: `${baseUrl}/uz`,
+        ru: `${baseUrl}/ru`,
+        en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/uz`,
+      },
+    },
 
     openGraph: {
       title: "sahif",
       description: t("description"),
       url: `${baseUrl}/${locale}`,
       siteName: "sahif",
-      locale: locale,
+      locale,
       type: "website",
       images: [
         {
@@ -49,6 +57,14 @@ export async function generateMetadata({
       title: "sahif",
       description: t("description"),
       images: [`${baseUrl}/logo.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
     verification: {
       google: "5ZMAopwyvMuvknczVP7TArFgHEobr6--H-tMxH0pF-E",
