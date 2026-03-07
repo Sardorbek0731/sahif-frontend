@@ -26,6 +26,7 @@ export async function generateMetadata({
     metadataBase: new URL(baseUrl),
     title: "sahif",
     description: t("description"),
+    applicationName: "sahif",
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {

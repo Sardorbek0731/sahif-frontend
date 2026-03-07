@@ -15,6 +15,7 @@ export async function generateMetadata({
   return {
     title: `404 | sahif`,
     description: t("description"),
+    applicationName: "sahif",
     robots: {
       index: false,
       follow: true,
