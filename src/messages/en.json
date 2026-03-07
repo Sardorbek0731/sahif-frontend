@@ -48,6 +48,10 @@
     "karakalpakstan": "Karakalpakstan"
   },
 
+  "searchInput": {
+    "recentSearches": "Recent searches"
+  },
+
   "categories": {
     "categories": "Catalog",
     "famousCategories": "Famous Categories",

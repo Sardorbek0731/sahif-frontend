@@ -9,8 +9,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 export default function Search() {
-  const tHeader = useTranslations("header");
-  const tCategories = useTranslations("categories");
+  const t = useTranslations("");
   const router = useRouter();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -76,7 +75,7 @@ export default function Search() {
           name="search-book"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          placeholder={tHeader("searchBook")}
+          placeholder={t("header.searchBook")}
           autoComplete="off"
           className="flex-1 h-full bg-transparent outline-none"
           onFocus={() => setIsFocused(true)}
@@ -87,7 +86,9 @@ export default function Search() {
         <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-50">
           {history.length > 0 && (
             <div className="mb-6">
-              <p className="mb-4 opacity-50">🕒 Tarix</p>
+              <p className="mb-4 opacity-50">
+                🕒 {t("searchInput.recentSearches")}
+              </p>
               <div className="flex flex-col">
                 {history.map((item) => (
                   <div
@@ -111,7 +112,7 @@ export default function Search() {
           )}
 
           <p className="mb-4 opacity-50">
-            🔥 {tCategories("famousCategories")}
+            🔥 {t("categories.famousCategories")}
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -125,7 +126,7 @@ export default function Search() {
                 className="px-4 py-2 text-sm rounded-md bg-background"
                 onClick={() => setIsFocused(false)}
               >
-                {tCategories(`items.${sub.slug}.name`)}
+                {t(`categories.items.${sub.slug}.name`)}
               </Link>
             ))}
           </div>

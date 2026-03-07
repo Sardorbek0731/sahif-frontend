@@ -14,8 +14,7 @@ import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
 
 export default function Location() {
-  const tHeader = useTranslations("header");
-  const tRegions = useTranslations("regions");
+  const t = useTranslations("");
 
   const { selectedId, setSelectedId, isConfirmed, confirmLocation } =
     useLocationStore();
@@ -58,7 +57,9 @@ export default function Location() {
   }, [isOpen]);
 
   const filteredRegions = regions.filter((region) =>
-    tRegions(region.key).toLowerCase().includes(deferredSearch.toLowerCase()),
+    t(`regions.${region.key}`)
+      .toLowerCase()
+      .includes(deferredSearch.toLowerCase()),
   );
 
   const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
@@ -76,16 +77,16 @@ export default function Location() {
           setShowPrompt(false);
         }}
       >
-        {tRegions(currentRegion.key)}
+        {t(`regions.${currentRegion.key}`)}
       </Button>
 
       {showPrompt && !isOpen && (
         <div className="flex flex-col absolute top-full left-0 mt-4 z-30 bg-card p-4 rounded-lg">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <p className="text-sm text-nowrap mb-4">
-            {tHeader("yourLocation")}:{" "}
+            {t("header.yourLocation")}:{" "}
             <span className="text-primary">
-              {tRegions(currentRegion.key)} ?
+              {t(`regions.${currentRegion.key}`)} ?
             </span>
           </p>
 
@@ -97,7 +98,7 @@ export default function Location() {
                 setShowPrompt(false);
               }}
             >
-              {tHeader("yesCorrect")}
+              {t("header.yesCorrect")}
             </Button>
 
             <Button
@@ -107,7 +108,7 @@ export default function Location() {
                 setIsOpen(true);
               }}
             >
-              {tHeader("change")}
+              {t("header.change")}
             </Button>
           </div>
         </div>
@@ -123,7 +124,9 @@ export default function Location() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="row-between mb-6">
-              <h2 className="text-xl font-bold">{tHeader("selectLocation")}</h2>
+              <h2 className="text-xl font-bold">
+                {t("header.selectLocation")}
+              </h2>
 
               <Button
                 leftIcon="x"
@@ -141,7 +144,7 @@ export default function Location() {
                 name="search-region"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={tHeader("searchRegion")}
+                placeholder={t("header.searchRegion")}
                 className="flex-1 h-full bg-transparent outline-none"
               />
             </div>
@@ -162,14 +165,14 @@ export default function Location() {
                       setSearchQuery("");
                     }}
                   >
-                    <span>{tRegions(region.key)}</span>
+                    <span>{t(`regions.${region.key}`)}</span>
                     {selectedId === region.id && (
                       <Icon name="location" size={18} />
                     )}
                   </Button>
                 ))
               ) : (
-                <div className="py-10 text-center">{tHeader("noResults")}</div>
+                <div className="py-10 text-center">{t("header.noResults")}</div>
               )}
             </div>
           </div>
