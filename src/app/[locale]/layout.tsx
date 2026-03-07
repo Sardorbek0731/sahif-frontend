@@ -112,30 +112,32 @@ export default async function LocaleLayout({
     initialTheme = "";
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "sahif",
+    alternateName: ["Sahif", "sahif.vercel.app"],
+    url: `https://sahif.vercel.app/${locale}`,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `https://sahif.vercel.app/${locale}/books?search={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html
       lang={locale}
       className={`${inter.variable} ${asimovian.variable} ${initialTheme === "dark" ? "dark" : ""}`}
       suppressHydrationWarning
     >
-      <body className="antialiased">
+      <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "sahif",
-              alternateName: ["Sahif", "sahif.vercel.app"],
-              url: `https://sahif.vercel.app/${locale}`,
-              potentialAction: {
-                "@type": "SearchAction",
-                target: `https://sahif.vercel.app/${locale}/books?search={search_term_string}`,
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+      </head>
+      <body className="antialiased">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>{children}</ThemeProvider>
         </NextIntlClientProvider>
