@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -17,8 +18,6 @@ export async function generateMetadata({
     namespace: "categories",
   });
 
-  const baseUrl = "https://sahif.vercel.app";
-
   let pageTitle = t("pages.books");
   if (search) pageTitle = search;
   else if (category) {
@@ -33,7 +32,8 @@ export async function generateMetadata({
   const query = new URLSearchParams();
   if (search) query.set("search", search);
   else if (category) query.set("category", category);
-  const url = `${baseUrl}/${locale}/books${query.toString() ? `?${query}` : ""}`;
+  const queryString = query.toString();
+  const url = `${SITE_URL}/${locale}/books${queryString ? `?${queryString}` : ""}`;
 
   return {
     title,
@@ -41,7 +41,7 @@ export async function generateMetadata({
     applicationName: "sahif",
     alternates: { canonical: url },
     robots: {
-      index: !search, 
+      index: !search,
       follow: true,
       googleBot: {
         index: !search,
@@ -55,13 +55,13 @@ export async function generateMetadata({
       siteName: "sahif",
       locale,
       type: "website",
-      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
+      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
       title,
       description: t("description"),
-      images: [`${baseUrl}/logo.png`],
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }

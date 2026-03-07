@@ -10,6 +10,7 @@ import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -20,33 +21,31 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale });
 
-  const baseUrl = "https://sahif.vercel.app";
-
   return {
-    metadataBase: new URL(baseUrl),
+    metadataBase: new URL(SITE_URL),
     title: "sahif",
     description: t("description"),
     applicationName: "sahif",
     alternates: {
-      canonical: `${baseUrl}/${locale}`,
+      canonical: `${SITE_URL}/${locale}`,
       languages: {
-        uz: `${baseUrl}/uz`,
-        ru: `${baseUrl}/ru`,
-        en: `${baseUrl}/en`,
-        "x-default": `${baseUrl}/uz`,
+        uz: `${SITE_URL}/uz`,
+        ru: `${SITE_URL}/ru`,
+        en: `${SITE_URL}/en`,
+        "x-default": `${SITE_URL}/uz`,
       },
     },
 
     openGraph: {
       title: "sahif",
       description: t("description"),
-      url: `${baseUrl}/${locale}`,
+      url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
       locale,
       type: "website",
       images: [
         {
-          url: `${baseUrl}/logo.png`,
+          url: `${SITE_URL}/logo.png`,
           width: 512,
           height: 512,
           alt: "sahif logo",
@@ -57,7 +56,7 @@ export async function generateMetadata({
       card: "summary",
       title: "sahif",
       description: t("description"),
-      images: [`${baseUrl}/logo.png`],
+      images: [`${SITE_URL}/logo.png`],
     },
     robots: {
       index: true,
@@ -117,10 +116,10 @@ export default async function LocaleLayout({
     "@type": "WebSite",
     name: "sahif",
     alternateName: ["Sahif", "sahif.vercel.app"],
-    url: `https://sahif.vercel.app/${locale}`,
+    url: `${SITE_URL}/${locale}`,
     potentialAction: {
       "@type": "SearchAction",
-      target: `https://sahif.vercel.app/${locale}/books?search={search_term_string}`,
+      target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

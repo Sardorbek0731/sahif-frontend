@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -9,8 +10,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "notFound" });
-
-  const baseUrl = "https://sahif.vercel.app";
 
   return {
     title: `404 | sahif`,
@@ -23,14 +22,14 @@ export async function generateMetadata({
     openGraph: {
       title: `404 | sahif`,
       description: t("description"),
-      url: `${baseUrl}/${locale}/404`,
-      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
+      url: `${SITE_URL}/${locale}/404`,
+      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       title: `404 | sahif`,
       card: "summary",
       description: t("description"),
-      images: [`${baseUrl}/logo.png`],
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
+import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -11,8 +12,6 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const t = await getTranslations({ locale });
-
-  const baseUrl = "https://sahif.vercel.app";
   const title = `sahif | ${t("home.metadata.title")}`;
 
   return {
@@ -20,28 +19,36 @@ export async function generateMetadata({
     description: t("description"),
     applicationName: "sahif",
     alternates: {
-      canonical: `${baseUrl}/${locale}`,
+      canonical: `${SITE_URL}/${locale}`,
       languages: {
-        uz: `${baseUrl}/uz`,
-        ru: `${baseUrl}/ru`,
-        en: `${baseUrl}/en`,
-        "x-default": `${baseUrl}/uz`,
+        uz: `${SITE_URL}/uz`,
+        ru: `${SITE_URL}/ru`,
+        en: `${SITE_URL}/en`,
+        "x-default": `${SITE_URL}/uz`,
       },
     },
     openGraph: {
       title: title,
       description: t("description"),
-      url: `${baseUrl}/${locale}`,
+      url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
       locale: locale,
       type: "website",
-      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
+      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
       title,
       description: t("description"),
-      images: [`${baseUrl}/logo.png`],
+      images: [`${SITE_URL}/logo.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
   };
 }

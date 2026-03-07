@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -7,29 +8,29 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+
   const t = await getTranslations({ locale });
-  const baseUrl = "https://sahif.vercel.app";
   const title = `${t("pages.wishlist")} | sahif`;
 
   return {
     title,
     description: t("description"),
     applicationName: "sahif",
-    robots: { index: false, follow: false }, 
+    robots: { index: false, follow: false },
     openGraph: {
       title,
       description: t("description"),
-      url: `${baseUrl}/${locale}/wishlist`,
+      url: `${SITE_URL}/${locale}/wishlist`,
       siteName: "sahif",
       locale,
       type: "website",
-      images: [{ url: `${baseUrl}/logo.png`, width: 512, height: 512 }],
+      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
     },
     twitter: {
       card: "summary",
       title,
       description: t("description"),
-      images: [`${baseUrl}/logo.png`],
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }
