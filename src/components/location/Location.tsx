@@ -86,7 +86,7 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-30 bg-card p-4 rounded-lg">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-25 bg-card p-4 rounded-lg">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}

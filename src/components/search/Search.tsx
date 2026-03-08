@@ -83,7 +83,8 @@ export default function Search() {
       </form>
 
       {isFocused && (
-        <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-50">
+        <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-25">
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           {history.length > 0 && (
             <div className="mb-6">
               <span className="flex items-center mb-4 opacity-50">
