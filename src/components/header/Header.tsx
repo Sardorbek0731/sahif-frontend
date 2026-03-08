@@ -4,11 +4,22 @@ import ThemeToggle from "../theme/Theme";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-export default function Header() {
+export default function Header({
+  initialTheme,
+  initialLocationId,
+  initialConfirmed,
+}: {
+  initialTheme: string;
+  initialLocationId: string;
+  initialConfirmed: boolean;
+}) {
   return (
     <header className="my-container row-between py-4">
       <div className="flex items-center">
-        <Location />
+        <Location
+          initialLocationId={initialLocationId}
+          initialConfirmed={initialConfirmed}
+        />
 
         <Link href="tel:+998915723949">
           <Button
@@ -22,7 +33,7 @@ export default function Header() {
       </div>
 
       <div className="flex items-center">
-        <ThemeToggle />
+        <ThemeToggle initialTheme={initialTheme} />
 
         <LangSwitcher />
       </div>

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
 import { SITE_URL } from "@/constants";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({
   params,
@@ -53,10 +54,30 @@ export async function generateMetadata({
   };
 }
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = await cookies();
+
+  const themeCookie = cookieStore.get("theme")?.value || "system";
+  const resolvedThemeCookie = cookieStore.get("theme-resolved")?.value;
+
+  let initialTheme = themeCookie;
+  if (themeCookie === "system" && resolvedThemeCookie) {
+    initialTheme = resolvedThemeCookie;
+  } else if (themeCookie === "system") {
+    initialTheme = "";
+  }
+
+  const locCookie = cookieStore.get("location-id")?.value || "tashkent-city";
+  const confirmedCookie =
+    cookieStore.get("location-confirmed")?.value === "true";
+
   return (
     <>
-      <Header />
+      <Header
+        initialTheme={initialTheme}
+        initialLocationId={locCookie}
+        initialConfirmed={confirmedCookie}
+      />
       <Navbar />
     </>
   );

@@ -13,7 +13,13 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
 
-export default function Location() {
+export default function Location({
+  initialLocationId,
+  initialConfirmed,
+}: {
+  initialLocationId: string;
+  initialConfirmed: boolean;
+}) {
   const t = useTranslations("");
 
   const { selectedId, setSelectedId, isConfirmed, confirmLocation } =
@@ -34,11 +40,12 @@ export default function Location() {
   }, []);
 
   useEffect(() => {
-    if (mounted && !isConfirmed) {
+    const confirmed = mounted ? isConfirmed : initialConfirmed;
+    if (mounted && !confirmed) {
       const timer = setTimeout(() => setShowPrompt(true), 1000);
       return () => clearTimeout(timer);
     }
-  }, [mounted, isConfirmed]);
+  }, [mounted, isConfirmed, initialConfirmed]);
 
   useEffect(() => {
     if (isOpen) {
@@ -62,10 +69,8 @@ export default function Location() {
       .includes(deferredSearch.toLowerCase()),
   );
 
-  const currentRegion = regions.find((r) => r.id === selectedId) || regions[0];
-
-  if (!mounted)
-    return <Button className="w-34 h-10 bg-card hover:bg-card-hover mr-4" />;
+  const currentId = mounted ? selectedId : initialLocationId;
+  const currentRegion = regions.find((r) => r.id === currentId) || regions[0];
 
   return (
     <div className="relative mr-4">
