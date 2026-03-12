@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { setLocationCookies, confirmLocationCookie } from "@/lib/cookies";
 
 interface LocationState {
   selectedId: string;
@@ -8,21 +8,15 @@ interface LocationState {
   confirmLocation: () => void;
 }
 
-export const useLocationStore = create<LocationState>()(
-  persist(
-    (set) => ({
-      selectedId: "tashkent-city",
-      isConfirmed: false,
-      setSelectedId: (id) => {
-        set({ selectedId: id, isConfirmed: true });
-        document.cookie = `location-id=${id}; path=/; max-age=31536000; SameSite=Lax`;
-        document.cookie = `location-confirmed=true; path=/; max-age=31536000; SameSite=Lax`;
-      },
-      confirmLocation: () => {
-        set({ isConfirmed: true });
-        document.cookie = `location-confirmed=true; path=/; max-age=31536000; SameSite=Lax`;
-      },
-    }),
-    { name: "location-storage" },
-  ),
-);
+export const useLocationStore = create<LocationState>()((set) => ({
+  selectedId: "tashkent-city",
+  isConfirmed: false,
+  setSelectedId: (id) => {
+    set({ selectedId: id, isConfirmed: true });
+    setLocationCookies(id);
+  },
+  confirmLocation: () => {
+    set({ isConfirmed: true });
+    confirmLocationCookie();
+  },
+}));

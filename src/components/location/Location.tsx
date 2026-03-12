@@ -54,10 +54,10 @@ export default function Location({
         if (e.key === "Escape") setIsOpen(false);
       };
       window.addEventListener("keydown", handleEsc);
-      setTimeout(() => inputRef.current?.focus(), 100);
+      requestAnimationFrame(() => inputRef.current?.focus());
 
       return () => {
-        document.body.style.overflow = "unset";
+        document.body.style.overflow = "";
         window.removeEventListener("keydown", handleEsc);
       };
     }
@@ -86,7 +86,7 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-25 bg-card p-4 rounded-lg">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}
@@ -160,7 +160,7 @@ export default function Location({
                   <Button
                     key={region.id}
                     className={`w-full justify-between h-10 px-4 ${
-                      selectedId === region.id
+                      currentId === region.id
                         ? "text-primary bg-card"
                         : "hover:bg-card"
                     }`}
@@ -171,7 +171,7 @@ export default function Location({
                     }}
                   >
                     <span>{t(`regions.${region.key}`)}</span>
-                    {selectedId === region.id && (
+                    {currentId === region.id && (
                       <Icon name="location" size={18} />
                     )}
                   </Button>

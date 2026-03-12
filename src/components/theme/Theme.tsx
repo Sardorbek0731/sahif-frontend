@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState, startTransition } from "react";
 import { Button } from "../ui/button";
+import { setThemeCookies } from "@/lib/cookies";
 
 export default function ThemeToggle({
   initialTheme,
@@ -20,8 +21,7 @@ export default function ThemeToggle({
 
   useEffect(() => {
     if (theme && resolvedTheme) {
-      document.cookie = `theme=${theme}; path=/; max-age=${60 * 60 * 24 * 365}`;
-      document.cookie = `theme-resolved=${resolvedTheme}; path=/; max-age=${60 * 60 * 24 * 365}`;
+      setThemeCookies(theme, resolvedTheme);
     }
   }, [theme, resolvedTheme]);
 
@@ -31,6 +31,8 @@ export default function ThemeToggle({
 
   const currentTheme = mounted ? resolvedTheme : initialTheme;
 
+  const targetTheme = currentTheme === "dark" ? "light" : "dark";
+
   return (
     <Button
       leftIcon={currentTheme === "dark" ? "sun" : "moon"}
@@ -38,7 +40,7 @@ export default function ThemeToggle({
       iconSize={20}
       onClick={toggleTheme}
       className="justify-center w-10 h-10 mr-4 bg-card hover:bg-card-hover"
-      aria-label={`Switch to ${mounted ? (resolvedTheme === "dark" ? "light" : "dark") : initialTheme === "dark" ? "light" : "dark"} mode`}
+      aria-label={`Switch to ${targetTheme} mode`}
     />
   );
 }

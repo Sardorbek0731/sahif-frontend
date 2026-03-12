@@ -8,6 +8,17 @@ import { Logo } from "@/data/Logo";
 export default function Navbar() {
   const tPages = useTranslations("pages");
 
+  const navLinks = [
+    {
+      href: "/wishlist",
+      icon: "wishlist",
+      label: tPages("wishlist"),
+      mr: true,
+    },
+    { href: "/cart", icon: "cart", label: tPages("cart"), mr: true },
+    { href: "/login", icon: "login", label: tPages("login"), mr: false },
+  ] as const;
+
   return (
     <nav className="my-container row-between">
       <Link className="mr-4 flex items-center" href="/">
@@ -19,32 +30,16 @@ export default function Navbar() {
       <Search />
 
       <div className="flex items-center">
-        <Link href="/wishlist" className="mr-4">
-          <Button
-            leftIcon="wishlist"
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
-            {tPages("wishlist")}
-          </Button>
-        </Link>
-
-        <Link href="/cart" className="mr-4">
-          <Button
-            leftIcon="cart"
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
-            {tPages("cart")}
-          </Button>
-        </Link>
-
-        <Link href="/login">
-          <Button
-            leftIcon="login"
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
-            {tPages("login")}
-          </Button>
-        </Link>
+        {navLinks.map(({ href, icon, label, mr }) => (
+          <Link key={href} href={href} className={mr ? "mr-4" : ""}>
+            <Button
+              leftIcon={icon}
+              className="bg-card hover:bg-card-hover h-10 px-4"
+            >
+              {label}
+            </Button>
+          </Link>
+        ))}
       </div>
     </nav>
   );

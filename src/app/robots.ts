@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/constants";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,15 +8,15 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/cart",
-          "/login",
-          "/wishlist",
-          "/404",
+          "/*/cart",
+          "/*/login",
+          "/*/wishlist",
+          "/*/404",
           "/*?search=",
           "/*&search=",
         ],
       },
     ],
-    sitemap: "https://sahif.vercel.app/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

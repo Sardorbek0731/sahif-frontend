@@ -4,6 +4,8 @@ import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
 import { SITE_URL } from "@/constants";
 import { cookies } from "next/headers";
+import { routing } from "@/i18n/routing";
+import { getInitialTheme } from "@/lib/theme";
 
 export async function generateMetadata({
   params,
@@ -22,18 +24,18 @@ export async function generateMetadata({
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
       languages: {
-        uz: `${SITE_URL}/uz`,
-        ru: `${SITE_URL}/ru`,
-        en: `${SITE_URL}/en`,
+        ...Object.fromEntries(
+          routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}`]),
+        ),
         "x-default": `${SITE_URL}/uz`,
       },
     },
     openGraph: {
-      title: title,
+      title,
       description: t("description"),
       url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
-      locale: locale,
+      locale,
       type: "website",
       images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
     },
@@ -56,17 +58,7 @@ export async function generateMetadata({
 
 export default async function Home() {
   const cookieStore = await cookies();
-
-  const themeCookie = cookieStore.get("theme")?.value || "system";
-  const resolvedThemeCookie = cookieStore.get("theme-resolved")?.value;
-
-  let initialTheme = themeCookie;
-  if (themeCookie === "system" && resolvedThemeCookie) {
-    initialTheme = resolvedThemeCookie;
-  } else if (themeCookie === "system") {
-    initialTheme = "";
-  }
-
+  const initialTheme = getInitialTheme(cookieStore);
   const locCookie = cookieStore.get("location-id")?.value || "tashkent-city";
   const confirmedCookie =
     cookieStore.get("location-confirmed")?.value === "true";

@@ -12,6 +12,8 @@ export default function Categories() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!open) return;
+
     function handleClickOutside(e: MouseEvent) {
       if (
         wrapperRef.current &&
@@ -32,7 +34,7 @@ export default function Categories() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEsc);
     };
-  }, []);
+  }, [open]);
 
   return (
     <div className="relative" ref={wrapperRef}>
@@ -51,7 +53,7 @@ export default function Categories() {
             {categoryGroups.map((group) => (
               <div key={group.name}>
                 <h3 className="font-semibold mb-3">
-                  {"- " + t(`groups.${group.name}`)}
+                  {`- ${t(`groups.${group.name}`)}`}
                 </h3>
 
                 <ul className="space-y-2">

@@ -18,6 +18,8 @@ export default function LanguageSwitcher() {
     languages.find((l) => l.code === locale) || languages[0];
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -38,7 +40,7 @@ export default function LanguageSwitcher() {
       document.removeEventListener("pointerdown", handleClickOutside);
       document.removeEventListener("keydown", handleEsc);
     };
-  }, []);
+  }, [isOpen]);
 
   const changeLanguage = (newLocale: LanguageCode) => {
     if (newLocale === locale) return;
@@ -61,7 +63,7 @@ export default function LanguageSwitcher() {
       </Button>
 
       {isOpen && (
-        <div className="absolute bg-card rounded-lg mt-4 pt-2 pb-1 w-full left-0 z-25">
+        <div className="absolute bg-card rounded-lg mt-4 pt-2 pb-1 w-full left-0 z-20">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           {languages
             .filter((lang) => lang.code !== locale)
