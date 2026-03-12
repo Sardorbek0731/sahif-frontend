@@ -22,8 +22,13 @@ export default function Location({
 }) {
   const t = useTranslations("");
 
-  const { selectedId, setSelectedId, isConfirmed, confirmLocation } =
-    useLocationStore();
+  const {
+    selectedId,
+    setSelectedId,
+    isConfirmed,
+    confirmLocation,
+    initialize,
+  } = useLocationStore();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -38,6 +43,10 @@ export default function Location({
       setMounted(true);
     });
   }, []);
+
+  useEffect(() => {
+    initialize(initialLocationId, initialConfirmed);
+  }, [initialLocationId, initialConfirmed, initialize]);
 
   useEffect(() => {
     const confirmed = mounted ? isConfirmed : initialConfirmed;
@@ -121,7 +130,7 @@ export default function Location({
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 row-center bg-black/50 p-4"
+          className="fixed inset-0 z-40 row-center bg-black/50 p-4"
           onClick={() => setIsOpen(false)}
         >
           <div

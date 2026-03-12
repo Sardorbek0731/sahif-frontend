@@ -6,6 +6,7 @@ interface LocationState {
   isConfirmed: boolean;
   setSelectedId: (id: string) => void;
   confirmLocation: () => void;
+  initialize: (locationId: string, confirmed: boolean) => void;
 }
 
 export const useLocationStore = create<LocationState>()((set) => ({
@@ -18,5 +19,8 @@ export const useLocationStore = create<LocationState>()((set) => ({
   confirmLocation: () => {
     set({ isConfirmed: true });
     confirmLocationCookie();
+  },
+  initialize: (locationId, confirmed) => {
+    set({ selectedId: locationId, isConfirmed: confirmed });
   },
 }));

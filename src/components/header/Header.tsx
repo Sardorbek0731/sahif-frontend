@@ -1,7 +1,6 @@
 import LangSwitcher from "../lang/Lang";
 import Location from "@/components/location/Location";
 import ThemeToggle from "../theme/Theme";
-import { Link } from "@/i18n/routing";
 import { Button } from "../ui/button";
 
 export default function Header({
@@ -21,7 +20,7 @@ export default function Header({
           initialConfirmed={initialConfirmed}
         />
 
-        <Link href="tel:+998915723949">
+        <a href="tel:+998915723949">
           <Button
             leftIcon="callCenter"
             className="bg-card hover:bg-card-hover h-10 px-4"
@@ -29,7 +28,7 @@ export default function Header({
             +998 91 572 3949 |{"\u00A0"}
             <span className="text-primary">9:00 - 22:00</span>
           </Button>
-        </Link>
+        </a>
       </div>
 
       <div className="flex items-center">
