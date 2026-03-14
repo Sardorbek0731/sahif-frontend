@@ -6,8 +6,6 @@ export const books: readonly Book[] = [
     slug: "otkan-kunlar",
     title: "O'tkan kunlar",
     author: "Abdulla Qodiriy",
-    description:
-      "O'zbek adabiyotining birinchi romani. Otabek va Kumushning muhabbat qissasi orqali XIX asr o'zbek jamiyatining hayoti tasvirlanadi.",
     categorySlugs: ["classic-literature"],
 
     price: {
@@ -55,8 +53,6 @@ export const books: readonly Book[] = [
     slug: "mehrobdan-chayon",
     title: "Mehrobdan chayon",
     author: "Abdulla Qodiriy",
-    description:
-      "Qodiriyning ikkinchi romani. Anvar va Raʼnoning muhabbati, o'zbek jamiyatidagi adolatsizlik va zulm mavzularini chuqur yoritadi.",
     categorySlugs: ["classic-literature"],
 
     price: {
@@ -99,8 +95,6 @@ export const books: readonly Book[] = [
     slug: "sariq-devni-minib",
     title: "Sariq devni minib",
     author: "Xudoiberdi To'xtaboyev",
-    description:
-      "O'zbek bolalar adabiyotining eng sevimli asarlaridan biri. Hamid va uning sarguzashtlari orqali do'stlik, jasurlik va adolat mavzulari yoritiladi.",
     categorySlugs: ["children-books", "fantasy"],
 
     price: {
@@ -144,8 +138,6 @@ export const books: readonly Book[] = [
     title: "Yuz yillik yolg'izlik",
     author: "Gabriel García Márquez",
     translator: "Hamid Ismoilov",
-    description:
-      "Nobel mukofoti sohibi Marquezning magnum opusi. Buendiya oilasining yetti avlod davomidagi tarixi orqali Lotin Amerikasining sehrli realizm uslubida tasvirlangan epik romani.",
     categorySlugs: [
       "classic-literature",
       "historical-fiction",
@@ -194,8 +186,6 @@ export const books: readonly Book[] = [
     title: "Alkimyogar",
     author: "Paulo Coelho",
     translator: "Sardor Mirzayev",
-    description:
-      "Dunyoning eng ko'p sotilgan kitoblaridan biri. Yosh cho'pon Santiyagoning o'z taqdiriga erishish yo'lidagi sarguzashtlari orqali hayotning mazmuni va orzular kuchi haqida falsafiy roman.",
     categorySlugs: ["contemporary-fiction", "philosophy", "motivation"],
 
     price: {

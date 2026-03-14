@@ -52,7 +52,6 @@ export interface Book {
   readonly title: string; // Official book title as shown on the cover
   readonly author: string; // Name of the primary author
   readonly translator?: string; // Translator's name for international books
-  readonly description: string; // Detailed summary or marketing blurb
   readonly categorySlugs: CategorySlug[]; // List of categories the book belongs to
 
   // Pricing

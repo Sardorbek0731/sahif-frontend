@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 import { type Locale, routing } from "@/i18n/routing";
 import { books } from "@/data/books";
@@ -24,8 +25,10 @@ export async function generateMetadata({
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
+  const t = await getTranslations({ locale, namespace: "books" });
+
   const title = `${book.title} | sahif`;
-  const description = book.description;
+  const description = t(`${slug}.description`);
 
   return {
     title,
@@ -59,9 +62,13 @@ export default async function BookPage({
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
+
+  const t = await getTranslations({ locale, namespace: "books" });
+
+  const description = t(`${slug}.description`);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -112,7 +119,7 @@ export default async function BookPage({
           <div className="flex-1">
             <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
             <p className="text-foreground/70 mb-6">{book.author}</p>
-            <p className="mb-8">{book.description}</p>
+            <p className="mb-8">{description}</p>
 
             <div className="flex items-center gap-4 mb-6">
               <span className="text-2xl font-bold text-primary">

@@ -224,5 +224,23 @@
         "description": "Traditions, customs, and cultural heritage"
       }
     }
+  },
+
+  "books": {
+    "otkan-kunlar": {
+      "description": "The first Uzbek novel. It depicts 19th-century Uzbek society through the tragic love story of Otabek and Kumush."
+    },
+    "mehrobdan-chayon": {
+      "description": "Qodiriy's second novel. It explores themes of social injustice and tyranny through the love of Anvar and Ra'no."
+    },
+    "sariq-devni-minib": {
+      "description": "One of the most beloved works of Uzbek children's literature, highlighting friendship and courage through Hamid's adventures."
+    },
+    "hundred-years-of-solitude": {
+      "description": "Marquez's magnum opus. An epic tale of seven generations of the Buendía family, told in the style of magical realism."
+    },
+    "the-alchemist": {
+      "description": "One of the world's best-selling books. A philosophical novel about the meaning of life and the power of dreams, following Santiago's journey."
+    }
   }
 }
