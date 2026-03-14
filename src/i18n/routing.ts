@@ -4,7 +4,6 @@ export const routing = {
   locales: ["uz", "ru", "en"],
   defaultLocale: "uz",
   localePrefix: "always",
-  localeDetection: true,
 } as const;
 
 export const { Link, redirect, usePathname, useRouter } =

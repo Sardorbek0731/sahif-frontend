@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
+import { routing } from "@/i18n/routing";
 
 export async function generateMetadata({
   params,
@@ -41,8 +42,18 @@ export async function generateMetadata({
   return {
     title,
     description,
-    applicationName: "sahif",
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((loc) => [
+            loc,
+            `${SITE_URL}/${loc}/books${category ? `?category=${category}` : ""}`,
+          ]),
+        ),
+        "x-default": `${SITE_URL}/${routing.defaultLocale}/books`,
+      },
+    },
     robots: {
       index: !search,
       follow: true,
@@ -56,7 +67,7 @@ export async function generateMetadata({
       description,
       url,
       siteName: "sahif",
-      locale,
+      locale: OG_LOCALES[locale] ?? locale,
       type: "website",
       images: [
         {

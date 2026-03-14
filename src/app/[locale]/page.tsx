@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
-import { SITE_URL } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 
 export async function generateMetadata({
@@ -23,7 +23,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    applicationName: "sahif",
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
       languages: {
@@ -38,7 +37,7 @@ export async function generateMetadata({
       description,
       url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
-      locale,
+      locale: OG_LOCALES[locale] ?? locale,
       type: "website",
       images: [
         {
@@ -54,14 +53,6 @@ export async function generateMetadata({
       title,
       description,
       images: [`${SITE_URL}/logo.png`],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
     },
   };
 }

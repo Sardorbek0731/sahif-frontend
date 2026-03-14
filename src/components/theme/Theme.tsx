@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 import { setThemeCookies } from "@/lib/cookies";
-import { subscribe, isMountedTrue, isMountedFalse } from "@/lib/hooks";
+import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
 
 export default function ThemeToggle({
   initialTheme,
@@ -16,8 +16,8 @@ export default function ThemeToggle({
   const { theme, setTheme, resolvedTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     subscribe,
-    isMountedTrue,
-    isMountedFalse,
+    getClientSnapshot,
+    getServerSnapshot,
   );
 
   useEffect(() => {

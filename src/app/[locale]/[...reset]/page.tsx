@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
 
 export async function generateMetadata({
   params,
@@ -20,7 +20,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    applicationName: "sahif",
     robots: {
       index: false,
       follow: true,
@@ -33,6 +32,9 @@ export async function generateMetadata({
       title,
       description,
       url: `${SITE_URL}/${locale}/404`,
+      siteName: "sahif",
+      locale: OG_LOCALES[locale] ?? locale,
+      type: "website",
       images: [
         {
           url: `${SITE_URL}/logo.png`,

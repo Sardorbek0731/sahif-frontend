@@ -10,7 +10,12 @@ import { getMessages, getTranslations } from "next-intl/server";
 
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
-import { SITE_URL, GOOGLE_VERIFICATION } from "@/constants";
+import {
+  SITE_URL,
+  GOOGLE_VERIFICATION,
+  SITE_HOSTNAME,
+  OG_LOCALES,
+} from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 
 export async function generateMetadata({
@@ -45,7 +50,7 @@ export async function generateMetadata({
       description,
       url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
-      locale,
+      locale: OG_LOCALES[locale] ?? locale,
       type: "website",
       images: [
         {
@@ -107,7 +112,7 @@ export default async function LocaleLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "sahif",
-    alternateName: ["Sahif", new URL(SITE_URL).hostname],
+    alternateName: ["Sahif", SITE_HOSTNAME],
     url: `${SITE_URL}/${locale}`,
     potentialAction: {
       "@type": "SearchAction",

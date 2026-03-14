@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { SITE_URL } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
 
 export function generatePrivateMetadata({
   title,
@@ -16,7 +16,6 @@ export function generatePrivateMetadata({
   return {
     title,
     description,
-    applicationName: "sahif",
     robots: {
       index: false,
       follow: false,
@@ -27,7 +26,7 @@ export function generatePrivateMetadata({
       description,
       url,
       siteName: "sahif",
-      locale,
+      locale: OG_LOCALES[locale] ?? locale,
       type: "website",
       images: [
         {

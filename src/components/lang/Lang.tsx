@@ -57,6 +57,8 @@ export default function LanguageSwitcher() {
           isOpen ? "rotate-180" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
         className="justify-between px-4 h-10 bg-card hover:bg-card-hover"
       >
         <Icon name={currentLanguage.code} size={16} className="mr-2" />
@@ -64,12 +66,16 @@ export default function LanguageSwitcher() {
       </Button>
 
       {isOpen && (
-        <div className="absolute bg-card rounded-lg mt-4 pt-2 pb-1 w-full left-0 z-20">
+        <div
+          role="listbox"
+          className="absolute bg-card rounded-lg mt-4 pt-2 pb-1 w-full left-0 z-20"
+        >
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
           {languages
             .filter((lang) => lang.code !== locale)
             .map((lang) => (
               <Button
+                role="option"
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
                 className="w-full mb-1 px-4 h-10 hover:bg-card-hover"

@@ -13,7 +13,7 @@ import { regions } from "@/data/regions";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
-import { subscribe, isMountedTrue, isMountedFalse } from "@/lib/hooks";
+import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
 
 export default function Location({
   initialLocationId,
@@ -41,8 +41,8 @@ export default function Location({
 
   const isMounted = useSyncExternalStore(
     subscribe,
-    isMountedTrue,
-    isMountedFalse,
+    getClientSnapshot,
+    getServerSnapshot,
   );
 
   useEffect(() => {
