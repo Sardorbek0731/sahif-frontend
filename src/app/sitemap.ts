@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { SITE_URL } from "@/constants";
+import { SITE_URL, HREFLANG_LOCALES } from "@/constants";
 import { routing } from "@/i18n/routing";
 
 import { books } from "@/data/books";
@@ -12,13 +12,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [...staticPages, ...bookPages];
 
   return pages.flatMap((page) => {
+    const bookCreatedAt = page.startsWith("/books/")
+      ? books.find((b) => `/books/${b.slug}` === page)?.createdAt
+      : undefined;
+
     const languages = Object.fromEntries(
-      locales.map((lang) => [lang, `${SITE_URL}/${lang}${page}`]),
+      locales.map((lang) => [
+        HREFLANG_LOCALES[lang],
+        `${SITE_URL}/${lang}${page}`,
+      ]),
     );
 
     return locales.map((locale) => ({
       url: `${SITE_URL}/${locale}${page}`,
-      lastModified: new Date(),
+      lastModified: bookCreatedAt ? new Date(bookCreatedAt) : new Date(),
       changeFrequency: "weekly" as const,
       priority: page === "" ? 1 : page === "/books" ? 0.8 : 0.6,
       alternates: {
