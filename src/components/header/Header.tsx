@@ -21,15 +21,15 @@ export default function Header({
           initialConfirmed={initialConfirmed}
         />
 
-        <a href={`tel:${PHONE_NUMBER}`}>
-          <Button
-            leftIcon="callCenter"
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
-            {PHONE_DISPLAY} |{"\u00A0"}
-            <span className="text-primary">{WORKING_HOURS}</span>
-          </Button>
-        </a>
+        <Button
+          as="a"
+          href={`tel:${PHONE_NUMBER}`}
+          leftIcon="callCenter"
+          className="bg-card hover:bg-card-hover h-10 px-4"
+        >
+          {PHONE_DISPLAY} |{"\u00A0"}
+          <span className="text-primary">{WORKING_HOURS}</span>
+        </Button>
       </div>
 
       <div className="flex items-center">

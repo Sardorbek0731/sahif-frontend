@@ -21,7 +21,7 @@ export default function Navbar() {
 
   return (
     <nav className="my-container row-between">
-      <Link className="mr-4 flex items-center" href="/">
+      <Link href="/" className="mr-4 flex items-center">
         <Logo className="mr-2 w-10 h-10" />
         <span className="font-asimovian text-2xl">sahif</span>
       </Link>
@@ -31,14 +31,15 @@ export default function Navbar() {
 
       <div className="flex items-center">
         {navLinks.map(({ href, icon, label, mr }) => (
-          <Link key={href} href={href} className={mr ? "mr-4" : ""}>
-            <Button
-              leftIcon={icon}
-              className="bg-card hover:bg-card-hover h-10 px-4"
-            >
-              {label}
-            </Button>
-          </Link>
+          <Button
+            as={Link}
+            key={href}
+            href={href}
+            leftIcon={icon}
+            className={`bg-card hover:bg-card-hover h-10 px-4 ${mr ? "mr-4" : ""}`}
+          >
+            {label}
+          </Button>
         ))}
       </div>
     </nav>

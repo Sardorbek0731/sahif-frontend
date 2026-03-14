@@ -3,5 +3,3 @@ export const languages = [
   { code: "en", name: "English" },
   { code: "ru", name: "Русский" },
 ] as const;
-
-export type LanguageCode = (typeof languages)[number]["code"];

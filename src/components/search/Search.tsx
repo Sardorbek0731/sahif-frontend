@@ -7,6 +7,7 @@ import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
 import { famousSubCategories } from "@/data/categories";
+import { SEARCH_HISTORY_KEY } from "@/constants";
 
 export default function Search() {
   const t = useTranslations();
@@ -19,7 +20,7 @@ export default function Search() {
   const [history, setHistory] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const saved = localStorage.getItem("search-history");
+      const saved = localStorage.getItem(SEARCH_HISTORY_KEY);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -33,8 +34,9 @@ export default function Search() {
         setIsFocused(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () =>
+      document.removeEventListener("pointerdown", handleClickOutside);
   }, [isFocused]);
 
   const handleSearch = (value: string) => {
@@ -46,7 +48,7 @@ export default function Search() {
       5,
     );
     setHistory(newHistory);
-    localStorage.setItem("search-history", JSON.stringify(newHistory));
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
 
     const query = new URLSearchParams();
     query.set("search", trimmed);
@@ -58,7 +60,7 @@ export default function Search() {
     e.stopPropagation();
     const updated = history.filter((h) => h !== item);
     setHistory(updated);
-    localStorage.setItem("search-history", JSON.stringify(updated));
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(updated));
   };
 
   return (

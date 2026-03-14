@@ -1,22 +1,31 @@
+import {
+  THEME_COOKIE,
+  THEME_RESOLVED_COOKIE,
+  LOCATION_ID_COOKIE,
+  LOCATION_CONFIRMED_COOKIE,
+} from "@/constants";
+
 const YEAR = 60 * 60 * 24 * 365;
 
 function getSecure() {
   return location.protocol === "https:" ? "; Secure" : "";
 }
 
-export function setLocationCookies(id: string) {
+function setCookie(name: string, value: string) {
   const secure = getSecure();
-  document.cookie = `location-id=${id}; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
-  document.cookie = `location-confirmed=true; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
+  document.cookie = `${name}=${value}; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
+}
+
+export function setLocationCookies(id: string) {
+  setCookie(LOCATION_ID_COOKIE, id);
+  setCookie(LOCATION_CONFIRMED_COOKIE, "true");
 }
 
 export function confirmLocationCookie() {
-  const secure = getSecure();
-  document.cookie = `location-confirmed=true; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
+  setCookie(LOCATION_CONFIRMED_COOKIE, "true");
 }
 
 export function setThemeCookies(theme: string, resolvedTheme: string) {
-  const secure = getSecure();
-  document.cookie = `theme=${theme}; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
-  document.cookie = `theme-resolved=${resolvedTheme}; path=/; max-age=${YEAR}; SameSite=Lax${secure}`;
+  setCookie(THEME_COOKIE, theme);
+  setCookie(THEME_RESOLVED_COOKIE, resolvedTheme);
 }

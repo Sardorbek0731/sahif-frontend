@@ -24,13 +24,8 @@ export default function Location({
 }) {
   const t = useTranslations();
 
-  const {
-    selectedId,
-    setSelectedId,
-    isConfirmed,
-    confirmLocation,
-    initialize,
-  } = useLocationStore();
+  const { selectedId, setSelectedId, confirmLocation, initialize } =
+    useLocationStore();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -47,14 +42,12 @@ export default function Location({
 
   useEffect(() => {
     initialize(initialLocationId, initialConfirmed);
-  }, [initialLocationId, initialConfirmed, initialize]);
-
-  useEffect(() => {
-    if (!isConfirmed) {
+    if (!initialConfirmed) {
       const timer = setTimeout(() => setShowPrompt(true), 1000);
       return () => clearTimeout(timer);
     }
-  }, [isConfirmed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (isOpen) {

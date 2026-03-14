@@ -41,7 +41,7 @@ export default function Categories() {
     <div className="relative" ref={wrapperRef}>
       <Button
         aria-expanded={open}
-        aria-haspopup="true"
+        aria-haspopup="menu"
         leftIcon={open ? "x" : "categories"}
         onClick={() => setOpen((prev) => !prev)}
         className="bg-card hover:bg-card-hover h-10 px-4 mr-4"

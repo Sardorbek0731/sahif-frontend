@@ -6,7 +6,13 @@ import { getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
-import { SITE_URL, OG_LOCALES, DEFAULT_LOCATION_ID } from "@/constants";
+import {
+  SITE_URL,
+  OG_LOCALES,
+  DEFAULT_LOCATION_ID,
+  LOCATION_ID_COOKIE,
+  LOCATION_CONFIRMED_COOKIE,
+} from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 import { generateAlternates } from "@/lib/seo";
 
@@ -56,9 +62,9 @@ export default async function Home() {
   const initialTheme = getInitialTheme(cookieStore);
 
   const locCookie =
-    cookieStore.get("location-id")?.value || DEFAULT_LOCATION_ID;
+    cookieStore.get(LOCATION_ID_COOKIE)?.value || DEFAULT_LOCATION_ID;
   const confirmedCookie =
-    cookieStore.get("location-confirmed")?.value === "true";
+    cookieStore.get(LOCATION_CONFIRMED_COOKIE)?.value === "true";
 
   return (
     <>

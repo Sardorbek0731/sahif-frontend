@@ -1,15 +1,17 @@
 import { ReactNode } from "react";
 import { Icon, IconName } from "./icons";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps<T extends React.ElementType = "button"> = {
+  as?: T;
   leftIcon?: IconName;
   rightIcon?: IconName;
   iconSize?: number;
   iconStyle?: string;
   children?: ReactNode;
-}
+} & React.ComponentPropsWithoutRef<T>;
 
-export const Button = ({
+export const Button = <T extends React.ElementType = "button">({
+  as,
   leftIcon,
   rightIcon,
   iconSize = 16,
@@ -17,9 +19,10 @@ export const Button = ({
   children,
   className = "",
   ...props
-}: ButtonProps) => {
+}: ButtonProps<T>) => {
+  const Component = as ?? "button";
   return (
-    <button
+    <Component
       className={`flex items-center rounded-lg transition-all cursor-pointer ${className}`}
       {...props}
     >
@@ -30,9 +33,7 @@ export const Button = ({
           className={`${iconStyle} ${children ? "mr-2" : ""}`}
         />
       )}
-
       {children}
-
       {rightIcon && (
         <Icon
           name={rightIcon}
@@ -40,6 +41,6 @@ export const Button = ({
           className={`${iconStyle} ${children ? "ml-2" : ""}`}
         />
       )}
-    </button>
+    </Component>
   );
 };

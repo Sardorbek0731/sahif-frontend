@@ -3,14 +3,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 
-import { useRouter, usePathname } from "@/i18n/routing";
-import { languages, LanguageCode } from "@/data/lang";
+import { type Locale, useRouter, usePathname } from "@/i18n/routing";
+import { languages } from "@/data/lang";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons";
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
-  const locale = useLocale() as LanguageCode;
+  const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
     };
   }, [isOpen]);
 
-  const changeLanguage = (newLocale: LanguageCode) => {
+  const changeLanguage = (newLocale: Locale) => {
     if (newLocale === locale) return;
     router.replace(pathname, { locale: newLocale, scroll: false });
     setIsOpen(false);
