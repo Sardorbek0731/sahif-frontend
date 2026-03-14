@@ -16,13 +16,13 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return generatePrivateMetadata({
-    title: `${t("pages.login")} | sahif`,
+    title: `${t("pages.cart")} | sahif`,
     description: t("description"),
-    url: `${SITE_URL}/${locale}/login`,
+    url: `${SITE_URL}/${locale}/cart`,
     locale,
   });
 }
 
-export default function Login() {
-  return <div>Login</div>;
+export default function Cart() {
+  return <main className="my-container">Cart</main>;
 }

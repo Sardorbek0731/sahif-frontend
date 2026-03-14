@@ -89,8 +89,8 @@ export default async function Books({
   else if (category) heading = `Kategoriya: ${category}`;
 
   return (
-    <div className="my-container py-10">
+    <main className="my-container py-10">
       <h1 className="text-3xl font-bold">{heading}</h1>
-    </div>
+    </main>
   );
 }
