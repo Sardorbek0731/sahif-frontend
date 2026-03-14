@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
 
 import { type Locale, routing } from "@/i18n/routing";
 import { books } from "@/data/books";
@@ -25,9 +24,8 @@ export async function generateMetadata({
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
-  const t = await getTranslations({ locale });
   const title = `${book.title} | sahif`;
-  const description = t("description");
+  const description = book.description;
 
   return {
     title,
@@ -74,6 +72,8 @@ export default async function BookPage({
       "@type": "AggregateRating",
       ratingValue: book.stats.rating,
       reviewCount: book.stats.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
     },
     datePublished: String(book.details.publishedYear),
     inLanguage: book.details.language[0],
