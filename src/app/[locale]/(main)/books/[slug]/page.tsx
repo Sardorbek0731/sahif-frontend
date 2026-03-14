@@ -70,10 +70,19 @@ export default async function BookPage({
     "@context": "https://schema.org",
     "@type": "Book",
     name: book.title,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: book.stats.rating,
+      reviewCount: book.stats.reviewCount,
+    },
+    datePublished: String(book.details.publishedYear),
+    inLanguage: book.details.language,
     author: { "@type": "Person", name: book.author },
     ...(book.details.isbn && { isbn: String(book.details.isbn) }),
     numberOfPages: book.details.pageCount,
-    ...(book.details.publisher && { publisher: book.details.publisher }),
+    ...(book.details.publisher && {
+      publisher: { "@type": "Organization", name: book.details.publisher },
+    }),
     ...(book.translator && {
       translator: { "@type": "Person", name: book.translator },
     }),
