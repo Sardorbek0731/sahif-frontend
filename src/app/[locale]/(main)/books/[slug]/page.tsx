@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { type Locale, routing } from "@/i18n/routing";
@@ -41,10 +42,8 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: "sahif logo",
+          url: `${SITE_URL}${book.images.cover}`,
+          alt: book.title,
         },
       ],
     },
@@ -52,7 +51,7 @@ export async function generateMetadata({
       card: "summary",
       title,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: [`${SITE_URL}${book.images.cover}`],
     },
   };
 }
@@ -70,13 +69,14 @@ export default async function BookPage({
     "@context": "https://schema.org",
     "@type": "Book",
     name: book.title,
+    image: `${SITE_URL}${book.images.cover}`,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: book.stats.rating,
       reviewCount: book.stats.reviewCount,
     },
     datePublished: String(book.details.publishedYear),
-    inLanguage: book.details.language,
+    inLanguage: book.details.language[0],
     author: { "@type": "Person", name: book.author },
     ...(book.details.isbn && { isbn: String(book.details.isbn) }),
     numberOfPages: book.details.pageCount,
@@ -96,6 +96,19 @@ export default async function BookPage({
       />
       <main className="my-container py-10">
         <div className="flex gap-10">
+          <div className="w-64 shrink-0">
+            <div className="relative aspect-3/4 w-full rounded-lg overflow-hidden">
+              <Image
+                src={book.images.cover}
+                alt={book.title}
+                fill
+                className="object-cover"
+                priority
+                sizes="256px"
+              />
+            </div>
+          </div>
+
           <div className="flex-1">
             <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
             <p className="text-foreground/70 mb-6">{book.author}</p>

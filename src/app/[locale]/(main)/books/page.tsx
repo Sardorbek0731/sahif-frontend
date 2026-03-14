@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
@@ -103,15 +104,26 @@ export default async function Books({
       <div className="grid grid-cols-4 gap-6">
         {filtered.map((book) => (
           <Link key={book.id} href={`/books/${book.slug}`}>
-            <div className="bg-card p-4 rounded-lg hover:bg-card-hover transition-all">
-              <h2 className="font-bold">{book.title}</h2>
-              <p className="text-foreground/70">{book.author}</p>
-              <p className="text-primary mt-2">
-                {(
-                  book.price.amount - (book.price.discountAmount ?? 0)
-                ).toLocaleString()}{" "}
-                {book.price.currency}
-              </p>
+            <div className="bg-card rounded-lg hover:bg-card-hover transition-all overflow-hidden">
+              <div className="relative aspect-3/4 w-full">
+                <Image
+                  src={book.images.cover}
+                  alt={book.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+              </div>
+              <div className="p-4">
+                <h2 className="font-bold">{book.title}</h2>
+                <p className="text-foreground/70">{book.author}</p>
+                <p className="text-primary mt-2">
+                  {(
+                    book.price.amount - (book.price.discountAmount ?? 0)
+                  ).toLocaleString()}{" "}
+                  {book.price.currency}
+                </p>
+              </div>
             </div>
           </Link>
         ))}
