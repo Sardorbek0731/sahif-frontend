@@ -3,9 +3,13 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/constants";
 import { routing } from "@/i18n/routing";
 
+import { books } from "@/data/books";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = routing.locales;
-  const pages = ["", "/books"];
+  const staticPages = ["", "/books"];
+  const bookPages = books.map((book) => `/books/${book.slug}`);
+  const pages = [...staticPages, ...bookPages];
 
   return pages.flatMap((page) => {
     const languages = Object.fromEntries(
@@ -16,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/${locale}${page}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: page === "" ? 1 : 0.8,
+      priority: page === "" ? 1 : page === "/books" ? 0.8 : 0.6,
       alternates: {
         languages: {
           ...languages,
