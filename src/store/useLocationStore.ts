@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { setLocationCookies, confirmLocationCookie } from "@/lib/cookies";
+import { DEFAULT_LOCATION_ID } from "@/constants";
 
 interface LocationState {
   selectedId: string;
@@ -10,7 +11,7 @@ interface LocationState {
 }
 
 export const useLocationStore = create<LocationState>()((set) => ({
-  selectedId: "tashkent-city",
+  selectedId: DEFAULT_LOCATION_ID,
   isConfirmed: false,
   setSelectedId: (id) => {
     set({ selectedId: id, isConfirmed: true });
@@ -20,7 +21,6 @@ export const useLocationStore = create<LocationState>()((set) => ({
     set({ isConfirmed: true });
     confirmLocationCookie();
   },
-  initialize: (locationId, confirmed) => {
-    set({ selectedId: locationId, isConfirmed: confirmed });
-  },
+  initialize: (locationId, confirmed) =>
+    set({ selectedId: locationId, isConfirmed: confirmed }),
 }));

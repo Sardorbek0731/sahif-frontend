@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
+import { type Locale } from "@/i18n/routing";
 
 export function generatePrivateMetadata({
   title,
@@ -11,7 +12,7 @@ export function generatePrivateMetadata({
   title: string;
   description: string;
   url: string;
-  locale: string;
+  locale: Locale;
 }): Metadata {
   return {
     title,

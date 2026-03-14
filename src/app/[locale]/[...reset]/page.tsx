@@ -4,11 +4,12 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
+import { type Locale } from "@/i18n/routing";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
 

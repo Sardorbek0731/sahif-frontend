@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
-import { routing } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
 import {
   SITE_URL,
@@ -17,11 +17,12 @@ import {
   OG_LOCALES,
 } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
+import { generateAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
 
@@ -35,16 +36,7 @@ export async function generateMetadata({
     title,
     description,
     applicationName: "sahif",
-    alternates: {
-      canonical: `${SITE_URL}/${locale}`,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}`]),
-        ),
-        "x-default": `${SITE_URL}/${routing.defaultLocale}`,
-      },
-    },
-
+    alternates: generateAlternates(locale),
     openGraph: {
       title,
       description,
@@ -99,7 +91,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
 

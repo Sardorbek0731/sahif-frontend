@@ -14,3 +14,5 @@ export const OG_LOCALES: Record<string, string> = {
 export const PHONE_NUMBER = "+998915723949";
 export const PHONE_DISPLAY = "+998 91 572 3949";
 export const WORKING_HOURS = "9:00 - 22:00";
+
+export const DEFAULT_LOCATION_ID = "tashkent-city";

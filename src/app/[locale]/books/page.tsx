@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
-import { routing } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
+import { generateAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
   searchParams,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<{ category?: string; search?: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
@@ -42,18 +43,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: url,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((loc) => [
-            loc,
-            `${SITE_URL}/${loc}/books${category ? `?category=${category}` : ""}`,
-          ]),
-        ),
-        "x-default": `${SITE_URL}/${routing.defaultLocale}/books`,
-      },
-    },
+    alternates: generateAlternates(locale, "books", url),
     robots: {
       index: !search,
       follow: true,

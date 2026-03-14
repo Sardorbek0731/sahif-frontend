@@ -3,16 +3,17 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 
-import { routing } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { SITE_URL, OG_LOCALES, DEFAULT_LOCATION_ID } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
+import { generateAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
 
@@ -23,15 +24,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: `${SITE_URL}/${locale}`,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}`]),
-        ),
-        "x-default": `${SITE_URL}/${routing.defaultLocale}`,
-      },
-    },
+    alternates: generateAlternates(locale),
     openGraph: {
       title,
       description,
@@ -62,7 +55,8 @@ export default async function Home() {
 
   const initialTheme = getInitialTheme(cookieStore);
 
-  const locCookie = cookieStore.get("location-id")?.value || "tashkent-city";
+  const locCookie =
+    cookieStore.get("location-id")?.value || DEFAULT_LOCATION_ID;
   const confirmedCookie =
     cookieStore.get("location-confirmed")?.value === "true";
 
