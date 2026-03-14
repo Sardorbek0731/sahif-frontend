@@ -105,7 +105,8 @@ export default async function LocaleLayout({
     "@type": "WebSite",
     name: "sahif",
     alternateName: ["Sahif", SITE_HOSTNAME],
-    url: `${SITE_URL}/${locale}`,
+    url: `${SITE_URL}`,
+    inLanguage: locale,
     potentialAction: {
       "@type": "SearchAction",
       target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
