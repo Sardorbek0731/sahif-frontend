@@ -22,7 +22,7 @@ import { generateAlternates } from "@/lib/seo";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
 
@@ -36,7 +36,7 @@ export async function generateMetadata({
     title,
     description,
     applicationName: "sahif",
-    alternates: generateAlternates(locale),
+    alternates: generateAlternates(locale as Locale),
     openGraph: {
       title,
       description,
@@ -91,7 +91,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
