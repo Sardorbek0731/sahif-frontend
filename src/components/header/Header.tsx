@@ -1,7 +1,7 @@
-import LangSwitcher from "../lang/Lang";
 import Location from "@/components/location/Location";
-import ThemeToggle from "../theme/Theme";
-import { Button } from "../ui/button";
+import LangSwitcher from "@/components/lang/Lang";
+import ThemeToggle from "@/components/theme/Theme";
+import { Button } from "@/components/ui/button";
 
 export default function Header({
   initialTheme,

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
+
 import { Link } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
 import { categoryGroups } from "@/data/categories";
 
 export default function Categories() {
@@ -27,11 +28,11 @@ export default function Categories() {
       if (e.key === "Escape") setOpen(false);
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
     document.addEventListener("keydown", handleEsc);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("pointerdown", handleClickOutside);
       document.removeEventListener("keydown", handleEsc);
     };
   }, [open]);

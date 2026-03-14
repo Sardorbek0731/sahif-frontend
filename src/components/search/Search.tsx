@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Icon } from "@/components/ui/icons/icon";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+
+import { Link, useRouter } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icons/icon";
 import { famousSubCategories } from "@/data/categories";
-import { useRouter } from "@/i18n/routing";
-import { Button } from "../ui/button";
 
 export default function Search() {
-  const t = useTranslations("");
+  const t = useTranslations();
   const router = useRouter();
 
   const [isFocused, setIsFocused] = useState(false);

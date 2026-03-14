@@ -164,7 +164,7 @@ export const allSubCategories = categoryGroups.flatMap<SubCategory>(
 );
 
 export const famousSubCategories = allSubCategories.filter(
-  (cat): cat is SubCategory & { isFamous: true } => !!cat.isFamous,
+  (cat) => cat.isFamous,
 );
 
 export const subCategoryBySlug = Object.fromEntries(

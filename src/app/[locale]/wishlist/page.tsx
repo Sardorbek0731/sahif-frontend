@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+
 import { getTranslations } from "next-intl/server";
+
 import { SITE_URL } from "@/constants";
 import { generatePrivateMetadata } from "@/lib/metadata";
 
@@ -11,10 +13,9 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const t = await getTranslations({ locale });
-  const title = `${t("pages.wishlist")} | sahif`;
 
   return generatePrivateMetadata({
-    title,
+    title: `${t("pages.wishlist")} | sahif`,
     description: t("description"),
     url: `${SITE_URL}/${locale}/wishlist`,
     locale,

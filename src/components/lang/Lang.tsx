@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
+
 import { useRouter, usePathname } from "@/i18n/routing";
 import { languages, LanguageCode } from "@/data/lang";
-import { Button } from "../ui/button";
-import { Icon } from "../ui/icons";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icons";
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);

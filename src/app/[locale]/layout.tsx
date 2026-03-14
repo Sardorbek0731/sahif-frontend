@@ -1,14 +1,15 @@
 import "./globals.css";
 
+import type { Metadata } from "next";
+
+import { cookies } from "next/headers";
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { notFound } from "next/navigation";
+import { getMessages, getTranslations } from "next-intl/server";
+
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
-import { cookies } from "next/headers";
-import type { Metadata } from "next";
-import { getMessages, getTranslations } from "next-intl/server";
 import { SITE_URL, GOOGLE_VERIFICATION } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 
@@ -20,12 +21,14 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const t = await getTranslations({ locale });
+
   const title = "sahif";
+  const description = t("description");
 
   return {
     metadataBase: new URL(SITE_URL),
     title,
-    description: t("description"),
+    description,
     applicationName: "sahif",
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
@@ -33,13 +36,13 @@ export async function generateMetadata({
         ...Object.fromEntries(
           routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}`]),
         ),
-        "x-default": `${SITE_URL}/uz`,
+        "x-default": `${SITE_URL}/${routing.defaultLocale}`,
       },
     },
 
     openGraph: {
       title,
-      description: t("description"),
+      description,
       url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
       locale,
@@ -56,7 +59,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary",
       title,
-      description: t("description"),
+      description,
       images: [`${SITE_URL}/logo.png`],
     },
     robots: {
@@ -95,10 +98,6 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
-    notFound();
-  }
-
   const messages = await getMessages();
   const cookieStore = await cookies();
 
@@ -108,7 +107,7 @@ export default async function LocaleLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "sahif",
-    alternateName: ["Sahif", "sahif.vercel.app"],
+    alternateName: ["Sahif", new URL(SITE_URL).hostname],
     url: `${SITE_URL}/${locale}`,
     potentialAction: {
       "@type": "SearchAction",

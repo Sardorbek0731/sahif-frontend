@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+
 import { getTranslations } from "next-intl/server";
+
 import { SITE_URL } from "@/constants";
 
 export async function generateMetadata({
@@ -28,6 +30,7 @@ export async function generateMetadata({
     }
   }
   const title = `${pageTitle} | sahif`;
+  const description = t("description");
 
   const query = new URLSearchParams();
   if (search) query.set("search", search);
@@ -37,7 +40,7 @@ export async function generateMetadata({
 
   return {
     title,
-    description: t("description"),
+    description,
     applicationName: "sahif",
     alternates: { canonical: url },
     robots: {
@@ -50,17 +53,24 @@ export async function generateMetadata({
     },
     openGraph: {
       title,
-      description: t("description"),
+      description,
       url,
       siteName: "sahif",
       locale,
       type: "website",
-      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
+      images: [
+        {
+          url: `${SITE_URL}/logo.png`,
+          width: 512,
+          height: 512,
+          alt: "sahif logo",
+        },
+      ],
     },
     twitter: {
       card: "summary",
       title,
-      description: t("description"),
+      description,
       images: [`${SITE_URL}/logo.png`],
     },
   };

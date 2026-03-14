@@ -5,13 +5,15 @@ import {
   useEffect,
   useDeferredValue,
   useRef,
-  startTransition,
+  useSyncExternalStore,
 } from "react";
 import { useTranslations } from "next-intl";
+
 import { regions } from "@/data/regions";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
+import { subscribe, isMountedTrue, isMountedFalse } from "@/lib/hooks";
 
 export default function Location({
   initialLocationId,
@@ -20,7 +22,7 @@ export default function Location({
   initialLocationId: string;
   initialConfirmed: boolean;
 }) {
-  const t = useTranslations("");
+  const t = useTranslations();
 
   const {
     selectedId,
@@ -33,28 +35,26 @@ export default function Location({
   const [isOpen, setIsOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [mounted, setMounted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const deferredSearch = useDeferredValue(searchQuery);
 
-  useEffect(() => {
-    startTransition(() => {
-      setMounted(true);
-    });
-  }, []);
+  const isMounted = useSyncExternalStore(
+    subscribe,
+    isMountedTrue,
+    isMountedFalse,
+  );
 
   useEffect(() => {
     initialize(initialLocationId, initialConfirmed);
   }, [initialLocationId, initialConfirmed, initialize]);
 
   useEffect(() => {
-    const confirmed = mounted ? isConfirmed : initialConfirmed;
-    if (mounted && !confirmed) {
+    if (!isConfirmed) {
       const timer = setTimeout(() => setShowPrompt(true), 1000);
       return () => clearTimeout(timer);
     }
-  }, [mounted, isConfirmed, initialConfirmed]);
+  }, [isConfirmed]);
 
   useEffect(() => {
     if (isOpen) {
@@ -78,7 +78,7 @@ export default function Location({
       .includes(deferredSearch.toLowerCase()),
   );
 
-  const currentId = mounted ? selectedId : initialLocationId;
+  const currentId = isMounted ? selectedId : initialLocationId;
   const currentRegion = regions.find((r) => r.id === currentId) || regions[0];
 
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import { SITE_URL } from "@/constants";
 
 export function generatePrivateMetadata({
@@ -28,7 +29,14 @@ export function generatePrivateMetadata({
       siteName: "sahif",
       locale,
       type: "website",
-      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512 }],
+      images: [
+        {
+          url: `${SITE_URL}/logo.png`,
+          width: 512,
+          height: 512,
+          alt: "sahif logo",
+        },
+      ],
     },
     twitter: {
       card: "summary",

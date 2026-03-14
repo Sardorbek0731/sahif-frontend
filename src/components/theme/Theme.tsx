@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useSyncExternalStore } from "react";
+
 import { useTheme } from "next-themes";
-import { useEffect, useState, startTransition } from "react";
-import { Button } from "../ui/button";
+
+import { Button } from "@/components/ui/button";
 import { setThemeCookies } from "@/lib/cookies";
+import { subscribe, isMountedTrue, isMountedFalse } from "@/lib/hooks";
 
 export default function ThemeToggle({
   initialTheme,
@@ -11,13 +14,11 @@ export default function ThemeToggle({
   initialTheme: string;
 }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    startTransition(() => {
-      setMounted(true);
-    });
-  }, []);
+  const isMounted = useSyncExternalStore(
+    subscribe,
+    isMountedTrue,
+    isMountedFalse,
+  );
 
   useEffect(() => {
     if (theme && resolvedTheme) {
@@ -29,8 +30,7 @@ export default function ThemeToggle({
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  const currentTheme = mounted ? resolvedTheme : initialTheme;
-
+  const currentTheme = isMounted ? resolvedTheme : initialTheme;
   const targetTheme = currentTheme === "dark" ? "light" : "dark";
 
   return (
