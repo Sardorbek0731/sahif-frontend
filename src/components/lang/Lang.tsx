@@ -70,7 +70,7 @@ export default function LanguageSwitcher() {
           role="listbox"
           className="absolute bg-card rounded-lg mt-4 pt-2 pb-1 w-full left-0 z-20"
         >
-          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 -z-1" />
           {languages
             .filter((lang) => lang.code !== locale)
             .map((lang) => (
@@ -78,7 +78,7 @@ export default function LanguageSwitcher() {
                 role="option"
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
-                className="w-full mb-1 px-4 h-10 hover:bg-card-hover"
+                className="w-full mb-1 px-4 h-10 bg-card hover:bg-card-hover rounded-none"
               >
                 <Icon name={lang.code} size={16} className="mr-2" />
                 {lang.name}

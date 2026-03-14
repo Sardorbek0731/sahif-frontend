@@ -13,4 +13,4 @@ export const regions = [
   { id: "surkhandarya", key: "surkhandarya" },
   { id: "khorezm", key: "khorezm" },
   { id: "karakalpakstan", key: "karakalpakstan" },
-];
+] as const;

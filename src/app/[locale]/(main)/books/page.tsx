@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
-import { type Locale } from "@/i18n/routing";
+import { type Locale, Link } from "@/i18n/routing";
 import { generateAlternates } from "@/lib/seo";
+
+import { books } from "@/data/books";
+import { type CategorySlug } from "@/data/categories";
 
 export async function generateMetadata({
   params,
@@ -84,13 +87,34 @@ export default async function Books({
 }) {
   const { category, search } = await searchParams;
 
-  let heading = "Barcha kitoblar";
-  if (search) heading = `"${search}" bo‘yicha natijalar`;
-  else if (category) heading = `Kategoriya: ${category}`;
+  const filtered = books.filter((book) => {
+    if (search) {
+      return (
+        book.title.toLowerCase().includes(search.toLowerCase()) ||
+        book.author.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    if (category) {
+      return book.categorySlugs.includes(category as CategorySlug);
+    }
+    return true;
+  });
 
   return (
     <main className="my-container py-10">
-      <h1 className="text-3xl font-bold">{heading}</h1>
+      <div className="grid grid-cols-4 gap-6">
+        {filtered.map((book) => (
+          <Link key={book.id} href={`/books/${book.slug}`}>
+            <div className="bg-card p-4 rounded-lg hover:bg-card-hover transition-all">
+              <h2 className="font-bold">{book.title}</h2>
+              <p className="text-foreground/70">{book.author}</p>
+              <p className="text-primary mt-2">
+                {book.price.amount.toLocaleString()} {book.price.currency}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
