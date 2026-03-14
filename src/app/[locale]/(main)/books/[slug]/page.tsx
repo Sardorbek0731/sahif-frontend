@@ -3,14 +3,16 @@ import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
-import { type Locale } from "@/i18n/routing";
+import { type Locale, routing } from "@/i18n/routing";
 import { books } from "@/data/books";
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 import { formatISBN } from "@/lib/formatters";
 
 export function generateStaticParams() {
-  return books.map((book) => ({ slug: book.slug }));
+  return routing.locales.flatMap((locale) =>
+    books.map((book) => ({ locale, slug: book.slug })),
+  );
 }
 
 export async function generateMetadata({
