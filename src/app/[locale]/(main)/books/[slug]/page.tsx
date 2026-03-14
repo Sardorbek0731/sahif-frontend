@@ -110,7 +110,6 @@ export default async function BookPage({
                 alt={book.title}
                 fill
                 className="object-cover"
-                priority
                 sizes="256px"
               />
             </div>
