@@ -170,3 +170,9 @@ export const famousSubCategories = allSubCategories.filter(
 export const subCategoryBySlug = Object.fromEntries(
   allSubCategories.map((cat) => [cat.slug, cat]),
 ) as Record<CategorySlug, SubCategory>;
+
+export function isValidCategory(
+  slug: string | undefined,
+): slug is CategorySlug {
+  return !!slug && (CATEGORY_SLUGS as readonly string[]).includes(slug);
+}

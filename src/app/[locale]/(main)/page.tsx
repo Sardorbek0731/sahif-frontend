@@ -27,7 +27,7 @@ export async function generateMetadata({
       description,
       url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
-      locale: OG_LOCALES[locale] ?? locale,
+      locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {

@@ -9,6 +9,10 @@ import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 import { formatISBN } from "@/lib/formatters";
 
+export function generateStaticParams() {
+  return books.map((book) => ({ slug: book.slug }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -16,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const book = books.find((b) => b.slug === slug);
-  if (!book) return {};
+  if (!book) notFound();
 
   const t = await getTranslations({ locale });
   const title = `${book.title} | sahif`;
@@ -31,7 +35,7 @@ export async function generateMetadata({
       description,
       url: `${SITE_URL}/${locale}/books/${slug}`,
       siteName: "sahif",
-      locale: OG_LOCALES[locale] ?? locale,
+      locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {
@@ -60,60 +64,81 @@ export default async function BookPage({
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: book.title,
+    author: { "@type": "Person", name: book.author },
+    ...(book.details.isbn && { isbn: String(book.details.isbn) }),
+    numberOfPages: book.details.pageCount,
+    ...(book.details.publisher && { publisher: book.details.publisher }),
+    ...(book.translator && {
+      translator: { "@type": "Person", name: book.translator },
+    }),
+  };
+
   return (
-    <main className="my-container py-10">
-      <div className="flex gap-10">
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
-          <p className="text-foreground/70 mb-6">{book.author}</p>
-          <p className="mb-8">{book.description}</p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="my-container py-10">
+        <div className="flex gap-10">
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
+            <p className="text-foreground/70 mb-6">{book.author}</p>
+            <p className="mb-8">{book.description}</p>
 
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-2xl font-bold text-primary">
-              {(
-                book.price.amount - (book.price.discountAmount ?? 0)
-              ).toLocaleString()}{" "}
-              {book.price.currency}
-            </span>
-            {book.price.discountAmount && (
-              <span className="line-through text-foreground/50">
-                {book.price.amount.toLocaleString()} {book.price.currency}
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-2xl font-bold text-primary">
+                {(
+                  book.price.amount - (book.price.discountAmount ?? 0)
+                ).toLocaleString()}{" "}
+                {book.price.currency}
               </span>
-            )}
-          </div>
+              {book.price.discountAmount != null && (
+                <span className="line-through text-foreground/50">
+                  {book.price.amount.toLocaleString()} {book.price.currency}
+                </span>
+              )}
+            </div>
 
-          <div className="bg-card rounded-lg p-6 space-y-3">
-            <p>
-              <span className="text-foreground/50">Pages:</span>{" "}
-              {book.details.pageCount}
-            </p>
-            <p>
-              <span className="text-foreground/50">Published:</span>{" "}
-              {book.details.publishedYear}
-            </p>
-            <p>
-              <span className="text-foreground/50">Publisher:</span>{" "}
-              {book.details.publisher}
-            </p>
-            <p>
-              <span className="text-foreground/50">Format:</span>{" "}
-              {book.details.format}
-            </p>
-            {book.translator && (
+            <div className="bg-card rounded-lg p-6 space-y-3">
               <p>
-                <span className="text-foreground/50">Translator:</span>{" "}
-                {book.translator}
+                <span className="text-foreground/50">Pages:</span>{" "}
+                {book.details.pageCount}
               </p>
-            )}
-            {book.details.isbn && (
               <p>
-                <span className="text-foreground/50">ISBN:</span>{" "}
-                {formatISBN(book.details.isbn)}
+                <span className="text-foreground/50">Published:</span>{" "}
+                {book.details.publishedYear}
               </p>
-            )}
+              {book.details.publisher && (
+                <p>
+                  <span className="text-foreground/50">Publisher:</span>{" "}
+                  {book.details.publisher}
+                </p>
+              )}
+              <p>
+                <span className="text-foreground/50">Format:</span>{" "}
+                {book.details.format}
+              </p>
+              {book.translator && (
+                <p>
+                  <span className="text-foreground/50">Translator:</span>{" "}
+                  {book.translator}
+                </p>
+              )}
+              {book.details.isbn && (
+                <p>
+                  <span className="text-foreground/50">ISBN:</span>{" "}
+                  {formatISBN(book.details.isbn)}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -7,7 +7,7 @@ import { type Locale, Link } from "@/i18n/routing";
 import { generateAlternates } from "@/lib/seo";
 
 import { books } from "@/data/books";
-import { type CategorySlug } from "@/data/categories";
+import { isValidCategory } from "@/data/categories";
 
 export async function generateMetadata({
   params,
@@ -20,18 +20,15 @@ export async function generateMetadata({
   const { category, search } = await searchParams;
 
   const t = await getTranslations({ locale });
-  const tCategories = await getTranslations({
-    locale,
-    namespace: "categories",
-  });
+  const tCategories = category
+    ? await getTranslations({ locale, namespace: "categories" })
+    : null;
 
   let pageTitle = t("pages.books");
   if (search) pageTitle = search;
   else if (category) {
-    try {
-      pageTitle = tCategories(`items.${category}.name`);
-    } catch {
-      pageTitle = t("pages.books");
+    if (isValidCategory(category)) {
+      pageTitle = tCategories!(`items.${category}.name`);
     }
   }
   const title = `${pageTitle} | sahif`;
@@ -46,7 +43,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: generateAlternates(locale, "books", url),
+    alternates: generateAlternates(locale, "books", search ? undefined : url),
     robots: {
       index: !search,
       follow: true,
@@ -60,7 +57,7 @@ export async function generateMetadata({
       description,
       url,
       siteName: "sahif",
-      locale: OG_LOCALES[locale] ?? locale,
+      locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {
@@ -89,13 +86,14 @@ export default async function Books({
 
   const filtered = books.filter((book) => {
     if (search) {
+      const q = search.toLowerCase();
       return (
-        book.title.toLowerCase().includes(search.toLowerCase()) ||
-        book.author.toLowerCase().includes(search.toLowerCase())
+        book.title.toLowerCase().includes(q) ||
+        book.author.toLowerCase().includes(q)
       );
     }
-    if (category) {
-      return book.categorySlugs.includes(category as CategorySlug);
+    if (isValidCategory(category)) {
+      return book.categorySlugs.includes(category);
     }
     return true;
   });
@@ -109,7 +107,10 @@ export default async function Books({
               <h2 className="font-bold">{book.title}</h2>
               <p className="text-foreground/70">{book.author}</p>
               <p className="text-primary mt-2">
-                {book.price.amount.toLocaleString()} {book.price.currency}
+                {(
+                  book.price.amount - (book.price.discountAmount ?? 0)
+                ).toLocaleString()}{" "}
+                {book.price.currency}
               </p>
             </div>
           </Link>

@@ -27,7 +27,7 @@ export function generatePrivateMetadata({
       description,
       url,
       siteName: "sahif",
-      locale: OG_LOCALES[locale] ?? locale,
+      locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {

@@ -1,5 +1,5 @@
 import { type Locale, routing } from "@/i18n/routing";
-import { SITE_URL } from "@/constants";
+import { SITE_URL, HREFLANG_LOCALES } from "@/constants";
 
 export function generateAlternates(
   locale: Locale,
@@ -11,7 +11,10 @@ export function generateAlternates(
     canonical: canonicalUrl ?? `${SITE_URL}/${locale}${fullPath}`,
     languages: {
       ...Object.fromEntries(
-        routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}${fullPath}`]),
+        routing.locales.map((loc) => [
+          HREFLANG_LOCALES[loc],
+          `${SITE_URL}/${loc}${fullPath}`,
+        ]),
       ),
       "x-default": `${SITE_URL}/${routing.defaultLocale}${fullPath}`,
     },

@@ -18,7 +18,7 @@ export default async function MainLayout({
 
   const initialTheme = getInitialTheme(cookieStore);
   const locCookie =
-    cookieStore.get(LOCATION_ID_COOKIE)?.value || DEFAULT_LOCATION_ID;
+    cookieStore.get(LOCATION_ID_COOKIE)?.value ?? DEFAULT_LOCATION_ID;
   const confirmedCookie =
     cookieStore.get(LOCATION_CONFIRMED_COOKIE)?.value === "true";
 

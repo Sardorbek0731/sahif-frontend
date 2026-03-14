@@ -1,14 +1,23 @@
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://sahif.vercel.app";
+import { type Locale } from "@/i18n/routing";
 
-export const GOOGLE_VERIFICATION = process.env.GOOGLE_VERIFICATION ?? "";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://sahif.vercel.app";
+
+export const GOOGLE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "";
 
 export const SITE_HOSTNAME = new URL(SITE_URL).hostname;
 
-export const OG_LOCALES: Record<string, string> = {
+export const OG_LOCALES: Record<Locale, string> = {
   uz: "uz_UZ",
   ru: "ru_RU",
   en: "en_US",
+};
+
+export const HREFLANG_LOCALES: Record<Locale, string> = {
+  uz: "uz-UZ",
+  ru: "ru-RU",
+  en: "en-US",
 };
 
 export const PHONE_NUMBER = "+998915723949";
