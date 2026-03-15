@@ -47,11 +47,11 @@ export async function generateMetadata({
   return {
     title,
     description: bookDescription,
-    alternates: generateAlternates(locale, `books/${slug}`),
+    alternates: generateAlternates(locale, `books/${slug}/${variantParam}`),
     openGraph: {
       title,
       description: bookDescription,
-      url: `${SITE_URL}/${locale}/books/${slug}`,
+      url: `${SITE_URL}/${locale}/books/${slug}/${variantParam}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "article",
