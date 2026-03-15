@@ -224,23 +224,5 @@
         "description": "An’ana, urf-odat va madaniy meros"
       }
     }
-  },
-
-  "books": {
-    "otkan-kunlar": {
-      "description": "O'zbek adabiyotining birinchi romani. Otabek va Kumushning muhabbat qissasi orqali XIX asr o'zbek jamiyatining hayoti tasvirlanadi."
-    },
-    "mehrobdan-chayon": {
-      "description": "Qodiriyning ikkinchi romani. Anvar va Raʼnoning muhabbati, o'zbek jamiyatidagi adolatsizlik va zulm mavzularini chuqur yoritadi."
-    },
-    "sariq-devni-minib": {
-      "description": "O'zbek bolalar adabiyotining eng sevimli asarlaridan biri. Hamid va uning sarguzashtlari orqali do'stlik, jasurlik va adolat mavzulari yoritiladi."
-    },
-    "hundred-years-of-solitude": {
-      "description": "Nobel mukofoti sohibi Marquezning magnum opusi. Buendiya oilasining yetti avlod davomidagi tarixi orqali Lotin Amerikasining sehrli realizm uslubida tasvirlangan epik romani."
-    },
-    "the-alchemist": {
-      "description": "Dunyoning eng ko'p sotilgan kitoblaridan biri. Yosh cho'pon Santiyagoning o'z taqdiriga erishish yo'lidagi sarguzashtlari orqali hayotning mazmuni va orzular kuchi haqida falsafiy roman."
-    }
   }
 }

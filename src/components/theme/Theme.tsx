@@ -20,22 +20,27 @@ export default function ThemeToggle({
 }: {
   initialTheme: string;
 }) {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     subscribe,
     getClientSnapshot,
     getServerSnapshot,
   );
 
+  useEffect(() => {
+    if (theme && resolvedTheme) {
+      setThemeCookies(theme, resolvedTheme);
+    }
+  }, [theme, resolvedTheme]);
+
   const toggleTheme = () => {
     disableTransitions();
     const newTheme = resolvedTheme === "dark" ? "light" : "dark";
-    setThemeCookies(newTheme, newTheme);
     setTheme(newTheme);
   };
 
   useEffect(() => {
-    disableTransitions(); 
+    disableTransitions();
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {

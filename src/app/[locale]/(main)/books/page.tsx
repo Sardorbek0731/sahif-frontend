@@ -9,6 +9,7 @@ import { generateAlternates } from "@/lib/seo";
 
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
+import { getBookTitle } from "@/lib/book";
 
 export async function generateMetadata({
   params,
@@ -79,20 +80,30 @@ export async function generateMetadata({
 }
 
 export default async function Books({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: Locale }>;
   searchParams: Promise<{ category?: string; search?: string }>;
 }) {
+  const { locale } = await params;
   const { category, search } = await searchParams;
 
   const filtered = books.filter((book) => {
     if (search) {
       const q = search.toLowerCase();
+      // getBookTitle bu yerda qidiruv uchun ham juda qo'l keladi
+      const currentTitle = getBookTitle(book, locale).toLowerCase();
+      const hasOriginalTitleMatch = book.originalTitle
+        .toLowerCase()
+        .includes(q);
+      const hasAuthorMatch = book.author.toLowerCase().includes(q);
+
       return (
-        book.title.toLowerCase().includes(q) ||
-        book.author.toLowerCase().includes(q)
+        currentTitle.includes(q) || hasOriginalTitleMatch || hasAuthorMatch
       );
     }
+
     if (isValidCategory(category)) {
       return book.categorySlugs.includes(category);
     }
@@ -102,31 +113,52 @@ export default async function Books({
   return (
     <main className="my-container py-10">
       <div className="grid grid-cols-4 gap-6">
-        {filtered.map((book) => (
-          <Link key={book.id} href={`/books/${book.slug}`}>
-            <div className="bg-card rounded-lg hover:bg-card-hover transition-all overflow-hidden">
-              <div className="relative aspect-3/4 w-full">
-                <Image
-                  src={book.images.cover}
-                  alt={book.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
+        {filtered.map((book) => {
+          // --- getBookTitle FUNKSIYASINI SHU YERDA ISHLATAMIZ ---
+          const displayTitle = getBookTitle(book, locale);
+
+          // Qolgan mantiqiy qismlarni ham funksiyalarga ko'chirsa bo'ladi,
+          // lekin hozircha asosiy variantni topib olamiz:
+          const activeVariant =
+            book.variants.find((v) => v.language.startsWith(locale)) ||
+            book.variants[0];
+          const finalPrice =
+            activeVariant.price.amount -
+            (activeVariant.price.discountAmount ?? 0);
+          const displayImage =
+            activeVariant.variantImage || book.mainCoverImage;
+
+          return (
+            <Link key={book.id} href={`/books/${book.slug}`}>
+              <div>
+                <div className="relative aspect-3/4 w-full">
+                  <Image
+                    src={displayImage}
+                    alt={displayTitle} // Funksiyadan kelgan nom
+                    fill
+                    className="object-cover"
+                    priority={book.isHero}
+                  />
+                </div>
+                <div>
+                  <h2>{displayTitle}</h2> {/* Funksiyadan kelgan nom */}
+                  <p>{book.author}</p>
+                  <p>
+                    {finalPrice.toLocaleString()} {activeVariant.price.currency}
+                  </p>
+                  {activeVariant.price.discountAmount && (
+                    <span className="line-through opacity-50">
+                      {activeVariant.price.amount.toLocaleString()}
+                    </span>
+                  )}
+                  {activeVariant.stockCount === 0 && (
+                    <span className="text-red-500 text-xs block">Tugagan</span>
+                  )}
+                </div>
               </div>
-              <div className="p-4">
-                <h2 className="font-bold">{book.title}</h2>
-                <p className="text-foreground/70">{book.author}</p>
-                <p className="text-primary mt-2">
-                  {(
-                    book.price.amount - (book.price.discountAmount ?? 0)
-                  ).toLocaleString()}{" "}
-                  {book.price.currency}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </main>
   );

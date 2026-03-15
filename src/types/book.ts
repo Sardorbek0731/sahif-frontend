@@ -1,80 +1,78 @@
-import { CategorySlug } from "@/data/categories";
+// 1. Kitob nashr etilishi mumkin bo'lgan barcha tillar
+export type LanguageCode = "uz-Latn" | "uz-Cyrl" | "en" | "ru" | string;
 
-// ─── Price ───────────────────────────────────────────────────────────────────
+// 2. Sayt interfeysi tushunadigan asosiy tillar
+export type SupportedLocale = "uz" | "en" | "ru";
 
+// 3. Kitobning jismoniy ko'rinishi
+export type BookFormat = "hardcover" | "paperback" | "ebook" | "audio";
+
+// 4. Omborxonadagi holati
+export type StockStatus = "in-stock" | "out-of-stock" | "pre-order";
+
+// 5. Valyuta turi
+export type Currency = "UZS" | "USD";
+
+// --- Narx va chegirma tizimi ---
 interface BookPrice {
-  readonly amount: number; // Current retail price (gross price)
-  readonly currency: "UZS" | "USD"; // ISO currency code
-  readonly discountAmount?: number; // Subtracted value for sales (net price = amount - discountAmount)
+  readonly amount: number; // Haqiqiy narxi (masalan: 65000)
+  readonly currency: Currency; // Valyuta (UZS)
+  readonly discountAmount?: number; // Chegirma summasi (net price = amount - discountAmount)
 }
 
-// ─── Stats ────────────────────────────────────────────────────────────────────
+// --- Har bir til nashri uchun alohida ma'lumotlar (Variant) ---
+interface BookVariant {
+  readonly language: LanguageCode; // Nashr tili (uz-Latn, ru, en)
+  readonly titleInLanguage?: string; // Shu tildagi nomi (masalan: "Alkimyogar")
 
-interface BookStats {
-  readonly rating: number; // Average user rating (0 to 5)
-  readonly reviewCount: number; // Total number of user-submitted reviews
-  readonly salesCount?: number; // Total units sold (for "Most Popular" sorting)
-}
-
-// ─── Images ──────────────────────────────────────────────────────────────────
-
-interface BookImages {
-  readonly cover: string; // High-resolution main image (Hero/Details page)
-  readonly thumbnail: string; // Compressed low-res image (Catalog/List view)
-  readonly gallery?: string[]; // Additional photos of the book's interior or back
-}
-
-// ─── Details ─────────────────────────────────────────────────────────────────
-
-type BookLanguage = "uz" | "en" | "ru";
-type BookFormat = "hardcover" | "paperback" | "ebook" | "audio";
-
-interface BookDetails {
-  readonly language: BookLanguage[]; // The language the book is written in
-  readonly format: BookFormat; // Physical or digital type
-  readonly paperFormat: string; // Paper size format (e.g., '60x84/16')
-  readonly pageCount: number; // Total number of pages
-  readonly isbn?: number; // International Standard Book Number
-  readonly publishedYear: number; // Year the book was officially released
-  readonly publisher?: string; // Publishing house name (e.g., 'Asaxiy Books')
-}
-
-// ─── Stock ───────────────────────────────────────────────────────────────────
-
-type StockStatus = "in-stock" | "out-of-stock" | "pre-order";
-
-// ─── Book ────────────────────────────────────────────────────────────────────
-
-export interface Book {
-  // Identity
-  readonly id: number; // Unique identifier for the database
-  readonly slug: string; // URL-friendly identifier for SEO (e.g., 'otkan-kunlar')
-  readonly title: string; // Official book title as shown on the cover
-  readonly author: string; // Name of the primary author
-  readonly translator?: string; // Translator's name for international books
-  readonly categorySlugs: CategorySlug[]; // List of categories the book belongs to
-
-  // Pricing
+  // Savdo ma'lumotlari
   readonly price: BookPrice;
+  readonly stockCount: number; // Omborxonadagi soni
+  readonly stockStatus: StockStatus;
 
-  // Statistics
+  // Texnik ma'lumotlar (Nashrga qarab o'zgaradi)
+  readonly isbn: string; // Shu nashrning xalqaro kodi
+  readonly pageCount: number; // Sahifalar soni
+  readonly format: BookFormat; // Muqova turi
+  readonly publisher: string; // Nashriyot nomi
+  readonly publishedYear: number; // Chop etilgan yili
+
+  // Vizual (Ixtiyoriy)
+  readonly variantImage?: string; // Shu nashrning maxsus muqova rasmi
+}
+
+// --- Umumiy statistika ---
+interface BookStats {
+  readonly rating: number; // O'rtacha baho (0-5)
+  readonly reviewCount: number; // Sharhlar soni
+  readonly salesCount: number; // Jami sotilgan nusxalar
+}
+
+// --- ASOSIY KITOB MODELI ---
+export interface Book {
+  // --- Global (O'zgarmas) Ma'lumotlar ---
+  readonly id: number; // Baza uchun ID
+  readonly slug: string; // URL uchun identifikator
+  readonly author: string; // Muallif ismi
+  readonly categorySlugs: string[]; // Janrlar (slub ko'rinishida)
+
+  // --- Kitob haqida qisqacha ma'lumot (Marketing tavsifi) ---
+  readonly description: Record<SupportedLocale, string>; // Faqat uz, en, ru bo'lishini kafolatlaydi
+
+  // --- Faktik / Asl ma'lumotlar ---
+  readonly originalTitle: string; // Asl nomi (Original Title)
+  readonly originalLanguage: LanguageCode; // Asl tili (Original Language)
+  readonly mainCoverImage: string; // Asosiy/Zaxira muqova rasmi
+
+  // --- Nashrlar / Variantlar ---
+  readonly variants: BookVariant[]; // Do'konda mavjud barcha nashrlar ro'yxati
+
+  // --- UI va Marketing (Flaglar) ---
   readonly stats: BookStats;
+  readonly isHero: boolean; // Bosh sahifadagi slayder uchun
+  readonly isBestseller: boolean; // "Bestseller" belgisi
+  readonly isNew: boolean; // "Yangi" belgisi
 
-  // Media
-  readonly images: BookImages;
-
-  // Details
-  readonly details: BookDetails;
-
-  // Inventory
-  readonly stockStatus: StockStatus; // Inventory availability
-  readonly stockCount: number; // Number of units available in stock
-
-  // UI Flags (used for badges and filtering)
-  readonly isHero: boolean; // Should the book appear in the main Top Slider?
-  readonly isBestseller: boolean; // Display "Bestseller" badge
-  readonly isNew: boolean; // Display "New Arrival" badge
-
-  // Meta
-  readonly createdAt: string; // ISO Date string for "Sort by Date" functionality
+  // --- Meta ---
+  readonly createdAt: string; // Qo'shilgan vaqti (ISO formatda)
 }
