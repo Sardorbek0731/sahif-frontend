@@ -50,6 +50,11 @@ interface BookStats {
   readonly salesCount: number; // Jami sotilgan nusxalar
 }
 
+interface BookImages {
+  readonly cover: string;
+  readonly gallery?: string[];
+}
+
 // --- ASOSIY KITOB MODELI ---
 export interface Book {
   // --- Global (O'zgarmas) Ma'lumotlar ---
@@ -64,7 +69,7 @@ export interface Book {
   // --- Faktik / Asl ma'lumotlar ---
   readonly originalTitle: string; // Asl nomi (Original Title)
   readonly originalLanguage: LanguageCode; // Asl tili (Original Language)
-  readonly mainCoverImage: string; // Asosiy/Zaxira muqova rasmi
+  readonly images: BookImages;
 
   // --- Nashrlar / Variantlar ---
   readonly variants: BookVariant[]; // Do'konda mavjud barcha nashrlar ro'yxati

@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import Image from "next/image";
-
 import { type Locale, routing } from "@/i18n/routing";
 import { books } from "@/data/books";
 import { SITE_URL, OG_LOCALES } from "@/constants";
@@ -10,6 +8,8 @@ import { generateAlternates } from "@/lib/seo";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription } from "@/lib/book";
 import { Link } from "@/i18n/routing";
+
+import { BookGallery } from "@/components/book/book-gallery";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -40,7 +40,7 @@ export async function generateMetadata({
     book.variants.find((v) => v.language === variantParam) ||
     book.variants.find((v) => v.language.startsWith(locale)) ||
     book.variants[0];
-  const displayImage = activeVariant.variantImage || book.mainCoverImage;
+  const displayImage = activeVariant.variantImage || book.images.cover;
 
   const title = `${bookTitle} | sahif`;
 
@@ -85,7 +85,7 @@ export default async function BookPage({
     book.variants.find((v) => v.language === variantParam) ||
     book.variants.find((v) => v.language.startsWith(locale)) ||
     book.variants[0];
-  const displayImage = activeVariant.variantImage || book.mainCoverImage;
+  const displayImage = activeVariant.variantImage || book.images.cover;
   const finalPrice =
     activeVariant.price.amount - (activeVariant.price.discountAmount ?? 0);
 
@@ -112,18 +112,11 @@ export default async function BookPage({
       <main className="my-container py-10">
         <div className="flex flex-col md:flex-row gap-10">
           {/* Chap tomon: Rasm */}
-          <div className="w-full md:w-80 shrink-0">
-            <div className="relative aspect-3/4 w-full rounded-xl shadow-xl overflow-hidden border border-border">
-              <Image
-                src={displayImage}
-                alt={bookTitle}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 320px"
-                priority
-              />
-            </div>
-          </div>
+          <BookGallery
+            cover={displayImage}
+            gallery={book.images.gallery}
+            alt={bookTitle}
+          />
 
           {/* O'ng tomon: Ma'lumotlar */}
           <div className="flex-1">

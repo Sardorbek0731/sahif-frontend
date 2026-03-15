@@ -113,47 +113,43 @@ export default async function Books({
     <main className="my-container py-10">
       <div className="grid grid-cols-4 gap-6">
         {filtered.map((book) => {
-          // --- getBookTitle FUNKSIYASINI SHU YERDA ISHLATAMIZ ---
           const displayTitle = getBookTitle(book, locale);
-
-          // Qolgan mantiqiy qismlarni ham funksiyalarga ko'chirsa bo'ladi,
-          // lekin hozircha asosiy variantni topib olamiz:
           const activeVariant =
             book.variants.find((v) => v.language.startsWith(locale)) ||
             book.variants[0];
           const finalPrice =
             activeVariant.price.amount -
             (activeVariant.price.discountAmount ?? 0);
-          const displayImage =
-            activeVariant.variantImage || book.mainCoverImage;
+          const displayImage = activeVariant.variantImage || book.images.cover;
 
           return (
-            <Link key={book.id} href={`/books/${book.slug}`}>
+            <Link
+              key={book.id}
+              href={`/books/${book.slug}/${activeVariant.language}`}
+            >
+              <div className="relative aspect-3/4 w-full">
+                <Image
+                  src={displayImage}
+                  alt={displayTitle} // Funksiyadan kelgan nom
+                  fill
+                  className="object-cover"
+                  priority={book.isHero}
+                />
+              </div>
               <div>
-                <div className="relative aspect-3/4 w-full">
-                  <Image
-                    src={displayImage}
-                    alt={displayTitle} // Funksiyadan kelgan nom
-                    fill
-                    className="object-cover"
-                    priority={book.isHero}
-                  />
-                </div>
-                <div>
-                  <h2>{displayTitle}</h2> {/* Funksiyadan kelgan nom */}
-                  <p>{book.author}</p>
-                  <p>
-                    {finalPrice.toLocaleString()} {activeVariant.price.currency}
-                  </p>
-                  {activeVariant.price.discountAmount && (
-                    <span className="line-through opacity-50">
-                      {activeVariant.price.amount.toLocaleString()}
-                    </span>
-                  )}
-                  {activeVariant.stockCount === 0 && (
-                    <span className="text-red-500 text-xs block">Tugagan</span>
-                  )}
-                </div>
+                <h2>{displayTitle}</h2> {/* Funksiyadan kelgan nom */}
+                <p>{book.author}</p>
+                <p>
+                  {finalPrice.toLocaleString()} {activeVariant.price.currency}
+                </p>
+                {activeVariant.price.discountAmount && (
+                  <span className="line-through opacity-50">
+                    {activeVariant.price.amount.toLocaleString()}
+                  </span>
+                )}
+                {activeVariant.stockCount === 0 && (
+                  <span className="text-red-500 text-xs block">Tugagan</span>
+                )}
               </div>
             </Link>
           );
