@@ -2,11 +2,7 @@ import { cookies } from "next/headers";
 
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
-import {
-  DEFAULT_LOCATION_ID,
-  LOCATION_ID_COOKIE,
-  LOCATION_CONFIRMED_COOKIE,
-} from "@/constants";
+import { DEFAULT_LOCATION_ID } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 
 export default async function MainLayout({
@@ -18,9 +14,9 @@ export default async function MainLayout({
 
   const initialTheme = getInitialTheme(cookieStore);
   const locCookie =
-    cookieStore.get(LOCATION_ID_COOKIE)?.value ?? DEFAULT_LOCATION_ID;
+    cookieStore.get("location-id")?.value ?? DEFAULT_LOCATION_ID;
   const confirmedCookie =
-    cookieStore.get(LOCATION_CONFIRMED_COOKIE)?.value === "true";
+    cookieStore.get("location-confirmed")?.value === "true";
 
   return (
     <>

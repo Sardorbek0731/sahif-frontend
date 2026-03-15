@@ -25,11 +25,3 @@ export const PHONE_DISPLAY = "+998 91 572 3949";
 export const WORKING_HOURS = "9:00 - 22:00";
 
 export const DEFAULT_LOCATION_ID = "tashkent-city";
-
-export const THEME_COOKIE = "theme";
-export const THEME_RESOLVED_COOKIE = "theme-resolved";
-
-export const LOCATION_ID_COOKIE = "location-id";
-export const LOCATION_CONFIRMED_COOKIE = "location-confirmed";
-
-export const SEARCH_HISTORY_KEY = "search-history";

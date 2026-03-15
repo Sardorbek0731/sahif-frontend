@@ -1,10 +1,9 @@
 import { cookies } from "next/headers";
-import { THEME_COOKIE, THEME_RESOLVED_COOKIE } from "@/constants";
 
 export function getInitialTheme(
   cookieStore: Awaited<ReturnType<typeof cookies>>,
 ) {
-  const themeCookie = cookieStore.get(THEME_COOKIE)?.value ?? "system";
-  const resolvedThemeCookie = cookieStore.get(THEME_RESOLVED_COOKIE)?.value;
+  const themeCookie = cookieStore.get("theme")?.value ?? "system";
+  const resolvedThemeCookie = cookieStore.get("theme-resolved")?.value;
   return themeCookie === "system" ? (resolvedThemeCookie ?? "") : themeCookie;
 }

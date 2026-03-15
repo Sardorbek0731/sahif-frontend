@@ -3,8 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 
+import { useTheme } from "next-themes";
+
 import { type Locale, useRouter, usePathname } from "@/i18n/routing";
 import { languages } from "@/data/lang";
+import { setThemeCookies } from "@/lib/cookies";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons";
 
@@ -14,6 +17,7 @@ export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { theme, resolvedTheme } = useTheme();
 
   const currentLanguage =
     languages.find((l) => l.code === locale) || languages[0];
@@ -44,7 +48,10 @@ export default function LanguageSwitcher() {
   }, [isOpen]);
 
   const changeLanguage = (newLocale: Locale) => {
-    if (newLocale === locale) return;
+    if (theme && resolvedTheme) {
+      setThemeCookies(theme, resolvedTheme);
+    }
+
     router.replace(pathname, { locale: newLocale, scroll: false });
     setIsOpen(false);
   };

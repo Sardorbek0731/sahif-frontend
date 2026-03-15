@@ -7,7 +7,6 @@ import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icons/icon";
 import { famousSubCategories } from "@/data/categories";
-import { SEARCH_HISTORY_KEY } from "@/constants";
 
 export default function Search() {
   const t = useTranslations();
@@ -20,7 +19,7 @@ export default function Search() {
   const [history, setHistory] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const saved = localStorage.getItem(SEARCH_HISTORY_KEY);
+      const saved = localStorage.getItem("search-history");
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -48,7 +47,7 @@ export default function Search() {
       5,
     );
     setHistory(newHistory);
-    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
+    localStorage.setItem("search-history", JSON.stringify(newHistory));
 
     const query = new URLSearchParams();
     query.set("search", trimmed);
@@ -60,7 +59,7 @@ export default function Search() {
     e.stopPropagation();
     const updated = history.filter((h) => h !== item);
     setHistory(updated);
-    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(updated));
+    localStorage.setItem("search-history", JSON.stringify(updated));
   };
 
   return (
