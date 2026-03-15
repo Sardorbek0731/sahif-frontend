@@ -94,9 +94,8 @@ export default async function Books({
       const q = search.toLowerCase();
       // getBookTitle bu yerda qidiruv uchun ham juda qo'l keladi
       const currentTitle = getBookTitle(book, locale).toLowerCase();
-      const hasOriginalTitleMatch = book.originalTitle
-        .toLowerCase()
-        .includes(q);
+      const hasOriginalTitleMatch =
+        book.originalTitle?.toLowerCase().includes(q) ?? false;
       const hasAuthorMatch = book.author.toLowerCase().includes(q);
 
       return (

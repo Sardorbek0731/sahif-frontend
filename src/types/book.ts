@@ -1,3 +1,5 @@
+import { CategorySlug } from "@/data/categories";
+
 // 1. Kitob nashr etilishi mumkin bo'lgan barcha tillar
 export type LanguageCode = "uz-Latn" | "uz-Cyrl" | "en" | "ru" | string;
 
@@ -54,7 +56,7 @@ export interface Book {
   readonly id: number; // Baza uchun ID
   readonly slug: string; // URL uchun identifikator
   readonly author: string; // Muallif ismi
-  readonly categorySlugs: string[]; // Janrlar (slub ko'rinishida)
+  readonly categorySlugs: CategorySlug[]; // Janrlar (slub ko'rinishida)
 
   // --- Kitob haqida qisqacha ma'lumot (Marketing tavsifi) ---
   readonly description: Record<SupportedLocale, string>; // Faqat uz, en, ru bo'lishini kafolatlaydi

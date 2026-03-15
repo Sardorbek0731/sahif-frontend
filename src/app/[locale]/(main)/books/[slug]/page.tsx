@@ -19,19 +19,21 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
+  searchParams: Promise<{ variant?: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  const { variant: variantParam } = await searchParams;
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
-  // Funksiyalarni ishlatamiz
-  const bookTitle = getBookTitle(book, locale);
+  const bookTitle = getBookTitle(book, locale, variantParam);
   const bookDescription = getBookDescription(book, locale);
 
-  // Rasm uchun baribir variant kerak
   const activeVariant =
+    book.variants.find((v) => v.language === variantParam) ||
     book.variants.find((v) => v.language.startsWith(locale)) ||
     book.variants[0];
   const displayImage = activeVariant.variantImage || book.mainCoverImage;
@@ -48,10 +50,10 @@ export async function generateMetadata({
       url: `${SITE_URL}/${locale}/books/${slug}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
-      type: "article", // Kitob sahifasi uchun 'article' to'g'riroq
+      type: "article",
       images: [
         {
-          url: `${SITE_URL}${displayImage}`, // Aynan shu nashrning rasmi
+          url: `${SITE_URL}${displayImage}`,
           alt: bookTitle,
         },
       ],
@@ -67,31 +69,32 @@ export async function generateMetadata({
 
 export default async function BookPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
+  searchParams: Promise<{ variant?: string }>;
 }) {
   const { locale, slug } = await params;
+  const { variant: variantParam } = await searchParams;
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
-  // 1. Funksiyalardan foydalanamiz (Shunda importlar ishlaydi)
-  const bookTitle = getBookTitle(book, locale);
-  const bookDescription = getBookDescription(book, locale);
-
-  // 2. Narx va rasm uchun variantni topamiz
   const activeVariant =
+    book.variants.find((v) => v.language === variantParam) ||
     book.variants.find((v) => v.language.startsWith(locale)) ||
     book.variants[0];
   const displayImage = activeVariant.variantImage || book.mainCoverImage;
   const finalPrice =
     activeVariant.price.amount - (activeVariant.price.discountAmount ?? 0);
 
+  const bookTitle = getBookTitle(book, locale, variantParam);
+  const bookDescription = getBookDescription(book, locale);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Book",
     name: bookTitle,
     image: `${SITE_URL}${displayImage}`,
-    // ... statistika va boshqalar
     numberOfPages: activeVariant.pageCount,
     isbn: activeVariant.isbn,
     publisher: { "@type": "Organization", name: activeVariant.publisher },
@@ -125,32 +128,26 @@ export default async function BookPage({
             <h1 className="text-4xl font-black mb-2">{bookTitle}</h1>
             <p className="text-xl text-foreground/60 mb-6">{book.author}</p>
 
-            {/* TILLARNI TANLASH (Muhim qism) */}
+            {/* TILLARNI TANLASH */}
             <div className="mb-8">
               <p className="text-sm font-bold mb-3 opacity-50 uppercase tracking-widest">
                 Nashr tili:
               </p>
               <div className="flex flex-wrap gap-3">
-                {book.variants.map((variant) => {
-                  // Til kodini formatlash: 'uz-Latn' bo'lsa 'uz'ga o'giradi
-                  const targetLocale = variant.language.split("-")[0] as Locale;
-
-                  return (
-                    <Link
-                      key={variant.language}
-                      locale={targetLocale} // Sahifa tilini o'zgartiradi
-                      href={`/books/${book.slug}`}
-                      className={`px-4 py-2 rounded-full border transition-all cursor-pointer ${
-                        variant.language === activeVariant.language
-                          ? "bg-primary text-primary-foreground border-primary shadow-md"
-                          : "bg-background border-border hover:border-primary/50"
-                      } ${variant.stockCount === 0 ? "opacity-50 grayscale pointer-events-none" : ""}`}
-                    >
-                      {variant.language.toUpperCase()}
-                      {variant.stockCount === 0 && " (Tugagan)"}
-                    </Link>
-                  );
-                })}
+                {book.variants.map((variant) => (
+                  <Link
+                    key={variant.language}
+                    href={`/books/${book.slug}?variant=${variant.language}`}
+                    className={`px-4 py-2 rounded-full border transition-all cursor-pointer ${
+                      variant.language === activeVariant.language
+                        ? "bg-primary text-primary-foreground border-primary shadow-md"
+                        : "bg-background border-border hover:border-primary/50"
+                    } ${variant.stockCount === 0 ? "opacity-50 grayscale pointer-events-none" : ""}`}
+                  >
+                    {variant.language.toUpperCase()}
+                    {variant.stockCount === 0 && " (Tugagan)"}
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -170,7 +167,7 @@ export default async function BookPage({
               )}
             </div>
 
-            {/* Texnik ma'lumotlar (Variantdan olinadi) */}
+            {/* Texnik ma'lumotlar */}
             <div className="grid grid-cols-2 gap-4 bg-muted/30 p-6 rounded-2xl border border-border">
               <div>
                 <p className="text-xs text-foreground/50 uppercase">ISBN</p>
