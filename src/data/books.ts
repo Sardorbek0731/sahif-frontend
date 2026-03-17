@@ -59,7 +59,7 @@ export const books: readonly Book[] = [
       {
         // Yangi nashr — ingliz tili
         language: "en",
-        titleInLanguage: "Serendipitous encounters on the way to the Top",
+        titleInLanguage: "Serendipitous encounters on the way to the top",
         price: {
           amount: 169000,
           currency: "UZS",

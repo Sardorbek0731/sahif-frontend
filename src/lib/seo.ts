@@ -16,7 +16,7 @@ export function generateAlternates(
           `${SITE_URL}/${loc}${fullPath}`,
         ]),
       ),
-      "x-default": `${SITE_URL}/${routing.defaultLocale}${fullPath}`,
+      "x-default": `${SITE_URL}${fullPath}`,
     },
   };
 }
