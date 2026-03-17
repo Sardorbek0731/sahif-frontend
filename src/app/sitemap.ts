@@ -11,10 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const bookPages = books.map((book) => `/books/${book.slug}`);
   const pages = [...staticPages, ...bookPages];
 
+  const bookCreatedAtMap = new Map(
+    books.map((b) => [`/books/${b.slug}`, b.createdAt]),
+  );
+  const now = new Date();
+
   return pages.flatMap((page) => {
-    const bookCreatedAt = page.startsWith("/books/")
-      ? books.find((b) => `/books/${b.slug}` === page)?.createdAt
-      : undefined;
+    const bookCreatedAt = bookCreatedAtMap.get(page);
 
     const languages = Object.fromEntries(
       locales.map((lang) => [
@@ -25,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return locales.map((locale) => ({
       url: `${SITE_URL}/${locale}${page}`,
-      lastModified: bookCreatedAt ? new Date(bookCreatedAt) : new Date(),
+      lastModified: bookCreatedAt ? new Date(bookCreatedAt) : now,
       changeFrequency: "weekly" as const,
       priority: page === "" ? 1 : page === "/books" ? 0.8 : 0.6,
       alternates: {

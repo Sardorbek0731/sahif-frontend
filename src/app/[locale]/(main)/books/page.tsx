@@ -92,7 +92,6 @@ export default async function Books({
   const filtered = books.filter((book) => {
     if (search) {
       const q = search.toLowerCase();
-      // getBookTitle bu yerda qidiruv uchun ham juda qo'l keladi
       const currentTitle = getBookTitle(book, locale).toLowerCase();
       const hasOriginalTitleMatch =
         book.originalTitle?.toLowerCase().includes(q) ?? false;
@@ -130,14 +129,13 @@ export default async function Books({
               <div className="relative aspect-3/4 w-full">
                 <Image
                   src={displayImage}
-                  alt={displayTitle} // Funksiyadan kelgan nom
+                  alt={displayTitle}
                   fill
                   className="object-cover"
-                  priority={book.isHero}
                 />
               </div>
               <div>
-                <h2>{displayTitle}</h2> {/* Funksiyadan kelgan nom */}
+                <h2>{displayTitle}</h2>
                 <p>{book.author}</p>
                 <p>
                   {finalPrice.toLocaleString()} {activeVariant.price.currency}

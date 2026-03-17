@@ -32,7 +32,6 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${locale}/404`,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",

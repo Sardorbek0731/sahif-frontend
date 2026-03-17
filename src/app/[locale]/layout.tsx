@@ -97,6 +97,7 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const cookieStore = await cookies();
+  const t = await getTranslations({ locale });
 
   const initialTheme = getInitialTheme(cookieStore);
 
@@ -107,6 +108,7 @@ export default async function LocaleLayout({
     alternateName: ["Sahif", SITE_HOSTNAME],
     url: SITE_URL,
     inLanguage: locale,
+    description: t("description"),
     potentialAction: {
       "@type": "SearchAction",
       target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
