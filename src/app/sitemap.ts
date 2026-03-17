@@ -8,11 +8,15 @@ import { books } from "@/data/books";
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = routing.locales;
   const staticPages = ["", "/books"];
-  const bookPages = books.map((book) => `/books/${book.slug}`);
+  const bookPages = books.flatMap((book) =>
+    book.variants.map((variant) => `/books/${book.slug}/${variant.language}`),
+  );
   const pages = [...staticPages, ...bookPages];
 
   const bookCreatedAtMap = new Map(
-    books.map((b) => [`/books/${b.slug}`, b.createdAt]),
+    books.flatMap((b) =>
+      b.variants.map((v) => [`/books/${b.slug}/${v.language}`, b.createdAt]),
+    ),
   );
   const now = new Date();
 
