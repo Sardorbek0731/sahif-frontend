@@ -110,6 +110,8 @@ export default async function BookPage({
       "@type": "AggregateRating",
       ratingValue: book.stats.rating,
       reviewCount: book.stats.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
     },
     offers: {
       "@type": "Offer",
