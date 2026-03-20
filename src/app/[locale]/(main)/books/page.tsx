@@ -126,14 +126,13 @@ export default async function Books({
               key={book.id}
               href={`/books/${book.slug}/${activeVariant.language}`}
             >
-              <div className="relative aspect-3/4 w-full">
-                <Image
-                  src={displayImage}
-                  alt={displayTitle}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <Image
+                src={displayImage}
+                alt={displayTitle}
+                width={200}
+                height={300}
+                className="h-auto"
+              />
               <div>
                 <h2>{displayTitle}</h2>
                 <p>{book.author}</p>

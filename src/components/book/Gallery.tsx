@@ -9,23 +9,20 @@ interface BookGalleryProps {
   alt: string;
 }
 
-export function BookGallery({ cover, gallery, alt }: BookGalleryProps) {
+export function Gallery({ cover, gallery, alt }: BookGalleryProps) {
   const allImages = [cover, ...(gallery ?? [])];
   const [activeImage, setActiveImage] = useState(cover);
 
   return (
     <div className="w-full md:w-80 shrink-0">
       {/* Asosiy rasm */}
-      <div className="relative aspect-3/4 w-full rounded-xl shadow-xl overflow-hidden border border-border">
-        <Image
-          src={activeImage}
-          alt={alt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 320px"
-          priority
-        />
-      </div>
+      <Image
+        src={activeImage}
+        alt={alt}
+        width={300}
+        height={400}
+        className="h-auto"
+      />
 
       {/* Gallery thumbnails */}
       {allImages.length > 0 && (

@@ -30,7 +30,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="my-container row-between">
+    <nav className="my-container row-between mb-4">
       <Link href="/" className="mr-4 flex items-center">
         <Logo className="mr-2 w-10 h-10" />
         <span className="font-asimovian text-2xl">sahif</span>

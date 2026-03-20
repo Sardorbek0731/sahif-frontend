@@ -17,6 +17,8 @@ import { RuFlagIcon } from "./list/ru";
 import { CallCenterIcon } from "./list/call-center";
 import { FlameIcon } from "./list/flame";
 import { ClockIcon } from "./list/clock";
+import { ChevronRightIcon } from "./list/chevron-right";
+import { ChevronLeftIcon } from "./list/chevron-left";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -36,6 +38,8 @@ export const ICON_LIST = {
   callCenter: CallCenterIcon,
   flame: FlameIcon,
   clock: ClockIcon,
+  chevronRight: ChevronRightIcon,
+  chevronLeft: ChevronLeftIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

@@ -7,6 +7,8 @@ import { type Locale } from "@/i18n/routing";
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 
+import Hero from "@/components/home/Hero";
+
 export async function generateMetadata({
   params,
 }: {
@@ -48,5 +50,9 @@ export async function generateMetadata({
 }
 
 export default async function Home() {
-  return <main className="my-container">Home</main>;
+  return (
+    <main className="my-container">
+      <Hero />
+    </main>
+  );
 }

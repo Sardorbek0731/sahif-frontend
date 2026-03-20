@@ -9,7 +9,7 @@ import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
 import { type BookFormat } from "@/types/book";
 
-import { BookGallery } from "@/components/book/book-gallery";
+import { Gallery } from "@/components/book/Gallery";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -143,7 +143,7 @@ export default async function BookPage({
 
       <main className="my-container py-10">
         <div className="flex flex-col md:flex-row gap-10">
-          <BookGallery
+          <Gallery
             cover={displayImage}
             gallery={book.images.gallery}
             alt={bookTitle}
