@@ -11,6 +11,8 @@ import { type BookFormat } from "@/types/book";
 
 import { Gallery } from "@/components/book/Gallery";
 
+import BookActions from "@/components/book/BookActions";
+
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
     books.flatMap((book) =>
@@ -213,6 +215,11 @@ export default async function BookPage({
                 <p className="text-xs text-foreground/50 uppercase">Muqova</p>
                 <p className="font-medium capitalize">{activeVariant.format}</p>
               </div>
+              <BookActions
+                bookId={book.id}
+                slug={book.slug}
+                language={activeVariant.language}
+              />
             </div>
           </div>
         </div>

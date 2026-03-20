@@ -130,18 +130,20 @@ export default function Hero() {
 
           {/* Tugmalar + Dots */}
           <div className="flex items-center gap-3">
-            <Link
+            <Button
+              as={Link}
               href={`/books/${book.slug}/${activeVariant.language}`}
-              className="px-5 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+              className="px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Sotib olish
-            </Link>
-            <Link
+            </Button>
+            <Button
+              as={Link}
               href={`/books/${book.slug}/${activeVariant.language}`}
               className="text-sm text-foreground/50 underline underline-offset-2 hover:text-foreground transition-colors"
             >
               Batafsil
-            </Link>
+            </Button>
 
             {/* Dots */}
             <div className="flex items-center gap-1.5 ml-auto">

@@ -6,6 +6,8 @@ import { SITE_URL } from "@/constants";
 import { generatePrivateMetadata } from "@/lib/metadata";
 import { type Locale } from "@/i18n/routing";
 
+import CartContent from "@/components/cart/CartContent";
+
 export async function generateMetadata({
   params,
 }: {
@@ -24,5 +26,9 @@ export async function generateMetadata({
 }
 
 export default function Cart() {
-  return <main className="my-container">Cart</main>;
+  return (
+    <main className="my-container">
+      <CartContent />
+    </main>
+  );
 }
