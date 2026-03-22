@@ -25,3 +25,5 @@ export const PHONE_DISPLAY = "+998 91 572 3949";
 export const WORKING_HOURS = "9:00 - 22:00";
 
 export const DEFAULT_LOCATION_ID = "tashkent-city";
+
+export const SKIP_WORDS = new Set(["de", "van", "von", "di", "del", "la", "le", "el"]);

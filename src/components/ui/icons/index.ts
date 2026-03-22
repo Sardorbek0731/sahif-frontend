@@ -19,6 +19,8 @@ import { FlameIcon } from "./list/flame";
 import { ClockIcon } from "./list/clock";
 import { ChevronRightIcon } from "./list/chevron-right";
 import { ChevronLeftIcon } from "./list/chevron-left";
+import { MinusIcon } from "./list/minus";
+import { PlusIcon } from "./list/plus";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -40,6 +42,8 @@ export const ICON_LIST = {
   clock: ClockIcon,
   chevronRight: ChevronRightIcon,
   chevronLeft: ChevronLeftIcon,
+  minus: MinusIcon,
+  plus: PlusIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

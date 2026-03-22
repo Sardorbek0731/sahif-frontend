@@ -1,12 +1,13 @@
-// components/cart/CartContent.tsx
 "use client";
+
+import Image from "next/image";
+import { useLocale } from "next-intl";
 
 import { useCartStore } from "@/store/useCartStore";
 import { books } from "@/data/books";
-import { useLocale } from "next-intl";
 import { type Locale } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
-import Image from "next/image";
+import { getAuthor } from "@/lib/author";
 
 export default function CartContent() {
   const locale = useLocale() as Locale;
@@ -28,11 +29,21 @@ export default function CartContent() {
       const variant =
         book.variants.find((v) => v.language === item.language) ??
         book.variants[0];
-      const displayTitle = getBookTitle(book, locale);
-      const displayImage = variant.variantImage ?? book.images.cover;
+      const bookTitle = getBookTitle(book, locale);
+      const bookImage = variant.variantImage ?? book.images.cover;
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
-      return { book, variant, item, displayTitle, displayImage, finalPrice };
+      const author = getAuthor(book.authorSlug);
+      const authorName = author?.name ?? book.authorSlug;
+      return {
+        book,
+        variant,
+        item,
+        bookTitle,
+        bookImage,
+        finalPrice,
+        authorName,
+      };
     })
     .filter(Boolean);
 
@@ -51,17 +62,17 @@ export default function CartContent() {
             className="flex items-center gap-4 p-4 bg-card rounded-lg"
           >
             <Image
-              src={b.displayImage}
-              alt={b.displayTitle}
+              src={b.bookImage}
+              alt={b.bookTitle}
               width={60}
               height={90}
               className="h-auto rounded-md"
             />
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">
-                {b.displayTitle}
+                {b.bookTitle}
               </p>
-              <p className="text-xs text-foreground/50">{b.book.author}</p>
+              <p className="text-xs text-foreground/50">{b.authorName}</p>
               <p className="text-xs text-foreground/50">{b.variant.language}</p>
             </div>
             <div className="flex items-center gap-2">

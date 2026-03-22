@@ -5,12 +5,12 @@ import { type Locale, routing, Link } from "@/i18n/routing";
 import { books } from "@/data/books";
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
+import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
 import { type BookFormat } from "@/types/book";
 
 import { Gallery } from "@/components/book/Gallery";
-
 import BookActions from "@/components/book/BookActions";
 
 export function generateStaticParams() {
@@ -39,7 +39,7 @@ export async function generateMetadata({
   const bookDescription = getBookDescription(book, locale);
 
   const activeVariant = getActiveVariant(book, variantParam, locale);
-  const displayImage = activeVariant.variantImage || book.images.cover;
+  const bookImage = activeVariant.variantImage || book.images.cover;
 
   const title = `${bookTitle} | sahif`;
 
@@ -56,7 +56,7 @@ export async function generateMetadata({
       type: "book",
       images: [
         {
-          url: `${SITE_URL}${displayImage}`,
+          url: `${SITE_URL}${bookImage}`,
           alt: bookTitle,
         },
       ],
@@ -65,7 +65,7 @@ export async function generateMetadata({
       card: "summary",
       title,
       description: bookDescription,
-      images: [`${SITE_URL}${displayImage}`],
+      images: [`${SITE_URL}${bookImage}`],
     },
   };
 }
@@ -80,8 +80,11 @@ export default async function BookPage({
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
+  const author = getAuthor(book.authorSlug);
+  const authorName = author?.name ?? book.authorSlug;
+
   const activeVariant = getActiveVariant(book, variantParam, locale);
-  const displayImage = activeVariant.variantImage || book.images.cover;
+  const bookImage = activeVariant.variantImage || book.images.cover;
   const finalPrice =
     activeVariant.price.amount - (activeVariant.price.discountAmount ?? 0);
 
@@ -99,9 +102,9 @@ export default async function BookPage({
     "@context": "https://schema.org",
     "@type": "Book",
     name: bookTitle,
-    author: { "@type": "Person", name: book.author },
+    author: { "@type": "Person", name: authorName },
     description: bookDescription,
-    image: `${SITE_URL}${displayImage}`,
+    image: `${SITE_URL}${bookImage}`,
     inLanguage: activeVariant.language,
     numberOfPages: activeVariant.pageCount,
     isbn: activeVariant.isbn,
@@ -146,14 +149,14 @@ export default async function BookPage({
       <main className="my-container py-10">
         <div className="flex flex-col md:flex-row gap-10">
           <Gallery
-            cover={displayImage}
+            cover={bookImage}
             gallery={book.images.gallery}
             alt={bookTitle}
           />
 
           <div className="flex-1">
             <h1 className="text-4xl font-black mb-2">{bookTitle}</h1>
-            <p className="text-xl text-foreground/60 mb-6">{book.author}</p>
+            <p className="text-xl text-foreground/60 mb-6">{authorName}</p>
 
             <div className="mb-8">
               <p className="text-sm font-bold mb-3 opacity-50 uppercase tracking-widest">
@@ -192,6 +195,12 @@ export default async function BookPage({
               )}
             </div>
 
+            <BookActions
+              bookId={book.id}
+              slug={book.slug}
+              language={activeVariant.language}
+            />
+
             <div className="grid grid-cols-2 gap-4 bg-muted/30 p-6 rounded-2xl border border-border">
               <div>
                 <p className="text-xs text-foreground/50 uppercase">ISBN</p>
@@ -215,11 +224,6 @@ export default async function BookPage({
                 <p className="text-xs text-foreground/50 uppercase">Muqova</p>
                 <p className="font-medium capitalize">{activeVariant.format}</p>
               </div>
-              <BookActions
-                bookId={book.id}
-                slug={book.slug}
-                language={activeVariant.language}
-              />
             </div>
           </div>
         </div>

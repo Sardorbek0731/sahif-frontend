@@ -25,7 +25,7 @@ export default function NavLinks() {
     getServerSnapshot,
   );
 
-  const cartCount = useCartStore((s) => s.totalItems());
+  const cartCount = useCartStore((s) => s.totalUniqueItems());
   const wishlistCount = useWishlistStore((s) => s.totalItems());
 
   const navLinks: NavLink[] = [

@@ -11,6 +11,12 @@
   "home": {
     "metadata": {
       "title": "Best books, fast delivery and great prices!"
+    },
+    "hero": {
+      "author": "Author",
+      "details": "View details",
+      "new": "New",
+      "bestseller": "Bestseller"
     }
   },
 
@@ -224,5 +230,8 @@
         "description": "Traditions, customs, and cultural heritage"
       }
     }
+  },
+  "actions": {
+    "addToCart": "Add to cart"
   }
 }

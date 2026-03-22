@@ -1,13 +1,14 @@
-// components/wishlist/WishlistContent.tsx
 "use client";
+
+import Image from "next/image";
+import { useLocale } from "next-intl";
 
 import { useWishlistStore } from "@/store/useWishlistStore";
 import { useCartStore } from "@/store/useCartStore";
 import { books } from "@/data/books";
-import { useLocale } from "next-intl";
 import { type Locale, Link } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
-import Image from "next/image";
+import { getAuthor } from "@/lib/author";
 
 export default function WishlistContent() {
   const locale = useLocale() as Locale;
@@ -29,11 +30,21 @@ export default function WishlistContent() {
       const variant =
         book.variants.find((v) => v.language === item.language) ??
         book.variants[0];
-      const displayTitle = getBookTitle(book, locale);
-      const displayImage = variant.variantImage ?? book.images.cover;
+      const bookTitle = getBookTitle(book, locale);
+      const bookImage = variant.variantImage ?? book.images.cover;
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
-      return { book, variant, item, displayTitle, displayImage, finalPrice };
+      const author = getAuthor(book.authorSlug);
+      const authorName = author?.name ?? book.authorSlug;
+      return {
+        book,
+        variant,
+        item,
+        bookTitle,
+        bookImage,
+        finalPrice,
+        authorName,
+      };
     })
     .filter(Boolean);
 
@@ -48,8 +59,8 @@ export default function WishlistContent() {
           >
             <Link href={`/books/${b.book.slug}/${b.item.language}`}>
               <Image
-                src={b.displayImage}
-                alt={b.displayTitle}
+                src={b.bookImage}
+                alt={b.bookTitle}
                 width={60}
                 height={90}
                 className="h-auto rounded-md"
@@ -58,10 +69,10 @@ export default function WishlistContent() {
             <div className="flex-1">
               <Link href={`/books/${b.book.slug}/${b.item.language}`}>
                 <p className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                  {b.displayTitle}
+                  {b.bookTitle}
                 </p>
               </Link>
-              <p className="text-xs text-foreground/50">{b.book.author}</p>
+              <p className="text-xs text-foreground/50">{b.authorName}</p>
               <p className="text-sm font-medium mt-1">
                 {b.finalPrice.toLocaleString()} UZS
               </p>

@@ -60,7 +60,7 @@ export interface Book {
   // --- Global (O'zgarmas) Ma'lumotlar ---
   readonly id: number; // Baza uchun ID
   readonly slug: string; // URL uchun identifikator
-  readonly author: string; // Muallif ismi
+  readonly authorSlug: string;
   readonly categorySlugs: CategorySlug[]; // Janrlar (slub ko'rinishida)
 
   // --- Kitob haqida qisqacha ma'lumot (Marketing tavsifi) ---
@@ -76,7 +76,6 @@ export interface Book {
 
   // --- UI va Marketing (Flaglar) ---
   readonly stats: BookStats;
-  readonly isHero: boolean; // Bosh sahifadagi slayder uchun
   readonly isBestseller: boolean; // "Bestseller" belgisi
   readonly isNew: boolean; // "Yangi" belgisi
 

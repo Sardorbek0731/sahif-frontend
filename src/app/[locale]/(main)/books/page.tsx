@@ -9,6 +9,7 @@ import { generateAlternates } from "@/lib/seo";
 
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
+import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
 
 import BookCardActions from "@/components/books/BookCardActions";
@@ -95,12 +96,13 @@ export default async function Books({
     if (search) {
       const q = search.toLowerCase();
       const currentTitle = getBookTitle(book, locale).toLowerCase();
-      const hasOriginalTitleMatch =
-        book.originalTitle?.toLowerCase().includes(q) ?? false;
-      const hasAuthorMatch = book.author.toLowerCase().includes(q);
+      const author = getAuthor(book.authorSlug);
+      const authorName = author?.name ?? book.authorSlug;
 
       return (
-        currentTitle.includes(q) || hasOriginalTitleMatch || hasAuthorMatch
+        currentTitle.includes(q) ||
+        (book.originalTitle?.toLowerCase().includes(q) ?? false) ||
+        authorName.toLowerCase().includes(q)
       );
     }
 
@@ -114,49 +116,50 @@ export default async function Books({
     <main className="my-container py-10">
       <div className="grid grid-cols-4 gap-6">
         {filtered.map((book) => {
-          const displayTitle = getBookTitle(book, locale);
+          const bookTitle = getBookTitle(book, locale);
+          const author = getAuthor(book.authorSlug);
+          const authorName = author?.name ?? book.authorSlug;
           const activeVariant =
             book.variants.find((v) => v.language.startsWith(locale)) ||
             book.variants[0];
           const finalPrice =
             activeVariant.price.amount -
             (activeVariant.price.discountAmount ?? 0);
-          const displayImage = activeVariant.variantImage || book.images.cover;
+          const bookImage = activeVariant.variantImage || book.images.cover;
 
           return (
-            <Link
-              key={book.id}
-              href={`/books/${book.slug}/${activeVariant.language}`}
-            >
-              <Image
-                src={displayImage}
-                alt={displayTitle}
-                width={200}
-                height={300}
-                className="h-auto"
-              />
-              <div>
-                <h2>{displayTitle}</h2>
-                <p>{book.author}</p>
-                <p>
-                  {finalPrice.toLocaleString()} {activeVariant.price.currency}
-                </p>
-                {activeVariant.price.discountAmount && (
-                  <span className="line-through opacity-50">
-                    {activeVariant.price.amount.toLocaleString()}
-                  </span>
-                )}
-                {activeVariant.stockCount === 0 && (
-                  <span className="text-red-500 text-xs block">Tugagan</span>
-                )}
-
-                <BookCardActions
-                  bookId={book.id}
-                  slug={book.slug}
-                  language={activeVariant.language}
+            <div key={book.id} className="relative">
+              <Link
+                key={book.id}
+                href={`/books/${book.slug}/${activeVariant.language}`}
+              >
+                <Image
+                  src={bookImage}
+                  alt={bookTitle}
+                  width={200}
+                  height={300}
+                  className="h-auto"
                 />
-              </div>
-            </Link>
+                <h2>{bookTitle}</h2>
+              </Link>
+              <p>{authorName}</p>
+              <p>
+                {finalPrice.toLocaleString()} {activeVariant.price.currency}
+              </p>
+              {activeVariant.price.discountAmount && (
+                <span className="line-through opacity-50">
+                  {activeVariant.price.amount.toLocaleString()}
+                </span>
+              )}
+              <BookCardActions
+                bookId={book.id}
+                slug={book.slug}
+                language={activeVariant.language}
+              />
+              {activeVariant.stockCount === 0 && (
+                <span className="text-red-500 text-xs block">Tugagan</span>
+              )}
+            </div>
           );
         })}
       </div>

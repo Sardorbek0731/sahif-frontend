@@ -11,6 +11,12 @@
   "home": {
     "metadata": {
       "title": "Eng sara kitoblar, tez yetkazib berish va qulay narxlar!"
+    },
+    "hero": {
+      "author": "Muallif",
+      "details": "Batafsil",
+      "new": "Yangi",
+      "bestseller": "Bestseller"
     }
   },
 
@@ -224,5 +230,8 @@
         "description": "An’ana, urf-odat va madaniy meros"
       }
     }
+  },
+  "actions": {
+    "addToCart": "Savatchaga"
   }
 }

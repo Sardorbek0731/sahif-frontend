@@ -7,7 +7,7 @@ export interface CartItem {
   language: string;
   quantity: number;
 }
- 
+
 interface CartStore {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">) => void;
@@ -15,23 +15,24 @@ interface CartStore {
   updateQuantity: (bookId: number, language: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: () => number;
+  totalUniqueItems: () => number;
 }
- 
+
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
- 
+
       addItem: (item) => {
         const existing = get().items.find(
-          (i) => i.bookId === item.bookId && i.language === item.language
+          (i) => i.bookId === item.bookId && i.language === item.language,
         );
         if (existing) {
           set((state) => ({
             items: state.items.map((i) =>
               i.bookId === item.bookId && i.language === item.language
                 ? { ...i, quantity: i.quantity + 1 }
-                : i
+                : i,
             ),
           }));
         } else {
@@ -40,15 +41,15 @@ export const useCartStore = create<CartStore>()(
           }));
         }
       },
- 
+
       removeItem: (bookId, language) => {
         set((state) => ({
           items: state.items.filter(
-            (i) => !(i.bookId === bookId && i.language === language)
+            (i) => !(i.bookId === bookId && i.language === language),
           ),
         }));
       },
- 
+
       updateQuantity: (bookId, language, quantity) => {
         if (quantity <= 0) {
           get().removeItem(bookId, language);
@@ -58,16 +59,17 @@ export const useCartStore = create<CartStore>()(
           items: state.items.map((i) =>
             i.bookId === bookId && i.language === language
               ? { ...i, quantity }
-              : i
+              : i,
           ),
         }));
       },
- 
+
       clearCart: () => set({ items: [] }),
- 
-      totalItems: () =>
-        get().items.reduce((sum, i) => sum + i.quantity, 0),
+
+      totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
+
+      totalUniqueItems: () => get().items.length,
     }),
-    { name: "cart" }
-  )
+    { name: "cart" },
+  ),
 );

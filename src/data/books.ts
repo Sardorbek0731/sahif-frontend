@@ -4,7 +4,7 @@ export const books: readonly Book[] = [
   {
     id: 1,
     slug: "yuksaklik-sari-100-ta-uchrashuv",
-    author: "Otabek Mahkamov",
+    authorSlug: "otabek-mahkamov",
     categorySlugs: ["motivation", "biography-memoirs", "self-development"],
     description: {
       uz: "Muallifning 52 davlatga sayohati davomida Hillari Klinton, Gordon Ramzi va Antonio Banderas kabi 100 ta jahon yulduzi bilan uchrashuvlari tafsiloti. Bu shunchaki xotiralar emas, balki muvaffaqiyatli shaxslardan olingan hayotiy saboqlar va motivatsiya to'plamidir.",
@@ -13,14 +13,12 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Yuksaklik sari tasodif bo'lmagan 100 ta uchrashuv",
     originalLanguage: "uz",
-    images: {
-      cover: "/books/yuksaklik-sari-100-ta-uchrashuv/cover.jpg",
-    },
+    images: { cover: "/books/yuksaklik-sari-100-ta-uchrashuv/cover.jpg" },
     variants: [
       {
         language: "uz-Latn",
         titleInLanguage: "Yuksaklik sari tasodif bo'lmagan 100 ta uchrashuv",
-        price: { amount: 237000, currency: "UZS" },
+        price: { amount: 237000, currency: "UZS", discountAmount: 15000 },
         stockCount: 50,
         stockStatus: "in-stock",
         isbn: "9789943719576",
@@ -67,7 +65,6 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.8, reviewCount: 320, salesCount: 5000 },
-    isHero: true,
     isBestseller: true,
     isNew: false,
     createdAt: "2024-11-26T08:00:00Z",
@@ -76,7 +73,7 @@ export const books: readonly Book[] = [
   {
     id: 2,
     slug: "le-petit-prince",
-    author: "Antoine de Saint-Exupéry",
+    authorSlug: "antoine-de-saint-exupéry",
     categorySlugs: [
       "classic-literature",
       "fairy-tales",
@@ -90,9 +87,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Le Petit Prince",
     originalLanguage: "fr",
-    images: {
-      cover: "/books/le-petit-prince/cover.jpg",
-    },
+    images: { cover: "/books/le-petit-prince/cover.jpg" },
     variants: [
       {
         language: "fr",
@@ -147,16 +142,15 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.9, reviewCount: 1240, salesCount: 15000 },
-    isHero: false,
-    isBestseller: true,
-    isNew: false,
+    isBestseller: false,
+    isNew: true,
     createdAt: "2024-11-20T10:00:00Z",
   },
 
   {
     id: 3,
     slug: "steve-jobs",
-    author: "Walter Isaacson",
+    authorSlug: "walter-isaacson",
     categorySlugs: [
       "biography-memoirs",
       "it-programming",
@@ -170,9 +164,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Steve Jobs",
     originalLanguage: "en",
-    images: {
-      cover: "/books/steve-jobs/cover.jpg",
-    },
+    images: { cover: "/books/steve-jobs/cover.jpg" },
     variants: [
       {
         language: "en",
@@ -236,7 +228,6 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.9, reviewCount: 5200, salesCount: 30000 },
-    isHero: true,
     isBestseller: true,
     isNew: false,
     createdAt: "2024-11-30T12:00:00Z",
@@ -245,7 +236,7 @@ export const books: readonly Book[] = [
   {
     id: 4,
     slug: "atomic-habits",
-    author: "James Clear",
+    authorSlug: "james-clear",
     categorySlugs: ["self-development", "psychology", "motivation"],
     description: {
       uz: "Kichik o'zgarishlar katta natijalarga olib keladi. James Clear odatlarni qanday shakllantirishni va yomon odatlardan qanday qutulishni amaliy va ilmiy asosda tushuntiradi. Dunyo bo'ylab 25 milliondan ortiq nusxada sotilgan.",
@@ -254,9 +245,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Atomic Habits",
     originalLanguage: "en",
-    images: {
-      cover: "/books/atomic-habits/cover.jpg",
-    },
+    images: { cover: "/books/atomic-habits/cover.jpg" },
     variants: [
       {
         language: "en",
@@ -337,16 +326,15 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.9, reviewCount: 8900, salesCount: 45000 },
-    isHero: true,
-    isBestseller: true,
-    isNew: false,
+    isBestseller: false,
+    isNew: true,
     createdAt: "2024-12-01T09:00:00Z",
   },
 
   {
     id: 5,
     slug: "o-alquimista",
-    author: "Paulo Coelho",
+    authorSlug: "paulo-coelho",
     categorySlugs: [
       "classic-literature",
       "philosophy",
@@ -360,9 +348,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "O Alquimista",
     originalLanguage: "pt",
-    images: {
-      cover: "/books/o-alquimista/cover.jpg",
-    },
+    images: { cover: "/books/o-alquimista/cover.jpg" },
     variants: [
       {
         language: "pt",
@@ -443,8 +429,7 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.8, reviewCount: 12400, salesCount: 62000 },
-    isHero: false,
-    isBestseller: true,
+    isBestseller: false,
     isNew: false,
     createdAt: "2024-12-05T10:00:00Z",
   },
@@ -452,7 +437,7 @@ export const books: readonly Book[] = [
   {
     id: 6,
     slug: "rich-dad-poor-dad",
-    author: "Robert T. Kiyosaki",
+    authorSlug: "robert-t-kiyosaki",
     categorySlugs: ["business-finance", "self-development", "motivation"],
     description: {
       uz: "Dunyo bo'ylab 40 milliondan ortiq nusxada sotilgan moliyaviy savodxonlik klassikasi. Kiyosaki boy va kambag'al otalarning pul haqidagi tafakkuri qanday farq qilishini va moliyaviy erkinlikka qanday erishishni tushuntiradi.",
@@ -461,9 +446,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Rich Dad Poor Dad",
     originalLanguage: "en",
-    images: {
-      cover: "/books/rich-dad-poor-dad/cover.jpg",
-    },
+    images: { cover: "/books/rich-dad-poor-dad/cover.jpg" },
     variants: [
       {
         language: "en",
@@ -518,8 +501,7 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.7, reviewCount: 9800, salesCount: 52000 },
-    isHero: false,
-    isBestseller: true,
+    isBestseller: false,
     isNew: false,
     createdAt: "2024-12-08T09:00:00Z",
   },
@@ -527,7 +509,7 @@ export const books: readonly Book[] = [
   {
     id: 7,
     slug: "1984",
-    author: "George Orwell",
+    authorSlug: "george-orwell",
     categorySlugs: ["classic-literature", "science-fiction", "politics"],
     description: {
       uz: "Buyuk Britaniyalik yozuvchi Jorj Oruellning dystopik romani. Totalitar jamiyatda yashovchi Winston Smitning erkinlik va haqiqat izlashdagi kurashi. Barcha zamonlar klassikasi.",
@@ -536,9 +518,7 @@ export const books: readonly Book[] = [
     },
     originalTitle: "Nineteen Eighty-Four",
     originalLanguage: "en",
-    images: {
-      cover: "/books/1984/cover.jpg",
-    },
+    images: { cover: "/books/1984/cover.jpg" },
     variants: [
       {
         language: "en",
@@ -593,7 +573,6 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.8, reviewCount: 14200, salesCount: 38000 },
-    isHero: false,
     isBestseller: true,
     isNew: false,
     createdAt: "2024-12-10T10:00:00Z",
