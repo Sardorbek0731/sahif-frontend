@@ -4,8 +4,8 @@
   "pages": {
     "books": "Kitoblar",
     "cart": "Savatcha",
-    "login": "Kirish",
-    "wishlist": "Sevimlilar"
+    "wishlist": "Sevimlilar",
+    "profile": "Profil"
   },
 
   "home": {
@@ -262,11 +262,15 @@
       }
     }
   },
+
   "actions": {
     "addToCart": "Savatchaga"
   },
+
   "auth": {
+    "logout": "Chiqish",
     "login": {
+      "title": "Kirish",
       "phone": {
         "title": "Kirish",
         "description": "Telefon raqamingizni kiriting — SMS kod yuboramiz.",

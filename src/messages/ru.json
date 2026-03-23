@@ -4,8 +4,8 @@
   "pages": {
     "books": "Книги",
     "cart": "Корзина",
-    "login": "Войти",
-    "wishlist": "Избранное"
+    "wishlist": "Избранное",
+    "profile": "Профиль"
   },
 
   "home": {
@@ -262,11 +262,15 @@
       }
     }
   },
+
   "actions": {
     "addToCart": "В корзину"
   },
+
   "auth": {
+    "logout": "Выйти",
     "login": {
+      "title": "Войти",
       "phone": {
         "title": "Вход",
         "description": "Введите номер телефона — отправим код.",

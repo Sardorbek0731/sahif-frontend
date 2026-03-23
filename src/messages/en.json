@@ -4,8 +4,8 @@
   "pages": {
     "books": "Books",
     "cart": "Cart",
-    "login": "Login",
-    "wishlist": "Wishlist"
+    "wishlist": "Wishlist",
+    "profile": "Profile"
   },
 
   "home": {
@@ -262,11 +262,15 @@
       }
     }
   },
+
   "actions": {
     "addToCart": "Add to cart"
   },
+
   "auth": {
+    "logout": "Log out",
     "login": {
+      "title": "Sign in",
       "phone": {
         "title": "Sign in",
         "description": "Enter your phone number — we'll send you a code.",
