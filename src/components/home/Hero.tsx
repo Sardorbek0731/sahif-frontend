@@ -63,7 +63,7 @@ export default function Hero() {
     .join("");
 
   return (
-    <div className="relative w-full bg-card rounded-lg row-between p-8 h-100">
+    <section className="relative w-full bg-card rounded-lg row-between p-6 h-100">
       <div
         className={`w-[60%] flex flex-col items-start h-full justify-between overflow-hidden transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
@@ -78,16 +78,18 @@ export default function Hero() {
           </span>
         )}
 
-        <Link
-          href={`/books/${book.slug}/${activeVariant.language}`}
-          className="hover:text-primary transition-colors"
-        >
-          <h1 className="text-2xl font-bold mb-2">{bookTitle}</h1>
-        </Link>
+        <div>
+          <Link
+            href={`/books/${book.slug}/${activeVariant.language}`}
+            className="hover:text-primary transition-colors"
+          >
+            <h1 className="text-2xl font-bold mb-2">{bookTitle}</h1>
+          </Link>
 
-        <p className="mb-4 text-foreground/75 line-clamp-3">
-          {book.description[locale]}
-        </p>
+          <p className="mb-4 text-foreground/75 line-clamp-3">
+            {book.description[locale]}
+          </p>
+        </div>
 
         <Link
           href={`/authors/${book.authorSlug}`}
@@ -133,7 +135,7 @@ export default function Hero() {
       </div>
 
       <div
-        className={`absolute right-8 top-8 bottom-8 transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
+        className={`absolute right-6 top-6 bottom-6 transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
         <div
           className="absolute inset-0 rounded-xl bg-primary/20 border border-primary/40"
@@ -155,7 +157,7 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center">
         <Button
           onClick={prev}
           leftIcon="chevronLeft"
@@ -184,6 +186,6 @@ export default function Hero() {
           className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 ml-3 hover:border-foreground/75 hover:bg-foreground/10"
         />
       </div>
-    </div>
+    </section>
   );
 }

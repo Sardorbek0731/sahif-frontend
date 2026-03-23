@@ -21,6 +21,10 @@ import { ChevronRightIcon } from "./list/chevron-right";
 import { ChevronLeftIcon } from "./list/chevron-left";
 import { MinusIcon } from "./list/minus";
 import { PlusIcon } from "./list/plus";
+import { NotebookTextIcon } from "./list/notebook-text";
+import { TruckIcon } from "./list/truck";
+import { ShieldCheckIcon } from "./list/shield-check";
+import { SparklesIcon } from "./list/sparkles";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -44,6 +48,10 @@ export const ICON_LIST = {
   chevronLeft: ChevronLeftIcon,
   minus: MinusIcon,
   plus: PlusIcon,
+  notebookText: NotebookTextIcon,
+  truck: TruckIcon,
+  shieldCheck: ShieldCheckIcon,
+  sparkles: SparklesIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;

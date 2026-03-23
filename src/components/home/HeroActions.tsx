@@ -40,7 +40,7 @@ export default function HeroActions({ bookId, slug, language }: Props) {
             onClick={decrement}
             leftIcon="minus"
             iconSize={16}
-            className="border-r border-r-foreground/50 pr-2 mr-4 text-foreground/60 hover:text-foreground"
+            className="border-r border-Savatchar-foreground/50 pr-2 mr-4 text-foreground/60 hover:text-foreground"
           />
           <span>{inCart.quantity}</span>
           <Button
@@ -55,7 +55,7 @@ export default function HeroActions({ bookId, slug, language }: Props) {
           onClick={addToCart}
           leftIcon="cart"
           iconSize={16}
-          className="bg-black text-white px-4 h-10 mr-4"
+          className="bg-foreground text-background px-4 h-10 mr-4"
         >
           {t("addToCart")}
         </Button>

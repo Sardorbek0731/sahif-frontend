@@ -17,6 +17,37 @@
       "details": "View details",
       "new": "New",
       "bestseller": "Bestseller"
+    },
+    "features": {
+      "eyebrow": "Why sahif?",
+      "heading": "Book shopping has never been this easy",
+      "subheading": "Thousands of books, fast delivery, secure checkout — all in one place.",
+      "items": {
+        "catalog": {
+          "title": "Huge catalog",
+          "description": "Thousands of titles from Uzbek, Russian and international publishers. Filter by genre, author, or topic."
+        },
+        "delivery": {
+          "title": "Fast delivery",
+          "description": "Order from anywhere — we'll bring it straight to your door, nationwide."
+        },
+        "search": {
+          "title": "Smart search",
+          "description": "Find any book instantly by title, author, or ISBN. Search understands both Uzbek and Russian."
+        },
+        "payment": {
+          "title": "Secure payment",
+          "description": "Click, Payme, or bank card — choose your preferred method. Every transaction is encrypted."
+        },
+        "recommendations": {
+          "title": "Personal picks",
+          "description": "We recommend new books based on your reading history and favourite genres."
+        },
+        "support": {
+          "title": "24/7 support",
+          "description": "Got a question? Our team is always ready via chat, phone, or Telegram."
+        }
+      }
     }
   },
 

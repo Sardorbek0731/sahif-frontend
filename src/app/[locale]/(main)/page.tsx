@@ -8,6 +8,7 @@ import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
+import Features from "@/components/home/Features";
 
 export async function generateMetadata({
   params,
@@ -53,6 +54,7 @@ export default async function Home() {
   return (
     <main className="my-container">
       <Hero />
+      <Features />
     </main>
   );
 }
