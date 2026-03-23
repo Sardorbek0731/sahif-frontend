@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
 import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
 import { IconName } from "../ui/icons";
@@ -19,6 +20,7 @@ interface NavLink {
 
 export default function NavLinks() {
   const tPages = useTranslations("pages");
+
   const isMounted = useSyncExternalStore(
     subscribe,
     getClientSnapshot,
@@ -27,6 +29,7 @@ export default function NavLinks() {
 
   const cartCount = useCartStore((s) => s.totalUniqueItems());
   const wishlistCount = useWishlistStore((s) => s.totalItems());
+  const { isAuthenticated, user } = useAuthStore();
 
   const navLinks: NavLink[] = [
     {
@@ -42,12 +45,6 @@ export default function NavLinks() {
       label: tPages("cart"),
       mr: true,
       count: isMounted ? cartCount : 0,
-    },
-    {
-      href: "/login",
-      icon: "login",
-      label: tPages("login"),
-      mr: false,
     },
   ];
 
@@ -69,6 +66,26 @@ export default function NavLinks() {
           )}
         </Button>
       ))}
+
+      {isMounted && isAuthenticated ? (
+        <Button
+          as={Link}
+          href="/profile"
+          leftIcon="user"
+          className="relative bg-card hover:bg-card-hover h-10 px-4"
+        >
+          {user?.name}
+        </Button>
+      ) : (
+        <Button
+          as={Link}
+          href="/login"
+          leftIcon="login"
+          className="relative bg-card hover:bg-card-hover h-10 px-4"
+        >
+          {tPages("login")}
+        </Button>
+      )}
     </div>
   );
 }

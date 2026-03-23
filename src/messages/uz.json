@@ -264,5 +264,30 @@
   },
   "actions": {
     "addToCart": "Savatchaga"
+  },
+  "auth": {
+    "login": {
+      "phone": {
+        "title": "Kirish",
+        "description": "Telefon raqamingizni kiriting — SMS kod yuboramiz.",
+        "label": "Telefon raqam",
+        "submit": "Kod yuborish",
+        "loading": "Yuborilmoqda..."
+      },
+      "otp": {
+        "title": "SMS kodni kiriting",
+        "description": "Kodni yubordik:",
+        "back": "Orqaga",
+        "loading": "Tekshirilmoqda..."
+      },
+      "name": {
+        "title": "Ismingiz",
+        "description": "Birinchi marta kiryapsiz. Ismingizni kiriting.",
+        "label": "Ism",
+        "placeholder": "Masalan: Jasur",
+        "submit": "Boshlash",
+        "loading": "Saqlanmoqda..."
+      }
+    }
   }
 }

@@ -25,6 +25,7 @@ import { NotebookTextIcon } from "./list/notebook-text";
 import { TruckIcon } from "./list/truck";
 import { ShieldCheckIcon } from "./list/shield-check";
 import { SparklesIcon } from "./list/sparkles";
+import { UserIcon } from "./list/user";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -52,6 +53,7 @@ export const ICON_LIST = {
   truck: TruckIcon,
   shieldCheck: ShieldCheckIcon,
   sparkles: SparklesIcon,
+  user: UserIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;
