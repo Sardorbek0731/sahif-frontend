@@ -6,17 +6,20 @@ export function generateAlternates(
   path = "",
   canonicalUrl?: string,
 ) {
-  const fullPath = path ? `/${path}` : "";
+  const formattedPath = path ? (path.startsWith("/") ? path : `/${path}`) : "";
+
+  const baseUrl = `${SITE_URL}/${locale}${formattedPath}`;
+
   return {
-    canonical: canonicalUrl ?? `${SITE_URL}/${locale}${fullPath}`,
+    canonical: canonicalUrl ?? baseUrl,
     languages: {
       ...Object.fromEntries(
         routing.locales.map((loc) => [
-          HREFLANG_LOCALES[loc],
-          `${SITE_URL}/${loc}${fullPath}`,
+          HREFLANG_LOCALES[loc as Locale],
+          `${SITE_URL}/${loc}${formattedPath}`,
         ]),
       ),
-      "x-default": `${SITE_URL}${fullPath}`,
+      "x-default": `${SITE_URL}/${routing.defaultLocale}${formattedPath}`,
     },
   };
 }

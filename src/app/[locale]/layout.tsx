@@ -106,7 +106,7 @@ export default async function LocaleLayout({
     "@type": "WebSite",
     name: "sahif",
     alternateName: ["Sahif", SITE_HOSTNAME],
-    url: SITE_URL,
+    url: `${SITE_URL}/${locale}`,
     inLanguage: locale,
     description: t("description"),
     potentialAction: {
