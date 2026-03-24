@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
-import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";

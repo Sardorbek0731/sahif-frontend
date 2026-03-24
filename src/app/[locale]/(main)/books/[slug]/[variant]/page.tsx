@@ -11,7 +11,7 @@ import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
 import { type BookFormat } from "@/types/book";
 
 import { Gallery } from "@/components/book/Gallery";
-import BookActions from "@/components/book/BookActions";
+import BookActions from "@/components/shared/BookActions";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -204,6 +204,7 @@ export default async function BookPage({
               bookId={book.id}
               slug={book.slug}
               language={activeVariant.language}
+              variant="detail"
             />
 
             <div className="grid grid-cols-2 gap-4 bg-muted/30 p-6 rounded-2xl border border-border">

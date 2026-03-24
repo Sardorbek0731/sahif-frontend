@@ -2,16 +2,23 @@
 
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  maxWidth?: string; 
+  className?: string; 
 };
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+export default function Modal({ 
+  isOpen, 
+  onClose, 
+  children, 
+  maxWidth = "max-w-sm", 
+  className = "p-8"      
+}: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,14 +45,14 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
       className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm row-center px-4"
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
-      <div className="relative w-full max-w-sm rounded-lg bg-card border border-foreground/10 p-8 shadow-xl">
+      <div className={`relative w-full ${maxWidth} rounded-xl bg-background border border-foreground/10 shadow-xl ${className}`}>
         <Button
           onClick={onClose}
           leftIcon="x"
           iconSize={18}
-          iconStyle="text-foreground/50 hover:text-foreground transition-colors"
-          className="absolute right-4 top-4 w-8 h-8 justify-center bg-transparent hover:bg-foreground/5"
+          className="absolute right-4 top-4 w-8 h-8 justify-center bg-transparent hover:bg-foreground/5 p-0"
         />
+        
         {children}
       </div>
     </div>,

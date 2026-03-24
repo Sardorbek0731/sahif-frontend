@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 import { type Locale, useRouter, usePathname } from "@/i18n/routing";
 import { languages } from "@/data/lang";
 import { setThemeCookies } from "@/lib/cookies";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
 
 export default function LanguageSwitcher() {

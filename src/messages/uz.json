@@ -5,7 +5,8 @@
     "books": "Kitoblar",
     "cart": "Savatcha",
     "wishlist": "Sevimlilar",
-    "profile": "Profil"
+    "profile": "Profil",
+    "admin": "Admin"
   },
 
   "home": {
@@ -16,7 +17,8 @@
       "author": "Muallif",
       "details": "Batafsil",
       "new": "Yangi",
-      "bestseller": "Bestseller"
+      "bestseller": "Bestseller",
+      "trending": "Trend"
     },
     "features": {
       "eyebrow": "Nima uchun sahif?",

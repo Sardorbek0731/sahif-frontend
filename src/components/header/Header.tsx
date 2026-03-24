@@ -1,7 +1,7 @@
 import Location from "@/components/location/Location";
 import LangSwitcher from "@/components/lang/Lang";
 import ThemeToggle from "@/components/theme/Theme";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { PHONE_NUMBER, PHONE_DISPLAY, WORKING_HOURS } from "@/constants";
 
 export default function Header({

@@ -1,15 +1,16 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useState } from "react";
 import { Link } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
-import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import { IconName } from "../ui/icons";
 import UserMenu from "@/components/navbar/UserMenu";
+import LoginModal from "@/components/auth/LoginModal";
 
 interface NavLink {
   href: string;
@@ -21,16 +22,12 @@ interface NavLink {
 
 export default function NavLinks() {
   const t = useTranslations("");
-
-  const isMounted = useSyncExternalStore(
-    subscribe,
-    getClientSnapshot,
-    getServerSnapshot,
-  );
+  const isMounted = useIsMounted();
 
   const cartCount = useCartStore((s) => s.totalUniqueItems());
   const wishlistCount = useWishlistStore((s) => s.totalItems());
   const { isAuthenticated } = useAuthStore();
+  const [loginOpen, setLoginOpen] = useState(false);
 
   const navLinks: NavLink[] = [
     {
@@ -71,14 +68,17 @@ export default function NavLinks() {
       {isMounted && isAuthenticated ? (
         <UserMenu />
       ) : (
-        <Button
-          as={Link}
-          href="/login"
-          leftIcon="login"
-          className="relative bg-card hover:bg-card-hover h-10 px-4"
-        >
-          {t("auth.login.title")}
-        </Button>
+        <>
+          <Button
+            leftIcon="login"
+            onClick={() => setLoginOpen(true)}
+            className="relative bg-card hover:bg-card-hover h-10 px-4"
+          >
+            {t("auth.login.title")}
+          </Button>
+
+          <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
+        </>
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/routing";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
 import { useAuthStore } from "@/store/useAuthStore";
 

@@ -78,6 +78,7 @@ export interface Book {
   readonly stats: BookStats;
   readonly isBestseller: boolean; // "Bestseller" belgisi
   readonly isNew: boolean; // "Yangi" belgisi
+  readonly isTrending: boolean;
 
   // --- Meta ---
   readonly createdAt: string; // Qo'shilgan vaqti (ISO formatda)

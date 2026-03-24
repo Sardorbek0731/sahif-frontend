@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect } from "react";
 
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { setThemeCookies } from "@/lib/cookies";
-import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 function disableTransitions() {
   const style = document.createElement("style");
@@ -21,11 +21,7 @@ export default function ThemeToggle({
   initialTheme: string;
 }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const isMounted = useSyncExternalStore(
-    subscribe,
-    getClientSnapshot,
-    getServerSnapshot,
-  );
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     if (theme && resolvedTheme) {

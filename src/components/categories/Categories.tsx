@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { categoryGroups } from "@/data/categories";
 
 export default function Categories() {

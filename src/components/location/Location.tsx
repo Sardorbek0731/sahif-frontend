@@ -1,19 +1,14 @@
 "use client";
 
-import {
-  useState,
-  useEffect,
-  useDeferredValue,
-  useRef,
-  useSyncExternalStore,
-} from "react";
+import { useState, useEffect, useDeferredValue, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 import { regions } from "@/data/regions";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons/icon";
 import { useLocationStore } from "@/store/useLocationStore";
-import { subscribe, getClientSnapshot, getServerSnapshot } from "@/lib/hooks";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import Modal from "@/components/ui/Modal";
 
 export default function Location({
   initialLocationId,
@@ -23,6 +18,8 @@ export default function Location({
   initialConfirmed: boolean;
 }) {
   const t = useTranslations();
+  const isMounted = useIsMounted();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { selectedId, setSelectedId, confirmLocation, initialize } =
     useLocationStore();
@@ -30,15 +27,8 @@ export default function Location({
   const [isOpen, setIsOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const deferredSearch = useDeferredValue(searchQuery);
-
-  const isMounted = useSyncExternalStore(
-    subscribe,
-    getClientSnapshot,
-    getServerSnapshot,
-  );
 
   useEffect(() => {
     initialize(initialLocationId, initialConfirmed);
@@ -46,22 +36,11 @@ export default function Location({
       const timer = setTimeout(() => setShowPrompt(true), 1000);
       return () => clearTimeout(timer);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initialLocationId, initialConfirmed, initialize]);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      const handleEsc = (e: KeyboardEvent) => {
-        if (e.key === "Escape") setIsOpen(false);
-      };
-      window.addEventListener("keydown", handleEsc);
       requestAnimationFrame(() => inputRef.current?.focus());
-
-      return () => {
-        document.body.style.overflow = "";
-        window.removeEventListener("keydown", handleEsc);
-      };
     }
   }, [isOpen]);
 
@@ -121,70 +100,54 @@ export default function Location({
         </div>
       )}
 
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 row-center bg-black/50 p-4"
-          onClick={() => setIsOpen(false)}
-        >
-          <div
-            className="bg-background w-full max-w-[420px] p-6 rounded-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="row-between mb-6">
-              <h2 className="text-xl font-bold">
-                {t("header.selectLocation")}
-              </h2>
-
-              <Button
-                leftIcon="x"
-                iconSize={20}
-                className="bg-card hover:bg-card-hover p-2"
-                onClick={() => setIsOpen(false)}
-              />
-            </div>
-
-            <div className="flex items-center mb-6 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
-              <Icon name="search" size={16} className="mr-2" />
-              <input
-                ref={inputRef}
-                type="text"
-                name="search-region"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("header.searchRegion")}
-                className="flex-1 h-full bg-transparent outline-none"
-              />
-            </div>
-
-            <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6">
-              {filteredRegions.length > 0 ? (
-                filteredRegions.map((region) => (
-                  <Button
-                    key={region.id}
-                    className={`w-full justify-between h-10 px-4 ${
-                      currentId === region.id
-                        ? "text-primary bg-card"
-                        : "hover:bg-card"
-                    }`}
-                    onClick={() => {
-                      setSelectedId(region.id);
-                      setIsOpen(false);
-                      setSearchQuery("");
-                    }}
-                  >
-                    <span>{t(`regions.${region.key}`)}</span>
-                    {currentId === region.id && (
-                      <Icon name="location" size={18} />
-                    )}
-                  </Button>
-                ))
-              ) : (
-                <div className="py-10 text-center">{t("header.noResults")}</div>
-              )}
-            </div>
-          </div>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        maxWidth="max-w-[420px]"
+        className="p-6"
+      >
+        <div className="row-between mb-6">
+          <h2 className="text-xl font-bold">{t("header.selectLocation")}</h2>
         </div>
-      )}
+
+        <div className="flex items-center mb-6 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
+          <Icon name="search" size={16} className="mr-2" />
+          <input
+            ref={inputRef}
+            type="text"
+            name="search-region"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t("header.searchRegion")}
+            className="flex-1 h-full bg-transparent outline-none"
+          />
+        </div>
+
+        <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6 custom-scrollbar">
+          {filteredRegions.length > 0 ? (
+            filteredRegions.map((region) => (
+              <Button
+                key={region.id}
+                className={`w-full justify-between h-10 px-4 ${
+                  currentId === region.id
+                    ? "text-primary bg-card"
+                    : "hover:bg-card"
+                }`}
+                onClick={() => {
+                  setSelectedId(region.id);
+                  setIsOpen(false);
+                  setSearchQuery("");
+                }}
+              >
+                <span>{t(`regions.${region.key}`)}</span>
+                {currentId === region.id && <Icon name="location" size={18} />}
+              </Button>
+            ))
+          ) : (
+            <div className="py-10 text-center">{t("header.noResults")}</div>
+          )}
+        </div>
+      </Modal>
     </div>
   );
 }

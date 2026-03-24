@@ -5,7 +5,8 @@
     "books": "Книги",
     "cart": "Корзина",
     "wishlist": "Избранное",
-    "profile": "Профиль"
+    "profile": "Профиль",
+    "admin": "Админ"
   },
 
   "home": {
@@ -16,7 +17,8 @@
       "author": "Автор",
       "details": "Подробнее",
       "new": "Новинка",
-      "bestseller": "Бестселлер"
+      "bestseller": "Бестселлер",
+      "trending": "Тренд"
     },
     "features": {
       "eyebrow": "Почему sahif?",

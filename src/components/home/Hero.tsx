@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -10,12 +10,19 @@ import { books } from "@/data/books";
 import { getBookTitle } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 import { type Book } from "@/types/book";
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 import { SKIP_WORDS } from "@/constants";
 
-import HeroActions from "@/components/home/HeroActions";
+import BookActions from "../shared/BookActions";
 
-const heroBooks = books.filter((book) => book.isBestseller || book.isNew);
+const heroBooks = books.filter(
+  (book) => book.isBestseller || book.isNew || book.isTrending,
+);
+
+const DOT_SIZE = 8;
+const DOT_MARGIN = 3;
+const SLOT = DOT_SIZE + DOT_MARGIN * 2;
+const getLeft = (i: number) => i * SLOT + DOT_MARGIN;
 
 export default function Hero() {
   const locale = useLocale() as Locale;
@@ -23,7 +30,15 @@ export default function Hero() {
   const [animating, setAnimating] = useState(false);
   const t = useTranslations("home.hero");
 
+  const pillRef = useRef<HTMLDivElement>(null);
+  const prevIndexRef = useRef(0);
+
   const go = useCallback((index: number) => {
+    if (heroBooks.length <= 1) {
+      setCurrent(index);
+      return;
+    }
+
     setAnimating(true);
     setTimeout(() => {
       setCurrent(index);
@@ -32,17 +47,72 @@ export default function Hero() {
   }, []);
 
   const prev = useCallback(() => {
+    if (heroBooks.length <= 1) return;
     go(current === 0 ? heroBooks.length - 1 : current - 1);
   }, [current, go]);
 
   const next = useCallback(() => {
+    if (heroBooks.length <= 1) return;
     go(current === heroBooks.length - 1 ? 0 : current + 1);
   }, [current, go]);
 
   useEffect(() => {
+    if (heroBooks.length <= 1) return;
     const timer = setInterval(next, 10000);
     return () => clearInterval(timer);
   }, [next]);
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (heroBooks.length <= 1) return;
+
+    const prevIndex = prevIndexRef.current;
+    prevIndexRef.current = current;
+
+    const pill = pillRef.current;
+    if (!pill || prevIndex === current) return;
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    const prevLeft = getLeft(prevIndex);
+    const currLeft = getLeft(current);
+
+    const isWrap =
+      (prevIndex === 0 && current === heroBooks.length - 1) ||
+      (prevIndex === heroBooks.length - 1 && current === 0);
+
+    if (isWrap) {
+      pill.style.transition = "none";
+      pill.style.left = `${currLeft}px`;
+      pill.style.width = `${DOT_SIZE}px`;
+      return;
+    }
+
+    if (current > prevIndex) {
+      pill.style.transition = "width 125ms cubic-bezier(.4,0,.2,1)";
+      pill.style.width = `${currLeft - prevLeft + DOT_SIZE}px`;
+      timeoutRef.current = setTimeout(() => {
+        pill.style.transition =
+          "left 125ms cubic-bezier(.4,0,.2,1), width 125ms cubic-bezier(.4,0,.2,1)";
+        pill.style.left = `${currLeft}px`;
+        pill.style.width = `${DOT_SIZE}px`;
+      }, 125);
+    } else {
+      pill.style.transition =
+        "left 125ms cubic-bezier(.4,0,.2,1), width 125ms cubic-bezier(.4,0,.2,1)";
+      pill.style.left = `${currLeft}px`;
+      pill.style.width = `${prevLeft - currLeft + DOT_SIZE}px`;
+      timeoutRef.current = setTimeout(() => {
+        pill.style.transition = "width 125ms cubic-bezier(.4,0,.2,1)";
+        pill.style.width = `${DOT_SIZE}px`;
+      }, 125);
+    }
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [current]);
 
   const book = heroBooks[current] as Book;
   const activeVariant =
@@ -67,16 +137,23 @@ export default function Hero() {
       <div
         className={`w-[60%] flex flex-col items-start h-full justify-between overflow-hidden transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
-        {book.isBestseller && (
-          <span className="border border-primary bg-primary/15 text-primary py-1 px-3 rounded-md text-sm mb-4">
-            {t("bestseller")}
-          </span>
-        )}
-        {book.isNew && (
-          <span className="border border-green-500 bg-green-500/15 text-green-500 py-1 px-3 rounded-md text-sm mb-4">
-            {t("new")}
-          </span>
-        )}
+        <div className="flex items-center gap-2 flex-wrap mb-4">
+          {book.isTrending && (
+            <span className="border border-orange-500 bg-orange-500/15 text-orange-500 py-1 px-3 rounded-md text-sm">
+              {t("trending")}
+            </span>
+          )}
+          {book.isBestseller && (
+            <span className="border border-primary bg-primary/15 text-primary py-1 px-3 rounded-md text-sm">
+              {t("bestseller")}
+            </span>
+          )}
+          {book.isNew && (
+            <span className="border border-green-500 bg-green-500/15 text-green-500 py-1 px-3 rounded-md text-sm">
+              {t("new")}
+            </span>
+          )}
+        </div>
 
         <div>
           <Link
@@ -127,10 +204,11 @@ export default function Hero() {
           )}
         </div>
 
-        <HeroActions
+        <BookActions
           bookId={book.id}
           slug={book.slug}
           language={activeVariant.language}
+          variant="hero"
         />
       </div>
 
@@ -157,35 +235,51 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center">
-        <Button
-          onClick={prev}
-          leftIcon="chevronLeft"
-          iconSize={18}
-          iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
-          className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 mr-4 hover:border-foreground/75 hover:bg-foreground/10"
-        />
-
-        {heroBooks.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => go(i)}
-            className={`h-2 cursor-pointer rounded-full transition-all duration-250 mr-1 last:mr-0 ${
-              i === current
-                ? "w-5 bg-foreground"
-                : "w-2 bg-foreground/20 hover:bg-foreground/50"
-            }`}
+      {heroBooks.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center">
+          <Button
+            onClick={prev}
+            leftIcon="chevronLeft"
+            iconSize={18}
+            iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
+            className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 mr-4 hover:border-foreground/75 hover:bg-foreground/10"
           />
-        ))}
 
-        <Button
-          onClick={next}
-          leftIcon="chevronRight"
-          iconSize={18}
-          iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
-          className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 ml-3 hover:border-foreground/75 hover:bg-foreground/10"
-        />
-      </div>
+          <div
+            className="relative flex items-center"
+            style={{
+              width: `${heroBooks.length * SLOT}px`,
+              height: `${DOT_SIZE}px`,
+            }}
+          >
+            {heroBooks.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => go(i)}
+                className="absolute h-2 w-2 rounded-full bg-foreground/20 hover:bg-foreground/40 transition-colors cursor-pointer"
+                style={{ left: getLeft(i) }}
+              />
+            ))}
+
+            <div
+              ref={pillRef}
+              className="absolute h-2 rounded-full bg-foreground pointer-events-none"
+              style={{
+                left: getLeft(0),
+                width: DOT_SIZE,
+              }}
+            />
+          </div>
+
+          <Button
+            onClick={next}
+            leftIcon="chevronRight"
+            iconSize={18}
+            iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
+            className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 ml-3 hover:border-foreground/75 hover:bg-foreground/10"
+          />
+        </div>
+      )}
     </section>
   );
 }

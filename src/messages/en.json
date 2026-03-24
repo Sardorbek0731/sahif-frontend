@@ -5,7 +5,8 @@
     "books": "Books",
     "cart": "Cart",
     "wishlist": "Wishlist",
-    "profile": "Profile"
+    "profile": "Profile",
+    "admin": "Admin"
   },
 
   "home": {
@@ -16,7 +17,8 @@
       "author": "Author",
       "details": "View details",
       "new": "New",
-      "bestseller": "Bestseller"
+      "bestseller": "Bestseller",
+      "trending": "Trending"
     },
     "features": {
       "eyebrow": "Why sahif?",

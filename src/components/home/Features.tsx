@@ -82,7 +82,7 @@ function FeatureCard({
     <div
       className={`relative rounded-lg bg-card border ${accent.border} ${accent.hover} ${accent.hoverBg} p-6 transition-all`}
     >
-      <span className="absolute right-5 top-5 font-mono text-foreground/10 select-none">
+      <span className="absolute right-6 top-6 font-mono text-foreground/10 select-none">
         {String(index + 1).padStart(2, "0")}
       </span>
 

@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icons/icon";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 export default function NotFound() {
   const t = useTranslations("notFound");

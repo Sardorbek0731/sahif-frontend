@@ -67,6 +67,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.8, reviewCount: 320, salesCount: 5000 },
     isBestseller: true,
     isNew: false,
+    isTrending: true,
     createdAt: "2024-11-26T08:00:00Z",
   },
 
@@ -144,6 +145,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.9, reviewCount: 1240, salesCount: 15000 },
     isBestseller: false,
     isNew: true,
+    isTrending: false,
     createdAt: "2024-11-20T10:00:00Z",
   },
 
@@ -230,6 +232,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.9, reviewCount: 5200, salesCount: 30000 },
     isBestseller: true,
     isNew: false,
+    isTrending: true,
     createdAt: "2024-11-30T12:00:00Z",
   },
 
@@ -328,6 +331,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.9, reviewCount: 8900, salesCount: 45000 },
     isBestseller: false,
     isNew: true,
+    isTrending: false,
     createdAt: "2024-12-01T09:00:00Z",
   },
 
@@ -431,6 +435,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.8, reviewCount: 12400, salesCount: 62000 },
     isBestseller: false,
     isNew: false,
+    isTrending: false,
     createdAt: "2024-12-05T10:00:00Z",
   },
 
@@ -503,6 +508,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.7, reviewCount: 9800, salesCount: 52000 },
     isBestseller: false,
     isNew: false,
+    isTrending: false,
     createdAt: "2024-12-08T09:00:00Z",
   },
 
@@ -575,6 +581,7 @@ export const books: readonly Book[] = [
     stats: { rating: 4.8, reviewCount: 14200, salesCount: 38000 },
     isBestseller: true,
     isNew: false,
+    isTrending: false,
     createdAt: "2024-12-10T10:00:00Z",
   },
 ];

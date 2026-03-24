@@ -12,7 +12,7 @@ import { isValidCategory } from "@/data/categories";
 import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
 
-import BookCardActions from "@/components/books/BookCardActions";
+import BookActions from "@/components/shared/BookActions";
 
 export async function generateMetadata({
   params,
@@ -151,10 +151,11 @@ export default async function Books({
                   {activeVariant.price.amount.toLocaleString()}
                 </span>
               )}
-              <BookCardActions
+              <BookActions
                 bookId={book.id}
                 slug={book.slug}
                 language={activeVariant.language}
+                variant="card"
               />
               {activeVariant.stockCount === 0 && (
                 <span className="text-red-500 text-xs block">Tugagan</span>
