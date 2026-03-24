@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: getUrl(locale, page),
       lastModified: bookCreatedAt ? new Date(bookCreatedAt) : now,
       changeFrequency: "weekly" as const,
-      priority: page === "" ? 1 : page === "/books" ? 0.8 : 0.6,
+      priority: page === "" ? 1 : page === "/books" ? 0.9 : 0.7,
       alternates: {
         languages: {
           ...languages,
