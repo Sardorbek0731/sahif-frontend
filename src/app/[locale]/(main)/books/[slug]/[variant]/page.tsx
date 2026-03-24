@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { type Locale, routing, Link } from "@/i18n/routing";
 import { books } from "@/data/books";
 import { SITE_URL, OG_LOCALES } from "@/constants";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
@@ -45,6 +45,8 @@ export async function generateMetadata({
     : `${SITE_URL}${bookImage}`;
 
   const title = `${bookTitle} | sahif`;
+  const pagePath = `books/${slug}/${variantParam}`;
+  const url = getLocaleUrl(locale, pagePath);
 
   return {
     title,
@@ -53,7 +55,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description: bookDescription,
-      url: `${SITE_URL}/${locale}/books/${slug}/${variantParam}`,
+      url,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "book",
@@ -129,7 +131,7 @@ export default async function BookPage({
         activeVariant.stockCount > 0
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
-      url: `${SITE_URL}/${locale}/books/${book.slug}/${activeVariant.language}`,
+      url: getLocaleUrl(locale, `books/${book.slug}/${activeVariant.language}`),
     },
     workExample: book.variants.map((v) => ({
       "@type": "Book",

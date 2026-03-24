@@ -17,6 +17,9 @@ export function generatePrivateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: url,
+    },
     robots: {
       index: false,
       follow: false,

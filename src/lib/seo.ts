@@ -8,18 +8,28 @@ export function generateAlternates(
 ) {
   const formattedPath = path ? (path.startsWith("/") ? path : `/${path}`) : "";
 
-  const baseUrl = `${SITE_URL}/${locale}${formattedPath}`;
+  const getPrefix = (loc: string) =>
+    loc === routing.defaultLocale ? "" : `/${loc}`;
+
+  const baseUrl =
+    canonicalUrl ?? `${SITE_URL}${getPrefix(locale)}${formattedPath}`;
 
   return {
-    canonical: canonicalUrl ?? baseUrl,
+    canonical: baseUrl,
     languages: {
       ...Object.fromEntries(
         routing.locales.map((loc) => [
           HREFLANG_LOCALES[loc as Locale],
-          `${SITE_URL}/${loc}${formattedPath}`,
+          `${SITE_URL}${getPrefix(loc)}${formattedPath}`,
         ]),
       ),
-      "x-default": `${SITE_URL}/${routing.defaultLocale}${formattedPath}`,
+      "x-default": `${SITE_URL}${formattedPath}`,
     },
   };
+}
+
+export function getLocaleUrl(locale: string, path: string = "") {
+  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const formattedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${SITE_URL}${prefix}${formattedPath === "/" ? "" : formattedPath}`;
 }

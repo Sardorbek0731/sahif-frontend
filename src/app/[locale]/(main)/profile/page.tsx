@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL } from "@/constants";
 import { generatePrivateMetadata } from "@/lib/metadata";
 import { type Locale } from "@/i18n/routing";
+import { getLocaleUrl } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -18,7 +18,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: `${t("pages.profile")} | sahif`,
     description: t("description"),
-    url: `${SITE_URL}/${locale}/profile`,
+    url: getLocaleUrl(locale, "/profile"),
     locale,
   });
 }

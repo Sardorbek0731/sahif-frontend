@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
-import { type Locale } from "@/i18n/routing";
+import { type Locale, routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
 import {
   SITE_URL,
@@ -31,6 +31,8 @@ export async function generateMetadata({
   const title = "sahif";
   const description = t("description");
 
+  const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+
   return {
     metadataBase: new URL(SITE_URL),
     title,
@@ -40,7 +42,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${locale}`,
+      url: `${SITE_URL}${localePrefix}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale as Locale],
       type: "website",
@@ -101,17 +103,20 @@ export default async function LocaleLayout({
 
   const initialTheme = getInitialTheme(cookieStore);
 
+  const path = "";
+  const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "sahif",
     alternateName: ["Sahif", SITE_HOSTNAME],
-    url: `${SITE_URL}/${locale}`,
+    url: `${SITE_URL}${localePrefix}${path}`,
     inLanguage: locale,
     description: t("description"),
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
+      target: `${SITE_URL}${localePrefix}/books?search={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL } from "@/constants";
 import { generatePrivateMetadata } from "@/lib/metadata";
+import { getLocaleUrl } from "@/lib/seo";
 import { type Locale } from "@/i18n/routing";
 
 import CartContent from "@/components/cart/CartContent";
@@ -20,7 +20,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: `${t("pages.cart")} | sahif`,
     description: t("description"),
-    url: `${SITE_URL}/${locale}/cart`,
+    url: getLocaleUrl(locale, "/cart"),
     locale,
   });
 }

@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { type Locale, Link } from "@/i18n/routing";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
@@ -43,12 +43,12 @@ export async function generateMetadata({
   if (search) query.set("search", search);
   else if (category) query.set("category", category);
   const queryString = query.toString();
-  const url = `${SITE_URL}/${locale}/books${queryString ? `?${queryString}` : ""}`;
+  const url = `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
 
   return {
     title,
     description,
-    alternates: generateAlternates(locale, "books", search ? undefined : url),
+    alternates: generateAlternates(locale, "/books", search ? undefined : url),
     robots: {
       index: !search,
       follow: true,

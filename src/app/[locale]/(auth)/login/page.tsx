@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL } from "@/constants";
 import { generatePrivateMetadata } from "@/lib/metadata";
+import { getLocaleUrl } from "@/lib/seo";
 import { type Locale } from "@/i18n/routing";
 
 import { Link } from "@/i18n/routing";
@@ -23,7 +23,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: `${t("auth.login.title")} | sahif`,
     description: t("description"),
-    url: `${SITE_URL}/${locale}/login`,
+    url: getLocaleUrl(locale, "/login"),
     locale,
   });
 }

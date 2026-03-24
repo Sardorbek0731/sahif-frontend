@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 
 import { SITE_URL, OG_LOCALES } from "@/constants";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
 import Features from "@/components/home/Features";
@@ -20,6 +20,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
   const title = `sahif | ${t("home.metadata.title")}`;
   const description = t("description");
+  const url = getLocaleUrl(locale);
 
   return {
     title,
@@ -28,7 +29,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${locale}`,
+      url,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
