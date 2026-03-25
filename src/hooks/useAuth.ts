@@ -4,7 +4,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 type Step = "phone" | "otp" | "name";
 
-// TODO: backendchi bu konstantalarni o'chiradi
 const MOCK_OTP = "123456";
 
 export function useAuth() {
@@ -14,14 +13,12 @@ export function useAuth() {
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isNewUser, setIsNewUser] = useState(false);
 
   const sendOtp = async (phoneNumber: string) => {
     setIsLoading(true);
     setError("");
 
     try {
-      // TODO: POST /auth/send-otp { phone: phoneNumber }
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       setPhone(phoneNumber);
@@ -38,7 +35,6 @@ export function useAuth() {
     setError("");
 
     try {
-      // TODO: POST /auth/verify-otp { phone, code }
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       if (code !== MOCK_OTP) {
@@ -46,9 +42,7 @@ export function useAuth() {
         return;
       }
 
-      // TODO: backenddan { token, user, isNewUser } qaytadi
       const mockIsNewUser = true;
-      setIsNewUser(mockIsNewUser);
 
       if (mockIsNewUser) {
         setStep("name");
@@ -68,7 +62,6 @@ export function useAuth() {
     setError("");
 
     try {
-      // TODO: POST /auth/set-name { name }
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       setToken("mock-token-123");
@@ -90,7 +83,6 @@ export function useAuth() {
     step,
     phone,
     isLoading,
-    isNewUser,
     error,
     sendOtp,
     verifyOtp,

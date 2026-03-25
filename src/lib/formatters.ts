@@ -1,6 +1,5 @@
 export function formatISBN(isbn: string): string {
   if (!isbn) return "";
-  // Faqat raqamlarni qoldiramiz
   const str = isbn.replace(/\D/g, "");
 
   if (str.length === 13) {

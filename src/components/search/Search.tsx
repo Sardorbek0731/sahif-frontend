@@ -7,24 +7,24 @@ import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons/icon";
 import { famousSubCategories } from "@/data/categories";
+import { useSearchStore } from "@/store/useSearchStore";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function Search() {
   const t = useTranslations();
   const router = useRouter();
+  const isMounted = useIsMounted();
 
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [history, setHistory] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem("search-history");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const history = useSearchStore((s) => s.history);
+  const addToHistory = useSearchStore((s) => s.addToHistory);
+  const removeFromHistory = useSearchStore((s) => s.removeFromHistory);
+
+  const safeHistory = isMounted ? history : [];
 
   useEffect(() => {
     if (!isFocused) return;
@@ -42,24 +42,19 @@ export default function Search() {
     const trimmed = value.trim();
     if (!trimmed) return;
 
-    const newHistory = [trimmed, ...history.filter((h) => h !== trimmed)].slice(
-      0,
-      5,
-    );
-    setHistory(newHistory);
-    localStorage.setItem("search-history", JSON.stringify(newHistory));
+    addToHistory(trimmed);
 
     const query = new URLSearchParams();
     query.set("search", trimmed);
     router.push(`/books?${query.toString()}`);
     setIsFocused(false);
+    setSearchValue("");
+    inputRef.current?.blur();
   };
 
   const removeHistoryItem = (e: React.MouseEvent, item: string) => {
     e.stopPropagation();
-    const updated = history.filter((h) => h !== item);
-    setHistory(updated);
-    localStorage.setItem("search-history", JSON.stringify(updated));
+    removeFromHistory(item);
   };
 
   return (
@@ -73,6 +68,7 @@ export default function Search() {
       >
         <Icon name="search" size={16} className="mr-2" />
         <input
+          ref={inputRef}
           type="text"
           name="search-book"
           value={searchValue}
@@ -87,14 +83,14 @@ export default function Search() {
       {isFocused && (
         <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-20">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
-          {history.length > 0 && (
+          {safeHistory.length > 0 && (
             <div className="mb-6">
               <span className="flex items-center mb-4 opacity-50">
                 <Icon name="clock" size={16} className="mr-2 text-primary" />
                 {t("searchInput.recentSearches")}
               </span>
               <div className="flex flex-col">
-                {history.map((item) => (
+                {safeHistory.map((item) => (
                   <div
                     key={item}
                     onClick={() => handleSearch(item)}
@@ -129,7 +125,10 @@ export default function Search() {
                   query: { category: sub.slug },
                 }}
                 className="px-4 py-2 text-sm rounded-md bg-background"
-                onClick={() => setIsFocused(false)}
+                onClick={() => {
+                  setIsFocused(false);
+                  setSearchValue("");
+                }}
               >
                 {t(`categories.items.${sub.slug}.name`)}
               </Link>

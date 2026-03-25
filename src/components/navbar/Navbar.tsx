@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/routing";
 import Categories from "../categories/Categories";
 import Search from "../search/Search";
-import { Logo } from "@/data/Logo";
+import { Logo } from "@/components/ui/Logo";
 import NavLinks from "./NavLinks";
 
 export default function Navbar() {
