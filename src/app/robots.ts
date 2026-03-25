@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-
 import { SITE_URL } from "@/constants";
 
 export default function robots(): MetadataRoute.Robots {
@@ -9,18 +8,23 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/cart",
-          "/login",
-          "/admin",
-          "/wishlist",
-          "/*/cart",
-          "/*/login",
-          "/*/admin",
-          "/*/wishlist",
+          "*/cart",
+          "*/wishlist",
+          "*/profile",
+          "*/login",
+          "*/admin",
+
           "/*?search=*",
           "/*&search=*",
+          "/*?category=*",
+          "/*&category=*",
+
           "/api/",
           "/_next/",
+          "/static/",
+
+          "*/reset",
+          "*/reset/*", 
         ],
       },
     ],

@@ -7,54 +7,43 @@ import { authors } from "@/data/authors";
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = routing.locales;
 
-  const staticPages = ["", "/books"];
-
-  const bookPages = books.flatMap((book) =>
-    book.variants.map((variant) => `/books/${book.slug}/${variant.language}`),
+  const staticPaths = ["", "/books"];
+  const bookPaths = books.flatMap((book) =>
+    book.variants.map((v) => `/books/${book.slug}/${v.language}`),
   );
+  const authorPaths = authors.map((author) => `/authors/${author.slug}`);
 
-  const authorPages = authors.map((author) => `/authors/${author.slug}`);
+  const allPaths = [...staticPaths, ...bookPaths, ...authorPaths];
 
-  const pages = [...staticPages, ...bookPages, ...authorPages];
+  return allPaths.flatMap((path) => {
+    return locales.map((locale) => {
+      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+      const url = `${SITE_URL}${prefix}${path}`;
 
-  const bookCreatedAtMap = new Map(
-    books.flatMap((b) =>
-      b.variants.map((v) => [`/books/${b.slug}/${v.language}`, b.createdAt]),
-    ),
-  );
+      const languages = Object.fromEntries(
+        locales.map((l) => {
+          const lPrefix = l === routing.defaultLocale ? "" : `/${l}`;
+          return [HREFLANG_LOCALES[l], `${SITE_URL}${lPrefix}${path}`];
+        }),
+      );
 
-  const now = new Date();
+      let priority = 0.7;
+      if (path === "") priority = 1.0;
+      else if (path === "/books") priority = 0.9;
+      else if (path.startsWith("/authors")) priority = 0.8;
 
-  const getUrl = (locale: string, page: string) => {
-    const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-    return `${SITE_URL}${prefix}${page}`;
-  };
-
-  const getPriority = (page: string): number => {
-    if (page === "") return 1;
-    if (page === "/books") return 0.9;
-    if (page.startsWith("/authors")) return 0.8;
-    return 0.7;
-  };
-
-  return pages.flatMap((page) => {
-    const bookCreatedAt = bookCreatedAtMap.get(page);
-
-    const languages = Object.fromEntries(
-      locales.map((lang) => [HREFLANG_LOCALES[lang], getUrl(lang, page)]),
-    );
-
-    return locales.map((locale) => ({
-      url: getUrl(locale, page),
-      lastModified: bookCreatedAt ? new Date(bookCreatedAt) : now,
-      changeFrequency: "weekly" as const,
-      priority: getPriority(page),
-      alternates: {
-        languages: {
-          ...languages,
-          "x-default": getUrl(routing.defaultLocale, page),
+      return {
+        url,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority,
+        alternates: {
+          languages: {
+            ...languages,
+            "x-default": `${SITE_URL}${path}`,
+          },
         },
-      },
-    }));
+      };
+    });
   });
 }
