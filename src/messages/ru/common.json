@@ -1,0 +1,35 @@
+{
+  "pages": {
+    "books": "Книги",
+    "cart": "Корзина",
+    "wishlist": "Избранное",
+    "profile": "Профиль",
+    "admin": "Админ",
+    "login": "Войти"
+  },
+
+  "badges": {
+    "new": "Новинка",
+    "bestseller": "Бестселлер",
+    "trending": "Тренд"
+  },
+
+  "regions": {
+    "tashkentCity": "г. Ташкент",
+    "tashkentRegion": "Ташкентская обл.",
+    "andijan": "Андижан",
+    "fergana": "Фергана",
+    "namangan": "Наманган",
+    "samarkand": "Самарканд",
+    "bukhara": "Бухара",
+    "navoi": "Навои",
+    "jizzakh": "Джизак",
+    "sirdaryo": "Сырдарья",
+    "kashkadarya": "Кашкадарья",
+    "surkhandarya": "Сурхандарья",
+    "khorezm": "Хорезм",
+    "karakalpakstan": "Каракалпакстан"
+  },
+
+  "addToCart": "В корзину"
+}

@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "Eng sara kitoblar, tez yetkazib berish va qulay narxlar!",
+    "description": "O'zbekistondagi eng sifatli va zamonaviy kitoblar onlayn do'konida sizni kutmoqda — tez yetkazib berish va qulay narxlar bilan."
+  },
+
+  "hero": {
+    "author": "Muallif",
+    "details": "Batafsil"
+  },
+
+  "features": {
+    "tag": "Nima uchun sahif?",
+    "heading": "Kitob xarid qilish bu qadar qulay bo'lmagan",
+    "subheading": "Minglab kitob, tez yetkazib berish, xavfsiz to'lov — hammasi bir joyda.",
+    "items": {
+      "catalog": {
+        "title": "Katta katalog",
+        "description": "O'zbek, rus va xorij nashriyotlaridan minglab kitob. Janr, muallif yoki mavzu bo'yicha filtrlang."
+      },
+      "delivery": {
+        "title": "Tez yetkazib berish",
+        "description": "Buyurtma bering — eshigingizgacha yetkazib beramiz. Viloyatlarga ham ishlaydi."
+      },
+      "search": {
+        "title": "Aqlli qidiruv",
+        "description": "Kitob nomi, muallif yoki ISBN orqali bir zumda toping. Qidiruv o'zbek va rus tillarini tushunadi."
+      },
+      "payment": {
+        "title": "Xavfsiz to'lov",
+        "description": "Click, Payme, bank kartasi — qulay usulni tanlang. Barcha to'lovlar shifrlangan va himoyalangan."
+      },
+      "recommendations": {
+        "title": "Shaxsiy tavsiyalar",
+        "description": "O'qish tarixingiz va sevimli janrlaringiz asosida yangi kitoblar tavsiya qilamiz."
+      },
+      "support": {
+        "title": "24/7 qo'llab-quvvatlash",
+        "description": "Savollaringiz bormi? Operator doim tayyor — chat, telefon yoki Telegram orqali."
+      }
+    }
+  }
+}

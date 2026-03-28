@@ -1,0 +1,35 @@
+{
+  "pages": {
+    "books": "Books",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "profile": "Profile",
+    "admin": "Admin",
+    "login": "Log in"
+  },
+
+  "badges": {
+    "new": "New",
+    "bestseller": "Bestseller",
+    "trending": "Trending"
+  },
+
+  "regions": {
+    "tashkentCity": "Tashkent city",
+    "tashkentRegion": "Tashkent reg.",
+    "andijan": "Andijan",
+    "fergana": "Fergana",
+    "namangan": "Namangan",
+    "samarkand": "Samarkand",
+    "bukhara": "Bukhara",
+    "navoi": "Navoi",
+    "jizzakh": "Jizzakh",
+    "sirdaryo": "Sirdaryo",
+    "kashkadarya": "Kashkadarya",
+    "surkhandarya": "Surkhandarya",
+    "khorezm": "Khorezm",
+    "karakalpakstan": "Karakalpakstan"
+  },
+
+  "addToCart": "Add to cart"
+}

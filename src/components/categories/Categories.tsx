@@ -60,7 +60,7 @@ export default function Categories() {
                 </h3>
 
                 <ul className="space-y-2">
-                  {group.subCategories.map((sub) => (
+                  {group.categories.map((sub) => (
                     <li key={sub.slug} className="flex flex-1">
                       <Link
                         href={{

@@ -69,15 +69,15 @@ export type CategoryGroupName = (typeof CATEGORY_GROUPS)[number];
 // 3. Core Types
 // ----------
 
-export interface SubCategory {
+export interface Category {
   readonly id: number;
   readonly slug: CategorySlug;
-  readonly isFamous?: boolean;
+  readonly isPopular?: boolean;
 }
 
 export interface CategoryGroup {
   readonly name: CategoryGroupName;
-  readonly subCategories: readonly SubCategory[];
+  readonly categories: readonly Category[];
 }
 
 // ----------
@@ -87,23 +87,23 @@ export interface CategoryGroup {
 export const categoryGroups: readonly CategoryGroup[] = [
   {
     name: "fiction",
-    subCategories: [
-      { id: 101, slug: "classic-literature", isFamous: true },
+    categories: [
+      { id: 101, slug: "classic-literature", isPopular: true },
       { id: 102, slug: "contemporary-fiction" },
       { id: 103, slug: "mystery-thriller" },
-      { id: 104, slug: "fantasy", isFamous: true },
+      { id: 104, slug: "fantasy", isPopular: true },
       { id: 105, slug: "science-fiction" },
       { id: 106, slug: "romance" },
       { id: 107, slug: "historical-fiction" },
       { id: 108, slug: "horror" },
       { id: 109, slug: "poetry" },
-      { id: 110, slug: "drama", isFamous: true },
+      { id: 110, slug: "drama", isPopular: true },
     ],
   },
   {
     name: "children",
-    subCategories: [
-      { id: 201, slug: "children-books", isFamous: true },
+    categories: [
+      { id: 201, slug: "children-books", isPopular: true },
       { id: 202, slug: "fairy-tales" },
       { id: 203, slug: "young-adult" },
       { id: 204, slug: "comics-graphic-novels" },
@@ -111,9 +111,9 @@ export const categoryGroups: readonly CategoryGroup[] = [
   },
   {
     name: "selfImprovement",
-    subCategories: [
+    categories: [
       { id: 301, slug: "psychology" },
-      { id: 302, slug: "self-development", isFamous: true },
+      { id: 302, slug: "self-development", isPopular: true },
       { id: 303, slug: "motivation" },
       { id: 304, slug: "spirituality" },
       { id: 305, slug: "philosophy" },
@@ -121,7 +121,7 @@ export const categoryGroups: readonly CategoryGroup[] = [
   },
   {
     name: "businessSociety",
-    subCategories: [
+    categories: [
       { id: 401, slug: "business-finance" },
       { id: 402, slug: "management-marketing" },
       { id: 403, slug: "economics" },
@@ -132,10 +132,10 @@ export const categoryGroups: readonly CategoryGroup[] = [
   },
   {
     name: "scienceEducation",
-    subCategories: [
-      { id: 501, slug: "it-programming", isFamous: true },
+    categories: [
+      { id: 501, slug: "it-programming", isPopular: true },
       { id: 502, slug: "science-nature" },
-      { id: 503, slug: "medicine-health", isFamous: true },
+      { id: 503, slug: "medicine-health", isPopular: true },
       { id: 504, slug: "engineering" },
       { id: 505, slug: "history" },
       { id: 506, slug: "education-pedagogy" },
@@ -144,8 +144,8 @@ export const categoryGroups: readonly CategoryGroup[] = [
   },
   {
     name: "lifestyle",
-    subCategories: [
-      { id: 601, slug: "biography-memoirs", isFamous: true },
+    categories: [
+      { id: 601, slug: "biography-memoirs", isPopular: true },
       { id: 602, slug: "art-design" },
       { id: 603, slug: "cooking-culinary" },
       { id: 604, slug: "travel-geography" },
@@ -159,17 +159,17 @@ export const categoryGroups: readonly CategoryGroup[] = [
 // 5. Derived Helpers (zero duplication, full typing)
 // ----------
 
-export const allSubCategories = categoryGroups.flatMap<SubCategory>(
-  (group) => group.subCategories,
+export const allCategories = categoryGroups.flatMap<Category>(
+  (group) => group.categories,
 );
 
-export const famousSubCategories = allSubCategories.filter(
-  (cat) => cat.isFamous,
+export const popularCategories = allCategories.filter(
+  (cat) => cat.isPopular,
 );
 
-export const subCategoryBySlug = Object.fromEntries(
-  allSubCategories.map((cat) => [cat.slug, cat]),
-) as Record<CategorySlug, SubCategory>;
+export const categoryBySlug = Object.fromEntries(
+  allCategories.map((cat) => [cat.slug, cat]),
+) as Record<CategorySlug, Category>;
 
 export function isValidCategory(
   slug: string | undefined,

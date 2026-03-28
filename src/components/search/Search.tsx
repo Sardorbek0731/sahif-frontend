@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons/icon";
-import { famousSubCategories } from "@/data/categories";
+import { popularCategories } from "@/data/categories";
 import { useSearchStore } from "@/store/useSearchStore";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
@@ -117,7 +117,7 @@ export default function Search() {
           </span>
 
           <div className="flex flex-wrap gap-2">
-            {famousSubCategories.map((sub) => (
+            {popularCategories.map((sub) => (
               <Link
                 key={sub.id}
                 href={{

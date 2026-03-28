@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "The best books, fast delivery and great prices!",
+    "description": "The finest and most up-to-date books in Uzbekistan, available in our online store — fast delivery and affordable prices."
+  },
+
+  "hero": {
+    "author": "Author",
+    "details": "Details"
+  },
+
+  "features": {
+    "tag": "Why sahif?",
+    "heading": "Buying books has never been this easy",
+    "subheading": "Thousands of books, fast delivery, secure payment — all in one place.",
+    "items": {
+      "catalog": {
+        "title": "Large catalog",
+        "description": "Thousands of books from Uzbek, Russian and international publishers. Filter by genre, author or topic."
+      },
+      "delivery": {
+        "title": "Fast delivery",
+        "description": "Place your order — we'll deliver it to your door. Available across all regions."
+      },
+      "search": {
+        "title": "Smart search",
+        "description": "Find any book instantly by title, author or ISBN. Search works in both Uzbek and Russian."
+      },
+      "payment": {
+        "title": "Secure payment",
+        "description": "Click, Payme, bank card — choose what works for you. All payments are encrypted and protected."
+      },
+      "recommendations": {
+        "title": "Personal recommendations",
+        "description": "We suggest new books based on your reading history and favorite genres."
+      },
+      "support": {
+        "title": "24/7 support",
+        "description": "Have a question? Our team is always ready — via chat, phone or Telegram."
+      }
+    }
+  }
+}

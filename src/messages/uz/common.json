@@ -1,0 +1,35 @@
+{
+  "pages": {
+    "books": "Kitoblar",
+    "cart": "Savatcha",
+    "wishlist": "Sevimlilar",
+    "profile": "Profil",
+    "admin": "Admin",
+    "login": "Kirish"
+  },
+
+  "badges": {
+    "new": "Yangi",
+    "bestseller": "Bestseller",
+    "trending": "Trend"
+  },
+
+  "regions": {
+    "tashkentCity": "Toshkent sh.",
+    "tashkentRegion": "Toshkent vil.",
+    "andijan": "Andijon",
+    "fergana": "Farg'ona",
+    "namangan": "Namangan",
+    "samarkand": "Samarqand",
+    "bukhara": "Buxoro",
+    "navoi": "Navoiy",
+    "jizzakh": "Jizzax",
+    "sirdaryo": "Sirdaryo",
+    "kashkadarya": "Qashqadaryo",
+    "surkhandarya": "Surxondaryo",
+    "khorezm": "Xorazm",
+    "karakalpakstan": "Qoraqalpog'iston"
+  },
+
+  "addToCart": "Savatchaga"
+}
