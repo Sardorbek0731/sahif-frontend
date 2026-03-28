@@ -19,16 +19,13 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale });
   const title = `sahif | ${t("home.metadata.title")}`;
-  const description = t("description");
   const url = getLocaleUrl(locale);
 
   return {
     title,
-    description,
     alternates: generateAlternates(locale),
     openGraph: {
       title,
-      description,
       url,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
@@ -45,7 +42,6 @@ export async function generateMetadata({
     twitter: {
       card: "summary",
       title,
-      description,
       images: [`${SITE_URL}/logo.png`],
     },
   };

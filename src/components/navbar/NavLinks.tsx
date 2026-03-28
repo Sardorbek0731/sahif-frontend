@@ -74,7 +74,7 @@ export default function NavLinks() {
             onClick={() => setLoginOpen(true)}
             className="relative bg-card hover:bg-card-hover h-10 px-4"
           >
-            {t("auth.login.title")}
+            {t("pages.login")}
           </Button>
 
           <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />

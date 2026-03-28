@@ -46,7 +46,7 @@ export default function Categories() {
         onClick={() => setOpen((prev) => !prev)}
         className="bg-card hover:bg-card-hover h-10 px-4 mr-4"
       >
-        {t("categories")}
+        {t("title")}
       </Button>
 
       {open && (

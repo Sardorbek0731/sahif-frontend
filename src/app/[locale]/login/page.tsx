@@ -21,8 +21,8 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return generatePrivateMetadata({
-    title: `${t("auth.login.title")} | sahif`,
-    description: t("description"),
+    title: `${t("pages.login")} | sahif`,
+    description: t("login.metadata.description"),
     url: getLocaleUrl(locale, "/login"),
     locale,
   });

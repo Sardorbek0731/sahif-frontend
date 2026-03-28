@@ -19,7 +19,7 @@ export async function generateMetadata({
 
   return generatePrivateMetadata({
     title: `${t("pages.cart")} | sahif`,
-    description: t("description"),
+    description: t("cart.metadata.description"),
     url: getLocaleUrl(locale, "/cart"),
     locale,
   });

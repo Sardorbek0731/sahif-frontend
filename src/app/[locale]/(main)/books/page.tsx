@@ -37,7 +37,7 @@ export async function generateMetadata({
     }
   }
   const title = `${pageTitle} | sahif`;
-  const description = t("description");
+  const description = t("books.metadata.description");
 
   const query = new URLSearchParams();
   if (search) query.set("search", search);

@@ -73,7 +73,7 @@ export default function Search() {
           name="search-book"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          placeholder={t("header.searchBook")}
+          placeholder={t("search.searchBook")}
           autoComplete="off"
           className="flex-1 h-full bg-transparent outline-none"
           onFocus={() => setIsFocused(true)}
@@ -87,7 +87,7 @@ export default function Search() {
             <div className="mb-6">
               <span className="flex items-center mb-4 opacity-50">
                 <Icon name="clock" size={16} className="mr-2 text-primary" />
-                {t("searchInput.recentSearches")}
+                {t("search.recentSearches")}
               </span>
               <div className="flex flex-col">
                 {safeHistory.map((item) => (
@@ -113,7 +113,7 @@ export default function Search() {
 
           <span className="flex items-center mb-4 opacity-50">
             <Icon name="flame" size={16} className="mr-2 text-primary" />
-            {t("categories.famousCategories")}
+            {t("categories.popular")}
           </span>
 
           <div className="flex flex-wrap gap-2">

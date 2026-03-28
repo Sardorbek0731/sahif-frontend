@@ -19,7 +19,7 @@ export default function BookActions({
   variant = "card",
 }: Props) {
   const isMounted = useIsMounted();
-  const t = useTranslations("actions");
+  const t = useTranslations("");
 
   const {
     cartItem,

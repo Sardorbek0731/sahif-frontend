@@ -144,7 +144,7 @@ export default function Location({
               </Button>
             ))
           ) : (
-            <div className="py-10 text-center">{t("header.noResults")}</div>
+            <div className="py-10 text-center">{t("search.noResults")}</div>
           )}
         </div>
       </Modal>

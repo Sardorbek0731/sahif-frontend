@@ -17,7 +17,7 @@ export async function generateMetadata({
 
   return generatePrivateMetadata({
     title: `${t("pages.profile")} | sahif`,
-    description: t("description"),
+    description: t("profile.metadata.description"),
     url: getLocaleUrl(locale, "/profile"),
     locale,
   });

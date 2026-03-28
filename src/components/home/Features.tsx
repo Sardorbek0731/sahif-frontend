@@ -107,7 +107,7 @@ export default function Features() {
         <div className="row-center mb-1">
           <div className="h-px w-6 bg-foreground/20" />
           <span className="text-xs font-semibold text-foreground/30 mx-3">
-            {t("eyebrow")}
+            {t("tag")}
           </span>
           <div className="h-px w-6 bg-foreground/20" />
         </div>

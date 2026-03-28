@@ -28,7 +28,7 @@ export default function Hero() {
   const locale = useLocale() as Locale;
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const t = useTranslations("home.hero");
+  const t = useTranslations("");
 
   const pillRef = useRef<HTMLDivElement>(null);
   const prevIndexRef = useRef(0);
@@ -140,17 +140,17 @@ export default function Hero() {
         <div className="flex items-center gap-2 flex-wrap mb-4">
           {book.isTrending && (
             <span className="border border-orange-500 bg-orange-500/15 text-orange-500 py-1 px-3 rounded-md text-sm">
-              {t("trending")}
+              {t("badges.trending")}
             </span>
           )}
           {book.isBestseller && (
             <span className="border border-primary bg-primary/15 text-primary py-1 px-3 rounded-md text-sm">
-              {t("bestseller")}
+              {t("badges.bestseller")}
             </span>
           )}
           {book.isNew && (
             <span className="border border-green-500 bg-green-500/15 text-green-500 py-1 px-3 rounded-md text-sm">
-              {t("new")}
+              {t("badges.new")}
             </span>
           )}
         </div>
@@ -189,7 +189,7 @@ export default function Hero() {
             <p className="group-hover:text-primary transition-colors">
               {authorName}
             </p>
-            <span className="text-sm text-foreground/75">{t("author")}</span>
+            <span className="text-sm text-foreground/75">{t("home.hero.author")}</span>
           </span>
         </Link>
 
