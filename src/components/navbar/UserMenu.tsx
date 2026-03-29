@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
 import { useAuthStore } from "@/store/useAuthStore";
 
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
 export default function UserMenu({
   serverUserName,
 }: {
@@ -20,8 +22,24 @@ export default function UserMenu({
 
   const { user, logout } = useAuthStore();
 
-  const displayName =
-    user?.name || (serverUserName ? decodeURIComponent(serverUserName) : "");
+  const displayName = (() => {
+    const firstName = user?.firstName || "";
+    const lastName = user?.lastName || "";
+
+    if (firstName && lastName)
+      return `${capitalize(firstName)} ${capitalize(lastName)[0]}.`;
+    if (firstName) return capitalize(firstName);
+
+    if (serverUserName) {
+      const decoded = decodeURIComponent(serverUserName);
+      const [first, last] = decoded.split(" ");
+      return last
+        ? `${capitalize(first)} ${capitalize(last)[0]}.`
+        : capitalize(first);
+    }
+
+    return "";
+  })();
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {

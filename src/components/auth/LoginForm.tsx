@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
+
+type Step = "phone" | "otp" | "name";
 
 // ─── Phone Step ──────────────────────────────────────────────────────────────
 function PhoneStep({
@@ -158,15 +160,18 @@ function NameStep({
   isLoading,
   error,
 }: {
-  onSubmit: (name: string) => void;
+  onSubmit: (firstName: string, lastName: string) => void;
   isLoading: boolean;
   error: string;
 }) {
   const t = useTranslations("auth.login.name");
-  const [value, setValue] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const isValid = firstName.trim().length >= 2 && lastName.trim().length >= 2;
 
   const handleSubmit = () => {
-    if (value.trim().length >= 2) onSubmit(value.trim());
+    if (isValid) onSubmit(firstName.trim(), lastName.trim());
   };
 
   return (
@@ -175,23 +180,41 @@ function NameStep({
       <p className="text-sm text-foreground/50 mb-6">{t("description")}</p>
 
       <label className="text-sm font-medium text-foreground/70 mb-1.5 block">
-        {t("label")}
+        {t("firstNameLabel")}
       </label>
       <input
         type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-        placeholder={t("placeholder")}
-        className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-2"
+        value={firstName}
+        maxLength={20}
+        onChange={(e) => setFirstName(e.target.value)}
+        onKeyDown={(e) =>
+          e.key === "Enter" &&
+          document.getElementById("last-name-input")?.focus()
+        }
+        placeholder={t("firstNamePlaceholder")}
+        className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-3"
         autoFocus
       />
 
-      {error && <p className="text-xs text-rose-500 mb-3">{error}</p>}
+      <label className="text-sm font-medium text-foreground/70 mb-1.5 block">
+        {t("lastNameLabel")}
+      </label>
+      <input
+        id="last-name-input"
+        type="text"
+        value={lastName}
+        maxLength={20}
+        onChange={(e) => setLastName(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+        placeholder={t("lastNamePlaceholder")}
+        className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-2"
+      />
+
+      {error && <p className="text-xs text-rose-500 mb-3">{t(error)}</p>}
 
       <Button
         onClick={handleSubmit}
-        disabled={value.trim().length < 2 || isLoading}
+        disabled={!isValid || isLoading}
         className="w-full justify-center bg-primary text-white py-3 mt-2 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? t("loading") : t("submit")}
@@ -201,7 +224,13 @@ function NameStep({
 }
 
 // ─── LoginForm ───────────────────────────────────────────────────────────────
-export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
+export default function LoginForm({
+  onSuccess,
+  onStepChange,
+}: {
+  onSuccess?: () => void;
+  onStepChange?: (step: Step) => void;
+}) {
   const {
     step,
     phone,
@@ -213,32 +242,24 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
     back,
   } = useAuth();
 
-  const handleVerifyOtp = async (code: string) => {
-    await verifyOtp(code);
-  };
+  useEffect(() => {
+    onStepChange?.(step);
+  }, [step, onStepChange]);
 
-  const handleSubmitName = async (name: string) => {
-    await submitName(name);
+  const handleSubmitName = async (firstName: string, lastName: string) => {
+    await submitName(firstName, lastName);
     onSuccess?.();
-  };
-
-  const handleSendOtp = async (phone: string) => {
-    await sendOtp(phone);
   };
 
   return (
     <div className="w-full max-w-sm">
       {step === "phone" && (
-        <PhoneStep
-          onSubmit={handleSendOtp}
-          isLoading={isLoading}
-          error={error}
-        />
+        <PhoneStep onSubmit={sendOtp} isLoading={isLoading} error={error} />
       )}
       {step === "otp" && (
         <OtpStep
           phone={phone}
-          onSubmit={handleVerifyOtp}
+          onSubmit={verifyOtp}
           onBack={back}
           isLoading={isLoading}
           error={error}

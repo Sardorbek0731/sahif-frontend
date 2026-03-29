@@ -5,7 +5,8 @@ import { setCookie } from "@/lib/cookies";
 type User = {
   id: string;
   phone: string;
-  name: string;
+  firstName: string;
+  lastName: string;
 };
 
 type AuthStore = {
@@ -28,17 +29,20 @@ export const useAuthStore = create<AuthStore>()(
         set({ user, isAuthenticated: true });
         const currentToken = get().token;
         if (currentToken) {
+          const fullName = `${user.firstName} ${user.lastName}`.trim();
           setCookie("auth-token", currentToken);
-          setCookie("user-name", encodeURIComponent(user.name));
+          setCookie("user-name", encodeURIComponent(fullName));
         }
       },
 
       setToken: (token) => {
         set({ token });
         setCookie("auth-token", token);
-        const userName = get().user?.name || "";
-        if (userName) {
-          setCookie("user-name", encodeURIComponent(userName));
+        const currentUser = get().user;
+        if (currentUser) {
+          const fullName =
+            `${currentUser.firstName} ${currentUser.lastName}`.trim();
+          setCookie("user-name", encodeURIComponent(fullName));
         }
       },
 

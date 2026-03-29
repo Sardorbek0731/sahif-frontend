@@ -1,7 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import Modal from "@/components/ui/Modal";
 import LoginForm from "@/components/auth/LoginForm";
+
+type Step = "phone" | "otp" | "name";
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -14,14 +18,25 @@ export default function LoginModal({
   onClose,
   onSuccess,
 }: LoginModalProps) {
+  const [step, setStep] = useState<Step>("phone");
+
+  const handleClose = () => {
+    if (step === "name") return;
+    onClose();
+  };
+
   const handleSuccess = () => {
     onClose();
     onSuccess?.();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <LoginForm onSuccess={handleSuccess} />
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      showCloseButton={step !== "name"}
+    >
+      <LoginForm onSuccess={handleSuccess} onStepChange={setStep} />
     </Modal>
   );
 }

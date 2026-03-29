@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { useAuthStore } from "@/store/useAuthStore";
 
 type Step = "phone" | "otp" | "name";
@@ -33,7 +32,6 @@ export function useAuth() {
   const verifyOtp = async (code: string) => {
     setIsLoading(true);
     setError("");
-
     try {
       await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -48,7 +46,7 @@ export function useAuth() {
         setStep("name");
       } else {
         setToken("mock-token-123");
-        setUser({ id: "1", phone, name: "Foydalanuvchi" });
+        setUser({ id: "1", phone, firstName: "Foydalanuvchi", lastName: "" });
       }
     } catch {
       setError("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
@@ -57,7 +55,7 @@ export function useAuth() {
     }
   };
 
-  const submitName = async (name: string) => {
+  const submitName = async (firstName: string, lastName: string) => {
     setIsLoading(true);
     setError("");
 
@@ -65,7 +63,7 @@ export function useAuth() {
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       setToken("mock-token-123");
-      setUser({ id: "1", phone, name });
+      setUser({ id: "1", phone, firstName, lastName });
     } catch {
       setError("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
     } finally {
