@@ -23,7 +23,7 @@
       },
       "search": {
         "title": "Smart search",
-        "description": "Find any book instantly by title, author or ISBN. Search works in both Uzbek and Russian."
+        "description": "Find any book instantly by title, author or ISBN. Search understands Uzbek, Russian and English."
       },
       "payment": {
         "title": "Secure payment",

@@ -102,7 +102,8 @@ export default async function Books({
       return (
         currentTitle.includes(q) ||
         (book.originalTitle?.toLowerCase().includes(q) ?? false) ||
-        authorName.toLowerCase().includes(q)
+        authorName.toLowerCase().includes(q) ||
+        book.variants.some((v) => v.isbn.includes(q))
       );
     }
 

@@ -23,7 +23,7 @@
       },
       "search": {
         "title": "Aqlli qidiruv",
-        "description": "Kitob nomi, muallif yoki ISBN orqali bir zumda toping. Qidiruv o'zbek va rus tillarini tushunadi."
+        "description": "Kitob nomi, muallif yoki ISBN orqali bir zumda toping. Qidiruv o'zbek, rus va ingliz tillarini tushunadi."
       },
       "payment": {
         "title": "Xavfsiz to'lov",

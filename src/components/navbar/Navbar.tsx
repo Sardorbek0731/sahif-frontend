@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing";
-import Categories from "../categories/Categories";
-import Search from "../search/Search";
+import Categories from "./Categories";
+import Search from "./Search";
 import { Logo } from "@/components/ui/Logo";
 import NavLinks from "./NavLinks";
 

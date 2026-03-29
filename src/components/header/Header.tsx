@@ -1,6 +1,6 @@
-import Location from "@/components/location/Location";
-import LangSwitcher from "@/components/lang/Lang";
-import ThemeToggle from "@/components/theme/Theme";
+import Location from "@/components/header/Location";
+import LangSwitcher from "@/components/header/Lang";
+import ThemeToggle from "@/components/header/Theme";
 import { Button } from "@/components/ui/Button";
 import { PHONE_NUMBER, PHONE_DISPLAY, WORKING_HOURS } from "@/constants";
 
