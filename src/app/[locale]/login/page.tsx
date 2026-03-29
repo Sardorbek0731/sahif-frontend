@@ -7,6 +7,7 @@ import { type Locale, Link, redirect } from "@/i18n/routing";
 
 import LoginForm from "@/components/auth/LoginForm";
 import { cookies } from "next/headers";
+import LoginRedirect from "@/components/auth/LoginRedirect";
 
 export async function generateMetadata({
   params,
@@ -40,6 +41,8 @@ export default async function Login({
 
   return (
     <main className="min-h-screen bg-background row-center px-4">
+      <LoginRedirect />
+
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <Link href="/" className="text-2xl font-bold text-primary">

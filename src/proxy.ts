@@ -4,6 +4,8 @@ import { type Locale, routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
+const PROTECTED_ROUTES = ["/profile"];
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("auth-token")?.value;
@@ -13,11 +15,14 @@ export default function middleware(request: NextRequest) {
     ? (segments[1] as Locale)
     : routing.defaultLocale;
 
-  const isProtectedRoute = /^\/(uz|en|ru)\/profile($|\/)/.test(pathname);
+  const pathWithoutLocale = pathname.replace(`/${locale}`, "");
+  const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
+    pathWithoutLocale.startsWith(route),
+  );
 
   if (!token && isProtectedRoute) {
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/login`; 
+    url.pathname = `/${locale}/login`;
     return NextResponse.redirect(url);
   }
 

@@ -40,9 +40,6 @@ export async function generateMetadata({
 
   const activeVariant = getActiveVariant(book, variantParam, locale);
   const bookImage = activeVariant.variantImage || book.images.cover;
-  const fullImageUrl = bookImage.startsWith("http")
-    ? bookImage
-    : `${SITE_URL}${bookImage}`;
 
   const path = `/books/${slug}/${variantParam}`;
   const url = `${SITE_URL}/${locale}${path}`;
@@ -63,7 +60,7 @@ export async function generateMetadata({
       type: "book",
       images: [
         {
-          url: fullImageUrl,
+          url: `${SITE_URL}${bookImage}`,
           alt: title,
         },
       ],
@@ -72,7 +69,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${title} | sahif`,
       description: bookDescription,
-      images: [fullImageUrl],
+      images: [`${SITE_URL}${bookImage}`],
     },
   };
 }

@@ -6,7 +6,7 @@ type Step = "phone" | "otp" | "name";
 const MOCK_OTP = "123456";
 
 export function useAuth() {
-  const { setUser, setToken } = useAuthStore();
+  const { setUser, setToken, user } = useAuthStore();
 
   const [step, setStep] = useState<Step>("phone");
   const [phone, setPhone] = useState("");
@@ -40,7 +40,7 @@ export function useAuth() {
         return;
       }
 
-      const mockIsNewUser = true;
+      const mockIsNewUser = !user;
 
       if (mockIsNewUser) {
         setStep("name");

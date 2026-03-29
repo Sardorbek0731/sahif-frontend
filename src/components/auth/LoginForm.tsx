@@ -210,7 +210,7 @@ function NameStep({
         className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-2"
       />
 
-      {error && <p className="text-xs text-rose-500 mb-3">{t(error)}</p>}
+      {error && <p className="text-xs text-rose-500 mb-3">{error}</p>}
 
       <Button
         onClick={handleSubmit}

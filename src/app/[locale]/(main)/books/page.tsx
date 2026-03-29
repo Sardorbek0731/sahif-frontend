@@ -29,14 +29,14 @@ export async function generateMetadata({
   // Sarlavhani aniqlash
   let title = t("pages.books");
   if (search) title = search;
-  else if (category && isValidCategory(category)) {
+  else if (isValidCategory(category)) {
     const tCat = await getTranslations({ locale, namespace: "categories" });
     title = tCat(`items.${category}.name`);
   }
 
   // URL yasash (Parametrlar bilan)
   const isSearch = !!search;
-  const hasCategory = category && isValidCategory(category);
+  const hasCategory = isValidCategory(category);
   const path = "/books";
   const paramsObj = hasCategory ? { category } : undefined;
 
@@ -124,9 +124,7 @@ export default async function Books({
   });
 
   // JSON-LD uchun sahifa sarlavhasi (metadata dan alohida hisoblash shart emas)
-  const query = new URLSearchParams();
-  if (category && isValidCategory(category)) query.set("category", category);
-  const hasCategory = category && isValidCategory(category);
+  const hasCategory = isValidCategory(category);
   const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${category}` : ""}`;
 
   const jsonLd = {
@@ -152,7 +150,7 @@ export default async function Books({
             name: getAuthor(book.authorSlug)?.name ?? book.authorSlug,
           },
           url: `${SITE_URL}/${locale}/books/${book.slug}/${variant.language}`,
-          image: book.images.cover,
+          image: `${SITE_URL}${book.images.cover}`,
           offers: {
             "@type": "Offer",
             price: finalPrice,
@@ -178,7 +176,7 @@ export default async function Books({
       )}
 
       <div className="grid grid-cols-4 gap-6">
-        {filtered.map((book) => {
+        {filtered.map((book, index) => {
           const bookTitle = getBookTitle(book, locale);
           const author = getAuthor(book.authorSlug);
           const authorName = author?.name ?? book.authorSlug;
@@ -199,6 +197,7 @@ export default async function Books({
                   width={200}
                   height={300}
                   className="h-auto"
+                  priority={index < 4}
                 />
                 <h2>{bookTitle}</h2>
               </Link>

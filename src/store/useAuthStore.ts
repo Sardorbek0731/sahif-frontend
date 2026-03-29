@@ -47,7 +47,7 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
+        set({ token: null, isAuthenticated: false }); 
         document.cookie = "auth-token=; path=/; max-age=0";
         document.cookie = "user-name=; path=/; max-age=0";
       },
