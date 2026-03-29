@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
 import { type Locale } from "@/i18n/routing";
-import { getLocaleUrl } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -18,7 +17,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: t("pages.profile"),
     description: t("profile.metadata.description"),
-    url: getLocaleUrl(locale, "/profile"),
+    path: "/profile",
     locale,
   });
 }

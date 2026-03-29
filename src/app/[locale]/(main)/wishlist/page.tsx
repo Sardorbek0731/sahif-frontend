@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
 import { type Locale } from "@/i18n/routing";
-import { getLocaleUrl } from "@/lib/seo";
 
 import WishlistContent from "@/components/wishlist/WishlistContent";
 
@@ -20,7 +19,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: t("pages.wishlist"),
     description: t("wishlist.metadata.description"),
-    url: getLocaleUrl(locale, "/wishlist"),
+    path: "/wishlist",
     locale,
   });
 }

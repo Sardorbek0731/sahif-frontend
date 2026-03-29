@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { OG_LOCALES } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
 import { type Locale, Link } from "@/i18n/routing";
-import { generateAlternates, getLocaleUrl } from "@/lib/seo";
+import { generateAlternates } from "@/lib/seo";
 
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
@@ -24,39 +24,34 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const { category, search } = await searchParams;
-
   const t = await getTranslations({ locale });
-  const tCategories =
-    category && isValidCategory(category)
-      ? await getTranslations({ locale, namespace: "categories" })
-      : null;
 
-  // Sahifa sarlavhasi
+  // Sarlavhani aniqlash
   let title = t("pages.books");
   if (search) title = search;
-  else if (tCategories && category) {
-    title = tCategories(`items.${category}.name`);
+  else if (category && isValidCategory(category)) {
+    const tCat = await getTranslations({ locale, namespace: "categories" });
+    title = tCat(`items.${category}.name`);
   }
 
-  const description = t("books.metadata.description");
+  // URL yasash (Parametrlar bilan)
+  const isSearch = !!search;
+  const hasCategory = category && isValidCategory(category);
+  const path = "/books";
+  const paramsObj = hasCategory ? { category } : undefined;
 
-  // Canonical URL
-  const query = new URLSearchParams();
-  if (category && isValidCategory(category)) query.set("category", category);
-  const queryString = query.toString();
-  const canonicalUrl = search
-    ? undefined // search sahifalar — noindex, canonical yo'q
-    : `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
+  // Canonical URL (search bo'lsa noindex)
+  const canonicalUrl = isSearch
+    ? undefined
+    : `${SITE_URL}/${locale}${path}${hasCategory ? `?category=${category}` : ""}`;
+
+  const description = t("books.metadata.description");
 
   return {
     title,
     description,
 
-    alternates: generateAlternates(
-      locale, // 1-argument: joriy locale
-      "/books", // 2-argument: path
-      category && isValidCategory(category) ? { category } : undefined, // 3-argument: params
-    ),
+    alternates: generateAlternates(locale, path, paramsObj),
 
     robots: {
       index: !search,
@@ -70,7 +65,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | sahif`,
       description,
-      url: canonicalUrl ?? getLocaleUrl(locale, "/books"),
+      url: canonicalUrl || `${SITE_URL}/${locale}${path}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
@@ -131,8 +126,8 @@ export default async function Books({
   // JSON-LD uchun sahifa sarlavhasi (metadata dan alohida hisoblash shart emas)
   const query = new URLSearchParams();
   if (category && isValidCategory(category)) query.set("category", category);
-  const queryString = query.toString();
-  const pageUrl = `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
+  const hasCategory = category && isValidCategory(category);
+  const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${category}` : ""}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -156,7 +151,7 @@ export default async function Books({
             "@type": "Person",
             name: getAuthor(book.authorSlug)?.name ?? book.authorSlug,
           },
-          url: getLocaleUrl(locale, `/books/${book.slug}/${variant.language}`),
+          url: `${SITE_URL}/${locale}/books/${book.slug}/${variant.language}`,
           image: book.images.cover,
           offers: {
             "@type": "Offer",

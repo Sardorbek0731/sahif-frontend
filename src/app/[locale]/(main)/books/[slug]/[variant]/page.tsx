@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { type Locale, routing, Link } from "@/i18n/routing";
 import { books } from "@/data/books";
 import { SITE_URL, OG_LOCALES } from "@/constants";
-import { generateAlternates, getLocaleUrl } from "@/lib/seo";
+import { generateAlternates } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
@@ -44,8 +44,8 @@ export async function generateMetadata({
     ? bookImage
     : `${SITE_URL}${bookImage}`;
 
-  const pagePath = `books/${slug}/${variantParam}`;
-  const url = getLocaleUrl(locale, pagePath);
+  const path = `/books/${slug}/${variantParam}`;
+  const url = `${SITE_URL}/${locale}${path}`;
 
   return {
     title,
@@ -133,7 +133,7 @@ export default async function BookPage({
         activeVariant.stockCount > 0
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
-      url: getLocaleUrl(locale, `books/${book.slug}/${activeVariant.language}`),
+      url: `${SITE_URL}/${locale}/books/${book.slug}/${activeVariant.language}`,
     },
     workExample: book.variants.map((v) => ({
       "@type": "Book",

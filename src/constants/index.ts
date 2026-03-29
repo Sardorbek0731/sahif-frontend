@@ -6,8 +6,6 @@ export const SITE_URL =
 export const GOOGLE_VERIFICATION =
   process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "";
 
-export const SITE_HOSTNAME = new URL(SITE_URL).hostname;
-
 export const OG_LOCALES: Record<Locale, string> = {
   uz: "uz_UZ",
   ru: "ru_RU",

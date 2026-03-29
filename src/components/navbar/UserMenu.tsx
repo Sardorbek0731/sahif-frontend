@@ -8,13 +8,20 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
 import { useAuthStore } from "@/store/useAuthStore";
 
-export default function UserMenu() {
+export default function UserMenu({
+  serverUserName,
+}: {
+  serverUserName: string;
+}) {
   const t = useTranslations("");
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
   const { user, logout } = useAuthStore();
+
+  const displayName =
+    user?.name || (serverUserName ? decodeURIComponent(serverUserName) : "");
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -30,6 +37,7 @@ export default function UserMenu() {
     setOpen(false);
     logout();
     router.push("/");
+    router.refresh();
   };
 
   const menuItems = [
@@ -43,7 +51,7 @@ export default function UserMenu() {
         onClick={() => setOpen((v) => !v)}
         className="relative bg-card hover:bg-card-hover h-10 px-4"
       >
-        {user?.name}
+        {displayName}
       </Button>
 
       {open && (

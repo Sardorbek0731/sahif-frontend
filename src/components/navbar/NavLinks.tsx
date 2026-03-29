@@ -20,14 +20,22 @@ interface NavLink {
   count?: number;
 }
 
-export default function NavLinks() {
+export default function NavLinks({
+  serverAuthenticated,
+  serverUserName,
+}: {
+  serverAuthenticated: boolean;
+  serverUserName: string;
+}) {
   const t = useTranslations("");
   const isMounted = useIsMounted();
 
   const cartCount = useCartStore(selectTotalUniqueItems);
   const wishlistCount = useWishlistStore(selectTotalItems);
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated: clientAuthenticated } = useAuthStore();
   const [loginOpen, setLoginOpen] = useState(false);
+
+  const isAuthenticated = isMounted ? clientAuthenticated : serverAuthenticated;
 
   const navLinks: NavLink[] = [
     {
@@ -65,14 +73,14 @@ export default function NavLinks() {
         </Button>
       ))}
 
-      {isMounted && isAuthenticated ? (
-        <UserMenu />
+      {isAuthenticated ? (
+        <UserMenu serverUserName={serverUserName} />
       ) : (
         <>
           <Button
             leftIcon="login"
             onClick={() => setLoginOpen(true)}
-            className="relative bg-card hover:bg-card-hover h-10 px-4"
+            className="bg-card hover:bg-card-hover h-10 px-4"
           >
             {t("pages.login")}
           </Button>

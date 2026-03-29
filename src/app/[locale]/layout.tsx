@@ -10,14 +10,9 @@ import { getMessages, getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
-import {
-  SITE_URL,
-  GOOGLE_VERIFICATION,
-  SITE_HOSTNAME,
-  OG_LOCALES,
-} from "@/constants";
+import { SITE_URL, GOOGLE_VERIFICATION, OG_LOCALES } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
-import { generateAlternates, getLocaleUrl } from "@/lib/seo";
+import { generateAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -29,7 +24,6 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   const description = t("description");
-  const url = getLocaleUrl(locale);
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -43,7 +37,7 @@ export async function generateMetadata({
     openGraph: {
       title: "sahif",
       description,
-      url,
+      url: `${SITE_URL}/${locale}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale as Locale],
       type: "website",
@@ -109,13 +103,13 @@ export default async function LocaleLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "sahif",
-    alternateName: ["Sahif", SITE_HOSTNAME],
-    url: getLocaleUrl(locale),
+    alternateName: ["Sahif", "sahif.vercel.app"],
+    url: `${SITE_URL}/${locale}`,
     inLanguage: locale,
     description: t("description"),
     potentialAction: {
       "@type": "SearchAction",
-      target: `${getLocaleUrl(locale, "/books")}?search={search_term_string}`,
+      target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

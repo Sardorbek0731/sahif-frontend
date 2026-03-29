@@ -3,11 +3,10 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
-import { getLocaleUrl } from "@/lib/seo";
-import { type Locale, Link } from "@/i18n/routing";
+import { type Locale, Link, redirect } from "@/i18n/routing";
 
 import LoginForm from "@/components/auth/LoginForm";
-import LoginRedirect from "@/components/auth/LoginRedirect";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({
   params,
@@ -21,15 +20,26 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: t("pages.login"),
     description: t("login.metadata.description"),
-    url: getLocaleUrl(locale, "/login"),
+    path: "/login",
     locale,
   });
 }
 
-export default function Login() {
+export default async function Login({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth-token")?.value;
+
+  if (token) {
+    redirect({ href: "/", locale });
+  }
+
   return (
     <main className="min-h-screen bg-background row-center px-4">
-      <LoginRedirect />
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <Link href="/" className="text-2xl font-bold text-primary">

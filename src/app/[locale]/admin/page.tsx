@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
-import { getLocaleUrl } from "@/lib/seo";
 import { type Locale } from "@/i18n/routing";
 
 export async function generateMetadata({
@@ -18,7 +17,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: t("pages.admin"),
     description: t("admin.metadata.description"),
-    url: getLocaleUrl(locale, "/admin"),
+    path: "/admin", 
     locale,
   });
 }

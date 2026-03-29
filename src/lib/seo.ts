@@ -2,20 +2,30 @@ import { type Locale, routing } from "@/i18n/routing";
 import { SITE_URL, HREFLANG_LOCALES } from "@/constants";
 
 export function generateAlternates(
-  locale: Locale, // 1-argument locale bo'lishi kerak
+  locale: Locale,
   path = "",
   sharedParams?: Record<string, string>,
 ) {
   const formattedPath = path ? (path.startsWith("/") ? path : `/${path}`) : "";
 
-  // Joriy tilga mos canonical URL'ni shu yerning o'zida yasaymiz
-  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  const canonicalUrl = `${SITE_URL}${prefix}${formattedPath}`;
+  const canonicalUrl = `${SITE_URL}/${locale}${formattedPath}`;
 
-  const getPrefix = (loc: Locale) =>
-    loc === routing.defaultLocale ? "" : `/${loc}`;
+  const languages = Object.fromEntries(
+    routing.locales.map((loc) => {
+      const url = new URL(`${SITE_URL}/${loc}${formattedPath}`);
+      if (sharedParams) {
+        Object.entries(sharedParams).forEach(([k, v]) =>
+          url.searchParams.set(k, v),
+        );
+      }
+      return [HREFLANG_LOCALES[loc], url.toString()];
+    }),
+  );
 
-  const xDefault = new URL(`${SITE_URL}${formattedPath}`);
+  const xDefault = new URL(
+    `${SITE_URL}/${routing.defaultLocale}${formattedPath}`,
+  );
+
   if (sharedParams) {
     Object.entries(sharedParams).forEach(([k, v]) =>
       xDefault.searchParams.set(k, v),
@@ -23,26 +33,10 @@ export function generateAlternates(
   }
 
   return {
-    canonical: canonicalUrl, // Endi undefined bo'lmaydi
+    canonical: canonicalUrl,
     languages: {
-      ...Object.fromEntries(
-        routing.locales.map((loc) => {
-          const url = new URL(`${SITE_URL}${getPrefix(loc)}${formattedPath}`);
-          if (sharedParams) {
-            Object.entries(sharedParams).forEach(([k, v]) =>
-              url.searchParams.set(k, v),
-            );
-          }
-          return [HREFLANG_LOCALES[loc], url.toString()];
-        }),
-      ),
+      ...languages,
       "x-default": xDefault.toString(),
     },
   };
-}
-
-export function getLocaleUrl(locale: string, path: string = "") {
-  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  const formattedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${SITE_URL}${prefix}${formattedPath === "/" ? "" : formattedPath}`;
 }

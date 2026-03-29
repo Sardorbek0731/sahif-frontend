@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
-
-import { OG_LOCALES } from "@/constants";
+import { SITE_URL, OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 
 export function generatePrivateMetadata({
   title,
   description,
-  url,
   locale,
+  path,
 }: {
   title: string;
   description: string;
-  url: string;
   locale: Locale;
+  path: string;
 }): Metadata {
   return {
     title,
     description,
     alternates: {
-      canonical: url,
+      canonical: `${SITE_URL}/${locale}${path}`,
     },
     robots: {
       index: false,
@@ -28,7 +27,7 @@ export function generatePrivateMetadata({
     openGraph: {
       title: `${title} | sahif`,
       description,
-      url,
+      url: `${SITE_URL}/${locale}${path}`,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
