@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
-import { type Locale, routing } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
 import {
   SITE_URL,
@@ -17,7 +17,7 @@ import {
   OG_LOCALES,
 } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -28,38 +28,40 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale });
 
-  const title = "sahif";
   const description = t("description");
-
-  const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const url = getLocaleUrl(locale);
 
   return {
     metadataBase: new URL(SITE_URL),
-    title,
+    title: {
+      template: "%s | sahif",
+      default: "sahif",
+    },
     description,
     applicationName: "sahif",
-    alternates: generateAlternates(locale as Locale),
+    alternates: generateAlternates(locale as Locale, ""),
     openGraph: {
-      title,
+      title: "sahif",
       description,
-      url: `${SITE_URL}${localePrefix}`,
+      url,
       siteName: "sahif",
       locale: OG_LOCALES[locale as Locale],
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/logo.png`,
+          url: "/logo.png",
           width: 512,
           height: 512,
           alt: "sahif logo",
+          type: "image/png",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title,
+      title: "sahif",
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: ["/logo.png"],
     },
     robots: {
       index: true,
@@ -103,20 +105,17 @@ export default async function LocaleLayout({
 
   const initialTheme = getInitialTheme(cookieStore);
 
-  const path = "";
-  const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "sahif",
     alternateName: ["Sahif", SITE_HOSTNAME],
-    url: `${SITE_URL}${localePrefix}${path}`,
+    url: getLocaleUrl(locale),
     inLanguage: locale,
     description: t("description"),
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}${localePrefix}/books?search={search_term_string}`,
+      target: `${getLocaleUrl(locale, "/books")}?search={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

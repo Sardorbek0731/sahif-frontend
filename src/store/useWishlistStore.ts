@@ -14,7 +14,6 @@ interface WishlistStore {
   toggleItem: (item: WishlistItem) => void;
   isInWishlist: (bookId: number, language: string) => boolean;
   clearWishlist: () => void;
-  totalItems: () => number;
 }
 
 export const useWishlistStore = create<WishlistStore>()(
@@ -50,9 +49,9 @@ export const useWishlistStore = create<WishlistStore>()(
         get().items.some((i) => i.bookId === bookId && i.language === language),
 
       clearWishlist: () => set({ items: [] }),
-
-      totalItems: () => get().items.length,
     }),
     { name: "wishlist" },
   ),
 );
+
+export const selectTotalItems = (state: WishlistStore) => state.items.length;

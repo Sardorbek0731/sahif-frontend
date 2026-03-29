@@ -4,9 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
 import { getLocaleUrl } from "@/lib/seo";
-import { type Locale } from "@/i18n/routing";
-
-import { Link } from "@/i18n/routing";
+import { type Locale, Link } from "@/i18n/routing";
 
 import LoginForm from "@/components/auth/LoginForm";
 import LoginRedirect from "@/components/auth/LoginRedirect";
@@ -21,7 +19,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return generatePrivateMetadata({
-    title: `${t("pages.login")} | sahif`,
+    title: t("pages.login"),
     description: t("login.metadata.description"),
     url: getLocaleUrl(locale, "/login"),
     locale,

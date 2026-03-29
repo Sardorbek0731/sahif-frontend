@@ -35,7 +35,7 @@ export async function generateMetadata({
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
-  const bookTitle = getBookTitle(book, locale, variantParam);
+  const title = getBookTitle(book, locale, variantParam);
   const bookDescription = getBookDescription(book, locale);
 
   const activeVariant = getActiveVariant(book, variantParam, locale);
@@ -44,16 +44,18 @@ export async function generateMetadata({
     ? bookImage
     : `${SITE_URL}${bookImage}`;
 
-  const title = `${bookTitle} | sahif`;
   const pagePath = `books/${slug}/${variantParam}`;
   const url = getLocaleUrl(locale, pagePath);
 
   return {
     title,
     description: bookDescription,
-    alternates: generateAlternates(locale, `books/${slug}/${variantParam}`),
+    alternates: generateAlternates(
+      locale, // 1-argument: locale
+      `books/${slug}/${variantParam}`, // 2-argument: path
+    ),
     openGraph: {
-      title,
+      title: `${title} | sahif`,
       description: bookDescription,
       url,
       siteName: "sahif",
@@ -62,13 +64,13 @@ export async function generateMetadata({
       images: [
         {
           url: fullImageUrl,
-          alt: bookTitle,
+          alt: title,
         },
       ],
     },
     twitter: {
-      card: "summary",
-      title,
+      card: "summary_large_image",
+      title: `${title} | sahif`,
       description: bookDescription,
       images: [fullImageUrl],
     },

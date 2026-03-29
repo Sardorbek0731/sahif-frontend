@@ -10,11 +10,20 @@ import { type Locale, Link } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 
+import { useIsMounted } from "@/hooks/useIsMounted";
+
 export default function WishlistContent() {
+  const isMounted = useIsMounted();
   const locale = useLocale() as Locale;
   const { items, removeItem, clearWishlist } = useWishlistStore();
   const addToCart = useCartStore((s) => s.addItem);
 
+  // 1. Gidratatsiya tugaguncha kutamiz
+  if (!isMounted) {
+    return <div className="py-20 text-center">Yuklanmoqda...</div>;
+  }
+
+  // 2. Endi faqat haqiqiy (client-side) ma'lumot bilan ishlaymiz
   if (items.length === 0) {
     return (
       <div className="py-20 text-center text-foreground/50">

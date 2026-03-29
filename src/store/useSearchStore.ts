@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 interface SearchState {
   history: string[];
@@ -16,12 +16,9 @@ export const useSearchStore = create<SearchState>()(
         set((state) => {
           const trimmed = query.trim();
           if (!trimmed) return state;
-          const currentHistory = Array.isArray(state.history)
-            ? state.history
-            : [];
           const newHistory = [
             trimmed,
-            ...currentHistory.filter((h) => h !== trimmed),
+            ...state.history.filter((h) => h !== trimmed),
           ].slice(0, 5);
           return { history: newHistory };
         }),
@@ -31,9 +28,6 @@ export const useSearchStore = create<SearchState>()(
         })),
       clearHistory: () => set({ history: [] }),
     }),
-    {
-      name: "search-history",
-      storage: createJSONStorage(() => localStorage),
-    },
+    { name: "search-history" },
   ),
 );

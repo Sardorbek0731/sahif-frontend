@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 
 export async function generateMetadata({
@@ -15,11 +15,10 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "notFound" });
 
-  const title = `404 | sahif`;
   const description = t("description");
 
   return {
-    title,
+    title: "404",
     description,
     robots: {
       index: false,
@@ -30,25 +29,26 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title,
+      title: `404 | sahif`,
       description,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/logo.png`,
+          url: "/logo.png",
           width: 512,
           height: 512,
           alt: "sahif logo",
+          type: "image/png",
         },
       ],
     },
     twitter: {
-      title,
       card: "summary",
+      title: `404 | sahif`,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: ["/logo.png"],
     },
   };
 }

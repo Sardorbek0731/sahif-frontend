@@ -2,28 +2,41 @@ import { type Locale, routing } from "@/i18n/routing";
 import { SITE_URL, HREFLANG_LOCALES } from "@/constants";
 
 export function generateAlternates(
-  locale: Locale,
+  locale: Locale, // 1-argument locale bo'lishi kerak
   path = "",
-  canonicalUrl?: string,
+  sharedParams?: Record<string, string>,
 ) {
   const formattedPath = path ? (path.startsWith("/") ? path : `/${path}`) : "";
 
-  const getPrefix = (loc: string) =>
+  // Joriy tilga mos canonical URL'ni shu yerning o'zida yasaymiz
+  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const canonicalUrl = `${SITE_URL}${prefix}${formattedPath}`;
+
+  const getPrefix = (loc: Locale) =>
     loc === routing.defaultLocale ? "" : `/${loc}`;
 
-  const baseUrl =
-    canonicalUrl ?? `${SITE_URL}${getPrefix(locale)}${formattedPath}`;
+  const xDefault = new URL(`${SITE_URL}${formattedPath}`);
+  if (sharedParams) {
+    Object.entries(sharedParams).forEach(([k, v]) =>
+      xDefault.searchParams.set(k, v),
+    );
+  }
 
   return {
-    canonical: baseUrl,
+    canonical: canonicalUrl, // Endi undefined bo'lmaydi
     languages: {
       ...Object.fromEntries(
-        routing.locales.map((loc) => [
-          HREFLANG_LOCALES[loc as Locale],
-          `${SITE_URL}${getPrefix(loc)}${formattedPath}`,
-        ]),
+        routing.locales.map((loc) => {
+          const url = new URL(`${SITE_URL}${getPrefix(loc)}${formattedPath}`);
+          if (sharedParams) {
+            Object.entries(sharedParams).forEach(([k, v]) =>
+              url.searchParams.set(k, v),
+            );
+          }
+          return [HREFLANG_LOCALES[loc], url.toString()];
+        }),
       ),
-      "x-default": `${SITE_URL}${formattedPath}`,
+      "x-default": xDefault.toString(),
     },
   };
 }

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
-import { useCartStore } from "@/store/useCartStore";
-import { useWishlistStore } from "@/store/useWishlistStore";
+import { useCartStore, selectTotalUniqueItems } from "@/store/useCartStore";
+import { useWishlistStore, selectTotalItems } from "@/store/useWishlistStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -24,8 +24,8 @@ export default function NavLinks() {
   const t = useTranslations("");
   const isMounted = useIsMounted();
 
-  const cartCount = useCartStore((s) => s.totalUniqueItems());
-  const wishlistCount = useWishlistStore((s) => s.totalItems());
+  const cartCount = useCartStore(selectTotalUniqueItems);
+  const wishlistCount = useWishlistStore(selectTotalItems);
   const { isAuthenticated } = useAuthStore();
   const [loginOpen, setLoginOpen] = useState(false);
 

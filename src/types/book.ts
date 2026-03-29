@@ -1,7 +1,7 @@
 import { CategorySlug } from "@/data/categories";
 
 // 1. Kitob nashr etilishi mumkin bo'lgan barcha tillar
-export type LanguageCode = "uz-Latn" | "uz-Cyrl" | "en" | "ru" | string;
+export type LanguageCode = "uz-Latn" | "uz-Cyrl" | "en" | "ru" | (string & {});
 
 // 2. Sayt interfeysi tushunadigan asosiy tillar
 export type SupportedLocale = "uz" | "en" | "ru";
@@ -9,10 +9,7 @@ export type SupportedLocale = "uz" | "en" | "ru";
 // 3. Kitobning jismoniy ko'rinishi
 export type BookFormat = "hardcover" | "paperback" | "ebook" | "audio";
 
-// 4. Omborxonadagi holati
-export type StockStatus = "in-stock" | "out-of-stock" | "pre-order";
-
-// 5. Valyuta turi
+// 4. Valyuta turi
 export type Currency = "UZS" | "USD";
 
 // --- Narx va chegirma tizimi ---
@@ -30,7 +27,6 @@ interface BookVariant {
   // Savdo ma'lumotlari
   readonly price: BookPrice;
   readonly stockCount: number; // Omborxonadagi soni
-  readonly stockStatus: StockStatus;
 
   // Texnik ma'lumotlar (Nashrga qarab o'zgaradi)
   readonly isbn: string; // Shu nashrning xalqaro kodi

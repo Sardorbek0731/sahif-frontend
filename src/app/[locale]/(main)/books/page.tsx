@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { OG_LOCALES } from "@/constants";
 import { type Locale, Link } from "@/i18n/routing";
 import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 
@@ -13,6 +12,8 @@ import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
 
 import BookActions from "@/components/shared/BookActions";
+
+// ─── Metadata ────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({
   params,
@@ -25,30 +26,38 @@ export async function generateMetadata({
   const { category, search } = await searchParams;
 
   const t = await getTranslations({ locale });
-  const tCategories = category
-    ? await getTranslations({ locale, namespace: "categories" })
-    : null;
+  const tCategories =
+    category && isValidCategory(category)
+      ? await getTranslations({ locale, namespace: "categories" })
+      : null;
 
-  let pageTitle = t("pages.books");
-  if (search) pageTitle = search;
-  else if (category) {
-    if (isValidCategory(category)) {
-      pageTitle = tCategories!(`items.${category}.name`);
-    }
+  // Sahifa sarlavhasi
+  let title = t("pages.books");
+  if (search) title = search;
+  else if (tCategories && category) {
+    title = tCategories(`items.${category}.name`);
   }
-  const title = `${pageTitle} | sahif`;
+
   const description = t("books.metadata.description");
 
+  // Canonical URL
   const query = new URLSearchParams();
-  if (search) query.set("search", search);
-  else if (category) query.set("category", category);
+  if (category && isValidCategory(category)) query.set("category", category);
   const queryString = query.toString();
-  const url = `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
+  const canonicalUrl = search
+    ? undefined // search sahifalar — noindex, canonical yo'q
+    : `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
 
   return {
     title,
     description,
-    alternates: generateAlternates(locale, "/books", search ? undefined : url),
+
+    alternates: generateAlternates(
+      locale, // 1-argument: joriy locale
+      "/books", // 2-argument: path
+      category && isValidCategory(category) ? { category } : undefined, // 3-argument: params
+    ),
+
     robots: {
       index: !search,
       follow: true,
@@ -57,30 +66,35 @@ export async function generateMetadata({
         follow: true,
       },
     },
+
     openGraph: {
-      title,
+      title: `${title} | sahif`,
       description,
-      url,
+      url: canonicalUrl ?? getLocaleUrl(locale, "/books"),
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/logo.png`,
+          url: "/logo.png", // metadataBase bilan to'liq URL ga aylanadi
           width: 512,
           height: 512,
           alt: "sahif logo",
+          type: "image/png",
         },
       ],
     },
+
     twitter: {
       card: "summary",
-      title,
+      title: `${title} | sahif`,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: ["/logo.png"],
     },
   };
 }
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function Books({
   params,
@@ -101,7 +115,7 @@ export default async function Books({
 
       return (
         currentTitle.includes(q) ||
-        (book.originalTitle?.toLowerCase().includes(q) ?? false) ||
+        book.originalTitle.toLowerCase().includes(q) ||
         authorName.toLowerCase().includes(q) ||
         book.variants.some((v) => v.isbn.includes(q))
       );
@@ -110,11 +124,64 @@ export default async function Books({
     if (isValidCategory(category)) {
       return book.categorySlugs.includes(category);
     }
+
     return true;
   });
 
+  // JSON-LD uchun sahifa sarlavhasi (metadata dan alohida hisoblash shart emas)
+  const query = new URLSearchParams();
+  if (category && isValidCategory(category)) query.set("category", category);
+  const queryString = query.toString();
+  const pageUrl = `${getLocaleUrl(locale, "/books")}${queryString ? `?${queryString}` : ""}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    url: pageUrl,
+    numberOfItems: filtered.length,
+    itemListElement: filtered.slice(0, 20).map((book, index) => {
+      const variant =
+        book.variants.find((v) => v.language.startsWith(locale)) ||
+        book.variants[0];
+      const finalPrice =
+        variant.price.amount - (variant.price.discountAmount ?? 0);
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Book",
+          name: getBookTitle(book, locale),
+          author: {
+            "@type": "Person",
+            name: getAuthor(book.authorSlug)?.name ?? book.authorSlug,
+          },
+          url: getLocaleUrl(locale, `/books/${book.slug}/${variant.language}`),
+          image: book.images.cover,
+          offers: {
+            "@type": "Offer",
+            price: finalPrice,
+            priceCurrency: variant.price.currency,
+            availability:
+              variant.stockCount === 0
+                ? "https://schema.org/OutOfStock"
+                : "https://schema.org/InStock",
+          },
+        },
+      };
+    }),
+  };
+
   return (
     <main className="my-container py-10">
+      {/* JSON-LD — faqat real sahifalarda, search da emas */}
+      {!search && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+
       <div className="grid grid-cols-4 gap-6">
         {filtered.map((book) => {
           const bookTitle = getBookTitle(book, locale);
@@ -130,10 +197,7 @@ export default async function Books({
 
           return (
             <div key={book.id} className="relative">
-              <Link
-                key={book.id}
-                href={`/books/${book.slug}/${activeVariant.language}`}
-              >
+              <Link href={`/books/${book.slug}/${activeVariant.language}`}>
                 <Image
                   src={bookImage}
                   alt={bookTitle}

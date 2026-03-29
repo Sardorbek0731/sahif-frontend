@@ -18,7 +18,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return generatePrivateMetadata({
-    title: `${t("pages.wishlist")} | sahif`,
+    title: t("pages.wishlist"),
     description: t("wishlist.metadata.description"),
     url: getLocaleUrl(locale, "/wishlist"),
     locale,

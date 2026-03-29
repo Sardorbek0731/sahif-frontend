@@ -18,7 +18,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   return generatePrivateMetadata({
-    title: `${t("pages.cart")} | sahif`,
+    title: t("pages.cart"),
     description: t("cart.metadata.description"),
     url: getLocaleUrl(locale, "/cart"),
     locale,

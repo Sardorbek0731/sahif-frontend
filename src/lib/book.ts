@@ -1,5 +1,5 @@
 import { type Book } from "@/types/book";
-import { type Locale, routing } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 
 export function getBookTitle(
   book: Book,
@@ -8,18 +8,16 @@ export function getBookTitle(
 ): string {
   if (variantLanguage) {
     const variant = book.variants.find((v) => v.language === variantLanguage);
-    if (variant) return variant.titleInLanguage || book.originalTitle || "";
+    if (variant?.titleInLanguage) return variant.titleInLanguage;
   }
 
   const variant = book.variants.find((v) => v.language.startsWith(locale));
-
-  return variant?.titleInLanguage || book.originalTitle || "";
+  return variant?.titleInLanguage || book.originalTitle;
 }
 
 export function getBookDescription(book: Book, locale: Locale): string {
   const descriptions = book.description as Record<string, string>;
-
-  return descriptions[locale] || descriptions[routing.defaultLocale] || "";
+  return descriptions[locale];
 }
 
 export function getActiveVariant(

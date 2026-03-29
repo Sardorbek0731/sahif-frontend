@@ -3,17 +3,26 @@
 import Image from "next/image";
 import { useLocale } from "next-intl";
 
-import { useCartStore } from "@/store/useCartStore";
+import { useCartStore, selectTotalItems } from "@/store/useCartStore";
 import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 
-export default function CartContent() {
-  const locale = useLocale() as Locale;
-  const { items, removeItem, updateQuantity, clearCart, totalItems } =
-    useCartStore();
+import { useIsMounted } from "@/hooks/useIsMounted";
 
+export default function CartContent() {
+  const isMounted = useIsMounted();
+  const locale = useLocale() as Locale;
+  const { items, removeItem, updateQuantity, clearCart } = useCartStore();
+  const totalQuantity = useCartStore(selectTotalItems);
+
+  // 1. Gidratatsiya tugaguncha kutamiz
+  if (!isMounted) {
+    return <div className="py-20 text-center">Yuklanmoqda...</div>;
+  }
+
+  // 2. Endi faqat haqiqiy (client-side) ma'lumot bilan ishlaymiz
   if (items.length === 0) {
     return (
       <div className="py-20 text-center text-foreground/50">
@@ -125,7 +134,9 @@ export default function CartContent() {
           Savatni tozalash
         </button>
         <div className="text-right">
-          <p className="text-xs text-foreground/50">Jami ({totalItems()} ta)</p>
+          <p className="text-xs text-foreground/50">
+            Jami ({totalQuantity} ta)
+          </p>
           <p className="text-lg font-medium">{total.toLocaleString()} UZS</p>
         </div>
       </div>

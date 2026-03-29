@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
 
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { OG_LOCALES } from "@/constants";
 import { generateAlternates, getLocaleUrl } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
@@ -18,31 +18,32 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const t = await getTranslations({ locale });
-  const title = `sahif | ${t("home.metadata.title")}`;
+  const title = t("home.metadata.title");
   const url = getLocaleUrl(locale);
 
   return {
     title,
-    alternates: generateAlternates(locale),
+    alternates: generateAlternates(locale, ""),
     openGraph: {
-      title,
+      title: `${title} | sahif`,
       url,
       siteName: "sahif",
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/logo.png`,
+          url: "/logo.png",
           width: 512,
           height: 512,
           alt: "sahif logo",
+          type: "image/png",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title,
-      images: [`${SITE_URL}/logo.png`],
+      title: `${title} | sahif`,
+      images: ["/logo.png"],
     },
   };
 }

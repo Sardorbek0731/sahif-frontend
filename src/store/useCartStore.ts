@@ -14,8 +14,6 @@ interface CartStore {
   removeItem: (bookId: number, language: string) => void;
   updateQuantity: (bookId: number, language: string, quantity: number) => void;
   clearCart: () => void;
-  totalItems: () => number;
-  totalUniqueItems: () => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -65,11 +63,12 @@ export const useCartStore = create<CartStore>()(
       },
 
       clearCart: () => set({ items: [] }),
-
-      totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
-
-      totalUniqueItems: () => get().items.length,
     }),
     { name: "cart" },
   ),
 );
+
+export const selectTotalItems = (state: CartStore) =>
+  state.items.reduce((sum, i) => sum + i.quantity, 0);
+
+export const selectTotalUniqueItems = (state: CartStore) => state.items.length;

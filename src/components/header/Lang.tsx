@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 
 import { useTheme } from "next-themes";
+import { useSearchParams } from "next/navigation";
 
 import { type Locale, useRouter, usePathname } from "@/i18n/routing";
 import { languages } from "@/data/lang";
@@ -16,6 +17,7 @@ export default function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { theme, resolvedTheme } = useTheme();
 
@@ -52,7 +54,10 @@ export default function LanguageSwitcher() {
       setThemeCookies(theme, resolvedTheme);
     }
 
-    router.replace(pathname, { locale: newLocale, scroll: false });
+    const query = Object.fromEntries(searchParams.entries());
+
+    router.replace({ pathname, query }, { locale: newLocale, scroll: false });
+
     setIsOpen(false);
   };
 
