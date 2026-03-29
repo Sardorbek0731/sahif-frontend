@@ -79,7 +79,7 @@ const inter = Inter({
 });
 
 const asimovian = localFont({
-  src: "../../assets/fonts/Asimovian-Regular.ttf",
+  src: "../../assets/fonts/Asimovian/Asimovian-Regular.ttf",
   variable: "--font-asimovian",
   display: "swap",
 });
