@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
-import { Link, useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons/icon";
 import { popularCategories } from "@/data/categories";

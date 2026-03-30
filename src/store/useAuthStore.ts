@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { setCookie } from "@/lib/cookies";
+import { setAuthCookies, deleteCookie } from "@/lib/cookies";
 
 type User = {
   id: string;
@@ -27,29 +27,20 @@ export const useAuthStore = create<AuthStore>()(
 
       setUser: (user) => {
         set({ user, isAuthenticated: true });
-        const currentToken = get().token;
-        if (currentToken) {
+        const token = get().token;
+        if (token) {
           const fullName = `${user.firstName} ${user.lastName}`.trim();
-          setCookie("auth-token", currentToken);
-          setCookie("user-name", encodeURIComponent(fullName));
+          setAuthCookies(token, fullName);
         }
       },
 
       setToken: (token) => {
         set({ token });
-        setCookie("auth-token", token);
-        const currentUser = get().user;
-        if (currentUser) {
-          const fullName =
-            `${currentUser.firstName} ${currentUser.lastName}`.trim();
-          setCookie("user-name", encodeURIComponent(fullName));
-        }
       },
 
       logout: () => {
-        set({ token: null, isAuthenticated: false }); 
-        document.cookie = "auth-token=; path=/; max-age=0";
-        document.cookie = "user-name=; path=/; max-age=0";
+        set({ token: null, isAuthenticated: false });
+        deleteCookie("auth-token");
       },
     }),
     {

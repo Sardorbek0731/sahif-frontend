@@ -10,17 +10,18 @@ export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("auth-token")?.value;
 
-  const segments = pathname.split("/");
-  const locale = routing.locales.includes(segments[1] as Locale)
-    ? (segments[1] as Locale)
+  const [, maybeLocale] = pathname.split("/");
+  const locale = routing.locales.includes(maybeLocale as Locale)
+    ? (maybeLocale as Locale)
     : routing.defaultLocale;
 
-  const pathWithoutLocale = pathname.replace(`/${locale}`, "");
-  const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
+  const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), "");
+
+  const isProtected = PROTECTED_ROUTES.some((route) =>
     pathWithoutLocale.startsWith(route),
   );
 
-  if (!token && isProtectedRoute) {
+  if (!token && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/login`;
     return NextResponse.redirect(url);

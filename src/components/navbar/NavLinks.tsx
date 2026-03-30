@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useCartStore, selectTotalUniqueItems } from "@/store/useCartStore";
 import { useWishlistStore, selectTotalItems } from "@/store/useWishlistStore";

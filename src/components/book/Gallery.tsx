@@ -25,7 +25,7 @@ export function Gallery({ cover, gallery, alt }: BookGalleryProps) {
       />
 
       {/* Gallery thumbnails */}
-      {allImages.length > 0 && (
+      {allImages.length > 1 && (
         <div className="flex gap-2 mt-3">
           {allImages.map((img, index) => (
             <div

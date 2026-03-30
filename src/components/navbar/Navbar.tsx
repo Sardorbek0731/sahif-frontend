@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import Categories from "./Categories";
 import Search from "./Search";
 import { Logo } from "@/components/ui/Logo";

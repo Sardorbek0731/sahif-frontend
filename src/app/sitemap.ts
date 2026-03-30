@@ -17,14 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return allPaths.flatMap((path) => {
     return locales.map((locale) => {
-      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-      const url = `${SITE_URL}${prefix}${path}`;
+      const url = `${SITE_URL}/${locale}${path}`;
 
       const languages = Object.fromEntries(
-        locales.map((l) => {
-          const lPrefix = l === routing.defaultLocale ? "" : `/${l}`;
-          return [HREFLANG_LOCALES[l], `${SITE_URL}${lPrefix}${path}`];
-        }),
+        locales.map((l) => [HREFLANG_LOCALES[l], `${SITE_URL}/${l}${path}`]),
       );
 
       let priority = 0.7;
@@ -40,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         alternates: {
           languages: {
             ...languages,
-            "x-default": `${SITE_URL}${path}`,
+            "x-default": `${SITE_URL}/${routing.defaultLocale}${path}`,
           },
         },
       };

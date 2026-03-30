@@ -4,8 +4,7 @@ import { useState } from "react";
 
 import Modal from "@/components/ui/Modal";
 import LoginForm from "@/components/auth/LoginForm";
-
-type Step = "phone" | "otp" | "name";
+import { type Step } from "@/hooks/useAuth";
 
 type LoginModalProps = {
   isOpen: boolean;

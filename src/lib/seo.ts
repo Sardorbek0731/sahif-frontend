@@ -8,7 +8,13 @@ export function generateAlternates(
 ) {
   const formattedPath = path ? (path.startsWith("/") ? path : `/${path}`) : "";
 
-  const canonicalUrl = `${SITE_URL}/${locale}${formattedPath}`;
+  const canonicalBase = new URL(`${SITE_URL}/${locale}${formattedPath}`);
+  if (sharedParams) {
+    Object.entries(sharedParams).forEach(([k, v]) =>
+      canonicalBase.searchParams.set(k, v),
+    );
+  }
+  const canonicalUrl = canonicalBase.toString();
 
   const languages = Object.fromEntries(
     routing.locales.map((loc) => {

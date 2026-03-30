@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter, Link } from "@/i18n/routing";
+import { useRouter, Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
@@ -31,8 +31,7 @@ export default function UserMenu({
     if (firstName) return capitalize(firstName);
 
     if (serverUserName) {
-      const decoded = decodeURIComponent(serverUserName);
-      const [first, last] = decoded.split(" ");
+      const [first, last] = serverUserName.split(" ");
       return last
         ? `${capitalize(first)} ${capitalize(last)[0]}.`
         : capitalize(first);

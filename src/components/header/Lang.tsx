@@ -6,7 +6,8 @@ import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 import { useSearchParams } from "next/navigation";
 
-import { type Locale, useRouter, usePathname } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { languages } from "@/data/lang";
 import { setThemeCookies } from "@/lib/cookies";
 import { Button } from "@/components/ui/Button";
@@ -50,14 +51,9 @@ export default function LanguageSwitcher() {
   }, [isOpen]);
 
   const changeLanguage = (newLocale: Locale) => {
-    if (theme && resolvedTheme) {
-      setThemeCookies(theme, resolvedTheme);
-    }
-
+    setThemeCookies(theme!, resolvedTheme!);
     const query = Object.fromEntries(searchParams.entries());
-
     router.replace({ pathname, query }, { locale: newLocale, scroll: false });
-
     setIsOpen(false);
   };
 

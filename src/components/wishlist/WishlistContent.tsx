@@ -6,7 +6,8 @@ import { useLocale } from "next-intl";
 import { useWishlistStore } from "@/store/useWishlistStore";
 import { useCartStore } from "@/store/useCartStore";
 import { books } from "@/data/books";
-import { type Locale, Link } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { getBookTitle } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 

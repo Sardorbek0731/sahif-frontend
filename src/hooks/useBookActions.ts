@@ -23,7 +23,6 @@ export function useBookActions({ bookId, slug, language }: Props) {
     cartItem,
     isInWishlist,
     addToCart: () => addToCart({ bookId, slug, language }),
-    removeFromCart: () => removeItem(bookId, language),
     increment: () =>
       updateQuantity(bookId, language, (cartItem?.quantity ?? 0) + 1),
     decrement: () => {

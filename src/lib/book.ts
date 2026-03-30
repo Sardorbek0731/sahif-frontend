@@ -16,8 +16,7 @@ export function getBookTitle(
 }
 
 export function getBookDescription(book: Book, locale: Locale): string {
-  const descriptions = book.description as Record<string, string>;
-  return descriptions[locale];
+  return book.description[locale];
 }
 
 export function getActiveVariant(

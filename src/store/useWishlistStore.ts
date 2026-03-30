@@ -21,29 +21,35 @@ export const useWishlistStore = create<WishlistStore>()(
     (set, get) => ({
       items: [],
 
-      addItem: (item) => {
-        const exists = get().isInWishlist(item.bookId, item.language);
-        if (!exists) {
-          set((state) => ({ items: [...state.items, item] }));
-        }
-      },
+      addItem: (item) =>
+        set((state) => {
+          const exists = state.items.some(
+            (i) => i.bookId === item.bookId && i.language === item.language,
+          );
+          return exists ? state : { items: [...state.items, item] };
+        }),
 
-      removeItem: (bookId, language) => {
+      removeItem: (bookId, language) =>
         set((state) => ({
           items: state.items.filter(
             (i) => !(i.bookId === bookId && i.language === language),
           ),
-        }));
-      },
+        })),
 
-      toggleItem: (item) => {
-        const exists = get().isInWishlist(item.bookId, item.language);
-        if (exists) {
-          get().removeItem(item.bookId, item.language);
-        } else {
-          get().addItem(item);
-        }
-      },
+      toggleItem: (item) =>
+        set((state) => {
+          const exists = state.items.some(
+            (i) => i.bookId === item.bookId && i.language === item.language,
+          );
+          return {
+            items: exists
+              ? state.items.filter(
+                  (i) =>
+                    !(i.bookId === item.bookId && i.language === item.language),
+                )
+              : [...state.items, item],
+          };
+        }),
 
       isInWishlist: (bookId, language) =>
         get().items.some((i) => i.bookId === bookId && i.language === language),

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+
 import { type Locale } from "@/i18n/routing";
 import { OG_LOCALES, SITE_URL } from "@/constants";
 import { generateAlternates } from "@/lib/seo";

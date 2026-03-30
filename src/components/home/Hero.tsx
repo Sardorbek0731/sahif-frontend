@@ -5,9 +5,10 @@ import { useLocale, useTranslations } from "next-intl";
 
 import Image from "next/image";
 
-import { type Locale, Link } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { books } from "@/data/books";
-import { getBookTitle } from "@/lib/book";
+import { getBookTitle, getBookDescription } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 import { type Book } from "@/types/book";
 import { Button } from "../ui/Button";
@@ -162,7 +163,7 @@ export default function Hero() {
           </Link>
 
           <p className="mb-4 text-foreground/75 line-clamp-3">
-            {book.description[locale]}
+            {getBookDescription(book, locale)}
           </p>
         </div>
 

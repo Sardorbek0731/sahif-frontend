@@ -21,32 +21,28 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
 
-      addItem: (item) => {
-        const existing = get().items.find(
-          (i) => i.bookId === item.bookId && i.language === item.language,
-        );
-        if (existing) {
-          set((state) => ({
-            items: state.items.map((i) =>
-              i.bookId === item.bookId && i.language === item.language
-                ? { ...i, quantity: i.quantity + 1 }
-                : i,
-            ),
-          }));
-        } else {
-          set((state) => ({
-            items: [...state.items, { ...item, quantity: 1 }],
-          }));
-        }
-      },
+      addItem: (item) =>
+        set((state) => {
+          const exists = state.items.some(
+            (i) => i.bookId === item.bookId && i.language === item.language,
+          );
+          return {
+            items: exists
+              ? state.items.map((i) =>
+                  i.bookId === item.bookId && i.language === item.language
+                    ? { ...i, quantity: i.quantity + 1 }
+                    : i,
+                )
+              : [...state.items, { ...item, quantity: 1 }],
+          };
+        }),
 
-      removeItem: (bookId, language) => {
+      removeItem: (bookId, language) =>
         set((state) => ({
           items: state.items.filter(
             (i) => !(i.bookId === bookId && i.language === language),
           ),
-        }));
-      },
+        })),
 
       updateQuantity: (bookId, language, quantity) => {
         if (quantity <= 0) {

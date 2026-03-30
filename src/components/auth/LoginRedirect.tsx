@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 
 export default function LoginRedirect() {

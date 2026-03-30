@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
-import { useAuth } from "@/hooks/useAuth";
-
-type Step = "phone" | "otp" | "name";
+import { useAuth, type Step } from "@/hooks/useAuth";
 
 // ─── Phone Step ──────────────────────────────────────────────────────────────
 function PhoneStep({

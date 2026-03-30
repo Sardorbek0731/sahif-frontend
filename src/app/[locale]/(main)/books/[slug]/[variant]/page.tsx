@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import { type Locale, routing, Link } from "@/i18n/routing";
-import { books } from "@/data/books";
+import { type Locale, routing } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { SITE_URL, OG_LOCALES } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
+import { books } from "@/data/books";
 import { type BookFormat } from "@/types/book";
 
 import { Gallery } from "@/components/book/Gallery";
