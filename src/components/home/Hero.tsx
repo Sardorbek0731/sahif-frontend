@@ -15,6 +15,7 @@ import { Button } from "../ui/Button";
 import { SKIP_WORDS } from "@/constants";
 
 import BookActions from "../shared/BookActions";
+import BookBadge from "../shared/BookBadge";
 
 const heroBooks = books.filter(
   (book) => book.isBestseller || book.isNew || book.isTrending,
@@ -139,19 +140,7 @@ export default function Hero() {
         className={`w-[60%] flex flex-col items-start h-full justify-between overflow-hidden transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
         <div className="flex items-center gap-2 flex-wrap mb-4">
-          {book.isNew ? (
-            <span className="border border-green-500 bg-green-500/15 text-green-500 py-1 px-3 rounded-md text-sm">
-              {t("badges.new")}
-            </span>
-          ) : book.isTrending ? (
-            <span className="border border-orange-500 bg-orange-500/15 text-orange-500 py-1 px-3 rounded-md text-sm">
-              {t("badges.trending")}
-            </span>
-          ) : book.isBestseller ? (
-            <span className="border border-primary bg-primary/15 text-primary py-1 px-3 rounded-md text-sm">
-              {t("badges.bestseller")}
-            </span>
-          ) : null}
+          <BookBadge book={book} />
         </div>
 
         <div>
