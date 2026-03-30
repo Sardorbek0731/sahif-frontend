@@ -16,8 +16,6 @@ export default function robots(): MetadataRoute.Robots {
 
           "/*?search=*",
           "/*&search=*",
-          "/*?category=*",
-          "/*&category=*",
 
           "/api/",
           "/_next/",
