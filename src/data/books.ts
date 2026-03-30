@@ -19,7 +19,7 @@ export const books: readonly Book[] = [
         language: "uz-Latn",
         titleInLanguage: "Yuksaklik sari tasodif bo'lmagan 100 ta uchrashuv",
         price: { amount: 237000, currency: "UZS", discountAmount: 15000 },
-        stockCount: 50,
+        stockCount: 0,
         isbn: "9789943719576",
         pageCount: 680,
         format: "paperback",

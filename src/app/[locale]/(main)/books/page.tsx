@@ -6,6 +6,7 @@ import { SITE_URL, OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { generateAlternates } from "@/lib/seo";
+import { type BookFormat } from "@/types/book";
 
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
@@ -13,21 +14,30 @@ import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
 
 import BookActions from "@/components/shared/BookActions";
+import BooksFilter from "@/components/books/BooksFilter";
 
-// ─── Metadata ────────────────────────────────────────────────────────────────
+const BOOK_FORMATS: BookFormat[] = ["hardcover", "paperback", "ebook", "audio"];
+
+type SearchParams = {
+  category?: string;
+  search?: string;
+  format?: string;
+  lang?: string;
+  price?: string;
+  inStock?: string;
+};
 
 export async function generateMetadata({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ category?: string; search?: string }>;
+  searchParams: Promise<SearchParams>;
 }): Promise<Metadata> {
   const { locale } = await params;
   const { category, search } = await searchParams;
   const t = await getTranslations({ locale });
 
-  // Sarlavhani aniqlash
   let title = t("pages.books");
   if (search) title = search;
   else if (isValidCategory(category)) {
@@ -35,7 +45,6 @@ export async function generateMetadata({
     title = tCat(`items.${category}.name`);
   }
 
-  // URL yasash (Parametrlar bilan)
   const isSearch = !!search;
   const hasCategory = isValidCategory(category);
   const path = "/books";
@@ -68,7 +77,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/logo.png", // metadataBase bilan to'liq URL ga aylanadi
+          url: "/logo.png",
           width: 512,
           height: 512,
           alt: "sahif logo",
@@ -86,17 +95,28 @@ export async function generateMetadata({
   };
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default async function Books({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ category?: string; search?: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
-  const { category, search } = await searchParams;
+  const { category, search, format, lang, price, inStock } = await searchParams;
+
+  const activeFormat = BOOK_FORMATS.includes(format as BookFormat)
+    ? (format as BookFormat)
+    : null;
+  const activeLang = lang ?? null;
+  const activeInStock = inStock === "true";
+
+  const [minPrice, maxPrice] = (() => {
+    if (!price) return [null, null];
+    if (price === "200000+") return [200000, null];
+    const [min, max] = price.split("-").map(Number);
+    return [min, max];
+  })();
 
   const filtered = books.filter((book) => {
     if (search) {
@@ -104,7 +124,6 @@ export default async function Books({
       const currentTitle = getBookTitle(book, locale).toLowerCase();
       const author = getAuthor(book.authorSlug);
       const authorName = author?.name ?? book.authorSlug;
-
       return (
         currentTitle.includes(q) ||
         book.originalTitle.toLowerCase().includes(q) ||
@@ -113,19 +132,30 @@ export default async function Books({
       );
     }
 
-    if (isValidCategory(category)) {
-      return book.categorySlugs.includes(category);
+    if (isValidCategory(category) && !book.categorySlugs.includes(category)) {
+      return false;
     }
 
-    return true;
+    const matchingVariants = book.variants.filter((v) => {
+      if (activeFormat && v.format !== activeFormat) return false;
+      if (activeLang && v.language !== activeLang) return false;
+      if (activeInStock && v.stockCount === 0) return false;
+      const finalPrice = v.price.amount - (v.price.discountAmount ?? 0);
+      if (minPrice !== null && finalPrice < minPrice) return false;
+      if (maxPrice !== null && finalPrice > maxPrice) return false;
+      return true;
+    });
+
+    return matchingVariants.length > 0;
   });
 
   const hasCategory = isValidCategory(category);
   const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${category}` : ""}`;
 
-  // Har bir kitob uchun ma'lumotlarni bir marta hisoblaymiz
   const resolvedBooks = filtered.map((book) => {
     const variant =
+      (activeLang && book.variants.find((v) => v.language === activeLang)) ||
+      (activeFormat && book.variants.find((v) => v.format === activeFormat)) ||
       book.variants.find((v) => v.language.startsWith(locale)) ||
       book.variants[0];
     const authorName = getAuthor(book.authorSlug)?.name ?? book.authorSlug;
@@ -166,7 +196,7 @@ export default async function Books({
   };
 
   return (
-    <main className="my-container py-10">
+    <main className="my-container flex mb-4">
       {!search && (
         <script
           type="application/ld+json"
@@ -174,7 +204,15 @@ export default async function Books({
         />
       )}
 
-      <div className="grid grid-cols-4 gap-6">
+      <BooksFilter
+        activeCategory={hasCategory ? category : undefined}
+        activeFormat={activeFormat ?? undefined}
+        activeLang={activeLang ?? undefined}
+        activePrice={price}
+        activeInStock={activeInStock}
+      />
+
+      <div className="flex-1 grid grid-cols-4 gap-4">
         {resolvedBooks.map(
           (
             { book, variant, authorName, bookTitle, bookImage, finalPrice },
@@ -185,8 +223,8 @@ export default async function Books({
                 <Image
                   src={bookImage}
                   alt={bookTitle}
-                  width={200}
-                  height={300}
+                  width={150}
+                  height={250}
                   className="h-auto"
                   priority={index < 4}
                 />
