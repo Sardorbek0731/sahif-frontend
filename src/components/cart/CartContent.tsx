@@ -38,7 +38,7 @@ export default function CartContent() {
       const variant =
         book.variants.find((v) => v.language === item.language) ??
         book.variants[0];
-      const bookTitle = getBookTitle(book, locale);
+      const bookTitle = getBookTitle(book, locale, item.language);
       const bookImage = variant.variantImage ?? book.images.cover;
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);

@@ -10,43 +10,59 @@ type User = {
 };
 
 type AuthStore = {
-  user: User | null;
+  users: User[];
+  activeUserId: string | null;
   token: string | null;
   isAuthenticated: boolean;
-  setUser: (user: User) => void;
+  addOrActivateUser: (user: User) => void;
   setToken: (token: string) => void;
   logout: () => void;
 };
 
+const MAX_USERS = 5;
+
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => ({
-      user: null,
+      users: [],
+      activeUserId: null,
       token: null,
       isAuthenticated: false,
 
-      setUser: (user) => {
-        set({ user, isAuthenticated: true });
-        const token = get().token;
-        if (token) {
+      addOrActivateUser: (user) => {
+        set((state) => {
+          const exists = state.users.some((u) => u.phone === user.phone);
+          const updatedUsers = exists
+            ? state.users.map((u) => (u.phone === user.phone ? user : u))
+            : [...state.users, user].slice(-MAX_USERS);
+          return {
+            users: updatedUsers,
+            activeUserId: user.id,
+            isAuthenticated: true,
+          };
+        });
+      },
+
+      setToken: (token) => {
+        set({ token, isAuthenticated: true });
+        const activeUserId = get().activeUserId;
+        const user = get().users.find((u) => u.id === activeUserId);
+        if (user) {
           const fullName = `${user.firstName} ${user.lastName}`.trim();
           setAuthCookies(token, fullName);
         }
       },
 
-      setToken: (token) => {
-        set({ token });
-      },
-
       logout: () => {
-        set({ token: null, isAuthenticated: false });
+        set({ token: null, isAuthenticated: false, activeUserId: null });
         deleteCookie("auth-token");
       },
     }),
     {
       name: "auth",
       partialize: (state) => ({
-        user: state.user,
+        users: state.users,
+        activeUserId: state.activeUserId,
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),

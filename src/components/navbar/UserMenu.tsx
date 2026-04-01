@@ -20,7 +20,8 @@ export default function UserMenu({
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { user, logout } = useAuthStore();
+  const { users, activeUserId, logout } = useAuthStore();
+  const user = users.find((u) => u.id === activeUserId) ?? null;
 
   const displayName = (() => {
     const firstName = user?.firstName || "";

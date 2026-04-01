@@ -51,7 +51,9 @@ export default function LanguageSwitcher() {
   }, [isOpen]);
 
   const changeLanguage = (newLocale: Locale) => {
-    setThemeCookies(theme!, resolvedTheme!);
+    if (theme && resolvedTheme) {
+      setThemeCookies(theme, resolvedTheme);
+    }
     const query = Object.fromEntries(searchParams.entries());
     router.replace({ pathname, query }, { locale: newLocale, scroll: false });
     setIsOpen(false);

@@ -154,12 +154,15 @@ export default async function Books({
 
   const resolvedBooks = filtered.map((book) => {
     const variant =
-      (activeLang && book.variants.find((v) => v.language === activeLang)) ||
-      (activeFormat && book.variants.find((v) => v.format === activeFormat)) ||
+      book.variants.find((v) => {
+        if (activeLang && v.language !== activeLang) return false;
+        if (activeFormat && v.format !== activeFormat) return false;
+        return true;
+      }) ||
       book.variants.find((v) => v.language.startsWith(locale)) ||
       book.variants[0];
     const authorName = getAuthor(book.authorSlug)?.name ?? book.authorSlug;
-    const bookTitle = getBookTitle(book, locale);
+    const bookTitle = getBookTitle(book, locale, variant.language);
     const bookImage = variant.variantImage || book.images.cover;
     const finalPrice =
       variant.price.amount - (variant.price.discountAmount ?? 0);

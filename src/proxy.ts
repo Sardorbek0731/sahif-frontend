@@ -6,7 +6,7 @@ const intlMiddleware = createMiddleware(routing);
 
 const PROTECTED_ROUTES = ["/profile"];
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("auth-token")?.value;
 

@@ -6,7 +6,7 @@ export type Step = "phone" | "otp" | "name";
 const MOCK_OTP = "123456";
 
 export function useAuth() {
-  const { setUser, setToken, user } = useAuthStore();
+  const { users, addOrActivateUser, setToken } = useAuthStore();
 
   const [step, setStep] = useState<Step>("phone");
   const [phone, setPhone] = useState("");
@@ -33,11 +33,12 @@ export function useAuth() {
       return;
     }
 
-    if (!user) {
+    const existingUser = users.find((u) => u.phone === phone);
+    if (!existingUser) {
       setStep("name");
     } else {
+      addOrActivateUser(existingUser);
       setToken("mock-token-123");
-      setUser({ id: "1", phone, firstName: "Foydalanuvchi", lastName: "" });
     }
     setIsLoading(false);
   };
@@ -46,8 +47,8 @@ export function useAuth() {
     setIsLoading(true);
     setError("");
     await new Promise((resolve) => setTimeout(resolve, 800));
+    addOrActivateUser({ id: Date.now().toString(), phone, firstName, lastName });
     setToken("mock-token-123");
-    setUser({ id: "1", phone, firstName, lastName });
     setIsLoading(false);
   };
 
@@ -57,14 +58,5 @@ export function useAuth() {
     if (step === "name") setStep("otp");
   };
 
-  return {
-    step,
-    phone,
-    isLoading,
-    error,
-    sendOtp,
-    verifyOtp,
-    submitName,
-    back,
-  };
+  return { step, phone, isLoading, error, sendOtp, verifyOtp, submitName, back };
 }
