@@ -205,6 +205,7 @@ export default async function BookPage({
               slug={book.slug}
               language={activeVariant.language}
               variant="detail"
+              isOutOfStock={activeVariant.stockCount === 0}
             />
 
             <div className="grid grid-cols-2 gap-4 bg-muted/30 p-6 rounded-2xl border border-border">

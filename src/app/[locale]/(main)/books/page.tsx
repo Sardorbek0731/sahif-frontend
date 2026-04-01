@@ -247,6 +247,7 @@ export default async function Books({
                 slug={book.slug}
                 language={variant.language}
                 variant="card"
+                isOutOfStock={variant.stockCount === 0}
               />
               {variant.stockCount === 0 && (
                 <span className="text-red-500 text-xs block">Tugagan</span>

@@ -10,6 +10,7 @@ interface Props {
   slug: string;
   language: string;
   variant?: "card" | "hero" | "detail";
+  isOutOfStock?: boolean;
 }
 
 export default function BookActions({
@@ -17,6 +18,7 @@ export default function BookActions({
   slug,
   language,
   variant = "card",
+  isOutOfStock = false,
 }: Props) {
   const isMounted = useIsMounted();
   const t = useTranslations("");
@@ -64,6 +66,7 @@ export default function BookActions({
         ) : (
           <Button
             onClick={addToCart}
+            disabled={isOutOfStock}
             leftIcon="cart"
             iconSize={14}
             className="w-full justify-center bg-foreground text-background text-xs px-3 py-2 mt-3 hover:opacity-90"
@@ -97,6 +100,7 @@ export default function BookActions({
         ) : (
           <Button
             onClick={addToCart}
+            disabled={isOutOfStock}
             leftIcon="cart"
             iconSize={16}
             className="bg-foreground text-background px-4 h-10 mr-4"
@@ -140,6 +144,7 @@ export default function BookActions({
       ) : (
         <Button
           onClick={addToCart}
+          disabled={isOutOfStock}
           leftIcon="cart"
           iconSize={14}
           className="flex-1 bg-foreground text-background text-xs px-3 py-2 hover:opacity-90"
