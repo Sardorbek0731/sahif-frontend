@@ -249,9 +249,6 @@ export default async function Books({
                 variant="card"
                 isOutOfStock={variant.stockCount === 0}
               />
-              {variant.stockCount === 0 && (
-                <span className="text-red-500 text-xs block">Tugagan</span>
-              )}
             </div>
           ),
         )}

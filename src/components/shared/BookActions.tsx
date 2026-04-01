@@ -65,13 +65,16 @@ export default function BookActions({
           </div>
         ) : (
           <Button
-            onClick={addToCart}
-            disabled={isOutOfStock}
+            onClick={isOutOfStock ? undefined : addToCart}
             leftIcon="cart"
             iconSize={14}
-            className="w-full justify-center bg-foreground text-background text-xs px-3 py-2 mt-3 hover:opacity-90"
+            className={`w-full justify-center bg-foreground text-background text-xs px-3 py-2 mt-3 ${
+              isOutOfStock
+                ? "opacity-50 cursor-not-allowed!"
+                : "hover:opacity-90"
+            }`}
           >
-            {t("addToCart")}
+            {isOutOfStock ? "Tugagan" : t("addToCart")}
           </Button>
         )}
       </>
@@ -99,13 +102,14 @@ export default function BookActions({
           </div>
         ) : (
           <Button
-            onClick={addToCart}
-            disabled={isOutOfStock}
+            onClick={isOutOfStock ? undefined : addToCart}
             leftIcon="cart"
             iconSize={16}
-            className="bg-foreground text-background px-4 h-10 mr-4"
+            className={`px-4 h-10 mr-4 bg-foreground text-background ${
+              isOutOfStock ? "opacity-50 cursor-not-allowed!" : ""
+            }`}
           >
-            {t("addToCart")}
+            {isOutOfStock ? "Tugagan" : t("addToCart")}
           </Button>
         )}
         <Button
@@ -143,13 +147,14 @@ export default function BookActions({
         </div>
       ) : (
         <Button
-          onClick={addToCart}
-          disabled={isOutOfStock}
+          onClick={isOutOfStock ? undefined : addToCart}
           leftIcon="cart"
           iconSize={14}
-          className="flex-1 bg-foreground text-background text-xs px-3 py-2 hover:opacity-90"
+          className={`flex-1 bg-foreground text-background text-xs px-3 py-2 ${
+            isOutOfStock ? "opacity-50 cursor-not-allowed!" : "hover:opacity-90"
+          }`}
         >
-          {t("addToCart")}
+          {isOutOfStock ? "Tugagan" : t("addToCart")}
         </Button>
       )}
       <Button

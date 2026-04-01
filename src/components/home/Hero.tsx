@@ -199,6 +199,7 @@ export default function Hero() {
           slug={book.slug}
           language={activeVariant.language}
           variant="hero"
+          isOutOfStock={activeVariant.stockCount === 0}
         />
       </div>
 
