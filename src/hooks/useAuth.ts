@@ -36,18 +36,26 @@ export function useAuth() {
     const existingUser = users.find((u) => u.phone === phone);
     if (!existingUser) {
       setStep("name");
+      setIsLoading(false);
+      return false;
     } else {
       addOrActivateUser(existingUser);
       setToken("mock-token-123");
+      setIsLoading(false);
+      return true;
     }
-    setIsLoading(false);
   };
 
   const submitName = async (firstName: string, lastName: string) => {
     setIsLoading(true);
     setError("");
     await new Promise((resolve) => setTimeout(resolve, 800));
-    addOrActivateUser({ id: Date.now().toString(), phone, firstName, lastName });
+    addOrActivateUser({
+      id: Date.now().toString(),
+      phone,
+      firstName,
+      lastName,
+    });
     setToken("mock-token-123");
     setIsLoading(false);
   };
@@ -58,5 +66,14 @@ export function useAuth() {
     if (step === "name") setStep("otp");
   };
 
-  return { step, phone, isLoading, error, sendOtp, verifyOtp, submitName, back };
+  return {
+    step,
+    phone,
+    isLoading,
+    error,
+    sendOtp,
+    verifyOtp,
+    submitName,
+    back,
+  };
 }

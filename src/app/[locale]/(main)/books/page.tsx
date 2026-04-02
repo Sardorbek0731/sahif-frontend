@@ -128,7 +128,8 @@ export default async function Books({
         currentTitle.includes(q) ||
         book.originalTitle.toLowerCase().includes(q) ||
         authorName.toLowerCase().includes(q) ||
-        book.variants.some((v) => v.isbn.includes(q))
+        book.variants.some((v) => v.isbn.includes(q)) ||
+        book.variants.some((v) => v.titleInLanguage?.toLowerCase().includes(q))
       );
     }
 
@@ -153,14 +154,44 @@ export default async function Books({
   const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${category}` : ""}`;
 
   const resolvedBooks = filtered.map((book) => {
-    const variant =
-      book.variants.find((v) => {
-        if (activeLang && v.language !== activeLang) return false;
-        if (activeFormat && v.format !== activeFormat) return false;
-        return true;
-      }) ||
-      book.variants.find((v) => v.language.startsWith(locale)) ||
-      book.variants[0];
+    const variant = (() => {
+      // 1. Ikkalasi bor — ikkala shartga mos
+      if (activeLang && activeFormat) {
+        return (
+          book.variants.find(
+            (v) => v.language === activeLang && v.format === activeFormat,
+          ) ||
+          book.variants.find((v) => v.language === activeLang) ||
+          book.variants[0]
+        );
+      }
+
+      // 2. Faqat til filtri
+      if (activeLang) {
+        return (
+          book.variants.find((v) => v.language === activeLang) ||
+          book.variants[0]
+        );
+      }
+
+      // 3. Faqat format filtri — locale'ga mos + format, bo'lmasa faqat format
+      if (activeFormat) {
+        return (
+          book.variants.find(
+            (v) => v.language.startsWith(locale) && v.format === activeFormat,
+          ) ||
+          book.variants.find((v) => v.format === activeFormat) ||
+          book.variants.find((v) => v.language.startsWith(locale)) ||
+          book.variants[0]
+        );
+      }
+
+      // 4. Filter yo'q — locale'ga mos
+      return (
+        book.variants.find((v) => v.language.startsWith(locale)) ||
+        book.variants[0]
+      );
+    })();
     const authorName = getAuthor(book.authorSlug)?.name ?? book.authorSlug;
     const bookTitle = getBookTitle(book, locale, variant.language);
     const bookImage = variant.variantImage || book.images.cover;

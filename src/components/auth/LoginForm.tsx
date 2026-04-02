@@ -99,6 +99,7 @@ function OtpStep({
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
     const pasted = e.clipboardData
       .getData("text")
       .replace(/\D/g, "")
@@ -257,7 +258,10 @@ export default function LoginForm({
       {step === "otp" && (
         <OtpStep
           phone={phone}
-          onSubmit={verifyOtp}
+          onSubmit={async (code) => {
+            const success = await verifyOtp(code);
+            if (success) onSuccess?.();
+          }}
           onBack={back}
           isLoading={isLoading}
           error={error}
