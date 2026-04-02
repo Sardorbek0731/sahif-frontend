@@ -124,13 +124,13 @@ export default async function Books({
       const currentTitle = getBookTitle(book, locale).toLowerCase();
       const author = getAuthor(book.authorSlug);
       const authorName = author?.name ?? book.authorSlug;
-      return (
+      const matchesSearch =
         currentTitle.includes(q) ||
         book.originalTitle.toLowerCase().includes(q) ||
         authorName.toLowerCase().includes(q) ||
         book.variants.some((v) => v.isbn.includes(q)) ||
-        book.variants.some((v) => v.titleInLanguage?.toLowerCase().includes(q))
-      );
+        book.variants.some((v) => v.titleInLanguage?.toLowerCase().includes(q));
+      if (!matchesSearch) return false;
     }
 
     if (isValidCategory(category) && !book.categorySlugs.includes(category)) {

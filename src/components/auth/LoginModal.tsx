@@ -21,6 +21,7 @@ export default function LoginModal({
 
   const handleClose = () => {
     if (step === "name") return;
+    setStep("phone");
     onClose();
   };
 

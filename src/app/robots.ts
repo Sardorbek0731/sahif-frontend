@@ -8,11 +8,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "*/cart",
-          "*/wishlist",
-          "*/profile",
-          "*/login",
-          "*/admin",
+          "/*/cart",
+          "/*/wishlist",
+          "/*/profile",
+          "/*/login",
+          "/*/admin",
 
           "/*?search=*",
           "/*&search=*",
@@ -21,8 +21,8 @@ export default function robots(): MetadataRoute.Robots {
           "/_next/",
           "/static/",
 
-          "*/reset",
-          "*/reset/*", 
+          "/*/reset",
+          "/*/reset/*",
         ],
       },
     ],
