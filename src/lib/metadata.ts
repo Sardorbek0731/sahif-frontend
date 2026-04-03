@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { SITE_URL, SITE_NAME, OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 
 export function generatePrivateMetadata({
@@ -25,10 +25,10 @@ export function generatePrivateMetadata({
       googleBot: { index: false, follow: false },
     },
     openGraph: {
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description,
       url: `${SITE_URL}/${locale}${path}`,
-      siteName: "sahif",
+      siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
@@ -36,14 +36,14 @@ export function generatePrivateMetadata({
           url: "/logo.png",
           width: 512,
           height: 512,
-          alt: "sahif logo",
+          alt: `${SITE_NAME} logo`,
           type: "image/png",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description,
       images: ["/logo.png"],
     },

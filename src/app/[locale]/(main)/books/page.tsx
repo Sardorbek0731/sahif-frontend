@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { generateAlternates } from "@/lib/seo";
-import { type BookFormat } from "@/types/book";
-
-import { books } from "@/data/books";
-import { isValidCategory } from "@/data/categories";
 import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
+import { type BookFormat } from "@/types/book";
+import { books } from "@/data/books";
+import { isValidCategory } from "@/data/categories";
 
 import BookActions from "@/components/shared/BookActions";
 import BooksFilter from "@/components/books/BooksFilter";
@@ -69,10 +68,10 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description,
       url: isSearch ? undefined : pageUrl,
-      siteName: "sahif",
+      siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
@@ -80,15 +79,14 @@ export async function generateMetadata({
           url: "/logo.png",
           width: 512,
           height: 512,
-          alt: "sahif logo",
+          alt: `${SITE_NAME} logo`,
           type: "image/png",
         },
       ],
     },
-
     twitter: {
       card: "summary",
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description,
       images: ["/logo.png"],
     },

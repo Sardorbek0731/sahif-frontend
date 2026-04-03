@@ -4,6 +4,7 @@ import Search from "./Search";
 import { Logo } from "@/components/ui/Logo";
 import NavLinks from "./NavLinks";
 import { cookies } from "next/headers";
+import { SITE_NAME } from "@/constants";
 
 export default async function Navbar() {
   const cookieStore = await cookies();
@@ -14,7 +15,7 @@ export default async function Navbar() {
     <nav className="my-container row-between mb-4">
       <Link href="/" className="mr-4 flex items-center">
         <Logo className="mr-2 w-10 h-10" />
-        <span className="font-asimovian text-2xl">sahif</span>
+        <span className="font-asimovian text-2xl">{SITE_NAME}</span>
       </Link>
 
       <Categories />

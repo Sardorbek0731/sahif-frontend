@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
-import { OG_LOCALES, SITE_URL } from "@/constants";
+import { OG_LOCALES, SITE_URL, SITE_NAME } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
@@ -23,9 +23,9 @@ export async function generateMetadata({
     title,
     alternates: generateAlternates(locale, ""),
     openGraph: {
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       url: `${SITE_URL}/${locale}`,
-      siteName: "sahif",
+      siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
       images: [
@@ -33,14 +33,14 @@ export async function generateMetadata({
           url: "/logo.png",
           width: 512,
           height: 512,
-          alt: "sahif logo",
+          alt: `${SITE_NAME} logo`,
           type: "image/png",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       images: ["/logo.png"],
     },
   };

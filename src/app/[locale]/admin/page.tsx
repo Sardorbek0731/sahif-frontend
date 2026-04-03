@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-
 import { getTranslations } from "next-intl/server";
 
 import { generatePrivateMetadata } from "@/lib/metadata";
@@ -17,7 +16,7 @@ export async function generateMetadata({
   return generatePrivateMetadata({
     title: t("pages.admin"),
     description: t("admin.metadata.description"),
-    path: "/admin", 
+    path: "/admin",
     locale,
   });
 }

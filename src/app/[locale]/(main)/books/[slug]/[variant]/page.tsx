@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { type Locale, routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import { SITE_URL, OG_LOCALES } from "@/constants";
+import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
@@ -53,10 +53,10 @@ export async function generateMetadata({
       `books/${slug}/${variantParam}`, // 2-argument: path
     ),
     openGraph: {
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description: bookDescription,
       url,
-      siteName: "sahif",
+      siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "book",
       images: [
@@ -68,7 +68,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | sahif`,
+      title: `${title} | ${SITE_NAME}`,
       description: bookDescription,
       images: [`${SITE_URL}${bookImage}`],
     },

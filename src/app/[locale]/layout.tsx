@@ -1,7 +1,6 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-
 import { cookies } from "next/headers";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
@@ -10,7 +9,12 @@ import { getMessages, getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/providers/theme";
-import { SITE_URL, GOOGLE_VERIFICATION, OG_LOCALES } from "@/constants";
+import {
+  SITE_URL,
+  SITE_NAME,
+  GOOGLE_VERIFICATION,
+  OG_LOCALES,
+} from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 import { generateAlternates } from "@/lib/seo";
 
@@ -28,17 +32,17 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      template: "%s | sahif",
-      default: "sahif",
+      template: `%s | ${SITE_NAME}`,
+      default: SITE_NAME,
     },
     description,
-    applicationName: "sahif",
+    applicationName: SITE_NAME,
     alternates: generateAlternates(locale as Locale, ""),
     openGraph: {
-      title: "sahif",
+      title: SITE_NAME,
       description,
       url: `${SITE_URL}/${locale}`,
-      siteName: "sahif",
+      siteName: SITE_NAME,
       locale: OG_LOCALES[locale as Locale],
       type: "website",
       images: [
@@ -46,14 +50,14 @@ export async function generateMetadata({
           url: "/logo.png",
           width: 512,
           height: 512,
-          alt: "sahif logo",
+          alt: `${SITE_NAME} logo`,
           type: "image/png",
         },
       ],
     },
     twitter: {
       card: "summary",
-      title: "sahif",
+      title: SITE_NAME,
       description,
       images: ["/logo.png"],
     },
@@ -102,8 +106,11 @@ export default async function LocaleLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "sahif",
-    alternateName: ["Sahif", "sahif.vercel.app"],
+    name: SITE_NAME,
+    alternateName: [
+      SITE_NAME.charAt(0).toUpperCase() + SITE_NAME.slice(1),
+      "sahif.vercel.app",
+    ],
     url: `${SITE_URL}/${locale}`,
     inLanguage: locale,
     description: t("description"),
