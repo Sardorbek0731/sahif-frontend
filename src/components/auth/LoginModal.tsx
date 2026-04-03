@@ -35,8 +35,13 @@ export default function LoginModal({
       isOpen={isOpen}
       onClose={handleClose}
       showCloseButton={step !== "name"}
+      maxWidth="max-w-90"
     >
-      <LoginForm onSuccess={handleSuccess} onStepChange={setStep} />
+      <LoginForm
+        onSuccess={handleSuccess}
+        onStepChange={setStep}
+        ignoreSession
+      />
     </Modal>
   );
 }

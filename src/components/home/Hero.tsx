@@ -206,14 +206,6 @@ export default function Hero() {
       <div
         className={`absolute right-6 top-6 bottom-6 transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
-        <div
-          className="absolute inset-0 rounded-xl bg-primary/20 border border-primary/40"
-          style={{ transform: "rotate(5deg) translateX(10px)" }}
-        />
-        <div
-          className="absolute inset-0 rounded-xl bg-primary/10 border border-primary/20"
-          style={{ transform: "rotate(2.5deg) translateX(5px)" }}
-        />
         <div className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-primary rounded-tl-lg z-10" />
         <div className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-primary rounded-br-lg z-10" />
         <Link href={`/books/${book.slug}/${activeVariant.language}`}>

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Icon, IconName } from "@/components/ui/icons";
+import { FEATURE_KEYS } from "@/constants";
 
 const FEATURE_ICONS: IconName[] = [
   "notebookText",
@@ -17,55 +18,40 @@ const ACCENTS = [
   {
     icon: "text-amber-500",
     bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
     hover: "hover:border-amber-500/40",
     hoverBg: "hover:bg-amber-500/10",
   },
   {
     icon: "text-blue-500",
     bg: "bg-blue-500/10",
-    border: "border-blue-500/20",
     hover: "hover:border-blue-500/40",
     hoverBg: "hover:bg-blue-500/10",
   },
   {
     icon: "text-violet-500",
     bg: "bg-violet-500/10",
-    border: "border-violet-500/20",
     hover: "hover:border-violet-500/40",
     hoverBg: "hover:bg-violet-500/10",
   },
   {
     icon: "text-emerald-500",
     bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
     hover: "hover:border-emerald-500/40",
     hoverBg: "hover:bg-emerald-500/10",
   },
   {
     icon: "text-rose-500",
     bg: "bg-rose-500/10",
-    border: "border-rose-500/20",
     hover: "hover:border-rose-500/40",
     hoverBg: "hover:bg-rose-500/10",
   },
   {
     icon: "text-orange-500",
     bg: "bg-orange-500/10",
-    border: "border-orange-500/20",
     hover: "hover:border-orange-500/40",
     hoverBg: "hover:bg-orange-500/10",
   },
 ];
-
-const FEATURE_KEYS = [
-  "catalog",
-  "delivery",
-  "search",
-  "payment",
-  "recommendations",
-  "support",
-] as const;
 
 function FeatureCard({
   index,
@@ -80,7 +66,7 @@ function FeatureCard({
 
   return (
     <div
-      className={`relative rounded-lg bg-card border ${accent.border} ${accent.hover} ${accent.hoverBg} p-6 transition-all`}
+      className={`relative rounded-lg bg-card ${accent.hover} ${accent.hoverBg} p-6 transition-all`}
     >
       <span className="absolute right-6 top-6 font-mono text-foreground/10 select-none">
         {String(index + 1).padStart(2, "0")}

@@ -81,11 +81,11 @@ export default function Search() {
       </form>
 
       {isFocused && (
-        <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-20">
-          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
+        <div className="absolute top-full left-0 mt-4 w-full bg-card rounded-lg p-4 z-20 border border-border shadow-2xl">
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
           {safeHistory.length > 0 && (
-            <div className="mb-6">
-              <span className="flex items-center mb-4 opacity-50">
+            <div className="mb-2">
+              <span className="flex items-center mb-3 opacity-50">
                 <Icon name="clock" size={16} className="mr-2 text-primary" />
                 {t("search.recentSearches")}
               </span>
@@ -94,7 +94,7 @@ export default function Search() {
                   <div
                     key={item}
                     onClick={() => handleSearch(item)}
-                    className="row-between cursor-pointer hover:bg-background py-2 px-4 rounded-lg"
+                    className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all"
                   >
                     <div className="flex items-center">
                       <Icon className="mr-2" name="search" size={16} />
@@ -102,7 +102,7 @@ export default function Search() {
                     </div>
                     <Button
                       leftIcon="x"
-                      iconSize={16}
+                      iconSize={18}
                       onClick={(e) => removeHistoryItem(e, item)}
                     />
                   </div>
@@ -111,7 +111,7 @@ export default function Search() {
             </div>
           )}
 
-          <span className="flex items-center mb-4 opacity-50">
+          <span className="flex items-center mb-3 opacity-50">
             <Icon name="flame" size={16} className="mr-2 text-primary" />
             {t("categories.popular")}
           </span>
@@ -124,7 +124,7 @@ export default function Search() {
                   pathname: "/books",
                   query: { category: sub.slug },
                 }}
-                className="px-4 py-2 text-sm rounded-md bg-background"
+                className="px-4 py-2 text-sm rounded-lg bg-background border border-transparent hover:border-border hover:shadow-xl transition-all"
                 onClick={() => {
                   setIsFocused(false);
                   setSearchValue("");

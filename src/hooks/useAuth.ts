@@ -5,20 +5,44 @@ export type Step = "phone" | "otp" | "name";
 
 const MOCK_OTP = "123456";
 
-export function useAuth() {
+export function useAuth(
+  initialStep: Step = "phone",
+  initialPhone = "",
+  ignoreSession = false,
+) {
   const { users, addOrActivateUser, setToken } = useAuthStore();
 
-  const [step, setStep] = useState<Step>("phone");
-  const [phone, setPhone] = useState("");
+  const [step, setStep] = useState<Step>(() => {
+    if (ignoreSession) return initialStep;
+    const saved = sessionStorage.getItem("auth-step") as Step;
+    return saved === "name" ? "name" : initialStep;
+  });
+
+  const [phone, setPhone] = useState(() => {
+    if (ignoreSession) return initialPhone;
+    return sessionStorage.getItem("auth-phone") || initialPhone;
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const updateStep = (s: Step, p = phone) => {
+    if (s === "name") {
+      sessionStorage.setItem("auth-step", "name");
+      sessionStorage.setItem("auth-phone", p);
+    } else {
+      sessionStorage.removeItem("auth-step");
+      sessionStorage.removeItem("auth-phone");
+    }
+    setStep(s);
+  };
 
   const sendOtp = async (phoneNumber: string) => {
     setIsLoading(true);
     setError("");
     await new Promise((resolve) => setTimeout(resolve, 800));
     setPhone(phoneNumber);
-    setStep("otp");
+    updateStep("otp", phoneNumber);
     setIsLoading(false);
   };
 
@@ -35,10 +59,12 @@ export function useAuth() {
 
     const existingUser = users.find((u) => u.phone === phone);
     if (!existingUser) {
-      setStep("name");
+      updateStep("name");
       setIsLoading(false);
       return false;
     } else {
+      sessionStorage.removeItem("auth-step");
+      sessionStorage.removeItem("auth-phone");
       addOrActivateUser(existingUser);
       setToken("mock-token-123");
       setIsLoading(false);
@@ -50,6 +76,8 @@ export function useAuth() {
     setIsLoading(true);
     setError("");
     await new Promise((resolve) => setTimeout(resolve, 800));
+    sessionStorage.removeItem("auth-step");
+    sessionStorage.removeItem("auth-phone");
     addOrActivateUser({
       id: Date.now().toString(),
       phone,
@@ -62,8 +90,7 @@ export function useAuth() {
 
   const back = () => {
     setError("");
-    if (step === "otp") setStep("phone");
-    if (step === "name") setStep("otp");
+    if (step === "otp") updateStep("phone");
   };
 
   return {

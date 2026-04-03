@@ -33,5 +33,6 @@
     "karakalpakstan": "Каракалпакстан"
   },
 
-  "addToCart": "В корзину"
+  "addToCart": "В корзину",
+  "outOfStock": "Нет в наличии"
 }

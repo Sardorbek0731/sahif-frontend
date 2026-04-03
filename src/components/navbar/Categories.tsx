@@ -50,16 +50,16 @@ export default function Categories() {
       </Button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-4 w-[850px] bg-card rounded-lg p-6 z-20">
-          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
-          <div className="grid grid-cols-3 gap-8">
+        <div className="absolute top-full left-0 mt-4 w-180 bg-card rounded-lg p-6 z-20 border border-border shadow-2xl">
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
+          <div className="grid grid-cols-3 gap-6">
             {categoryGroups.map((group) => (
               <div key={group.name}>
                 <h3 className="font-semibold mb-3">
                   {`- ${t(`groups.${group.name}`)}`}
                 </h3>
 
-                <ul className="space-y-2">
+                <ul className="space-y-1.5">
                   {group.categories.map((sub) => (
                     <li key={sub.slug} className="flex flex-1">
                       <Link
@@ -67,7 +67,7 @@ export default function Categories() {
                           pathname: "/books",
                           query: { category: sub.slug },
                         }}
-                        className="row-between text-foreground/70 hover:text-foreground transition-all"
+                        className="text-muted-foreground hover:text-foreground transition-all"
                         onClick={() => setOpen(false)}
                       >
                         <span>{t(`items.${sub.slug}.name`)}</span>

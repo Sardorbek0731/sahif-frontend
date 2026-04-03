@@ -7,7 +7,7 @@
     "wishlist": "Wishlist",
     "profile": "Profile",
     "admin": "Admin",
-    "login": "Log in"
+    "login": "Sign in"
   },
 
   "badges": {
@@ -33,5 +33,6 @@
     "karakalpakstan": "Karakalpakstan"
   },
 
-  "addToCart": "Add to cart"
+  "addToCart": "Add to cart",
+  "outOfStock": "Out of stock"
 }

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { useBookActions } from "@/hooks/useBookActions";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTranslations } from "next-intl";
+import { Icon } from "../ui/icons";
 
 interface Props {
   bookId: number;
@@ -74,7 +75,7 @@ export default function BookActions({
                 : "hover:opacity-90"
             }`}
           >
-            {isOutOfStock ? "Tugagan" : t("addToCart")}
+            {isOutOfStock ? t("outOfStock") : t("addToCart")}
           </Button>
         )}
       </>
@@ -85,20 +86,20 @@ export default function BookActions({
     return (
       <div className="flex items-center">
         {cartItem ? (
-          <div className="row-between bg-background border border-foreground/10 h-10 rounded-lg mr-4 px-2">
-            <Button
+          <div className="row-between bg-background border border-border h-10 rounded-lg mr-4 px-2">
+            <button
               onClick={decrement}
-              leftIcon="minus"
-              iconSize={16}
-              className="border-r border-foreground/10 pr-2 mr-4 text-foreground/60 hover:text-foreground"
-            />
+              className="border-r border-border pr-2 mr-2 text-muted-foreground hover:text-foreground cursor-pointer"
+            >
+              <Icon name="minus" size={16} />
+            </button>
             <span className="mx-2">{cartItem.quantity}</span>
-            <Button
+            <button
               onClick={increment}
-              leftIcon="plus"
-              iconSize={16}
-              className="border-l border-foreground/10 pl-2 ml-4 text-foreground/60 hover:text-foreground"
-            />
+              className="border-l border-border pl-2 ml-2 text-muted-foreground hover:text-foreground cursor-pointer"
+            >
+              <Icon name="plus" size={16} />
+            </button>
           </div>
         ) : (
           <Button
@@ -106,10 +107,10 @@ export default function BookActions({
             leftIcon="cart"
             iconSize={16}
             className={`px-4 h-10 mr-4 bg-foreground text-background ${
-              isOutOfStock ? "opacity-50 cursor-not-allowed!" : ""
+              isOutOfStock ? "opacity-20 cursor-not-allowed!" : ""
             }`}
           >
-            {isOutOfStock ? "Tugagan" : t("addToCart")}
+            {isOutOfStock ? t("outOfStock") : t("addToCart")}
           </Button>
         )}
         <Button
@@ -154,7 +155,7 @@ export default function BookActions({
             isOutOfStock ? "opacity-50 cursor-not-allowed!" : "hover:opacity-90"
           }`}
         >
-          {isOutOfStock ? "Tugagan" : t("addToCart")}
+          {isOutOfStock ? t("outOfStock") : t("addToCart")}
         </Button>
       )}
       <Button

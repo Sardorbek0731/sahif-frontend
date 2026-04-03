@@ -17,8 +17,8 @@ export default function Modal({
   isOpen,
   onClose,
   children,
-  maxWidth = "max-w-sm",
-  className = "p-8",
+  maxWidth,
+  className,
   showCloseButton = true,
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -44,18 +44,18 @@ export default function Modal({
   return createPortal(
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm row-center px-4"
+      className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm row-center"
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
       <div
-        className={`relative w-full ${maxWidth} rounded-xl bg-background border border-foreground/10 shadow-xl ${className}`}
+        className={`relative w-full ${maxWidth} rounded-lg bg-background p-6 ${className}`}
       >
         {showCloseButton && (
           <Button
             onClick={onClose}
             leftIcon="x"
             iconSize={18}
-            className="absolute right-4 top-4 w-8 h-8 justify-center bg-transparent hover:bg-foreground/5 p-0"
+            className="absolute right-6 top-6 w-8 h-8 justify-center bg-card hover:bg-card-hover"
           />
         )}
         {children}

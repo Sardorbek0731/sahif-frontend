@@ -161,7 +161,12 @@ export default async function BookPage({
 
           <div className="flex-1">
             <h1 className="text-4xl font-black mb-2">{bookTitle}</h1>
-            <p className="text-xl text-foreground/60 mb-6">{authorName}</p>
+            <Link
+              href={`/authors/${book.authorSlug}`}
+              className="hover:text-primary transition-all"
+            >
+              {authorName}
+            </Link>
 
             <div className="mb-8">
               <p className="text-sm font-bold mb-3 opacity-50 uppercase tracking-widest">

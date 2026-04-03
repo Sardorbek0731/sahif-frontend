@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
+import Spinner from "../ui/Spinner";
 import { useAuth, type Step } from "@/hooks/useAuth";
 
 // ─── Phone Step ──────────────────────────────────────────────────────────────
@@ -26,14 +27,12 @@ function PhoneStep({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-foreground mb-1">{t("title")}</h2>
-      <p className="text-sm text-foreground/50 mb-6">{t("description")}</p>
+      <h2 className="text-xl font-bold text-foreground mb-3">{t("title")}</h2>
+      <p className="text-muted-foreground mb-6">{t("description")}</p>
 
-      <label className="text-sm font-medium text-foreground/70 mb-1.5 block">
-        {t("label")}
-      </label>
-      <div className="flex items-center gap-2 rounded-lg border border-foreground/15 bg-card px-4 py-3 mb-2 focus-within:border-primary transition-colors">
-        <span className="text-sm text-foreground/50 select-none">+998</span>
+      <label className="text-muted-foreground mb-2 block">{t("label")}:</label>
+      <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all">
+        <span className="text-foreground select-none">+998</span>
         <input
           type="tel"
           inputMode="numeric"
@@ -42,19 +41,17 @@ function PhoneStep({
           onChange={(e) => setValue(e.target.value.replace(/\D/g, ""))}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           placeholder="__ ___ __ __"
-          className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground/25"
+          className="flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground"
           autoFocus
         />
       </div>
 
-      {error && <p className="text-xs text-rose-500 mb-3">{error}</p>}
-
       <Button
         onClick={handleSubmit}
         disabled={value.replace(/\D/g, "").length !== 9 || isLoading}
-        className="w-full justify-center bg-primary text-white py-3 mt-2 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full justify-center bg-primary text-foreground py-3 mt-6 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isLoading ? t("loading") : t("submit")}
+        {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
     </div>
   );
@@ -112,20 +109,21 @@ function OtpStep({
 
   return (
     <div>
-      <button
+      <Button
         onClick={onBack}
-        className="text-sm text-foreground/50 hover:text-foreground transition-colors mb-4 flex items-center gap-1"
+        leftIcon="chevronLeft"
+        iconSize={18}
+        className="justify-center h-8 px-2 bg-card hover:bg-card-hover mb-6"
       >
-        ← {t("back")}
-      </button>
+        {t("back")}
+      </Button>
 
-      <h2 className="text-xl font-bold text-foreground mb-1">{t("title")}</h2>
-      <p className="text-sm text-foreground/50 mb-6">
-        {t("description")}{" "}
-        <span className="text-foreground font-medium">{phone}</span>
+      <h2 className="text-xl font-bold text-foreground mb-3">{t("title")}</h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        {t("description")} <span className="text-foreground">{phone}</span>
       </p>
 
-      <div className="flex gap-2 mb-2" onPaste={handlePaste}>
+      <div className="flex gap-2" onPaste={handlePaste}>
         {values.map((v, i) => (
           <input
             key={i}
@@ -136,19 +134,15 @@ function OtpStep({
             value={v}
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
-            className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-foreground/15 rounded-lg outline-none focus:border-primary transition-colors"
+            className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-md outline-none focus:border-primary transition-colors"
             autoFocus={i === 0}
           />
         ))}
       </div>
 
-      {error && <p className="text-xs text-rose-500 mt-2">{error}</p>}
+      {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
 
-      {isLoading && (
-        <p className="text-xs text-foreground/40 mt-3 text-center">
-          {t("loading")}
-        </p>
-      )}
+      {isLoading && <Spinner className="w-8 h-8 border-2 mt-6" />}
     </div>
   );
 }
@@ -175,11 +169,8 @@ function NameStep({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-foreground mb-1">{t("title")}</h2>
-      <p className="text-sm text-foreground/50 mb-6">{t("description")}</p>
-
-      <label className="text-sm font-medium text-foreground/70 mb-1.5 block">
-        {t("firstNameLabel")}
+      <label className="text-muted-foreground mb-2 block">
+        {t("firstNameLabel")}:
       </label>
       <input
         type="text"
@@ -191,12 +182,12 @@ function NameStep({
           document.getElementById("last-name-input")?.focus()
         }
         placeholder={t("firstNamePlaceholder")}
-        className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-3"
+        className="w-full text-foreground outline-none placeholder:text-muted-foreground rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all mb-6"
         autoFocus
       />
 
-      <label className="text-sm font-medium text-foreground/70 mb-1.5 block">
-        {t("lastNameLabel")}
+      <label className="text-muted-foreground mb-2 block">
+        {t("lastNameLabel")}:
       </label>
       <input
         id="last-name-input"
@@ -206,17 +197,15 @@ function NameStep({
         onChange={(e) => setLastName(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         placeholder={t("lastNamePlaceholder")}
-        className="w-full rounded-lg border border-foreground/15 bg-card px-4 py-3 text-sm text-foreground outline-none placeholder:text-foreground/25 focus:border-primary transition-colors mb-2"
+        className="w-full text-foreground outline-none placeholder:text-muted-foreground rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all mb-6"
       />
-
-      {error && <p className="text-xs text-rose-500 mb-3">{error}</p>}
 
       <Button
         onClick={handleSubmit}
         disabled={!isValid || isLoading}
-        className="w-full justify-center bg-primary text-white py-3 mt-2 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full justify-center bg-primary text-foreground py-3 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isLoading ? t("loading") : t("submit")}
+        {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
     </div>
   );
@@ -226,9 +215,15 @@ function NameStep({
 export default function LoginForm({
   onSuccess,
   onStepChange,
+  initialStep = "phone",
+  initialPhone = "",
+  ignoreSession = false,
 }: {
   onSuccess?: () => void;
   onStepChange?: (step: Step) => void;
+  initialStep?: Step;
+  initialPhone?: string;
+  ignoreSession?: boolean;
 }) {
   const {
     step,
@@ -239,11 +234,18 @@ export default function LoginForm({
     verifyOtp,
     submitName,
     back,
-  } = useAuth();
+  } = useAuth(initialStep, initialPhone, ignoreSession);
 
   useEffect(() => {
     onStepChange?.(step);
   }, [step, onStepChange]);
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem("auth-step");
+      sessionStorage.removeItem("auth-phone");
+    };
+  }, []);
 
   const handleSubmitName = async (firstName: string, lastName: string) => {
     await submitName(firstName, lastName);
@@ -251,7 +253,7 @@ export default function LoginForm({
   };
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full">
       {step === "phone" && (
         <PhoneStep onSubmit={sendOtp} isLoading={isLoading} error={error} />
       )}

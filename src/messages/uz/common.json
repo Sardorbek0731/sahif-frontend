@@ -33,5 +33,6 @@
     "karakalpakstan": "Qoraqalpog'iston"
   },
 
-  "addToCart": "Savatchaga"
+  "addToCart": "Savatchaga",
+  "outOfStock": "Tugagan"
 }

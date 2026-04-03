@@ -264,7 +264,12 @@ export default async function Books({
                 />
                 <h2>{bookTitle}</h2>
               </Link>
-              <p>{authorName}</p>
+              <Link
+                href={`/authors/${book.authorSlug}`}
+                className="hover:text-primary transition-all"
+              >
+                {authorName}
+              </Link>
               <p>
                 {finalPrice.toLocaleString()} {variant.price.currency}
               </p>

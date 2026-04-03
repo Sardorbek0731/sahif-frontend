@@ -67,8 +67,8 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg">
-          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45" />
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg border border-border shadow-2xl">
+          <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}
             <span className="text-primary">
@@ -103,8 +103,7 @@ export default function Location({
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        maxWidth="max-w-[420px]"
-        className="p-6"
+        maxWidth="max-w-100"
       >
         <div className="row-between mb-6">
           <h2 className="text-xl font-bold">{t("header.selectLocation")}</h2>
@@ -123,7 +122,7 @@ export default function Location({
           />
         </div>
 
-        <div className="max-h-[352px] overflow-y-auto space-y-3 pr-6 custom-scrollbar">
+        <div className="max-h-88 overflow-y-auto space-y-3 pr-3 custom-scrollbar">
           {filteredRegions.length > 0 ? (
             filteredRegions.map((region) => (
               <Button
@@ -144,7 +143,7 @@ export default function Location({
               </Button>
             ))
           ) : (
-            <div className="py-10 text-center">{t("search.noResults")}</div>
+            <div className="text-center">{t("search.noResults")}</div>
           )}
         </div>
       </Modal>
