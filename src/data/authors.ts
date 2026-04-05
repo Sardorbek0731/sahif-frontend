@@ -82,7 +82,7 @@ export const authors: readonly Author[] = [
     id: 8,
     slug: "dale-carnegie",
     name: "Dale Carnegie",
-    image: "/authors/dale-carnegie.jpg",
+    image: "/authors/dale-carnegie.webp",
     bio: {
       uz: "Amerikalik yozuvchi va o'qituvchi. 'Do'st orttirish va odamlarga ta'sir qilish' kitobi 30 milliondan ortiq nusxada sotilgan.",
       en: "American writer and lecturer. How to Win Friends and Influence People has sold over 30 million copies worldwide.",
@@ -93,7 +93,7 @@ export const authors: readonly Author[] = [
     id: 9,
     slug: "fyodor-dostoevsky",
     name: "Fyodor Dostoevsky",
-    image: "/authors/fyodor-dostoevsky.jpg",
+    image: "/authors/fyodor-dostoevsky.webp",
     bio: {
       uz: "Rus yozuvchisi va faylasuf. Jahon adabiyotining eng buyuk namoyandalridan biri. 'Jinoyat va jazo', 'Aka-uka Karamazovlar' asarlari bilan mashhur.",
       en: "Russian novelist and philosopher, one of the greatest writers in world literature, known for Crime and Punishment and The Brothers Karamazov.",
