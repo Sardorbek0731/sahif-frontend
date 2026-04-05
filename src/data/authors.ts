@@ -78,4 +78,37 @@ export const authors: readonly Author[] = [
       ru: "Английский писатель и публицист, известный антиутопическими романами «1984» и «Скотный двор».",
     },
   },
+  {
+    id: 8,
+    slug: "dale-carnegie",
+    name: "Dale Carnegie",
+    image: "/authors/dale-carnegie.jpg",
+    bio: {
+      uz: "Amerikalik yozuvchi va o'qituvchi. 'Do'st orttirish va odamlarga ta'sir qilish' kitobi 30 milliondan ortiq nusxada sotilgan.",
+      en: "American writer and lecturer. How to Win Friends and Influence People has sold over 30 million copies worldwide.",
+      ru: "Американский писатель и педагог. «Как завоёвывать друзей и оказывать влияние на людей» продана тиражом более 30 миллионов экземпляров.",
+    },
+  },
+  {
+    id: 9,
+    slug: "fyodor-dostoevsky",
+    name: "Fyodor Dostoevsky",
+    image: "/authors/fyodor-dostoevsky.jpg",
+    bio: {
+      uz: "Rus yozuvchisi va faylasuf. Jahon adabiyotining eng buyuk namoyandalridan biri. 'Jinoyat va jazo', 'Aka-uka Karamazovlar' asarlari bilan mashhur.",
+      en: "Russian novelist and philosopher, one of the greatest writers in world literature, known for Crime and Punishment and The Brothers Karamazov.",
+      ru: "Русский писатель и философ, один из величайших мастеров мировой литературы, автор «Преступления и наказания» и «Братьев Карамазовых».",
+    },
+  },
+  {
+    id: 10,
+    slug: "napoleon-hill",
+    name: "Napoleon Hill",
+    image: "/authors/napoleon-hill.jpg",
+    bio: {
+      uz: "Amerikalik yozuvchi. 'O'ylang va boy bo'ling' kitobi shaxsiy rivojlanish sohasidagi eng ko'p sotilgan kitoblardan biri.",
+      en: "American author. Think and Grow Rich is one of the best-selling self-help books of all time, with over 100 million copies sold.",
+      ru: "Американский писатель. «Думай и богатей» — одна из самых продаваемых книг по саморазвитию, продана тиражом более 100 миллионов экземпляров.",
+    },
+  },
 ];
