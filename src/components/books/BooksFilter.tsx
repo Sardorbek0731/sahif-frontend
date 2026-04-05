@@ -108,7 +108,7 @@ export default function BooksFilter({
 
   return (
     <aside className="w-56 shrink-0 mr-4">
-      <div className="bg-card rounded-xl border border-foreground/10 overflow-hidden">
+      <div className="bg-card rounded-lg border border-foreground/10 overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/10">
           <span className="text-sm font-semibold">Filtr</span>

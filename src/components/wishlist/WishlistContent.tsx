@@ -73,7 +73,7 @@ export default function WishlistContent() {
                 alt={b.bookTitle}
                 width={60}
                 height={90}
-                className="h-auto rounded-md"
+                className="h-auto rounded-lg"
               />
             </Link>
             <div className="flex-1">

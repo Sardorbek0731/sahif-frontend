@@ -45,7 +45,7 @@ export default function Hero() {
     setTimeout(() => {
       setCurrent(index);
       setAnimating(false);
-    }, 250);
+    }, 200);
   }, []);
 
   const prev = useCallback(() => {
@@ -92,23 +92,23 @@ export default function Hero() {
     }
 
     if (current > prevIndex) {
-      pill.style.transition = "width 125ms cubic-bezier(.4,0,.2,1)";
+      pill.style.transition = "width 100ms cubic-bezier(.4,0,.2,1)";
       pill.style.width = `${currLeft - prevLeft + DOT_SIZE}px`;
       timeoutRef.current = setTimeout(() => {
         pill.style.transition =
-          "left 125ms cubic-bezier(.4,0,.2,1), width 125ms cubic-bezier(.4,0,.2,1)";
+          "left 100ms cubic-bezier(.4,0,.2,1), width 100ms cubic-bezier(.4,0,.2,1)";
         pill.style.left = `${currLeft}px`;
         pill.style.width = `${DOT_SIZE}px`;
-      }, 125);
+      }, 100);
     } else {
       pill.style.transition =
-        "left 125ms cubic-bezier(.4,0,.2,1), width 125ms cubic-bezier(.4,0,.2,1)";
+        "left 100ms cubic-bezier(.4,0,.2,1), width 100ms cubic-bezier(.4,0,.2,1)";
       pill.style.left = `${currLeft}px`;
       pill.style.width = `${prevLeft - currLeft + DOT_SIZE}px`;
       timeoutRef.current = setTimeout(() => {
-        pill.style.transition = "width 125ms cubic-bezier(.4,0,.2,1)";
+        pill.style.transition = "width 100ms cubic-bezier(.4,0,.2,1)";
         pill.style.width = `${DOT_SIZE}px`;
-      }, 125);
+      }, 100);
     }
 
     return () => {
@@ -137,11 +137,9 @@ export default function Hero() {
   return (
     <section className="relative w-full bg-card rounded-lg row-between p-6 h-100">
       <div
-        className={`w-[60%] flex flex-col items-start h-full justify-between overflow-hidden transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
+        className={`w-[60%] flex flex-col items-start h-full justify-between transition-all duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
-        <div className="flex items-center gap-2 flex-wrap mb-4">
-          <BookBadge book={book} />
-        </div>
+        <BookBadge className="mb-3" book={book} />
 
         <div>
           <Link
@@ -151,14 +149,14 @@ export default function Hero() {
             <h1 className="text-2xl font-bold mb-2">{bookTitle}</h1>
           </Link>
 
-          <p className="mb-4 text-foreground/75 line-clamp-3">
+          <p className="mb-3 text-muted-foreground line-clamp-3">
             {getBookDescription(book, locale)}
           </p>
         </div>
 
         <Link
           href={`/authors/${book.authorSlug}`}
-          className="flex items-center mb-4 group"
+          className="flex items-center mb-3 group"
         >
           {author?.image ? (
             <Image
@@ -166,29 +164,29 @@ export default function Hero() {
               alt={author.name}
               width={44}
               height={44}
-              className="w-11 h-11 rounded-full object-cover mr-4"
+              className="w-12 h-12 rounded-full object-cover mr-3"
             />
           ) : (
-            <div className="w-11 h-11 rounded-full bg-primary/20 border border-primary/30 row-center text-primary font-bold text-sm mr-4">
+            <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/50 row-center text-primary font-bold text-sm mr-3">
               {authorInitials}
             </div>
           )}
-          <span className="flex flex-col justify-between h-full">
+          <span>
             <p className="group-hover:text-primary transition-colors">
               {authorName}
             </p>
-            <span className="text-sm text-foreground/75">
+            <span className="text-sm text-muted-foreground">
               {t("home.hero.author")}
             </span>
           </span>
         </Link>
 
-        <div className="mb-4">
-          <span className="text-primary text-2xl mr-4">
+        <div className="mb-3">
+          <span className="text-primary text-2xl mr-3">
             {finalPrice.toLocaleString()} {activeVariant.price.currency}
           </span>
           {activeVariant.price.discountAmount && (
-            <span className="line-through text-foreground/75">
+            <span className="line-through text-muted-foreground">
               {activeVariant.price.amount.toLocaleString()}
             </span>
           )}
@@ -198,7 +196,6 @@ export default function Hero() {
           bookId={book.id}
           slug={book.slug}
           language={activeVariant.language}
-          variant="hero"
           isOutOfStock={activeVariant.stockCount === 0}
         />
       </div>
@@ -206,14 +203,14 @@ export default function Hero() {
       <div
         className={`absolute right-6 top-6 bottom-6 transition-opacity duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
-        <div className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-primary rounded-tl-lg z-10" />
-        <div className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-primary rounded-br-lg z-10" />
+        <div className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-primary rounded-tl-lg" />
+        <div className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-primary rounded-br-lg" />
         <Link href={`/books/${book.slug}/${activeVariant.language}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={bookImage}
             alt={bookTitle}
-            className="relative h-full w-auto rounded-xl z-10"
+            className="relative h-full w-auto rounded-lg"
           />
         </Link>
       </div>
@@ -224,8 +221,8 @@ export default function Hero() {
             onClick={prev}
             leftIcon="chevronLeft"
             iconSize={18}
-            iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
-            className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 mr-4 hover:border-foreground/75 hover:bg-foreground/10"
+            iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
+            className="group transition-all w-8 h-8 border border-border justify-center bg-background mr-3 hover:border-foreground"
           />
 
           <div
@@ -239,7 +236,7 @@ export default function Hero() {
               <button
                 key={i}
                 onClick={() => go(i)}
-                className="absolute h-2 w-2 rounded-full bg-foreground/20 hover:bg-foreground/40 transition-colors cursor-pointer"
+                className="absolute h-2 w-2 rounded-full bg-foreground/15 hover:bg-foreground/30 transition-colors cursor-pointer"
                 style={{ left: getLeft(i) }}
               />
             ))}
@@ -258,8 +255,8 @@ export default function Hero() {
             onClick={next}
             leftIcon="chevronRight"
             iconSize={18}
-            iconStyle="transition-all text-foreground/25 group-hover:text-foreground/75"
-            className="group transition-all w-9 h-9 border border-foreground/25 justify-center bg-foreground/5 ml-3 hover:border-foreground/75 hover:bg-foreground/10"
+            iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
+            className="group transition-all w-8 h-8 border border-border justify-center bg-background ml-3 hover:border-foreground"
           />
         </div>
       )}

@@ -1,0 +1,9 @@
+{
+  "pages": "pages",
+  "formats": {
+    "hardcover": "Hardcover",
+    "paperback": "Paperback",
+    "ebook": "E-book",
+    "audio": "Audiobook"
+  }
+}

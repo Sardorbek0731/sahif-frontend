@@ -49,7 +49,7 @@ function PhoneStep({
       <Button
         onClick={handleSubmit}
         disabled={value.replace(/\D/g, "").length !== 9 || isLoading}
-        className="w-full justify-center bg-primary text-foreground py-3 mt-6 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full justify-center bg-primary text-foreground py-3 mt-6 hover:bg-primary/90 disabled:bg-primary/40 disabled:text-foreground/40 disabled:cursor-not-allowed"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
@@ -134,7 +134,7 @@ function OtpStep({
             value={v}
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
-            className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-md outline-none focus:border-primary transition-colors"
+            className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-lg outline-none focus:border-primary transition-colors"
             autoFocus={i === 0}
           />
         ))}
@@ -203,7 +203,7 @@ function NameStep({
       <Button
         onClick={handleSubmit}
         disabled={!isValid || isLoading}
-        className="w-full justify-center bg-primary text-foreground py-3 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full justify-center bg-primary text-foreground py-3 hover:bg-primary/90 disabled:bg-primary/40 disabled:text-foreground/40 disabled:cursor-not-allowed"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>

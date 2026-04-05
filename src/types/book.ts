@@ -7,7 +7,13 @@ export type LanguageCode = "uz-Latn" | "uz-Cyrl" | "en" | "ru" | (string & {});
 export type SupportedLocale = "uz" | "en" | "ru";
 
 // 3. Kitobning jismoniy ko'rinishi
-export type BookFormat = "hardcover" | "paperback" | "ebook" | "audio";
+export const BOOK_FORMATS = [
+  "hardcover",
+  "paperback",
+  "ebook",
+  "audio",
+] as const;
+export type BookFormat = (typeof BOOK_FORMATS)[number];
 
 // 4. Valyuta turi
 export type Currency = "UZS" | "USD";
@@ -20,7 +26,7 @@ interface BookPrice {
 }
 
 // --- Har bir til nashri uchun alohida ma'lumotlar (Variant) ---
-interface BookVariant {
+export interface BookVariant {
   readonly language: LanguageCode; // Nashr tili (uz-Latn, ru, en)
   readonly titleInLanguage?: string; // Shu tildagi nomi (masalan: "Alkimyogar")
 

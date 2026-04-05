@@ -10,6 +10,7 @@ const MESSAGE_MODULES: Record<string, string> = {
   search: "components/search",
   admin: "pages/admin",
   authors: "pages/authors",
+  book: "pages/book",
   books: "pages/books",
   cart: "pages/cart",
   home: "pages/home",

@@ -67,7 +67,7 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg border border-border shadow-2xl">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-21 bg-card p-4 rounded-lg border border-border shadow-2xl">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}
@@ -103,7 +103,7 @@ export default function Location({
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        maxWidth="max-w-100"
+        maxWidth="max-w-90"
       >
         <div className="row-between mb-6">
           <h2 className="text-xl font-bold">{t("header.selectLocation")}</h2>

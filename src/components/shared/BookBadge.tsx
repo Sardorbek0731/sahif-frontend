@@ -30,7 +30,7 @@ export default function BookBadge({ book, className = "" }: Props) {
 
   return (
     <span
-      className={`border py-1 px-3 rounded-md text-sm ${BADGE_STYLES[badge.key]} ${className}`}
+      className={`border py-1 px-3 rounded-lg text-sm ${BADGE_STYLES[badge.key]} ${className}`}
     >
       {badge.label}
     </span>

@@ -75,7 +75,7 @@ export default function CartContent() {
               alt={b.bookTitle}
               width={60}
               height={90}
-              className="h-auto rounded-md"
+              className="h-auto rounded-lg"
             />
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">
@@ -93,7 +93,7 @@ export default function CartContent() {
                     b.item.quantity - 1,
                   )
                 }
-                className="w-7 h-7 rounded-md bg-background border border-foreground/10 text-foreground text-sm"
+                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm"
               >
                 −
               </button>
@@ -106,7 +106,7 @@ export default function CartContent() {
                     b.item.quantity + 1,
                   )
                 }
-                className="w-7 h-7 rounded-md bg-background border border-foreground/10 text-foreground text-sm"
+                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm"
               >
                 +
               </button>

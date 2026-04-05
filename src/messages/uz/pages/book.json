@@ -1,0 +1,9 @@
+{
+  "pages": "bet",
+  "formats": {
+    "hardcover": "Qattiq muqova",
+    "paperback": "Yumshoq muqova",
+    "ebook": "Elektron kitob",
+    "audio": "Audio kitob"
+  }
+}

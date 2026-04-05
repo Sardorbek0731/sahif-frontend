@@ -1,21 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { type Locale } from "@/i18n/routing";
-import { Link } from "@/i18n/navigation";
 import { generateAlternates } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { getBookTitle } from "@/lib/book";
-import { type BookFormat } from "@/types/book";
+import { type BookFormat, BOOK_FORMATS } from "@/types/book";
 import { books } from "@/data/books";
 import { isValidCategory } from "@/data/categories";
 
-import BookActions from "@/components/shared/BookActions";
 import BooksFilter from "@/components/books/BooksFilter";
-
-const BOOK_FORMATS: BookFormat[] = ["hardcover", "paperback", "ebook", "audio"];
+import BookCard from "@/components/books/BookCard";
 
 type SearchParams = {
   category?: string;
@@ -153,7 +149,6 @@ export default async function Books({
 
   const resolvedBooks = filtered.map((book) => {
     const variant = (() => {
-      // 1. Ikkalasi bor — ikkala shartga mos
       if (activeLang && activeFormat) {
         return (
           book.variants.find(
@@ -164,7 +159,6 @@ export default async function Books({
         );
       }
 
-      // 2. Faqat til filtri
       if (activeLang) {
         return (
           book.variants.find((v) => v.language === activeLang) ||
@@ -172,7 +166,6 @@ export default async function Books({
         );
       }
 
-      // 3. Faqat format filtri — locale'ga mos + format, bo'lmasa faqat format
       if (activeFormat) {
         return (
           book.variants.find(
@@ -184,7 +177,6 @@ export default async function Books({
         );
       }
 
-      // 4. Filter yo'q — locale'ga mos
       return (
         book.variants.find((v) => v.language.startsWith(locale)) ||
         book.variants[0]
@@ -244,46 +236,22 @@ export default async function Books({
         activeInStock={activeInStock}
       />
 
-      <div className="flex-1 grid grid-cols-4 gap-4">
+      <div className="flex-1 grid grid-cols-4 gap-4 content-start">
         {resolvedBooks.map(
           (
             { book, variant, authorName, bookTitle, bookImage, finalPrice },
             index,
           ) => (
-            <div key={book.id} className="relative">
-              <Link href={`/books/${book.slug}/${variant.language}`}>
-                <Image
-                  src={bookImage}
-                  alt={bookTitle}
-                  width={150}
-                  height={250}
-                  className="h-auto"
-                  priority={index < 4}
-                />
-                <h2>{bookTitle}</h2>
-              </Link>
-              <Link
-                href={`/authors/${book.authorSlug}`}
-                className="hover:text-primary transition-all"
-              >
-                {authorName}
-              </Link>
-              <p>
-                {finalPrice.toLocaleString()} {variant.price.currency}
-              </p>
-              {variant.price.discountAmount && (
-                <span className="line-through opacity-50">
-                  {variant.price.amount.toLocaleString()}
-                </span>
-              )}
-              <BookActions
-                bookId={book.id}
-                slug={book.slug}
-                language={variant.language}
-                variant="card"
-                isOutOfStock={variant.stockCount === 0}
-              />
-            </div>
+            <BookCard
+              key={book.id}
+              book={book}
+              variant={variant}
+              authorName={authorName}
+              bookTitle={bookTitle}
+              bookImage={bookImage}
+              finalPrice={finalPrice}
+              priority={index < 4}
+            />
           ),
         )}
       </div>
