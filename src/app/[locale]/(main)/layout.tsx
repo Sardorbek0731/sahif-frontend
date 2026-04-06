@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 
 import Header from "@/components/header/Header";
 import Navbar from "@/components/navbar/Navbar";
+import Footer from "@/components/footer/Footer";
 import { DEFAULT_LOCATION_ID } from "@/constants";
 import { getInitialTheme } from "@/lib/theme";
 
@@ -27,6 +28,7 @@ export default async function MainLayout({
       />
       <Navbar />
       {children}
+      <Footer />
     </>
   );
 }

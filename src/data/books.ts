@@ -620,9 +620,9 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.7, reviewCount: 18500, salesCount: 72000 },
-    isBestseller: true,
+    isBestseller: false,
     isNew: false,
-    isTrending: true,
+    isTrending: false,
     createdAt: "2024-12-12T09:00:00Z",
   },
 
@@ -758,9 +758,9 @@ export const books: readonly Book[] = [
       },
     ],
     stats: { rating: 4.6, reviewCount: 31200, salesCount: 89000 },
-    isBestseller: true,
+    isBestseller: false,
     isNew: false,
-    isTrending: true,
+    isTrending: false,
     createdAt: "2024-12-16T09:00:00Z",
   },
 ];
