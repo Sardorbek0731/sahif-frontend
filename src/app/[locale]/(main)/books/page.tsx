@@ -20,6 +20,7 @@ type SearchParams = {
   lang?: string;
   price?: string;
   inStock?: string;
+  author?: string;
 };
 
 export async function generateMetadata({
@@ -33,20 +34,20 @@ export async function generateMetadata({
   const { category, search } = await searchParams;
   const t = await getTranslations({ locale });
 
+  const firstCategory = category?.split(",")[0];
   let title = t("pages.books");
   if (search) title = search;
-  else if (isValidCategory(category)) {
+  else if (isValidCategory(firstCategory)) {
     const tCat = await getTranslations({ locale, namespace: "categories" });
-    title = tCat(`items.${category}.name`);
+    title = tCat(`items.${firstCategory}.name`);
   }
 
   const isSearch = !!search;
-  const hasCategory = isValidCategory(category);
+  const hasCategory = isValidCategory(firstCategory);
   const path = "/books";
-  const paramsObj = hasCategory ? { category } : undefined;
-
+  const paramsObj = hasCategory ? { category: firstCategory } : undefined;
+  const pageUrl = `${SITE_URL}/${locale}${path}${hasCategory ? `?category=${firstCategory}` : ""}`;
   const description = t("books.metadata.description");
-  const pageUrl = `${SITE_URL}/${locale}${path}${hasCategory ? `?category=${category}` : ""}`;
 
   return {
     title,
@@ -97,20 +98,52 @@ export default async function Books({
   searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
-  const { category, search, format, lang, price, inStock } = await searchParams;
+  const {
+    category,
+    search,
+    format,
+    lang,
+    price,
+    inStock,
+    author: authorParam,
+  } = await searchParams;
 
-  const activeFormat = BOOK_FORMATS.includes(format as BookFormat)
-    ? (format as BookFormat)
-    : null;
-  const activeLang = lang ?? null;
+  const activeFormats = format
+    ? (format
+        .split(",")
+        .filter((f) => BOOK_FORMATS.includes(f as BookFormat)) as BookFormat[])
+    : [];
+  const activeLangs = lang ? lang.split(",").filter(Boolean) : [];
+  const activeAuthors = authorParam
+    ? authorParam.split(",").filter(Boolean)
+    : [];
+  const activeCategories = category
+    ? category.split(",").filter(isValidCategory)
+    : [];
   const activeInStock = inStock === "true";
 
   const [minPrice, maxPrice] = (() => {
     if (!price) return [null, null];
-    if (price === "200000+") return [200000, null];
+    if (price.endsWith("+")) return [parseInt(price), null];
     const [min, max] = price.split("-").map(Number);
-    return [min, max];
+    return [isNaN(min) ? null : min, isNaN(max) ? null : max];
   })();
+
+  const matchesVariantFilters = (v: (typeof books)[0]["variants"][0]) => {
+    if (activeLangs.length && !activeLangs.includes(v.language)) return false;
+    if (activeFormats.length && !activeFormats.includes(v.format)) return false;
+    if (activeInStock && v.stockCount === 0) return false;
+    const fp = v.price.amount - (v.price.discountAmount ?? 0);
+    if (minPrice !== null && fp < minPrice) return false;
+    if (maxPrice !== null && fp > maxPrice) return false;
+    return true;
+  };
+
+  const matchesVariantSearch = (
+    v: (typeof books)[0]["variants"][0],
+    q: string,
+  ) =>
+    v.titleInLanguage?.toLowerCase().includes(q) || v.isbn.includes(q) || false;
 
   const filtered = books.filter((book) => {
     if (search) {
@@ -118,83 +151,60 @@ export default async function Books({
       const currentTitle = getBookTitle(book, locale).toLowerCase();
       const author = getAuthor(book.authorSlug);
       const authorName = author?.name ?? book.authorSlug;
-      const matchesSearch =
+      const bookMatchesSearch =
         currentTitle.includes(q) ||
         book.originalTitle.toLowerCase().includes(q) ||
         authorName.toLowerCase().includes(q) ||
-        book.variants.some((v) => v.isbn.includes(q)) ||
-        book.variants.some((v) => v.titleInLanguage?.toLowerCase().includes(q));
-      if (!matchesSearch) return false;
+        book.variants.some((v) => matchesVariantSearch(v, q));
+      if (!bookMatchesSearch) return false;
     }
 
-    if (isValidCategory(category) && !book.categorySlugs.includes(category)) {
+    if (
+      activeCategories.length &&
+      !activeCategories.some((c) => book.categorySlugs.includes(c))
+    )
       return false;
-    }
+    if (activeAuthors.length && !activeAuthors.includes(book.authorSlug))
+      return false;
 
-    const matchingVariants = book.variants.filter((v) => {
-      if (activeFormat && v.format !== activeFormat) return false;
-      if (activeLang && v.language !== activeLang) return false;
-      if (activeInStock && v.stockCount === 0) return false;
-      const finalPrice = v.price.amount - (v.price.discountAmount ?? 0);
-      if (minPrice !== null && finalPrice < minPrice) return false;
-      if (maxPrice !== null && finalPrice > maxPrice) return false;
-      return true;
-    });
-
-    return matchingVariants.length > 0;
+    return book.variants.some(matchesVariantFilters);
   });
 
-  const hasCategory = isValidCategory(category);
-  const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${category}` : ""}`;
+  const hasCategory = activeCategories.length === 1;
+  const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${activeCategories[0]}` : ""}`;
 
   const resolvedBooks = filtered.map((book) => {
-    const variant = (() => {
-      if (activeLang && activeFormat) {
-        return (
-          book.variants.find(
-            (v) => v.language === activeLang && v.format === activeFormat,
-          ) ||
-          book.variants.find((v) => v.language === activeLang) ||
-          book.variants[0]
-        );
-      }
-
-      if (activeLang) {
-        return (
-          book.variants.find((v) => v.language === activeLang) ||
-          book.variants[0]
-        );
-      }
-
-      if (activeFormat) {
-        return (
-          book.variants.find(
-            (v) => v.language.startsWith(locale) && v.format === activeFormat,
-          ) ||
-          book.variants.find((v) => v.format === activeFormat) ||
-          book.variants.find((v) => v.language.startsWith(locale)) ||
-          book.variants[0]
-        );
-      }
-
-      return (
-        book.variants.find((v) => v.language.startsWith(locale)) ||
-        book.variants[0]
-      );
-    })();
     const authorName = getAuthor(book.authorSlug)?.name ?? book.authorSlug;
-    const bookTitle = getBookTitle(book, locale, variant.language);
-    const bookImage = variant.variantImage || book.images.cover;
-    const finalPrice =
-      variant.price.amount - (variant.price.discountAmount ?? 0);
-    return { book, variant, authorName, bookTitle, bookImage, finalPrice };
+
+    const matchesSearch = (v: (typeof book.variants)[0]) =>
+      search ? matchesVariantSearch(v, search.toLowerCase()) : false;
+
+    const variant =
+      book.variants.find((v) => matchesSearch(v) && matchesVariantFilters(v)) ??
+      book.variants.find(matchesSearch) ??
+      book.variants.find(
+        (v) => matchesVariantFilters(v) && v.language.startsWith(locale),
+      ) ??
+      book.variants.find(matchesVariantFilters) ??
+      book.variants[0];
+
+    const bookTitle = variant.titleInLanguage ?? book.originalTitle;
+
+    return {
+      book,
+      variant,
+      authorName,
+      bookTitle,
+      bookImage: variant.variantImage || book.images.cover,
+      finalPrice: variant.price.amount - (variant.price.discountAmount ?? 0),
+    };
   });
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     url: pageUrl,
-    numberOfItems: filtered.length,
+    numberOfItems: resolvedBooks.length,
     itemListElement: resolvedBooks
       .slice(0, 20)
       .map(({ book, variant, authorName, bookTitle, finalPrice }, index) => ({
@@ -219,6 +229,19 @@ export default async function Books({
       })),
   };
 
+  const t = await getTranslations({ locale });
+  const pageTitle = search
+    ? `"${search}"`
+    : hasCategory
+      ? await (async () => {
+          const tCat = await getTranslations({
+            locale,
+            namespace: "categories",
+          });
+          return tCat(`items.${activeCategories[0]}.name`);
+        })()
+      : t("pages.books");
+
   return (
     <main className="my-container flex mb-4">
       {!search && (
@@ -229,31 +252,42 @@ export default async function Books({
       )}
 
       <BooksFilter
-        activeCategory={hasCategory ? category : undefined}
-        activeFormat={activeFormat ?? undefined}
-        activeLang={activeLang ?? undefined}
+        activeCategories={activeCategories}
+        activeFormats={activeFormats}
+        activeLangs={activeLangs}
         activePrice={price}
         activeInStock={activeInStock}
+        activeAuthors={activeAuthors}
       />
 
-      <div className="flex-1 grid grid-cols-4 gap-4 content-start">
-        {resolvedBooks.map(
-          (
-            { book, variant, authorName, bookTitle, bookImage, finalPrice },
-            index,
-          ) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              variant={variant}
-              authorName={authorName}
-              bookTitle={bookTitle}
-              bookImage={bookImage}
-              finalPrice={finalPrice}
-              priority={index < 4}
-            />
-          ),
-        )}
+      <div className="flex-1 content-start">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-bold">
+            {pageTitle}
+            <span className="text-base font-normal text-muted-foreground ml-2">
+              ({filtered.length} ta)
+            </span>
+          </h1>
+        </div>
+        <div className="grid grid-cols-4 gap-4">
+          {resolvedBooks.map(
+            (
+              { book, variant, authorName, bookTitle, bookImage, finalPrice },
+              index,
+            ) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                variant={variant}
+                authorName={authorName}
+                bookTitle={bookTitle}
+                bookImage={bookImage}
+                finalPrice={finalPrice}
+                priority={index < 4}
+              />
+            ),
+          )}
+        </div>
       </div>
     </main>
   );

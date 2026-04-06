@@ -51,3 +51,15 @@ export const FEATURE_KEYS = [
   "recommendations",
   "support",
 ] as const;
+
+export const BOOK_LANGUAGES = [
+  { code: "uz-Latn", label: "O'zbek (lotin)" },
+  { code: "uz-Cyrl", label: "Ўзбек (кирил)" },
+  { code: "ru", label: "Русский" },
+  { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
+  { code: "de", label: "Deutsch" },
+  { code: "tr", label: "Türkçe" },
+  { code: "pt", label: "Português" },
+  { code: "es", label: "Español" },
+] as const;
