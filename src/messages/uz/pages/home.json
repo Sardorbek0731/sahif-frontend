@@ -8,6 +8,21 @@
     "details": "Batafsil"
   },
 
+  "popular": {
+    "title": "Mashhur kitoblar",
+    "showMore": "Barchasini ko'rish"
+  },
+
+  "new": {
+    "title": "Yangi kitoblar",
+    "showMore": "Barchasini ko'rish"
+  },
+
+  "authors": {
+    "title": "Mualliflar",
+    "showMore": "Barcha mualliflarni ko'rish"
+  },
+
   "features": {
     "tag": "Nima uchun sahif?",
     "heading": "Kitob xarid qilish bu qadar qulay bo'lmagan",

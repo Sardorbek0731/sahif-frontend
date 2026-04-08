@@ -79,8 +79,8 @@ export interface Book {
   // --- UI va Marketing (Flaglar) ---
   readonly stats: BookStats;
   readonly isBestseller: boolean; // "Bestseller" belgisi
-  readonly isNew: boolean; // "Yangi" belgisi
   readonly isTrending: boolean;
+  readonly heroOrder?: number; // Bosh sahifa Hero sliderida tartib raqami (1 dan boshlanadi, max 10)
 
   // --- Meta ---
   readonly createdAt: string; // Qo'shilgan vaqti (ISO formatda)

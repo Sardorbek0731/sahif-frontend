@@ -17,9 +17,10 @@ import { SKIP_WORDS } from "@/constants";
 import BookActions from "../shared/BookActions";
 import BookBadge from "../shared/BookBadge";
 
-const heroBooks = books.filter(
-  (book) => book.isBestseller || book.isNew || book.isTrending,
-);
+const heroBooks = books
+  .filter((book) => book.heroOrder !== undefined)
+  .sort((a, b) => a.heroOrder! - b.heroOrder!)
+  .slice(0, 10);
 
 const DOT_SIZE = 8;
 const DOT_MARGIN = 3;
@@ -116,6 +117,8 @@ export default function Hero() {
     };
   }, [current]);
 
+  if (heroBooks.length === 0) return null;
+
   const book = heroBooks[current] as Book;
   const activeVariant =
     book.variants.find((v) => v.language.startsWith(locale)) ??
@@ -196,6 +199,7 @@ export default function Hero() {
           bookId={book.id}
           slug={book.slug}
           language={activeVariant.language}
+          stockCount={activeVariant.stockCount}
           isOutOfStock={activeVariant.stockCount === 0}
         />
       </div>

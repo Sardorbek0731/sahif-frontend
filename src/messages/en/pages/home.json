@@ -8,6 +8,21 @@
     "details": "Details"
   },
 
+  "popular": {
+    "title": "Popular Books",
+    "showMore": "View all"
+  },
+
+  "new": {
+    "title": "New Arrivals",
+    "showMore": "View all"
+  },
+
+  "authors": {
+    "title": "Authors",
+    "showMore": "View all authors"
+  },
+
   "features": {
     "tag": "Why sahif?",
     "heading": "Buying books has never been this easy",

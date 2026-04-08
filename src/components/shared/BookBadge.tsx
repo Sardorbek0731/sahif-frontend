@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { type Book } from "@/types/book";
+import { isNewBook } from "@/lib/book";
 
 const BADGE_STYLES = {
   new: "border-green-500 bg-green-500/15 text-green-500",
@@ -11,14 +12,14 @@ const BADGE_STYLES = {
 } as const;
 
 interface Props {
-  book: Pick<Book, "isNew" | "isTrending" | "isBestseller">;
+  book: Pick<Book, "createdAt" | "isTrending" | "isBestseller">;
   className?: string;
 }
 
 export default function BookBadge({ book, className = "" }: Props) {
   const t = useTranslations("badges");
 
-  const badge = book.isNew
+  const badge = isNewBook(book.createdAt)
     ? { key: "new" as const, label: t("new") }
     : book.isTrending
       ? { key: "trending" as const, label: t("trending") }

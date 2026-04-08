@@ -6,6 +6,8 @@ import { OG_LOCALES, SITE_URL, SITE_NAME } from "@/constants";
 import { generateAlternates } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
+import HomeBooks from "@/components/home/HomeBooks";
+import HomeAuthors from "@/components/home/HomeAuthors";
 import Features from "@/components/home/Features";
 
 export async function generateMetadata({
@@ -18,12 +20,15 @@ export async function generateMetadata({
   const t = await getTranslations({ locale });
 
   const title = t("home.metadata.title");
+  const description = t("description");
 
   return {
     title,
+    description,
     alternates: generateAlternates(locale, ""),
     openGraph: {
       title: `${title} | ${SITE_NAME}`,
+      description,
       url: `${SITE_URL}/${locale}`,
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
@@ -41,15 +46,24 @@ export async function generateMetadata({
     twitter: {
       card: "summary",
       title: `${title} | ${SITE_NAME}`,
+      description,
       images: ["/logo.png"],
     },
   };
 }
 
-export default async function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+
   return (
     <main className="my-container">
       <Hero />
+      <HomeBooks locale={locale} />
+      <HomeAuthors locale={locale} />
       <Features />
     </main>
   );

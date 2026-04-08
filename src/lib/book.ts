@@ -1,6 +1,13 @@
 import { type Book } from "@/types/book";
 import { type Locale } from "@/i18n/routing";
 
+const NEW_BOOK_DAYS = 30;
+
+export function isNewBook(createdAt: string): boolean {
+  const ms = Date.now() - new Date(createdAt).getTime();
+  return ms / 86_400_000 <= NEW_BOOK_DAYS;
+}
+
 export function getBookTitle(
   book: Book,
   locale: Locale,
