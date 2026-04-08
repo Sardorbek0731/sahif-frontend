@@ -1,5 +1,13 @@
 {
   "metadata": {
     "description": "Minglab kitob bir joyda — janr, muallif yoki mavzu bo'yicha filtrlang va o'zingizga mosini toping."
+  },
+  "sort": {
+    "label": "Saralash",
+    "popular": "Mashhurlari",
+    "new": "Yangilari",
+    "rating": "Eng baholanganlari",
+    "priceAsc": "Arzondan qimmati",
+    "priceDesc": "Qimmatdan arzoni"
   }
 }

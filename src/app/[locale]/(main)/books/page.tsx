@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
+import { SITE_URL, OG_LOCALES, SITE_NAME, BOOK_LANGUAGES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
 import { generateAlternates } from "@/lib/seo";
-import { getAuthor } from "@/lib/author";
-import { getBookTitle } from "@/lib/book";
+import { getAuthorName } from "@/lib/author";
+import { getBookTitle, isNewBook } from "@/lib/book";
 import { type BookFormat, BOOK_FORMATS } from "@/types/book";
 import { books } from "@/data/books";
+import { authors } from "@/data/authors";
 import { isValidCategory } from "@/data/categories";
 
+import { SORT_OPTIONS, type SortOption } from "@/constants/sort";
 import BooksFilter from "@/components/books/BooksFilter";
 import BookCard from "@/components/books/BookCard";
+import BooksSortSelect from "@/components/books/BooksSortSelect";
 
 type SearchParams = {
   category?: string;
@@ -21,6 +24,7 @@ type SearchParams = {
   price?: string;
   inStock?: string;
   author?: string;
+  sort?: string;
 };
 
 export async function generateMetadata({
@@ -31,7 +35,7 @@ export async function generateMetadata({
   searchParams: Promise<SearchParams>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const { category, search } = await searchParams;
+  const { category, search, sort } = await searchParams;
   const t = await getTranslations({ locale });
 
   const firstCategory = category?.split(",")[0];
@@ -43,7 +47,8 @@ export async function generateMetadata({
   }
 
   const isSearch = !!search;
-  const hasCategory = isValidCategory(firstCategory);
+  const hasCategory =
+    isValidCategory(firstCategory) && !category?.includes(",");
   const path = "/books";
   const paramsObj = hasCategory ? { category: firstCategory } : undefined;
   const pageUrl = `${SITE_URL}/${locale}${path}${hasCategory ? `?category=${firstCategory}` : ""}`;
@@ -56,10 +61,10 @@ export async function generateMetadata({
     alternates: generateAlternates(locale, path, paramsObj),
 
     robots: {
-      index: !search,
+      index: !search && !sort,
       follow: true,
       googleBot: {
-        index: !search,
+        index: !search && !sort,
         follow: true,
       },
     },
@@ -106,21 +111,32 @@ export default async function Books({
     price,
     inStock,
     author: authorParam,
+    sort: sortParam,
   } = await searchParams;
+
+  const sort = SORT_OPTIONS.includes(sortParam as SortOption)
+    ? (sortParam as SortOption)
+    : undefined;
 
   const activeFormats = format
     ? (format
         .split(",")
         .filter((f) => BOOK_FORMATS.includes(f as BookFormat)) as BookFormat[])
     : [];
-  const activeLangs = lang ? lang.split(",").filter(Boolean) : [];
+  const validLangCodes = new Set<string>(BOOK_LANGUAGES.map((l) => l.code));
+  const validAuthorSlugs = new Set(authors.map((a) => a.slug));
+
+  const activeLangs = lang
+    ? lang.split(",").filter((l) => validLangCodes.has(l))
+    : [];
   const activeAuthors = authorParam
-    ? authorParam.split(",").filter(Boolean)
+    ? authorParam.split(",").filter((a) => validAuthorSlugs.has(a))
     : [];
   const activeCategories = category
     ? category.split(",").filter(isValidCategory)
     : [];
   const activeInStock = inStock === "true";
+  const searchQuery = search?.toLowerCase();
 
   const [minPrice, maxPrice] = (() => {
     if (!price) return [null, null];
@@ -142,20 +158,17 @@ export default async function Books({
   const matchesVariantSearch = (
     v: (typeof books)[0]["variants"][0],
     q: string,
-  ) =>
-    v.titleInLanguage?.toLowerCase().includes(q) || v.isbn.includes(q) || false;
+  ) => !!(v.titleInLanguage?.toLowerCase().includes(q) || v.isbn.includes(q));
 
   const filtered = books.filter((book) => {
-    if (search) {
-      const q = search.toLowerCase();
+    if (searchQuery) {
       const currentTitle = getBookTitle(book, locale).toLowerCase();
-      const author = getAuthor(book.authorSlug);
-      const authorName = author?.name ?? book.authorSlug;
+      const authorName = getAuthorName(book.authorSlug).toLowerCase();
       const bookMatchesSearch =
-        currentTitle.includes(q) ||
-        book.originalTitle.toLowerCase().includes(q) ||
-        authorName.toLowerCase().includes(q) ||
-        book.variants.some((v) => matchesVariantSearch(v, q));
+        currentTitle.includes(searchQuery) ||
+        book.originalTitle.toLowerCase().includes(searchQuery) ||
+        authorName.includes(searchQuery) ||
+        book.variants.some((v) => matchesVariantSearch(v, searchQuery));
       if (!bookMatchesSearch) return false;
     }
 
@@ -170,23 +183,89 @@ export default async function Books({
     return book.variants.some(matchesVariantFilters);
   });
 
+  const variantFinalPrice = (v: (typeof books)[0]["variants"][0]) =>
+    v.price.amount - (v.price.discountAmount ?? 0);
+
+  const bookFilteredMinPrice = (book: (typeof books)[0]) =>
+    Math.min(
+      ...book.variants.filter(matchesVariantFilters).map(variantFinalPrice),
+    );
+
+  const bookFilteredMaxPrice = (book: (typeof books)[0]) =>
+    Math.max(
+      ...book.variants.filter(matchesVariantFilters).map(variantFinalPrice),
+    );
+
+  const sorted = (() => {
+    const arr = [...filtered];
+    switch (sort) {
+      case "popular":
+        return arr.sort(
+          (a, b) =>
+            b.stats.rating * b.stats.reviewCount -
+            a.stats.rating * a.stats.reviewCount,
+        );
+      case "new":
+        return arr.sort((a, b) => {
+          const aIsNew = isNewBook(a.createdAt);
+          const bIsNew = isNewBook(b.createdAt);
+          if (aIsNew !== bIsNew) return aIsNew ? -1 : 1;
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        });
+      case "rating":
+        return arr.sort((a, b) => b.stats.rating - a.stats.rating);
+      case "price-asc":
+        return arr.sort(
+          (a, b) => bookFilteredMinPrice(a) - bookFilteredMinPrice(b),
+        );
+      case "price-desc":
+        return arr.sort(
+          (a, b) => bookFilteredMaxPrice(b) - bookFilteredMaxPrice(a),
+        );
+      default:
+        return arr;
+    }
+  })();
+
   const hasCategory = activeCategories.length === 1;
-  const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${activeCategories[0]}` : ""}`;
 
-  const resolvedBooks = filtered.map((book) => {
-    const authorName = getAuthor(book.authorSlug)?.name ?? book.authorSlug;
+  const matchesSearch = (v: (typeof books)[0]["variants"][0]) =>
+    searchQuery ? matchesVariantSearch(v, searchQuery) : false;
 
-    const matchesSearch = (v: (typeof book.variants)[0]) =>
-      search ? matchesVariantSearch(v, search.toLowerCase()) : false;
+  const resolvedBooks = sorted.map((book) => {
+    const authorName = getAuthorName(book.authorSlug);
 
-    const variant =
-      book.variants.find((v) => matchesSearch(v) && matchesVariantFilters(v)) ??
-      book.variants.find(matchesSearch) ??
-      book.variants.find(
-        (v) => matchesVariantFilters(v) && v.language.startsWith(locale),
-      ) ??
-      book.variants.find(matchesVariantFilters) ??
-      book.variants[0];
+    const variant = (() => {
+      if (sort === "price-asc") {
+        const matchedVariants = book.variants.filter(matchesVariantFilters);
+        return (
+          matchedVariants.sort(
+            (a, b) => variantFinalPrice(a) - variantFinalPrice(b),
+          )[0] ?? book.variants[0]
+        );
+      }
+      if (sort === "price-desc") {
+        const matchedVariants = book.variants.filter(matchesVariantFilters);
+        return (
+          matchedVariants.sort(
+            (a, b) => variantFinalPrice(b) - variantFinalPrice(a),
+          )[0] ?? book.variants[0]
+        );
+      }
+      return (
+        book.variants.find(
+          (v) => matchesSearch(v) && matchesVariantFilters(v),
+        ) ??
+        book.variants.find(matchesSearch) ??
+        book.variants.find(
+          (v) => matchesVariantFilters(v) && v.language.startsWith(locale),
+        ) ??
+        book.variants.find(matchesVariantFilters) ??
+        book.variants[0]
+      );
+    })();
 
     const bookTitle = variant.titleInLanguage ?? book.originalTitle;
 
@@ -196,55 +275,64 @@ export default async function Books({
       authorName,
       bookTitle,
       bookImage: variant.variantImage || book.images.cover,
-      finalPrice: variant.price.amount - (variant.price.discountAmount ?? 0),
+      finalPrice: variantFinalPrice(variant),
     };
   });
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    url: pageUrl,
-    numberOfItems: resolvedBooks.length,
-    itemListElement: resolvedBooks
-      .slice(0, 20)
-      .map(({ book, variant, authorName, bookTitle, finalPrice }, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Book",
-          name: bookTitle,
-          author: { "@type": "Person", name: authorName },
-          url: `${SITE_URL}/${locale}/books/${book.slug}/${variant.language}`,
-          image: `${SITE_URL}${book.images.cover}`,
-          offers: {
-            "@type": "Offer",
-            price: finalPrice,
-            priceCurrency: variant.price.currency,
-            availability:
-              variant.stockCount === 0
-                ? "https://schema.org/OutOfStock"
-                : "https://schema.org/InStock",
-          },
-        },
-      })),
-  };
-
   const t = await getTranslations({ locale });
-  const pageTitle = search
-    ? `"${search}"`
-    : hasCategory
-      ? await (async () => {
-          const tCat = await getTranslations({
-            locale,
-            namespace: "categories",
-          });
-          return tCat(`items.${activeCategories[0]}.name`);
-        })()
-      : t("pages.books");
+
+  let pageTitle: string;
+  if (search) {
+    pageTitle = `"${search}"`;
+  } else if (hasCategory) {
+    const tCat = await getTranslations({ locale, namespace: "categories" });
+    pageTitle = tCat(`items.${activeCategories[0]}.name`);
+  } else {
+    pageTitle = t("pages.books");
+  }
+
+  const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${activeCategories[0]}` : ""}`;
+
+  const jsonLd =
+    !search && !sort
+      ? {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          url: pageUrl,
+          numberOfItems: resolvedBooks.length,
+          itemListElement: resolvedBooks
+            .slice(0, 20)
+            .map(
+              (
+                { book, variant, authorName, bookTitle, finalPrice },
+                index,
+              ) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                item: {
+                  "@type": "Book",
+                  name: bookTitle,
+                  author: { "@type": "Person", name: authorName },
+                  url: `${SITE_URL}/${locale}/books/${book.slug}/${variant.language}`,
+                  image: `${SITE_URL}${book.images.cover}`,
+                  offers: {
+                    "@type": "Offer",
+                    price: finalPrice,
+                    priceCurrency: variant.price.currency,
+                    availability:
+                      variant.stockCount === 0
+                        ? "https://schema.org/OutOfStock"
+                        : "https://schema.org/InStock",
+                  },
+                },
+              }),
+            ),
+        }
+      : null;
 
   return (
     <main className="my-container flex mb-4">
-      {!search && (
+      {jsonLd && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -258,6 +346,8 @@ export default async function Books({
         activePrice={price}
         activeInStock={activeInStock}
         activeAuthors={activeAuthors}
+        activeSort={sort}
+        activeSearch={search}
       />
 
       <div className="flex-1 content-start">
@@ -268,6 +358,18 @@ export default async function Books({
               ({filtered.length} ta)
             </span>
           </h1>
+          <BooksSortSelect
+            activeSort={sort}
+            activeParams={{
+              ...(category && { category }),
+              ...(search && { search }),
+              ...(format && { format }),
+              ...(lang && { lang }),
+              ...(price && { price }),
+              ...(inStock && { inStock }),
+              ...(authorParam && { author: authorParam }),
+            }}
+          />
         </div>
         <div className="grid grid-cols-4 gap-4">
           {resolvedBooks.map(

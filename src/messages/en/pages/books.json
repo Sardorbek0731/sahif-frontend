@@ -1,5 +1,13 @@
 {
   "metadata": {
     "description": "Thousands of books in one place — filter by genre, author or topic and find your perfect read."
+  },
+  "sort": {
+    "label": "Sort by",
+    "popular": "Most popular",
+    "new": "Newest",
+    "rating": "Top rated",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low"
   }
 }

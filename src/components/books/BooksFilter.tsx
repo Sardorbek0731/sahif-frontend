@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
@@ -17,6 +17,8 @@ interface Props {
   activePrice?: string;
   activeInStock?: boolean;
   activeAuthors?: string[];
+  activeSort?: string;
+  activeSearch?: string;
 }
 
 interface FilterState {
@@ -114,6 +116,17 @@ function toggleArr<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val];
 }
 
+function parsePrice(price?: string) {
+  if (!price) return { min: "", max: "" };
+  if (price.endsWith("+")) return { min: price.slice(0, -1), max: "" };
+  const [min, max] = price.split("-");
+  return { min: min ?? "", max: max ?? "" };
+}
+
+function setsEqual<T>(a: T[], b: T[]) {
+  return a.length === b.length && a.every((v) => b.includes(v));
+}
+
 const PRICE_RANGES = [
   { label: "0 – 50k", min: "0", max: "50000" },
   { label: "50k – 100k", min: "50000", max: "100000" },
@@ -128,42 +141,59 @@ export default function BooksFilter({
   activePrice,
   activeInStock,
   activeAuthors = [],
+  activeSort,
+  activeSearch,
 }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("categories");
   const tBook = useTranslations("book");
 
-  const parsePrice = (price?: string) => {
-    if (!price) return { min: "", max: "" };
-    if (price.endsWith("+")) return { min: price.slice(0, -1), max: "" };
-    const [min, max] = price.split("-");
-    return { min: min ?? "", max: max ?? "" };
-  };
-
-  const { min: initMin, max: initMax } = parsePrice(activePrice);
+  const parsedPrice = parsePrice(activePrice);
 
   const [local, setLocal] = useState<FilterState>({
     categories: activeCategories,
     formats: activeFormats,
     langs: activeLangs,
     authors: activeAuthors,
-    minPrice: initMin,
-    maxPrice: initMax,
+    minPrice: parsedPrice.min,
+    maxPrice: parsedPrice.max,
     inStock: activeInStock ?? false,
   });
+
+  useEffect(() => {
+    const p = parsePrice(activePrice);
+    setLocal({
+      categories: activeCategories,
+      formats: activeFormats,
+      langs: activeLangs,
+      authors: activeAuthors,
+      minPrice: p.min,
+      maxPrice: p.max,
+      inStock: activeInStock ?? false,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePrice, activeInStock,
+    // massivlarni reference emas, qiymat bo'yicha solishtirish uchun join ishlatamiz
+    activeCategories.join(","),
+    activeFormats.join(","),
+    activeLangs.join(","),
+    activeAuthors.join(","),
+  ]);
 
   const set = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
     setLocal((prev) => ({ ...prev, [key]: value }));
 
   const applyFilters = () => {
     const params = new URLSearchParams();
+    if (activeSearch) params.set("search", activeSearch);
     if (local.categories.length)
       params.set("category", local.categories.join(","));
     if (local.formats.length) params.set("format", local.formats.join(","));
     if (local.langs.length) params.set("lang", local.langs.join(","));
     if (local.authors.length) params.set("author", local.authors.join(","));
     if (local.inStock) params.set("inStock", "true");
+    if (activeSort) params.set("sort", activeSort);
 
     const min = parseInt(local.minPrice);
     const max = parseInt(local.maxPrice);
@@ -189,7 +219,11 @@ export default function BooksFilter({
       maxPrice: "",
       inStock: false,
     });
-    router.push(pathname);
+    const params = new URLSearchParams();
+    if (activeSearch) params.set("search", activeSearch);
+    if (activeSort) params.set("sort", activeSort);
+    const query = params.toString();
+    router.push(query ? `${pathname}?${query}` : pathname);
   };
 
   const activeFiltersCount = [
@@ -201,17 +235,13 @@ export default function BooksFilter({
     local.inStock ? 1 : 0,
   ].reduce((a, b) => a + b, 0);
 
-  const setsEqual = <T,>(a: T[], b: T[]) =>
-    a.length === b.length && a.every((v) => b.includes(v));
-
-  const { min: appliedMin, max: appliedMax } = parsePrice(activePrice);
   const isDirty =
     !setsEqual(local.categories, activeCategories) ||
     !setsEqual(local.formats, activeFormats) ||
     !setsEqual(local.langs, activeLangs) ||
     !setsEqual(local.authors, activeAuthors) ||
-    local.minPrice !== appliedMin ||
-    local.maxPrice !== appliedMax ||
+    local.minPrice !== parsedPrice.min ||
+    local.maxPrice !== parsedPrice.max ||
     local.inStock !== (activeInStock ?? false);
 
   return (
