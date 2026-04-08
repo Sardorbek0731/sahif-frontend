@@ -1,10 +1,10 @@
+import { cookies } from "next/headers";
 import Location from "@/components/header/Location";
 import LangSwitcher from "@/components/header/Lang";
 import ThemeToggle from "@/components/header/Theme";
-import { Button } from "@/components/ui/Button";
-import { PHONE_NUMBER, PHONE_DISPLAY, WORKING_HOURS } from "@/constants";
+import AuthButton from "@/components/header/AuthButton";
 
-export default function Header({
+export default async function Header({
   initialTheme,
   initialLocationId,
   initialConfirmed,
@@ -13,6 +13,10 @@ export default function Header({
   initialLocationId: string;
   initialConfirmed: boolean;
 }) {
+  const cookieStore = await cookies();
+  const hasToken = cookieStore.has("auth-token");
+  const userName = cookieStore.get("user-name")?.value || "";
+
   return (
     <header className="my-container row-between py-4">
       <div className="flex items-center">
@@ -20,22 +24,15 @@ export default function Header({
           initialLocationId={initialLocationId}
           initialConfirmed={initialConfirmed}
         />
-
-        <Button
-          as="a"
-          href={`tel:${PHONE_NUMBER}`}
-          leftIcon="callCenter"
-          className="bg-card hover:bg-card-hover h-10 px-4"
-        >
-          {PHONE_DISPLAY} |{"\u00A0"}
-          <span className="text-primary">{WORKING_HOURS}</span>
-        </Button>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         <ThemeToggle initialTheme={initialTheme} />
-
         <LangSwitcher />
+        <AuthButton
+          serverAuthenticated={hasToken}
+          serverUserName={decodeURIComponent(userName)}
+        />
       </div>
     </header>
   );

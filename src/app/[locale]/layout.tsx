@@ -15,7 +15,7 @@ import {
   GOOGLE_VERIFICATION,
   OG_LOCALES,
 } from "@/constants";
-import { getInitialTheme } from "@/lib/theme";
+import { getResolvedTheme } from "@/lib/theme";
 import { generateAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -101,7 +101,7 @@ export default async function LocaleLayout({
   const cookieStore = await cookies();
   const t = await getTranslations({ locale });
 
-  const initialTheme = getInitialTheme(cookieStore);
+  const resolvedTheme = getResolvedTheme(cookieStore);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -124,7 +124,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${asimovian.variable} ${initialTheme === "dark" ? "dark" : ""}`}
+      className={`${inter.variable} ${asimovian.variable} ${resolvedTheme === "dark" ? "dark" : ""}`}
       suppressHydrationWarning
     >
       <head>

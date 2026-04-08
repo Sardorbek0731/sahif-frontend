@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useCartStore, selectTotalUniqueItems } from "@/store/useCartStore";
 import { useWishlistStore, selectTotalItems } from "@/store/useWishlistStore";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { IconName } from "../ui/icons";
-import UserMenu from "@/components/navbar/UserMenu";
-import LoginModal from "@/components/auth/LoginModal";
 
 interface NavLink {
   href: string;
@@ -20,22 +16,12 @@ interface NavLink {
   count?: number;
 }
 
-export default function NavLinks({
-  serverAuthenticated,
-  serverUserName,
-}: {
-  serverAuthenticated: boolean;
-  serverUserName: string;
-}) {
+export default function NavLinks() {
   const t = useTranslations("");
   const isMounted = useIsMounted();
 
   const cartCount = useCartStore(selectTotalUniqueItems);
   const wishlistCount = useWishlistStore(selectTotalItems);
-  const { isAuthenticated: clientAuthenticated } = useAuthStore();
-  const [loginOpen, setLoginOpen] = useState(false);
-
-  const isAuthenticated = isMounted ? clientAuthenticated : serverAuthenticated;
 
   const navLinks: NavLink[] = [
     {
@@ -72,22 +58,6 @@ export default function NavLinks({
           )}
         </Button>
       ))}
-
-      {isAuthenticated ? (
-        <UserMenu serverUserName={serverUserName} />
-      ) : (
-        <>
-          <Button
-            leftIcon="login"
-            onClick={() => setLoginOpen(true)}
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
-            {t("pages.login")}
-          </Button>
-
-          <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
-        </>
-      )}
     </div>
   );
 }

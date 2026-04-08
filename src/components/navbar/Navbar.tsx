@@ -3,14 +3,9 @@ import Categories from "./Categories";
 import Search from "./Search";
 import { Logo } from "@/components/ui/Logo";
 import NavLinks from "./NavLinks";
-import { cookies } from "next/headers";
 import { SITE_NAME } from "@/constants";
 
-export default async function Navbar() {
-  const cookieStore = await cookies();
-  const hasToken = cookieStore.has("auth-token");
-  const userName = cookieStore.get("user-name")?.value || "";
-
+export default function Navbar() {
   return (
     <nav className="my-container row-between mb-4">
       <Link href="/" className="mr-4 flex items-center">
@@ -22,10 +17,7 @@ export default async function Navbar() {
       <Search />
 
       <div className="flex items-center">
-        <NavLinks
-          serverAuthenticated={hasToken}
-          serverUserName={decodeURIComponent(userName)}
-        />
+        <NavLinks />
       </div>
     </nav>
   );
