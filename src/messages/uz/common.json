@@ -3,6 +3,7 @@
 
   "pages": {
     "books": "Kitoblar",
+    "authors": "Mualliflar",
     "cart": "Savatcha",
     "wishlist": "Sevimlilar",
     "profile": "Profil",

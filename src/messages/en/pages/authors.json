@@ -1,5 +1,13 @@
 {
   "metadata": {
+    "title": "Authors",
     "description": "Learn about the author and explore all their books in one place."
-  }
+  },
+  "title": "Authors",
+  "subtitle": "Discover your favorite authors",
+  "booksCount": "{count} books",
+  "bio": "About the author",
+  "noBooks": "No books by this author yet",
+  "backToAuthors": "Back to authors",
+  "allBooks": "All books"
 }

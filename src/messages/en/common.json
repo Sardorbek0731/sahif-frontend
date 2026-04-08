@@ -3,6 +3,7 @@
 
   "pages": {
     "books": "Books",
+    "authors": "Authors",
     "cart": "Cart",
     "wishlist": "Wishlist",
     "profile": "Profile",

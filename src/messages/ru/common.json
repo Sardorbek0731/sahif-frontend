@@ -3,6 +3,7 @@
 
   "pages": {
     "books": "Книги",
+    "authors": "Авторы",
     "cart": "Корзина",
     "wishlist": "Избранное",
     "profile": "Профиль",

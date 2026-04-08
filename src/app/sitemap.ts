@@ -7,7 +7,7 @@ import { authors } from "@/data/authors";
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = routing.locales;
 
-  const staticPaths = ["", "/books"];
+  const staticPaths = ["", "/books", "/authors"];
   const bookPaths = books.flatMap((book) =>
     book.variants.map((v) => `/books/${book.slug}/${v.language}`),
   );
