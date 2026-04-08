@@ -5,7 +5,6 @@ interface SearchState {
   history: string[];
   addToHistory: (query: string) => void;
   removeFromHistory: (query: string) => void;
-  clearHistory: () => void;
 }
 
 export const useSearchStore = create<SearchState>()(
@@ -26,7 +25,6 @@ export const useSearchStore = create<SearchState>()(
         set((state) => ({
           history: state.history.filter((h) => h !== query),
         })),
-      clearHistory: () => set({ history: [] }),
     }),
     { name: "search-history" },
   ),

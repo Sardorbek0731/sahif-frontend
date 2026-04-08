@@ -75,6 +75,7 @@ function OtpStep({
   const [values, setValues] = useState(["", "", "", "", "", ""]);
 
   const handleChange = (index: number, val: string) => {
+    if (isLoading) return;
     if (!/^\d*$/.test(val)) return;
     const next = [...values];
     next[index] = val.slice(-1);
@@ -97,6 +98,7 @@ function OtpStep({
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
+    if (isLoading) return;
     const pasted = e.clipboardData
       .getData("text")
       .replace(/\D/g, "")
@@ -169,6 +171,9 @@ function NameStep({
 
   return (
     <div>
+      <h2 className="text-xl font-bold text-foreground mb-3">{t("title")}</h2>
+      <p className="text-muted-foreground mb-6">{t("description")}</p>
+
       <label className="text-muted-foreground mb-2 block">
         {t("firstNameLabel")}:
       </label>

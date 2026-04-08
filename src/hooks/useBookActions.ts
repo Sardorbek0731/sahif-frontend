@@ -5,9 +5,10 @@ interface Props {
   bookId: number;
   slug: string;
   language: string;
+  stockCount?: number;
 }
 
-export function useBookActions({ bookId, slug, language }: Props) {
+export function useBookActions({ bookId, slug, language, stockCount }: Props) {
   const cartItem = useCartStore((s) =>
     s.items.find((i) => i.bookId === bookId && i.language === language),
   );
@@ -23,8 +24,11 @@ export function useBookActions({ bookId, slug, language }: Props) {
     cartItem,
     isInWishlist,
     addToCart: () => addToCart({ bookId, slug, language }),
-    increment: () =>
-      updateQuantity(bookId, language, (cartItem?.quantity ?? 0) + 1),
+    increment: () => {
+      const current = cartItem?.quantity ?? 0;
+      if (stockCount !== undefined && current >= stockCount) return;
+      updateQuantity(bookId, language, current + 1);
+    },
     decrement: () => {
       if (!cartItem) return;
       if (cartItem.quantity === 1) {

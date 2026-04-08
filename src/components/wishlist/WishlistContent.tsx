@@ -9,7 +9,7 @@ import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { getBookTitle } from "@/lib/book";
-import { getAuthor } from "@/lib/author";
+import { getAuthorName } from "@/lib/author";
 
 import { useIsMounted } from "@/hooks/useIsMounted";
 
@@ -44,24 +44,14 @@ export default function WishlistContent() {
       const bookImage = variant.variantImage ?? book.images.cover;
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
-      const author = getAuthor(book.authorSlug);
-      const authorName = author?.name ?? book.authorSlug;
-      return {
-        book,
-        variant,
-        item,
-        bookTitle,
-        bookImage,
-        finalPrice,
-        authorName,
-      };
+      const authorName = getAuthorName(book.authorSlug);
+      return { book, variant, item, bookTitle, bookImage, finalPrice, authorName };
     })
-    .filter(Boolean);
+    .filter((b): b is NonNullable<typeof b> => b !== null);
 
   return (
     <div className="flex flex-col gap-4">
       {wishlistBooks.map((b) => {
-        if (!b) return null;
         return (
           <div
             key={`${b.item.bookId}-${b.item.language}`}
@@ -90,6 +80,7 @@ export default function WishlistContent() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => {
+                  if (b.variant.stockCount === 0) return;
                   addToCart({
                     bookId: b.item.bookId,
                     slug: b.book.slug,
@@ -97,7 +88,8 @@ export default function WishlistContent() {
                   });
                   removeItem(b.item.bookId, b.item.language);
                 }}
-                className="text-xs px-3 py-2 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity"
+                disabled={b.variant.stockCount === 0}
+                className="text-xs px-3 py-2 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {"Cartga o'tkazish"}
               </button>

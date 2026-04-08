@@ -10,6 +10,7 @@ interface Props {
   bookId: number;
   slug: string;
   language: string;
+  stockCount?: number;
   isOutOfStock?: boolean;
 }
 
@@ -17,6 +18,7 @@ export default function BookActions({
   bookId,
   slug,
   language,
+  stockCount,
   isOutOfStock = false,
 }: Props) {
   const isMounted = useIsMounted();
@@ -29,7 +31,7 @@ export default function BookActions({
     increment,
     decrement,
     toggleWishlist,
-  } = useBookActions({ bookId, slug, language });
+  } = useBookActions({ bookId, slug, language, stockCount });
 
   if (!isMounted) return null;
 

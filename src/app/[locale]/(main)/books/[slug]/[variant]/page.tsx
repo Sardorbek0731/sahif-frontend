@@ -61,8 +61,10 @@ export async function generateMetadata({
       type: "book",
       images: [
         {
-          url: `${SITE_URL}${bookImage}`,
+          url: bookImage,
           alt: title,
+          width: 400,
+          height: 600,
         },
       ],
     },
@@ -70,7 +72,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description: bookDescription,
-      images: [`${SITE_URL}${bookImage}`],
+      images: [bookImage],
     },
   };
 }
@@ -209,6 +211,7 @@ export default async function BookPage({
               bookId={book.id}
               slug={book.slug}
               language={activeVariant.language}
+              stockCount={activeVariant.stockCount}
               isOutOfStock={activeVariant.stockCount === 0}
             />
 

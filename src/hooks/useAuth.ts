@@ -13,13 +13,13 @@ export function useAuth(
   const { users, addOrActivateUser, setToken } = useAuthStore();
 
   const [step, setStep] = useState<Step>(() => {
-    if (ignoreSession) return initialStep;
+    if (typeof window === "undefined" || ignoreSession) return initialStep;
     const saved = sessionStorage.getItem("auth-step") as Step;
     return saved === "name" ? "name" : initialStep;
   });
 
   const [phone, setPhone] = useState(() => {
-    if (ignoreSession) return initialPhone;
+    if (typeof window === "undefined" || ignoreSession) return initialPhone;
     return sessionStorage.getItem("auth-phone") || initialPhone;
   });
 
@@ -54,7 +54,7 @@ export function useAuth(
     if (code !== MOCK_OTP) {
       setError("Kod noto'g'ri. Qaytadan urinib ko'ring.");
       setIsLoading(false);
-      return;
+      return false;
     }
 
     const existingUser = users.find((u) => u.phone === phone);

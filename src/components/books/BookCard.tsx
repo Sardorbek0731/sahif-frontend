@@ -85,6 +85,7 @@ export default function BookCard({
           bookId={book.id}
           slug={book.slug}
           language={variant.language}
+          stockCount={variant.stockCount}
           isOutOfStock={variant.stockCount === 0}
         />
       </div>

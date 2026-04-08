@@ -7,7 +7,7 @@ import { useCartStore, selectTotalItems } from "@/store/useCartStore";
 import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
-import { getAuthor } from "@/lib/author";
+import { getAuthorName } from "@/lib/author";
 
 import { useIsMounted } from "@/hooks/useIsMounted";
 
@@ -42,29 +42,19 @@ export default function CartContent() {
       const bookImage = variant.variantImage ?? book.images.cover;
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
-      const author = getAuthor(book.authorSlug);
-      const authorName = author?.name ?? book.authorSlug;
-      return {
-        book,
-        variant,
-        item,
-        bookTitle,
-        bookImage,
-        finalPrice,
-        authorName,
-      };
+      const authorName = getAuthorName(book.authorSlug);
+      return { book, variant, item, bookTitle, bookImage, finalPrice, authorName };
     })
-    .filter(Boolean);
+    .filter((b): b is NonNullable<typeof b> => b !== null);
 
   const total = cartBooks.reduce(
-    (sum, b) => sum + b!.finalPrice * b!.item.quantity,
+    (sum, b) => sum + b.finalPrice * b.item.quantity,
     0,
   );
 
   return (
     <div className="flex flex-col gap-4">
       {cartBooks.map((b) => {
-        if (!b) return null;
         return (
           <div
             key={`${b.item.bookId}-${b.item.language}`}
@@ -99,14 +89,17 @@ export default function CartContent() {
               </button>
               <span className="text-sm w-4 text-center">{b.item.quantity}</span>
               <button
-                onClick={() =>
-                  updateQuantity(
-                    b.item.bookId,
-                    b.item.language,
-                    b.item.quantity + 1,
-                  )
-                }
-                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm"
+                onClick={() => {
+                  if (b.item.quantity < b.variant.stockCount) {
+                    updateQuantity(
+                      b.item.bookId,
+                      b.item.language,
+                      b.item.quantity + 1,
+                    );
+                  }
+                }}
+                disabled={b.item.quantity >= b.variant.stockCount}
+                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 +
               </button>

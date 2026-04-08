@@ -31,11 +31,20 @@ export default function Modal({
     };
 
     document.addEventListener("keydown", handleKey);
+
+    const prev = document.body.dataset.modalCount;
+    const count = parseInt(prev ?? "0") + 1;
+    document.body.dataset.modalCount = String(count);
     document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
+      const current = parseInt(document.body.dataset.modalCount ?? "1") - 1;
+      document.body.dataset.modalCount = String(current);
+      if (current <= 0) {
+        document.body.style.overflow = "";
+        delete document.body.dataset.modalCount;
+      }
     };
   }, [isOpen, onClose]);
 

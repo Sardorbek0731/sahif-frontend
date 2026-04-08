@@ -62,4 +62,7 @@ export const BOOK_LANGUAGES = [
   { code: "tr", label: "Türkçe" },
   { code: "pt", label: "Português" },
   { code: "es", label: "Español" },
+  { code: "zh", label: "中文" },
+  { code: "ja", label: "日本語" },
+  { code: "he", label: "עברית" },
 ] as const;
