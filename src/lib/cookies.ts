@@ -24,11 +24,6 @@ export function confirmLocationCookie(): void {
   setCookie("location-confirmed", "true");
 }
 
-export function setThemeCookies(theme: string, resolvedTheme: string): void {
-  setCookie("theme", theme);
-  setCookie("theme-resolved", resolvedTheme);
-}
-
 export function setAuthCookies(token: string, name: string) {
   setCookie("auth-token", token);
   setCookie("user-name", encodeURIComponent(name));

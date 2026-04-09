@@ -22,12 +22,14 @@ export default function Modal({
   showCloseButton = true,
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
     };
 
     document.addEventListener("keydown", handleKey);
@@ -46,7 +48,7 @@ export default function Modal({
         delete document.body.dataset.modalCount;
       }
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
