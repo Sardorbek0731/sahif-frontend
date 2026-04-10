@@ -35,7 +35,7 @@ export default function NavLinks() {
       href: "/cart",
       icon: "cart",
       label: t("pages.cart"),
-      mr: true,
+      mr: false,
       count: isMounted ? cartCount : 0,
     },
   ];

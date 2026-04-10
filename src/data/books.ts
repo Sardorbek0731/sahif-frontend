@@ -489,7 +489,7 @@ export const books: readonly Book[] = [
       en: "George Orwell's haunting prophecy about the future. In 1984, Orwell portrays the terrifying nightmare of a totalitarian society — a world of perpetual war, omnipresent surveillance, and relentless propaganda.",
       ru: "Антиутопический роман Джорджа Оруэлла о тоталитарном обществе, где правит Большой Брат. История Уинстона Смита, осмелившегося думать самостоятельно в мире тотальной слежки и лжи.",
     },
-    originalTitle: "Nineteen Eighty-Four",
+    originalTitle: "1984",
     originalLanguage: "en",
     images: { cover: "/books/1984/cover.jpg" },
     variants: [
