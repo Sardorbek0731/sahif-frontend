@@ -16,6 +16,10 @@ export function generatePrivateMetadata({
   return {
     title,
     description,
+    icons: {
+      icon: `${SITE_URL}/logo.png`,
+      apple: `${SITE_URL}/logo.png`,
+    },
     alternates: {
       canonical: `${SITE_URL}/${locale}${path}`,
     },
@@ -33,7 +37,7 @@ export function generatePrivateMetadata({
       type: "website",
       images: [
         {
-          url: "/logo.png",
+          url: `${SITE_URL}/logo.png`,
           width: 512,
           height: 512,
           alt: `${SITE_NAME} logo`,
@@ -45,7 +49,7 @@ export function generatePrivateMetadata({
       card: "summary",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: ["/logo.png"],
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }

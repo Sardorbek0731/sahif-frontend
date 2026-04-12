@@ -57,6 +57,14 @@ export async function generateMetadata({
   return {
     title,
     description,
+    icons: {
+      icon: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+      apple: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+    },
 
     alternates: generateAlternates(locale, path, paramsObj),
 
@@ -78,7 +86,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/logo.png",
+          url: `${SITE_URL}/logo.png`, 
           width: 512,
           height: 512,
           alt: `${SITE_NAME} logo`,
@@ -90,7 +98,7 @@ export async function generateMetadata({
       card: "summary",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: ["/logo.png"],
+      images: [`${SITE_URL}/logo.png`], 
     },
   };
 }

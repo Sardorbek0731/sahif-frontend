@@ -32,6 +32,14 @@ export async function generateMetadata({
   return {
     title: author.name,
     description,
+    icons: {
+      icon: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+      apple: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+    },
     alternates: generateAlternates(locale, `/authors/${slug}`),
     openGraph: {
       title: `${author.name} | ${SITE_NAME}`,
@@ -44,7 +52,7 @@ export async function generateMetadata({
         ? [{ url: author.image, width: 400, height: 400, alt: author.name }]
         : [
             {
-              url: "/logo.png",
+              url: `${SITE_URL}/logo.png`,
               width: 512,
               height: 512,
               alt: `${SITE_NAME} logo`,
@@ -56,7 +64,7 @@ export async function generateMetadata({
       card: "summary",
       title: `${author.name} | ${SITE_NAME}`,
       description,
-      images: author.image ? [author.image] : ["/logo.png"],
+      images: author.image ? [author.image] : [`${SITE_URL}/logo.png`],
     },
   };
 }

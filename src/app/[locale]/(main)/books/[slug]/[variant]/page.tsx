@@ -108,10 +108,14 @@ export default async function BookPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Book",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/${locale}/books/${book.slug}/${activeVariant.language}`,
+    },
     name: bookTitle,
     author: { "@type": "Person", name: authorName },
     description: bookDescription,
-    image: `${SITE_URL}${bookImage}`,
+    image: [`${SITE_URL}${bookImage}`],
     inLanguage: activeVariant.language,
     numberOfPages: activeVariant.pageCount,
     isbn: activeVariant.isbn,
@@ -121,7 +125,7 @@ export default async function BookPage({
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: book.stats.rating,
-      reviewCount: book.stats.reviewCount,
+      reviewCount: book.stats.reviewCount || 1,
       bestRating: 5,
       worstRating: 1,
     },
@@ -129,6 +133,7 @@ export default async function BookPage({
       "@type": "Offer",
       price: finalPrice,
       priceCurrency: activeVariant.price.currency,
+      priceValidUntil: "2026-12-31",
       availability:
         activeVariant.stockCount > 0
           ? "https://schema.org/InStock"

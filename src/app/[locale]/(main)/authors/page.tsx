@@ -20,6 +20,10 @@ export async function generateMetadata({
   return {
     title: t("metadata.title"),
     description: t("metadata.description"),
+    icons: {
+      icon: `${SITE_URL}/logo.png`,
+      apple: `${SITE_URL}/logo.png`,
+    },
     alternates: generateAlternates(locale, "/authors"),
     openGraph: {
       title: `${t("metadata.title")} | ${SITE_NAME}`,
@@ -30,7 +34,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/logo.png",
+          url: `${SITE_URL}/logo.png`,
           width: 512,
           height: 512,
           alt: `${SITE_NAME} logo`,
@@ -42,7 +46,7 @@ export async function generateMetadata({
       card: "summary",
       title: `${t("metadata.title")} | ${SITE_NAME}`,
       description: t("metadata.description"),
-      images: ["/logo.png"],
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }

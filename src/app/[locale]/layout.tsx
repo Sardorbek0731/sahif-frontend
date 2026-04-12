@@ -37,6 +37,14 @@ export async function generateMetadata({
     },
     description,
     applicationName: SITE_NAME,
+    icons: {
+      icon: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+      apple: [
+        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
+      ],
+    },
     alternates: generateAlternates(locale as Locale, ""),
     openGraph: {
       title: SITE_NAME,
@@ -47,7 +55,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/logo.png",
+          url: `${SITE_URL}/logo.png`,
           width: 512,
           height: 512,
           alt: `${SITE_NAME} logo`,
@@ -59,7 +67,7 @@ export async function generateMetadata({
       card: "summary",
       title: SITE_NAME,
       description,
-      images: ["/logo.png"],
+      images: [`${SITE_URL}/logo.png`],
     },
     robots: {
       index: true,
@@ -107,11 +115,7 @@ export default async function LocaleLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    alternateName: [
-      SITE_NAME.charAt(0).toUpperCase() + SITE_NAME.slice(1),
-      "sahif.vercel.app",
-    ],
-    url: `${SITE_URL}/${locale}`,
+    url: SITE_URL,
     inLanguage: locale,
     description: t("description"),
     potentialAction: {
