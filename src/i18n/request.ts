@@ -1,5 +1,5 @@
 import { getRequestConfig } from "next-intl/server";
-import { routing, type Locale } from "./routing";
+import { type Locale, routing } from "./routing";
 
 type JsonModule = { default: Record<string, unknown> };
 

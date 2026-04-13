@@ -27,11 +27,9 @@ export default function Footer() {
         <div className="border-t border-border pt-12 pb-8">
           <div className="grid grid-cols-4 gap-12 mb-12">
             <div>
-              <Link href="/" className="flex items-center gap-2.5 mb-5">
-                <Logo className="w-9 h-9" />
-                <span className="font-asimovian text-2xl tracking-wide">
-                  {SITE_NAME}
-                </span>
+              <Link href="/" className="mr-4 flex items-center">
+                <Logo className="mr-2 w-10 h-10" />
+                <span className="font-asimovian text-2xl">{SITE_NAME}</span>
               </Link>
               <p className="text-sm text-muted-foreground leading-6">
                 O&apos;zbekistondagi eng sifatli kitoblar onlayn do&apos;koni.

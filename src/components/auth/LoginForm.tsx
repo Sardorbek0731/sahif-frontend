@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
 import Spinner from "../ui/Spinner";
-import { useAuth, type Step } from "@/hooks/useAuth";
+import { type Step, useAuth } from "@/hooks/useAuth";
 
 // ─── Phone Step ──────────────────────────────────────────────────────────────
 function PhoneStep({

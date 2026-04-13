@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 
-import { SORT_OPTIONS, type SortOption } from "@/constants/sort";
+import { type SortOption, SORT_OPTIONS } from "@/constants/sort";
 
 export type { SortOption };
 

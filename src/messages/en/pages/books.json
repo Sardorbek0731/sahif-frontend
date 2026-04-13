@@ -9,5 +9,18 @@
     "rating": "Top rated",
     "priceAsc": "Price: low to high",
     "priceDesc": "Price: high to low"
+  },
+  "filter": {
+    "title": "Filter",
+    "reset": "Clear",
+    "apply": "Apply",
+    "inStock": "In stock only",
+    "category": "Category",
+    "price": "Price (UZS)",
+    "priceFrom": "From",
+    "priceTo": "To",
+    "format": "Cover type",
+    "language": "Language",
+    "author": "Author"
   }
 }

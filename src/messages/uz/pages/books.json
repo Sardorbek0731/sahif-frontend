@@ -9,5 +9,18 @@
     "rating": "Eng baholanganlari",
     "priceAsc": "Arzondan qimmati",
     "priceDesc": "Qimmatdan arzoni"
+  },
+  "filter": {
+    "title": "Filtr",
+    "reset": "Tozalash",
+    "apply": "Qo'llash",
+    "inStock": "Faqat mavjudlar",
+    "category": "Kategoriya",
+    "price": "Narx (so'm)",
+    "priceFrom": "Dan",
+    "priceTo": "Gacha",
+    "format": "Muqova turi",
+    "language": "Kitob tili",
+    "author": "Muallif"
   }
 }

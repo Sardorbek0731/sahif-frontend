@@ -11,7 +11,7 @@ import { books } from "@/data/books";
 import { authors } from "@/data/authors";
 import { isValidCategory } from "@/data/categories";
 
-import { SORT_OPTIONS, type SortOption } from "@/constants/sort";
+import { type SortOption, SORT_OPTIONS } from "@/constants/sort";
 import BooksFilter from "@/components/books/BooksFilter";
 import BookCard from "@/components/books/BookCard";
 import BooksSortSelect from "@/components/books/BooksSortSelect";

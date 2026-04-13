@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icons";
+import { Button } from "@/components/ui/Button";
 import { BOOK_LANGUAGES } from "@/constants";
-import { categoryGroups, type CategorySlug } from "@/data/categories";
-import { authors } from "@/data/authors";
 import { type BookFormat, BOOK_FORMATS } from "@/types/book";
+import { type CategorySlug, categoryGroups } from "@/data/categories";
+import { authors } from "@/data/authors";
 
 interface Props {
   activeCategories?: CategorySlug[];
@@ -43,13 +44,13 @@ function CheckboxItem({
   return (
     <button
       onClick={onChange}
-      className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm transition-colors hover:bg-foreground/5 group"
+      className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm transition-all hover:bg-card-hover group min-w-0"
     >
       <span
         className={`w-4 h-4 rounded-[4px] border-[1.5px] flex items-center justify-center shrink-0 transition-all ${
           checked
             ? "bg-primary border-primary"
-            : "border-foreground/25 group-hover:border-foreground/40"
+            : "border-border group-hover:border-muted-foreground"
         }`}
       >
         {checked && (
@@ -65,9 +66,7 @@ function CheckboxItem({
         )}
       </span>
       <span
-        className={
-          checked ? "text-foreground font-medium" : "text-foreground/60"
-        }
+        className={`truncate ${checked ? "text-foreground" : "text-muted-foreground"}`}
       >
         {label}
       </span>
@@ -88,26 +87,26 @@ function Accordion({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-b border-foreground/8 last:border-0">
+    <div className="border-b border-border last:border-0">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between py-2.5 px-4 text-sm font-medium hover:bg-foreground/3 transition-colors"
+        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium hover:bg-card-hover transition-all"
       >
         <span className="flex items-center gap-2">
           {title}
           {badge ? (
-            <span className="text-[10px] bg-primary text-white w-4 h-4 rounded-full flex items-center justify-center font-bold">
+            <span className="text-[10px] bg-primary text-white w-5 h-5 rounded-full row-center font-bold">
               {badge}
             </span>
           ) : null}
         </span>
-        <span
-          className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        >
-          <Icon name="chevronDown" size={13} className="text-foreground/35" />
-        </span>
+        <Icon
+          name="chevronDown"
+          size={14}
+          className={`text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
       </button>
-      {open && <div className="pb-2 px-2">{children}</div>}
+      {open && <div className="py-2 px-2">{children}</div>}
     </div>
   );
 }
@@ -127,13 +126,6 @@ function setsEqual<T>(a: T[], b: T[]) {
   return a.length === b.length && a.every((v) => b.includes(v));
 }
 
-const PRICE_RANGES = [
-  { label: "0 – 50k", min: "0", max: "50000" },
-  { label: "50k – 100k", min: "50000", max: "100000" },
-  { label: "100k – 200k", min: "100000", max: "200000" },
-  { label: "200k+", min: "200000", max: "" },
-];
-
 export default function BooksFilter({
   activeCategories = [],
   activeFormats = [],
@@ -148,8 +140,14 @@ export default function BooksFilter({
   const pathname = usePathname();
   const t = useTranslations("categories");
   const tBook = useTranslations("book");
+  const tFilter = useTranslations("books.filter");
 
   const parsedPrice = parsePrice(activePrice);
+
+  const categoriesKey = activeCategories.join(",");
+  const formatsKey = activeFormats.join(",");
+  const langsKey = activeLangs.join(",");
+  const authorsKey = activeAuthors.join(",");
 
   const [local, setLocal] = useState<FilterState>({
     categories: activeCategories,
@@ -172,45 +170,47 @@ export default function BooksFilter({
       maxPrice: p.max,
       inStock: activeInStock ?? false,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activePrice, activeInStock,
-    // massivlarni reference emas, qiymat bo'yicha solishtirish uchun join ishlatamiz
-    activeCategories.join(","),
-    activeFormats.join(","),
-    activeLangs.join(","),
-    activeAuthors.join(","),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    activePrice,
+    activeInStock,
+    categoriesKey,
+    formatsKey,
+    langsKey,
+    authorsKey,
   ]);
 
   const set = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
     setLocal((prev) => ({ ...prev, [key]: value }));
 
-  const applyFilters = () => {
+  const buildParams = (state: FilterState) => {
     const params = new URLSearchParams();
     if (activeSearch) params.set("search", activeSearch);
-    if (local.categories.length)
-      params.set("category", local.categories.join(","));
-    if (local.formats.length) params.set("format", local.formats.join(","));
-    if (local.langs.length) params.set("lang", local.langs.join(","));
-    if (local.authors.length) params.set("author", local.authors.join(","));
-    if (local.inStock) params.set("inStock", "true");
     if (activeSort) params.set("sort", activeSort);
-
-    const min = parseInt(local.minPrice);
-    const max = parseInt(local.maxPrice);
-    if (local.minPrice || local.maxPrice) {
-      if (!local.maxPrice) {
-        params.set("price", `${isNaN(min) ? 0 : min}+`);
-      } else {
-        params.set("price", `${isNaN(min) ? 0 : min}-${isNaN(max) ? 0 : max}`);
-      }
+    if (state.categories.length)
+      params.set("category", state.categories.join(","));
+    if (state.formats.length) params.set("format", state.formats.join(","));
+    if (state.langs.length) params.set("lang", state.langs.join(","));
+    if (state.authors.length) params.set("author", state.authors.join(","));
+    if (state.inStock) params.set("inStock", "true");
+    if (state.minPrice || state.maxPrice) {
+      params.set(
+        "price",
+        state.maxPrice
+          ? `${state.minPrice || "0"}-${state.maxPrice}`
+          : `${state.minPrice || "0"}+`,
+      );
     }
+    return params.toString();
+  };
 
-    const query = params.toString();
+  const applyFilters = () => {
+    const query = buildParams(local);
     router.push(query ? `${pathname}?${query}` : pathname);
   };
 
   const resetAll = () => {
-    setLocal({
+    const empty: FilterState = {
       categories: [],
       formats: [],
       langs: [],
@@ -218,22 +218,19 @@ export default function BooksFilter({
       minPrice: "",
       maxPrice: "",
       inStock: false,
-    });
-    const params = new URLSearchParams();
-    if (activeSearch) params.set("search", activeSearch);
-    if (activeSort) params.set("sort", activeSort);
-    const query = params.toString();
+    };
+    setLocal(empty);
+    const query = buildParams(empty);
     router.push(query ? `${pathname}?${query}` : pathname);
   };
 
-  const activeFiltersCount = [
-    local.categories.length,
-    local.formats.length,
-    local.langs.length,
-    local.authors.length,
-    local.minPrice || local.maxPrice ? 1 : 0,
-    local.inStock ? 1 : 0,
-  ].reduce((a, b) => a + b, 0);
+  const activeFiltersCount =
+    local.categories.length +
+    local.formats.length +
+    local.langs.length +
+    local.authors.length +
+    (local.minPrice || local.maxPrice ? 1 : 0) +
+    (local.inStock ? 1 : 0);
 
   const isDirty =
     !setsEqual(local.categories, activeCategories) ||
@@ -246,125 +243,110 @@ export default function BooksFilter({
 
   return (
     <aside className="w-64 shrink-0 mr-4">
-      <div className="bg-card rounded-xl border border-foreground/10 overflow-hidden sticky top-4">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/10">
-          <span className="flex items-center gap-2 text-sm font-semibold">
-            Filtr
+      <div className="bg-card rounded-lg border border-border overflow-hidden sticky top-4">
+        {/* Header */}
+        <div className="row-between px-4 py-3 border-b border-border">
+          <span className="flex items-center gap-2 font-semibold">
+            <Icon name="filter" size={16} />
+            {tFilter("title")}
             {activeFiltersCount > 0 && (
-              <span className="text-[10px] bg-primary text-white w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              <span className="text-[10px] bg-primary text-white w-5 h-5 rounded-full row-center">
                 {activeFiltersCount}
               </span>
             )}
           </span>
           {activeFiltersCount > 0 && (
-            <button
+            <Button
               onClick={resetAll}
-              className="text-xs text-rose-500 hover:text-rose-400 transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground bg-card-hover px-3 py-1 border border-border"
             >
-              Tozalash
-            </button>
+              {tFilter("reset")}
+            </Button>
           )}
         </div>
 
+        {/* Filter sections */}
         <div className="overflow-y-auto max-h-[calc(100vh-180px)] custom-scrollbar">
-          <div className="px-2 py-2.5 border-b border-foreground/8">
+          {/* In stock */}
+          <div className="p-2 border-b border-border">
             <CheckboxItem
               checked={local.inStock}
               onChange={() => set("inStock", !local.inStock)}
-              label="Faqat mavjudlar"
+              label={tFilter("inStock")}
             />
           </div>
 
+          {/* Category */}
           <Accordion
-            title="Kategoriya"
+            title={tFilter("category")}
             defaultOpen={!!local.categories.length}
             badge={local.categories.length || undefined}
           >
-            {categoryGroups.map((group) => (
-              <div key={group.name} className="mb-1">
-                <p className="text-[10px] font-semibold text-foreground/30 px-2 pt-2 pb-1 uppercase tracking-widest">
-                  {t(`groups.${group.name}`)}
-                </p>
-                {group.categories.map((cat) => (
-                  <CheckboxItem
-                    key={cat.slug}
-                    checked={local.categories.includes(cat.slug)}
-                    onChange={() =>
-                      set("categories", toggleArr(local.categories, cat.slug))
-                    }
-                    label={t(`items.${cat.slug}.name`)}
-                  />
-                ))}
-              </div>
-            ))}
+            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+              {categoryGroups.map((group) => (
+                <div key={group.name} className="mb-1">
+                  <span className="text-xs font-semibold text-muted-foreground px-2 pt-2 pb-1 block">
+                    {t(`groups.${group.name}`)}
+                  </span>
+                  {group.categories.map((cat) => (
+                    <CheckboxItem
+                      key={cat.slug}
+                      checked={local.categories.includes(cat.slug)}
+                      onChange={() =>
+                        set("categories", toggleArr(local.categories, cat.slug))
+                      }
+                      label={t(`items.${cat.slug}.name`)}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </Accordion>
 
+          {/* Price */}
           <Accordion
-            title="Narx (so'm)"
+            title={tFilter("price")}
             defaultOpen={!!(local.minPrice || local.maxPrice)}
             badge={local.minPrice || local.maxPrice ? 1 : undefined}
           >
-            <div className="flex gap-2 px-2 mb-3">
+            <div className="flex gap-2">
               <div className="flex-1">
-                <label className="text-[10px] font-semibold text-foreground/35 uppercase tracking-wider mb-1 block">
-                  Dan
+                <label className="text-xs text-muted-foreground mb-1 block">
+                  {tFilter("priceFrom")}
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="0"
                   value={local.minPrice}
-                  onChange={(e) => set("minPrice", e.target.value)}
-                  className="w-full bg-background border border-foreground/15 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:border-primary/60 transition-colors"
+                  onChange={(e) =>
+                    set("minPrice", e.target.value.replace(/\D/g, ""))
+                  }
+                  className="w-full bg-card border border-border rounded-lg px-2.5 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-all"
                 />
               </div>
               <div className="flex-1">
-                <label className="text-[10px] font-semibold text-foreground/35 uppercase tracking-wider mb-1 block">
-                  Gacha
+                <label className="text-xs text-muted-foreground mb-1 block">
+                  {tFilter("priceTo")}
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="∞"
                   value={local.maxPrice}
-                  onChange={(e) => set("maxPrice", e.target.value)}
-                  className="w-full bg-background border border-foreground/15 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:border-primary/60 transition-colors"
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, "");
+                    if (val !== "0") set("maxPrice", val);
+                  }}
+                  className="w-full bg-card border border-border rounded-lg px-2.5 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-all"
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5 px-2">
-              {PRICE_RANGES.map((range) => {
-                const isActive =
-                  local.minPrice === range.min && local.maxPrice === range.max;
-                return (
-                  <button
-                    key={range.label}
-                    onClick={() =>
-                      isActive
-                        ? setLocal((p) => ({
-                            ...p,
-                            minPrice: "",
-                            maxPrice: "",
-                          }))
-                        : setLocal((p) => ({
-                            ...p,
-                            minPrice: range.min,
-                            maxPrice: range.max,
-                          }))
-                    }
-                    className={`text-xs py-1.5 rounded-lg border transition-all ${
-                      isActive
-                        ? "bg-primary/10 border-primary/40 text-primary font-semibold"
-                        : "border-foreground/12 text-foreground/50 hover:border-foreground/25 hover:text-foreground"
-                    }`}
-                  >
-                    {range.label}
-                  </button>
-                );
-              })}
             </div>
           </Accordion>
 
+          {/* Format */}
           <Accordion
-            title="Muqova turi"
+            title={tFilter("format")}
             defaultOpen={!!local.formats.length}
             badge={local.formats.length || undefined}
           >
@@ -378,51 +360,60 @@ export default function BooksFilter({
             ))}
           </Accordion>
 
+          {/* Language */}
           <Accordion
-            title="Kitob tili"
+            title={tFilter("language")}
             defaultOpen={!!local.langs.length}
             badge={local.langs.length || undefined}
           >
-            {BOOK_LANGUAGES.map((lang) => (
-              <CheckboxItem
-                key={lang.code}
-                checked={local.langs.includes(lang.code)}
-                onChange={() => set("langs", toggleArr(local.langs, lang.code))}
-                label={lang.label}
-              />
-            ))}
+            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+              {BOOK_LANGUAGES.map((lang) => (
+                <CheckboxItem
+                  key={lang.code}
+                  checked={local.langs.includes(lang.code)}
+                  onChange={() =>
+                    set("langs", toggleArr(local.langs, lang.code))
+                  }
+                  label={lang.label}
+                />
+              ))}
+            </div>
           </Accordion>
 
+          {/* Author */}
           <Accordion
-            title="Muallif"
+            title={tFilter("author")}
             defaultOpen={!!local.authors.length}
             badge={local.authors.length || undefined}
           >
-            {authors.map((author) => (
-              <CheckboxItem
-                key={author.slug}
-                checked={local.authors.includes(author.slug)}
-                onChange={() =>
-                  set("authors", toggleArr(local.authors, author.slug))
-                }
-                label={author.name}
-              />
-            ))}
+            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+              {authors.map((author) => (
+                <CheckboxItem
+                  key={author.slug}
+                  checked={local.authors.includes(author.slug)}
+                  onChange={() =>
+                    set("authors", toggleArr(local.authors, author.slug))
+                  }
+                  label={author.name}
+                />
+              ))}
+            </div>
           </Accordion>
         </div>
 
-        <div className="px-3 py-3 border-t border-foreground/10">
-          <button
+        {/* Apply button */}
+        <div className="p-3 border-t border-border">
+          <Button
             onClick={applyFilters}
             disabled={!isDirty}
-            className={`w-full py-2 rounded-lg text-sm font-semibold transition-all ${
+            className={`w-full justify-center py-2 transition-all border border-border disabled:cursor-not-allowed ${
               isDirty
-                ? "bg-primary text-white hover:bg-primary/90 active:scale-[0.98]"
-                : "bg-foreground/5 text-foreground/25 cursor-not-allowed"
+                ? "bg-primary text-white hover:bg-primary/90 border-primary active:scale-[0.98]"
+                : "bg-card-hover text-muted-foreground"
             }`}
           >
-            {"Qo'llash"}
-          </button>
+            {tFilter("apply")}
+          </Button>
         </div>
       </div>
     </aside>
