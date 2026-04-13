@@ -44,7 +44,7 @@ function CheckboxItem({
   return (
     <button
       onClick={onChange}
-      className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm transition-all hover:bg-card-hover group min-w-0"
+      className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm transition-all hover:bg-card-hover group min-w-0 cursor-pointer"
     >
       <span
         className={`w-4 h-4 rounded-[4px] border-[1.5px] flex items-center justify-center shrink-0 transition-all ${
@@ -90,7 +90,7 @@ function Accordion({
     <div className="border-b border-border last:border-0">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium hover:bg-card-hover transition-all"
+        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium hover:bg-card-hover transition-all cursor-pointer"
       >
         <span className="flex items-center gap-2">
           {title}
