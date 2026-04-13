@@ -6,7 +6,7 @@
     "label": "Saralash",
     "popular": "Mashhurlari",
     "new": "Yangilari",
-    "rating": "Eng baholanganlari",
+    "rating": "Yuqori reytingli",
     "priceAsc": "Arzondan qimmati",
     "priceDesc": "Qimmatdan arzoni"
   },
@@ -21,6 +21,7 @@
     "priceTo": "Gacha",
     "format": "Muqova turi",
     "language": "Kitob tili",
-    "author": "Muallif"
+    "author": "Muallif",
+    "count": "{count} ta"
   }
 }

@@ -309,7 +309,7 @@ export default function BooksFilter({
             defaultOpen={!!(local.minPrice || local.maxPrice)}
             badge={local.minPrice || local.maxPrice ? 1 : undefined}
           >
-            <div className="flex gap-2">
+            <div className="flex gap-2 px-2">
               <div className="flex-1">
                 <label className="text-xs text-muted-foreground mb-1 block">
                   {tFilter("priceFrom")}

@@ -21,6 +21,7 @@
     "priceTo": "До",
     "format": "Тип обложки",
     "language": "Язык книги",
-    "author": "Автор"
+    "author": "Автор",
+    "count": "{count} шт."
   }
 }

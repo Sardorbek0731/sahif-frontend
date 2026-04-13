@@ -346,7 +346,7 @@ export default async function Books({
           <h1 className="text-xl font-bold">
             {pageTitle}
             <span className="text-base font-normal text-muted-foreground ml-2">
-              ({filtered.length} ta)
+              ({t("books.filter.count", { count: filtered.length })})
             </span>
           </h1>
           <BooksSortSelect

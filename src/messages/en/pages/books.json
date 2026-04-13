@@ -21,6 +21,7 @@
     "priceTo": "To",
     "format": "Cover type",
     "language": "Language",
-    "author": "Author"
+    "author": "Author",
+    "count": "{count} items"
   }
 }
