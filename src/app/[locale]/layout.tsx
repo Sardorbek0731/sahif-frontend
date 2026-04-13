@@ -16,7 +16,7 @@ import {
   OG_LOCALES,
 } from "@/constants";
 import { getResolvedTheme } from "@/lib/theme";
-import { generateAlternates } from "@/lib/seo";
+import { SITE_ICONS, LOGO_OG_IMAGE } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -37,37 +37,21 @@ export async function generateMetadata({
     },
     description,
     applicationName: SITE_NAME,
-    icons: {
-      icon: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-      apple: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-    },
-    alternates: generateAlternates(locale as Locale, ""),
+    icons: SITE_ICONS,
     openGraph: {
       title: SITE_NAME,
       description,
-      url: `${SITE_URL}/${locale}`,
+      url: SITE_URL,
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale as Locale],
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: `${SITE_NAME} logo`,
-          type: "image/png",
-        },
-      ],
+      images: [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: SITE_NAME,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: [LOGO_OG_IMAGE.url],
     },
     robots: {
       index: true,
@@ -107,7 +91,6 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const cookieStore = await cookies();
-  const t = await getTranslations({ locale });
 
   const resolvedTheme = getResolvedTheme(cookieStore);
 
@@ -116,13 +99,6 @@ export default async function LocaleLayout({
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    inLanguage: locale,
-    description: t("description"),
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/${locale}/books?search={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

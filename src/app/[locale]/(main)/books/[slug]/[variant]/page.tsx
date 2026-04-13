@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { type Locale, routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, getPriceValidUntil } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
 import { formatISBN } from "@/lib/formatters";
 import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
@@ -122,18 +122,20 @@ export default async function BookPage({
     bookFormat: formatMap[activeVariant.format],
     publisher: { "@type": "Organization", name: activeVariant.publisher },
     datePublished: String(activeVariant.publishedYear),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: book.stats.rating,
-      reviewCount: book.stats.reviewCount || 1,
-      bestRating: 5,
-      worstRating: 1,
-    },
+    ...(book.stats.reviewCount > 0 && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: book.stats.rating,
+        reviewCount: book.stats.reviewCount,
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }),
     offers: {
       "@type": "Offer",
       price: finalPrice,
       priceCurrency: activeVariant.price.currency,
-      priceValidUntil: "2026-12-31",
+      priceValidUntil: getPriceValidUntil(),
       availability:
         activeVariant.stockCount > 0
           ? "https://schema.org/InStock"

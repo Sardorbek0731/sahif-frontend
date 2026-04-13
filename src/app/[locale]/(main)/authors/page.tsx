@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
+import { OG_LOCALES, SITE_NAME, SITE_URL } from "@/constants";
 import { type Locale } from "@/i18n/routing";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { authors } from "@/data/authors";
 import { books } from "@/data/books";
@@ -20,10 +20,6 @@ export async function generateMetadata({
   return {
     title: t("metadata.title"),
     description: t("metadata.description"),
-    icons: {
-      icon: `${SITE_URL}/logo.png`,
-      apple: `${SITE_URL}/logo.png`,
-    },
     alternates: generateAlternates(locale, "/authors"),
     openGraph: {
       title: `${t("metadata.title")} | ${SITE_NAME}`,
@@ -32,21 +28,13 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: `${SITE_NAME} logo`,
-          type: "image/png",
-        },
-      ],
+      images: [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: `${t("metadata.title")} | ${SITE_NAME}`,
       description: t("metadata.description"),
-      images: [`${SITE_URL}/logo.png`],
+      images: [LOGO_OG_IMAGE.url],
     },
   };
 }

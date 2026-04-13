@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const allPaths = [...staticPaths, ...bookPaths, ...authorPaths];
 
+  const staticLastModified = new Date("2025-01-01");
+
   return allPaths.flatMap((path) => {
     return locales.map((locale) => {
       const url = `${SITE_URL}/${locale}${path}`;
@@ -24,14 +26,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
       );
 
       let priority = 0.7;
-      if (path === "") priority = 1.0;
-      else if (path === "/books") priority = 0.9;
-      else if (path.startsWith("/authors")) priority = 0.8;
+      let changeFrequency: "daily" | "weekly" | "monthly" = "monthly";
+      let lastModified: Date = staticLastModified;
+
+      if (path === "") {
+        priority = 1.0;
+        changeFrequency = "daily";
+      } else if (path === "/books") {
+        priority = 0.9;
+        changeFrequency = "weekly";
+      } else if (path === "/authors") {
+        priority = 0.8;
+        changeFrequency = "monthly";
+      } else if (path.startsWith("/books/")) {
+        priority = 0.8;
+        changeFrequency = "monthly";
+        const slug = path.split("/")[2];
+        const book = books.find((b) => b.slug === slug);
+        if (book) lastModified = new Date(book.createdAt);
+      } else if (path.startsWith("/authors/")) {
+        priority = 0.7;
+        changeFrequency = "monthly";
+      }
 
       return {
         url,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
+        lastModified,
+        changeFrequency,
         priority,
         alternates: {
           languages: {

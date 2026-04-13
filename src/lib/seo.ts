@@ -1,5 +1,6 @@
+import { type Metadata } from "next";
 import { type Locale, routing } from "@/i18n/routing";
-import { SITE_URL, HREFLANG_LOCALES } from "@/constants";
+import { SITE_URL, SITE_NAME, HREFLANG_LOCALES } from "@/constants";
 
 export function generateAlternates(
   locale: Locale,
@@ -45,4 +46,23 @@ export function generateAlternates(
       "x-default": xDefault.toString(),
     },
   };
+}
+
+export const LOGO_OG_IMAGE = {
+  url: `${SITE_URL}/logo.png`,
+  width: 512,
+  height: 512,
+  alt: `${SITE_NAME} logo`,
+  type: "image/png",
+};
+
+export const SITE_ICONS: Metadata["icons"] = {
+  icon: [{ url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" }],
+  apple: [{ url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" }],
+};
+
+export function getPriceValidUntil(): string {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().slice(0, 10);
 }

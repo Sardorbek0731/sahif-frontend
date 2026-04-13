@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
 import { OG_LOCALES, SITE_URL, SITE_NAME } from "@/constants";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
 
 import Hero from "@/components/home/Hero";
 import HomeBooks from "@/components/home/HomeBooks";
@@ -25,14 +25,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    icons: {
-      icon: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-      apple: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-    },
     alternates: generateAlternates(locale, ""),
     openGraph: {
       title: `${title} | ${SITE_NAME}`,
@@ -41,21 +33,13 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: `${SITE_NAME} logo`,
-          type: "image/png",
-        },
-      ],
+      images: [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: [LOGO_OG_IMAGE.url],
     },
   };
 }

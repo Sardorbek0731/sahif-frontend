@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_URL, SITE_NAME, OG_LOCALES } from "@/constants";
 import { type Locale } from "@/i18n/routing";
+import { LOGO_OG_IMAGE } from "@/lib/seo";
 
 export function generatePrivateMetadata({
   title,
@@ -16,17 +17,13 @@ export function generatePrivateMetadata({
   return {
     title,
     description,
-    icons: {
-      icon: `${SITE_URL}/logo.png`,
-      apple: `${SITE_URL}/logo.png`,
-    },
     alternates: {
       canonical: `${SITE_URL}/${locale}${path}`,
     },
     robots: {
       index: false,
-      follow: false,
-      googleBot: { index: false, follow: false },
+      follow: true,
+      googleBot: { index: false, follow: true },
     },
     openGraph: {
       title: `${title} | ${SITE_NAME}`,
@@ -35,21 +32,13 @@ export function generatePrivateMetadata({
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: `${SITE_NAME} logo`,
-          type: "image/png",
-        },
-      ],
+      images: [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: [LOGO_OG_IMAGE.url],
     },
   };
 }

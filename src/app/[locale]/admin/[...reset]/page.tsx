@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { OG_LOCALES, SITE_NAME, SITE_URL } from "@/constants";
+import { OG_LOCALES, SITE_NAME } from "@/constants";
 import { type Locale } from "@/i18n/routing";
+import { LOGO_OG_IMAGE } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -20,10 +21,6 @@ export async function generateMetadata({
   return {
     title: "404",
     description,
-    icons: {
-      icon: `${SITE_URL}/logo.png`,
-      apple: `${SITE_URL}/logo.png`,
-    },
     robots: {
       index: false,
       follow: true,
@@ -38,21 +35,13 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/logo.png`,
-          width: 512,
-          height: 512,
-          alt: `${SITE_NAME} logo`,
-          type: "image/png",
-        },
-      ],
+      images: [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: `404 | ${SITE_NAME}`,
       description,
-      images: [`${SITE_URL}/logo.png`],
+      images: [LOGO_OG_IMAGE.url],
     },
   };
 }

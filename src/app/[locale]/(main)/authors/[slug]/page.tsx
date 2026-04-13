@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { type Locale, routing } from "@/i18n/routing";
-import { generateAlternates } from "@/lib/seo";
+import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { authors } from "@/data/authors";
 import { getBookTitle } from "@/lib/book";
@@ -32,14 +32,6 @@ export async function generateMetadata({
   return {
     title: author.name,
     description,
-    icons: {
-      icon: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-      apple: [
-        { url: `${SITE_URL}/logo.png`, sizes: "512x512", type: "image/png" },
-      ],
-    },
     alternates: generateAlternates(locale, `/authors/${slug}`),
     openGraph: {
       title: `${author.name} | ${SITE_NAME}`,
@@ -50,21 +42,13 @@ export async function generateMetadata({
       type: "profile",
       images: author.image
         ? [{ url: author.image, width: 400, height: 400, alt: author.name }]
-        : [
-            {
-              url: `${SITE_URL}/logo.png`,
-              width: 512,
-              height: 512,
-              alt: `${SITE_NAME} logo`,
-              type: "image/png",
-            },
-          ],
+        : [LOGO_OG_IMAGE],
     },
     twitter: {
       card: "summary",
       title: `${author.name} | ${SITE_NAME}`,
       description,
-      images: author.image ? [author.image] : [`${SITE_URL}/logo.png`],
+      images: author.image ? [author.image] : [LOGO_OG_IMAGE.url],
     },
   };
 }
