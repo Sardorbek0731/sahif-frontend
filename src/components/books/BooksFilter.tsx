@@ -266,7 +266,7 @@ export default function BooksFilter({
         </div>
 
         {/* Filter sections */}
-        <div className="overflow-y-auto max-h-[calc(100vh-180px)] custom-scrollbar">
+        <div>
           {/* In stock */}
           <div className="p-2 border-b border-border">
             <CheckboxItem
@@ -406,9 +406,9 @@ export default function BooksFilter({
           <Button
             onClick={applyFilters}
             disabled={!isDirty}
-            className={`w-full justify-center py-2 transition-all border border-border disabled:cursor-not-allowed ${
+            className={`w-full justify-center py-2 transition-all disabled:cursor-not-allowed ${
               isDirty
-                ? "bg-primary text-white hover:bg-primary/90 border-primary active:scale-[0.98]"
+                ? "bg-primary text-white hover:bg-primary/90 active:scale-[0.98]"
                 : "bg-card-hover text-muted-foreground"
             }`}
           >

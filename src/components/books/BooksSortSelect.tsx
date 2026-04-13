@@ -86,7 +86,7 @@ export default function BooksSortSelect({
             role="listbox"
             className="absolute right-0 mt-4 pt-2 pb-1 min-w-max bg-card border border-border rounded-lg shadow-2xl z-20"
           >
-            <div className="absolute -top-2 right-6 w-4 h-4 bg-card rotate-45 z-[-1] border-t border-l border-border" />
+            <div className="absolute -top-2 right-6 w-4 h-4 bg-card rotate-45 -z-1 border-t border-l border-border" />
             {SORT_OPTIONS.map((opt) => (
               <Button
                 role="option"
