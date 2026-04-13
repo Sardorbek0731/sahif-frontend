@@ -47,8 +47,8 @@ export default function UserMenu({
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("pointerdown", handleClick);
+    return () => document.removeEventListener("pointerdown", handleClick);
   }, []);
 
   const handleLogout = () => {
@@ -73,20 +73,20 @@ export default function UserMenu({
       </Button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-48 rounded-lg bg-card border border-foreground/10 shadow-lg overflow-hidden z-50">
+        <div className="absolute right-0 top-full mt-2 w-48 rounded-lg bg-card border border-border shadow-lg overflow-hidden z-50">
           {menuItems.map(({ href, icon, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-sm text-foreground/70 hover:text-foreground hover:bg-card-hover transition-colors"
+              className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
             >
               <Icon name={icon} size={16} />
               {label}
             </Link>
           ))}
 
-          <div className="border-t border-foreground/10" />
+          <div className="border-t border-border" />
 
           <button
             onClick={handleLogout}

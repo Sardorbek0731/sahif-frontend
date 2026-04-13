@@ -45,7 +45,15 @@ export default function WishlistContent() {
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
       const authorName = getAuthorName(book.authorSlug);
-      return { book, variant, item, bookTitle, bookImage, finalPrice, authorName };
+      return {
+        book,
+        variant,
+        item,
+        bookTitle,
+        bookImage,
+        finalPrice,
+        authorName,
+      };
     })
     .filter((b): b is NonNullable<typeof b> => b !== null);
 
@@ -72,7 +80,7 @@ export default function WishlistContent() {
                   {b.bookTitle}
                 </p>
               </Link>
-              <p className="text-xs text-foreground/50">{b.authorName}</p>
+              <p className="text-xs text-muted-foreground">{b.authorName}</p>
               <p className="text-sm font-medium mt-1">
                 {b.finalPrice.toLocaleString()} UZS
               </p>
@@ -95,7 +103,7 @@ export default function WishlistContent() {
               </button>
               <button
                 onClick={() => removeItem(b.item.bookId, b.item.language)}
-                className="text-foreground/30 hover:text-foreground/60 text-lg"
+                className="text-muted-foreground hover:text-foreground text-lg"
               >
                 ×
               </button>
@@ -104,10 +112,10 @@ export default function WishlistContent() {
         );
       })}
 
-      <div className="flex justify-end pt-4 border-t border-foreground/10">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           onClick={clearWishlist}
-          className="text-xs text-foreground/40 hover:text-foreground/60 underline underline-offset-2"
+          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
         >
           {"Hammasini o'chirish"}
         </button>

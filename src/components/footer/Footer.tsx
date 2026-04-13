@@ -83,7 +83,7 @@ export default function Footer() {
                     href={`tel:${PHONE_NUMBER}`}
                     className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors group"
                   >
-                    <span className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <span className="w-7 h-7 rounded-lg bg-primary/10 row-center shrink-0 group-hover:bg-primary/20 transition-colors">
                       <Icon
                         name="callCenter"
                         size={14}
@@ -94,13 +94,13 @@ export default function Footer() {
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                  <span className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-primary/10 row-center shrink-0">
                     <Icon name="clock" size={14} className="text-primary" />
                   </span>
                   {WORKING_HOURS}
                 </li>
                 <li className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                  <span className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-primary/10 row-center shrink-0">
                     <Icon name="location" size={14} className="text-primary" />
                   </span>
                   Toshkent, O&apos;zbekiston
@@ -109,7 +109,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-border pt-6 flex items-center justify-between">
+          <div className="border-t border-border pt-6 row-between">
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()}{" "}
               <span className="font-asimovian">{SITE_NAME}</span>. Barcha

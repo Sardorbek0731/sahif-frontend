@@ -75,7 +75,7 @@ export default async function AuthorsPage({
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-muted flex items-center justify-center text-2xl font-bold text-muted-foreground">
+                <div className="w-full h-full bg-muted row-center text-2xl font-bold text-muted-foreground">
                   {author.name[0]}
                 </div>
               )}

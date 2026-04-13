@@ -1,10 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/icons";
 import { useBookActions } from "@/hooks/useBookActions";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { useTranslations } from "next-intl";
-import { Icon } from "../ui/icons";
 
 interface Props {
   bookId: number;
@@ -38,7 +39,7 @@ export default function BookActions({
   return (
     <div className="flex items-center gap-3">
       {cartItem ? (
-        <div className="flex-1 flex items-center justify-between bg-foreground/5 border border-foreground/10 rounded-lg px-3 h-10">
+        <div className="flex-1 row-between bg-foreground/5 border border-border rounded-lg px-3 h-10">
           <button
             onClick={decrement}
             className="border-r border-border pr-3 mr-3 text-muted-foreground hover:text-foreground cursor-pointer transition-all"
@@ -60,7 +61,7 @@ export default function BookActions({
           iconSize={16}
           className={`flex-1 h-10 justify-center px-4 ${
             isOutOfStock
-              ? "bg-foreground/8 text-foreground/35 border border-foreground/10 cursor-not-allowed!"
+              ? "bg-foreground/8 text-foreground/35 border border-border cursor-not-allowed!"
               : "bg-foreground text-background hover:opacity-90"
           }`}
         >

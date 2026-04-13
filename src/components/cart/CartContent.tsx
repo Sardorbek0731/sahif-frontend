@@ -43,7 +43,15 @@ export default function CartContent() {
       const finalPrice =
         variant.price.amount - (variant.price.discountAmount ?? 0);
       const authorName = getAuthorName(book.authorSlug);
-      return { book, variant, item, bookTitle, bookImage, finalPrice, authorName };
+      return {
+        book,
+        variant,
+        item,
+        bookTitle,
+        bookImage,
+        finalPrice,
+        authorName,
+      };
     })
     .filter((b): b is NonNullable<typeof b> => b !== null);
 
@@ -71,8 +79,10 @@ export default function CartContent() {
               <p className="text-sm font-medium text-foreground">
                 {b.bookTitle}
               </p>
-              <p className="text-xs text-foreground/50">{b.authorName}</p>
-              <p className="text-xs text-foreground/50">{b.variant.language}</p>
+              <p className="text-xs text-muted-foreground">{b.authorName}</p>
+              <p className="text-xs text-muted-foreground">
+                {b.variant.language}
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -83,7 +93,7 @@ export default function CartContent() {
                     b.item.quantity - 1,
                   )
                 }
-                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm"
+                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm"
               >
                 −
               </button>
@@ -99,7 +109,7 @@ export default function CartContent() {
                   }
                 }}
                 disabled={b.item.quantity >= b.variant.stockCount}
-                className="w-7 h-7 rounded-lg bg-background border border-foreground/10 text-foreground text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 +
               </button>
@@ -111,7 +121,7 @@ export default function CartContent() {
             </div>
             <button
               onClick={() => removeItem(b.item.bookId, b.item.language)}
-              className="text-foreground/30 hover:text-foreground/60 text-lg ml-2"
+              className="text-muted-foreground hover:text-foreground text-lg ml-2"
             >
               ×
             </button>
@@ -119,15 +129,15 @@ export default function CartContent() {
         );
       })}
 
-      <div className="flex items-center justify-between pt-4 border-t border-foreground/10">
+      <div className="row-between pt-4 border-t border-border">
         <button
           onClick={clearCart}
-          className="text-xs text-foreground/40 hover:text-foreground/60 underline underline-offset-2"
+          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
         >
           Savatni tozalash
         </button>
         <div className="text-right">
-          <p className="text-xs text-foreground/50">
+          <p className="text-xs text-muted-foreground">
             Jami ({totalQuantity} ta)
           </p>
           <p className="text-lg font-medium">{total.toLocaleString()} UZS</p>

@@ -51,7 +51,7 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
   return (
     <div className="space-y-10 my-4">
       <section>
-        <div className="flex items-center justify-between mb-4">
+        <div className="row-between mb-4">
           <h2 className="text-2xl font-bold">{tPopular("title")}</h2>
           <Link href="/books?sort=popular">
             <Button
@@ -63,23 +63,28 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
           </Link>
         </div>
         <div className="grid grid-cols-5 gap-4">
-          {resolvedPopular.map(({ book, variant, authorName, bookTitle, bookImage, finalPrice }, index) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              variant={variant}
-              authorName={authorName}
-              bookTitle={bookTitle}
-              bookImage={bookImage}
-              finalPrice={finalPrice}
-              priority={index < 5}
-            />
-          ))}
+          {resolvedPopular.map(
+            (
+              { book, variant, authorName, bookTitle, bookImage, finalPrice },
+              index,
+            ) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                variant={variant}
+                authorName={authorName}
+                bookTitle={bookTitle}
+                bookImage={bookImage}
+                finalPrice={finalPrice}
+                priority={index < 5}
+              />
+            ),
+          )}
         </div>
       </section>
 
       <section>
-        <div className="flex items-center justify-between mb-4">
+        <div className="row-between mb-4">
           <h2 className="text-2xl font-bold">{tNew("title")}</h2>
           <Link href="/books?sort=new">
             <Button
@@ -91,17 +96,26 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
           </Link>
         </div>
         <div className="grid grid-cols-5 gap-4">
-          {resolvedNew.map(({ book, variant, authorName, bookTitle, bookImage, finalPrice }) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              variant={variant}
-              authorName={authorName}
-              bookTitle={bookTitle}
-              bookImage={bookImage}
-              finalPrice={finalPrice}
-            />
-          ))}
+          {resolvedNew.map(
+            ({
+              book,
+              variant,
+              authorName,
+              bookTitle,
+              bookImage,
+              finalPrice,
+            }) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                variant={variant}
+                authorName={authorName}
+                bookTitle={bookTitle}
+                bookImage={bookImage}
+                finalPrice={finalPrice}
+              />
+            ),
+          )}
         </div>
       </section>
     </div>

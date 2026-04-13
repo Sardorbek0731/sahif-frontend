@@ -13,7 +13,7 @@ export default async function HomeAuthors({ locale }: { locale: Locale }) {
 
   return (
     <section className="my-4">
-      <div className="flex items-center justify-between mb-4">
+      <div className="row-between mb-4">
         <h2 className="text-2xl font-bold">{t("title")}</h2>
       </div>
 
@@ -33,7 +33,7 @@ export default async function HomeAuthors({ locale }: { locale: Locale }) {
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-muted flex items-center justify-center text-xl font-bold text-muted-foreground">
+                <div className="w-full h-full bg-muted row-center text-xl font-bold text-muted-foreground">
                   {author.name[0]}
                 </div>
               )}

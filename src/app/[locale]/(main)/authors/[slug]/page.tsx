@@ -101,7 +101,7 @@ export default async function AuthorPage({
               className="w-36 h-36 rounded-full object-cover border-2 border-border"
             />
           ) : (
-            <div className="w-36 h-36 rounded-full bg-muted flex items-center justify-center text-4xl font-bold text-muted-foreground border-2 border-border">
+            <div className="w-36 h-36 rounded-full bg-muted row-center text-4xl font-bold text-muted-foreground border-2 border-border">
               {author.name[0]}
             </div>
           )}
@@ -119,7 +119,7 @@ export default async function AuthorPage({
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="row-between mb-4">
           <h2 className="text-xl font-bold">
             {t("allBooks")}
             <span className="text-base font-normal text-muted-foreground ml-2">
