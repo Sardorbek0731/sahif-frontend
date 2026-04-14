@@ -131,7 +131,7 @@ export default async function Books({
 
   const [minPrice, maxPrice] = (() => {
     if (!price) return [null, null];
-    if (price.endsWith("+")) return [parseInt(price), null];
+    if (price.endsWith("+")) return [parseInt(price.slice(0, -1)), null];
     const [min, max] = price.split("-").map(Number);
     return [isNaN(min) ? null : min, isNaN(max) ? null : max];
   })();
@@ -177,16 +177,6 @@ export default async function Books({
   const variantFinalPrice = (v: (typeof books)[0]["variants"][0]) =>
     v.price.amount - (v.price.discountAmount ?? 0);
 
-  const bookFilteredMinPrice = (book: (typeof books)[0]) =>
-    Math.min(
-      ...book.variants.filter(matchesVariantFilters).map(variantFinalPrice),
-    );
-
-  const bookFilteredMaxPrice = (book: (typeof books)[0]) =>
-    Math.max(
-      ...book.variants.filter(matchesVariantFilters).map(variantFinalPrice),
-    );
-
   const sorted = (() => {
     const arr = [...filtered];
     switch (sort) {
@@ -206,15 +196,29 @@ export default async function Books({
           );
         });
       case "rating":
-        return arr.sort((a, b) => b.stats.rating - a.stats.rating);
+        return arr.sort(
+          (a, b) =>
+            b.stats.rating - a.stats.rating ||
+            b.stats.reviewCount - a.stats.reviewCount,
+        );
       case "price-asc":
-        return arr.sort(
-          (a, b) => bookFilteredMinPrice(a) - bookFilteredMinPrice(b),
+      case "price-desc": {
+        const prices = new Map(
+          arr.map((b) => [
+            b.id,
+            Math.min(
+              ...b.variants
+                .filter(matchesVariantFilters)
+                .map(variantFinalPrice),
+            ),
+          ]),
         );
-      case "price-desc":
-        return arr.sort(
-          (a, b) => bookFilteredMaxPrice(b) - bookFilteredMaxPrice(a),
+        return arr.sort((a, b) =>
+          sort === "price-asc"
+            ? (prices.get(a.id) ?? 0) - (prices.get(b.id) ?? 0)
+            : (prices.get(b.id) ?? 0) - (prices.get(a.id) ?? 0),
         );
+      }
       default:
         return arr;
     }
@@ -222,41 +226,21 @@ export default async function Books({
 
   const hasCategory = activeCategories.length === 1;
 
-  const matchesSearch = (v: (typeof books)[0]["variants"][0]) =>
-    searchQuery ? matchesVariantSearch(v, searchQuery) : false;
-
   const resolvedBooks = sorted.map((book) => {
     const authorName = getAuthorName(book.authorSlug);
 
-    const variant = (() => {
-      if (sort === "price-asc") {
-        const matchedVariants = book.variants.filter(matchesVariantFilters);
-        return (
-          matchedVariants.sort(
-            (a, b) => variantFinalPrice(a) - variantFinalPrice(b),
-          )[0] ?? book.variants[0]
-        );
-      }
-      if (sort === "price-desc") {
-        const matchedVariants = book.variants.filter(matchesVariantFilters);
-        return (
-          matchedVariants.sort(
-            (a, b) => variantFinalPrice(b) - variantFinalPrice(a),
-          )[0] ?? book.variants[0]
-        );
-      }
-      return (
-        book.variants.find(
-          (v) => matchesSearch(v) && matchesVariantFilters(v),
-        ) ??
-        book.variants.find(matchesSearch) ??
-        book.variants.find(
-          (v) => matchesVariantFilters(v) && v.language.startsWith(locale),
-        ) ??
-        book.variants.find(matchesVariantFilters) ??
-        book.variants[0]
-      );
-    })();
+    const variant =
+      book.variants.find((v) =>
+        searchQuery
+          ? matchesVariantSearch(v, searchQuery) && matchesVariantFilters(v)
+          : false,
+      ) ??
+      book.variants.find(
+        (v) => matchesVariantFilters(v) && v.language.startsWith(locale),
+      ) ??
+      book.variants.find(matchesVariantFilters) ??
+      book.variants.find((v) => v.language.startsWith(locale)) ??
+      book.variants[0];
 
     const bookTitle = variant.titleInLanguage ?? book.originalTitle;
 

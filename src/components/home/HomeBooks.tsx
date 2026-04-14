@@ -12,7 +12,11 @@ import { type Book } from "@/types/book";
 const nonHeroBooks = books.filter((b) => b.heroOrder === undefined);
 
 const popularBooks = [...nonHeroBooks]
-  .sort((a, b) => b.stats.salesCount - a.stats.salesCount)
+  .sort(
+    (a, b) =>
+      b.stats.rating * b.stats.reviewCount -
+      a.stats.rating * a.stats.reviewCount,
+  )
   .slice(0, 5);
 
 function resolveBooks(list: Book[], locale: Locale) {
