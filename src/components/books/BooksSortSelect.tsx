@@ -63,7 +63,7 @@ export default function BooksSortSelect({
           </Button>
         )}
       >
-        <div role="listbox" aria-label={t("label")} className="py-2 min-w-max">
+        <div role="listbox" aria-label={t("label")} className="py-1 min-w-max">
           {SORT_OPTIONS.map((opt) => (
             <Button
               key={opt}
@@ -71,7 +71,7 @@ export default function BooksSortSelect({
               aria-selected={activeSort === opt}
               onClick={() => handleSelect(opt)}
               variant={activeSort === opt ? "selected" : "ghost"}
-              className="w-full whitespace-nowrap rounded-lg mb-1 last:mb-0 px-4 h-10 row-between"
+              className="w-full whitespace-nowrap rounded-none mb-1 last:mb-0 px-4 h-10 row-between"
             >
               <span>{t(TRANSLATION_KEY[opt])}</span>
               {activeSort === opt && (
@@ -89,7 +89,7 @@ export default function BooksSortSelect({
           leftIcon="x"
           iconSize={16}
           aria-label={tCommon("clearSort")}
-          className="h-10 px-3 bg-card hover:bg-card-hover"
+          className="h-10 w-10 row-center bg-card hover:bg-card-hover"
         />
       )}
     </div>
