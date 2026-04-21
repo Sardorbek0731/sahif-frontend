@@ -18,8 +18,8 @@ const VARIANT_WRAPPER: Record<InputVariant, string> = {
 };
 
 const SIZE_WRAPPER: Record<InputSize, string> = {
-  sm: "px-2 text-sm",
-  md: "px-4",
+  sm: "h-8 px-2 text-sm",
+  md: "h-10 px-4",
 };
 
 // ─── Input Props ─────────────────────────────────────────────────────────────
@@ -35,8 +35,9 @@ export interface InputProps extends Omit<
   prefix?: string;
   label?: string;
   error?: string;
-  wrapperClassName?: string;
-  // className → <input> ga, wrapperClassName → wrapper div ga
+  containerClassName?: string; // tashqi <div> ga (layout: w-full, mb-6, va h.k.)
+  wrapperClassName?: string; // ichki border/bg li <div> ga (vizual: hover, va h.k.)
+  // className → <input> ga
 }
 
 // ─── Input Component ─────────────────────────────────────────────────────────
@@ -50,6 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     prefix,
     label,
     error,
+    containerClassName,
     wrapperClassName,
     className,
     id,
@@ -60,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const errorId = id ? `${id}-error` : undefined;
 
   return (
-    <div>
+    <div className={cn("w-full", containerClassName)}>
       {label && (
         <label
           htmlFor={id}

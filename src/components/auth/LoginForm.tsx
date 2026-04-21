@@ -49,7 +49,6 @@ function PhoneStep({
         placeholder="__ ___ __ __"
         prefix="+998"
         autoFocus
-        className="h-10"
       />
 
       {error && <p className="text-rose-500 text-sm mt-3">{error}</p>}
@@ -152,8 +151,7 @@ function NameStep({
         maxLength={20}
         onChange={(e) => setFirstName(e.target.value)}
         placeholder={t("firstNamePlaceholder")}
-        wrapperClassName="mb-6"
-        className="h-10"
+        containerClassName="mb-6"
         autoFocus
       />
 
@@ -170,8 +168,7 @@ function NameStep({
         maxLength={20}
         onChange={(e) => setLastName(e.target.value)}
         placeholder={t("lastNamePlaceholder")}
-        wrapperClassName="mb-6"
-        className="h-10"
+        containerClassName="mb-6"
       />
 
       {error && <p className="text-rose-500 text-sm mt-1 mb-3">{error}</p>}

@@ -76,7 +76,6 @@ export default function Search() {
           placeholder={t("search.searchBook")}
           autoComplete="off"
           onFocus={() => setIsFocused(true)}
-          wrapperClassName="h-10"
         />
       </form>
 

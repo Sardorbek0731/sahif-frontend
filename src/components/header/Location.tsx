@@ -123,8 +123,8 @@ export default function Location({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t("header.searchRegion")}
-          wrapperClassName="mb-6 hover:bg-card-hover transition-all"
-          className="h-10"
+          wrapperClassName="hover:bg-card-hover transition-all"
+          containerClassName="mb-6"
         />
 
         <div className="max-h-90 overflow-y-auto space-y-3 pr-3">

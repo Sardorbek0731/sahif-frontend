@@ -300,7 +300,7 @@ export default function BooksFilter({
             badge={local.minPrice || local.maxPrice ? 1 : undefined}
           >
             <div className="flex gap-2 px-2">
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <label className="text-xs text-muted-foreground mb-1 block">
                   {tFilter("priceFrom")}
                 </label>
@@ -314,10 +314,9 @@ export default function BooksFilter({
                   }
                   variant="default"
                   size="sm"
-                  wrapperClassName="w-full"
                 />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <label className="text-xs text-muted-foreground mb-1 block">
                   {tFilter("priceTo")}
                 </label>
@@ -332,7 +331,6 @@ export default function BooksFilter({
                   }}
                   variant="default"
                   size="sm"
-                  wrapperClassName="w-full"
                 />
               </div>
             </div>
