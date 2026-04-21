@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  title?: string;
   maxWidth?: string;
   className?: string;
   showCloseButton?: boolean;
@@ -17,13 +19,23 @@ export default function Modal({
   isOpen,
   onClose,
   children,
+  title,
   maxWidth,
   className,
   showCloseButton = true,
 }: ModalProps) {
+  const t = useTranslations();
   const overlayRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+
+  // onClose ni har render da ref orqali yangilaymiz — stale closure muammosini hal qiladi
+  // useLayoutEffect — render dan keyin, DOM yangilanishidan oldin ishlaydi (React Compiler safe)
+  useLayoutEffect(() => {
+    onCloseRef.current = onClose;
+  });
+
+  // useId — SSR va client da bir xil ID (Math.random() hydration mismatch beradi)
+  const titleId = useId();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -59,13 +71,25 @@ export default function Modal({
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        aria-label={!title ? t("close") : undefined}
         className={`relative w-full ${maxWidth} rounded-lg bg-background p-6 ${className}`}
       >
+        {/* Yashirin title — faqat screen reader uchun, agar tashqaridan title berilmagan bo'lsa */}
+        {title && (
+          <span id={titleId} className="sr-only">
+            {title}
+          </span>
+        )}
+
         {showCloseButton && (
           <Button
             onClick={onClose}
             leftIcon="x"
             iconSize={18}
+            aria-label={t("close")}
             className="absolute right-6 top-6 w-8 h-8 justify-center bg-card hover:bg-card-hover"
           />
         )}
