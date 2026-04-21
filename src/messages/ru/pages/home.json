@@ -5,7 +5,10 @@
 
   "hero": {
     "author": "Автор",
-    "details": "Подробнее"
+    "details": "Подробнее",
+    "carousel": "Карусель избранных книг",
+    "slideLabel": "Слайд {current} из {total}",
+    "currentSlide": "Сейчас показывается: {title}"
   },
 
   "popular": {

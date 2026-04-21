@@ -12,7 +12,7 @@ import { getBookTitle } from "@/lib/book";
 import { getBooksByAuthor } from "@/lib/author";
 import BookCard from "@/components/books/BookCard";
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
     authors.map((author) => ({ locale, slug: author.slug })),
   );
@@ -25,7 +25,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const author = authors.find((a) => a.slug === slug);
-  if (!author) return {};
+  if (!author) notFound();
 
   const description = author.bio[locale];
 
@@ -133,7 +133,7 @@ export default async function AuthorPage({
             {t("noBooks")}
           </p>
         ) : (
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {resolvedBooks.map(
               (
                 { book, variant, authorName, bookTitle, bookImage, finalPrice },
@@ -147,7 +147,7 @@ export default async function AuthorPage({
                   bookTitle={bookTitle}
                   bookImage={bookImage}
                   finalPrice={finalPrice}
-                  priority={index < 5}
+                  preload={index < 5}
                 />
               ),
             )}

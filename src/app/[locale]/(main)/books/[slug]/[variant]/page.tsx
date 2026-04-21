@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { type Locale, routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
@@ -86,6 +87,8 @@ export default async function BookPage({
 
   const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
+
+  const t = await getTranslations({ locale, namespace: "book" });
 
   const author = getAuthor(book.authorSlug);
   const authorName = author?.name ?? book.authorSlug;
@@ -179,7 +182,7 @@ export default async function BookPage({
 
             <div className="mb-8">
               <p className="text-sm font-bold mb-3 opacity-50 uppercase tracking-widest">
-                Nashr tili:
+                {t("publishLanguage")}:
               </p>
               <div className="flex flex-wrap gap-3">
                 {book.variants.map((variant) => (
@@ -193,7 +196,7 @@ export default async function BookPage({
                     } ${variant.stockCount === 0 ? "opacity-50 grayscale pointer-events-none" : ""}`}
                   >
                     {variant.language.toUpperCase()}
-                    {variant.stockCount === 0 && " (Tugagan)"}
+                    {variant.stockCount === 0 && ` (${t("outOfStock")})`}
                   </Link>
                 ))}
               </div>
@@ -231,19 +234,23 @@ export default async function BookPage({
               </div>
               <div>
                 <p className="text-xs text-foreground/50 uppercase">
-                  Nashriyot
+                  {t("publisher")}
                 </p>
                 <p className="font-medium">{activeVariant.publisher}</p>
               </div>
               <div>
                 <p className="text-xs text-foreground/50 uppercase">
-                  Sahifalar
+                  {t("pageCount")}
                 </p>
                 <p className="font-medium">{activeVariant.pageCount}</p>
               </div>
               <div>
-                <p className="text-xs text-foreground/50 uppercase">Muqova</p>
-                <p className="font-medium capitalize">{activeVariant.format}</p>
+                <p className="text-xs text-foreground/50 uppercase">
+                  {t("cover")}
+                </p>
+                <p className="font-medium capitalize">
+                  {t(`formats.${activeVariant.format}`)}
+                </p>
               </div>
             </div>
           </div>

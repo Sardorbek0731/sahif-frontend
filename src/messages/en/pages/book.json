@@ -5,5 +5,10 @@
     "paperback": "Paperback",
     "ebook": "E-book",
     "audio": "Audiobook"
-  }
+  },
+  "publishLanguage": "Edition language",
+  "outOfStock": "Out of stock",
+  "publisher": "Publisher",
+  "pageCount": "Pages",
+  "cover": "Cover"
 }

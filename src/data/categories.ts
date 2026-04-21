@@ -163,9 +163,7 @@ export const allCategories = categoryGroups.flatMap<Category>(
   (group) => group.categories,
 );
 
-export const popularCategories = allCategories.filter(
-  (cat) => cat.isPopular,
-);
+export const popularCategories = allCategories.filter((cat) => cat.isPopular);
 
 export const categoryBySlug = Object.fromEntries(
   allCategories.map((cat) => [cat.slug, cat]),

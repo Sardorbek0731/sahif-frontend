@@ -35,5 +35,25 @@
   },
 
   "addToCart": "Add to cart",
-  "outOfStock": "Out of stock"
+  "outOfStock": "Out of stock",
+  "addToWishlist": "Add to wishlist",
+  "removeFromWishlist": "Remove from wishlist",
+  "close": "Close",
+  "increaseQuantity": "Increase quantity",
+  "decreaseQuantity": "Decrease quantity",
+  "removeItem": "Remove",
+  "removeFromSearch": "Remove from search",
+  "clearSort": "Clear sort",
+  "goToSlide": "Go to slide {index}",
+  "viewImage": "View image {index}",
+  "loading": "Loading",
+
+  "footer": {
+    "catalog": "Catalog",
+    "account": "Account",
+    "contact": "Contact",
+    "location": "Tashkent, Uzbekistan",
+    "rights": "All rights reserved.",
+    "createdBy": "Created by"
+  }
 }

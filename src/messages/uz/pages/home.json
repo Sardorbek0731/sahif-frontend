@@ -5,7 +5,10 @@
 
   "hero": {
     "author": "Muallif",
-    "details": "Batafsil"
+    "details": "Batafsil",
+    "carousel": "Tanlangan kitoblar karuseli",
+    "slideLabel": "{current}-slayd, jami {total} ta",
+    "currentSlide": "Hozir ko'rsatilmoqda: {title}"
   },
 
   "popular": {

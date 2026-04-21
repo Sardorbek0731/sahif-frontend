@@ -1,5 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
-import { type Locale, routing } from "./routing";
+import { hasLocale } from "next-intl";
+import { routing } from "./routing";
 
 type JsonModule = { default: Record<string, unknown> };
 
@@ -22,10 +23,9 @@ const MESSAGE_MODULES: Record<string, string> = {
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
-  const locale: Locale =
-    requested && routing.locales.includes(requested as Locale)
-      ? (requested as Locale)
-      : routing.defaultLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
 
   const [common, ...moduleEntries] = await Promise.all([
     import(`@/messages/${locale}/common.json`),

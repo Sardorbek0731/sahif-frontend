@@ -1,5 +1,9 @@
 {
   "metadata": {
     "description": "Savatchangizdagi kitoblarni ko'ring va buyurtmani rasmiylashtirishni boshlang."
-  }
+  },
+  "empty": "Savatcha bo'sh",
+  "loading": "Yuklanmoqda...",
+  "clear": "Savatni tozalash",
+  "total": "Jami ({count} ta)"
 }

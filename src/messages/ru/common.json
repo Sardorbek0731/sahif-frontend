@@ -35,5 +35,25 @@
   },
 
   "addToCart": "В корзину",
-  "outOfStock": "Нет в наличии"
+  "outOfStock": "Нет в наличии",
+  "addToWishlist": "Добавить в избранное",
+  "removeFromWishlist": "Убрать из избранного",
+  "close": "Закрыть",
+  "increaseQuantity": "Увеличить количество",
+  "decreaseQuantity": "Уменьшить количество",
+  "removeItem": "Удалить",
+  "removeFromSearch": "Удалить из поиска",
+  "clearSort": "Сбросить сортировку",
+  "goToSlide": "Перейти к слайду {index}",
+  "viewImage": "Просмотреть изображение {index}",
+  "loading": "Загрузка",
+
+  "footer": {
+    "catalog": "Каталог",
+    "account": "Аккаунт",
+    "contact": "Контакты",
+    "location": "Ташкент, Узбекистан",
+    "rights": "Все права защищены.",
+    "createdBy": "Создано"
+  }
 }

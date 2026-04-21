@@ -31,15 +31,37 @@ export const useAuthStore = create<AuthStore>()(
 
       addOrActivateUser: (user) => {
         set((state) => {
-          const exists = state.users.some((u) => u.phone === user.phone);
-          const updatedUsers = exists
-            ? state.users.map((u) => (u.phone === user.phone ? user : u))
-            : [...state.users, user].slice(-MAX_USERS);
-          return {
-            users: updatedUsers,
-            activeUserId: user.id,
-            isAuthenticated: true,
-          };
+          // Phone bo'yicha mavjud user'ni topish
+          const existingUserIndex = state.users.findIndex(
+            (u) => u.phone === user.phone,
+          );
+
+          if (existingUserIndex !== -1) {
+            // Mavjud user - ma'lumotlarni yangilash (ID o'zgarmasligi kerak)
+            const existingUser = state.users[existingUserIndex];
+            const updatedUsers = state.users.map((u, index) =>
+              index === existingUserIndex
+                ? {
+                    ...existingUser, // Eski ma'lumotlar (ID saqlanadi)
+                    ...user, // Yangi ma'lumotlar
+                    id: existingUser.id, // ID o'zgarmasligi kerak!
+                  }
+                : u,
+            );
+            return {
+              users: updatedUsers,
+              activeUserId: existingUser.id, // Eski ID ishlatish
+              isAuthenticated: true,
+            };
+          } else {
+            // Yangi user - oxiriga qo'shish va max 5 ta saqlash
+            const updatedUsers = [...state.users, user].slice(-MAX_USERS);
+            return {
+              users: updatedUsers,
+              activeUserId: user.id,
+              isAuthenticated: true,
+            };
+          }
         });
       },
 

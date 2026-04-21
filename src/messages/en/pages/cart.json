@@ -1,5 +1,9 @@
 {
   "metadata": {
     "description": "View the books in your cart and proceed to checkout."
-  }
+  },
+  "empty": "Your cart is empty",
+  "loading": "Loading...",
+  "clear": "Clear cart",
+  "total": "Total ({count} items)"
 }

@@ -52,7 +52,7 @@ export function useAuth(
     await new Promise((resolve) => setTimeout(resolve, 800));
 
     if (code !== MOCK_OTP) {
-      setError("Kod noto'g'ri. Qaytadan urinib ko'ring.");
+      setError("invalidCode");
       setIsLoading(false);
       return false;
     }
@@ -79,7 +79,7 @@ export function useAuth(
     sessionStorage.removeItem("auth-step");
     sessionStorage.removeItem("auth-phone");
     addOrActivateUser({
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       phone,
       firstName,
       lastName,

@@ -3,5 +3,10 @@
   "searchRegion": "Search region...",
   "yourLocation": "Your region",
   "yesCorrect": "Yes, correct",
-  "change": "Change"
+  "change": "Change",
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
 }

@@ -1,5 +1,10 @@
 {
   "metadata": {
     "description": "All your saved books in one place — add them to your cart whenever you're ready."
-  }
+  },
+  "title": "Wishlist",
+  "empty": "Your wishlist is empty",
+  "loading": "Loading...",
+  "moveToCart": "Move to cart",
+  "clearAll": "Clear all"
 }

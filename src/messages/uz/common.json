@@ -35,5 +35,25 @@
   },
 
   "addToCart": "Savatchaga",
-  "outOfStock": "Tugagan"
+  "outOfStock": "Tugagan",
+  "addToWishlist": "Sevimlilarga qo'shish",
+  "removeFromWishlist": "Sevimlilardan olib tashlash",
+  "close": "Yopish",
+  "increaseQuantity": "Miqdorni oshirish",
+  "decreaseQuantity": "Miqdorni kamaytirish",
+  "removeItem": "O'chirish",
+  "removeFromSearch": "Qidiruvdan o'chirish",
+  "clearSort": "Saralashni tozalash",
+  "goToSlide": "{index}-slaydga o'tish",
+  "viewImage": "{index}-rasmni ko'rish",
+  "loading": "Yuklanmoqda",
+
+  "footer": {
+    "catalog": "Katalog",
+    "account": "Akkaunt",
+    "contact": "Aloqa",
+    "location": "Toshkent, O'zbekiston",
+    "rights": "Barcha huquqlar himoyalangan.",
+    "createdBy": "Yaratuvchi"
+  }
 }

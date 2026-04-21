@@ -115,7 +115,6 @@ export const authors: readonly Author[] = [
     id: 11,
     slug: "f-scott-fitzgerald",
     name: "F. Scott Fitzgerald",
-    image: "/authors/f-scott-fitzgerald.jpg",
     bio: {
       uz: "Amerikalik yozuvchi. 'Buyuk Getsbi' romani bilan mashhur bo'lgan va Jazzdavri adabiyotining ramziga aylangan.",
       en: "American novelist and short story writer, widely regarded as one of the greatest American writers of the 20th century, known for The Great Gatsby.",
@@ -126,7 +125,6 @@ export const authors: readonly Author[] = [
     id: 12,
     slug: "harper-lee",
     name: "Harper Lee",
-    image: "/authors/harper-lee.jpg",
     bio: {
       uz: "Amerikalik yozuvchi. 'Zag'izg'onni o'ldirish' romani uchun Pulitzer mukofotini olgan.",
       en: "American novelist best known for To Kill a Mockingbird, which won the Pulitzer Prize in 1961 and has become a classic of American literature.",
@@ -137,7 +135,6 @@ export const authors: readonly Author[] = [
     id: 13,
     slug: "stephen-covey",
     name: "Stephen R. Covey",
-    image: "/authors/stephen-covey.jpg",
     bio: {
       uz: "Amerikalik yozuvchi va biznes konsultant. 'Muvaffaqiyatli odamlarning 7 ta odati' kitobi 40 milliondan ortiq nusxada sotilgan.",
       en: "American educator, author, and businessman. The 7 Habits of Highly Effective People has sold over 40 million copies worldwide.",
@@ -148,7 +145,6 @@ export const authors: readonly Author[] = [
     id: 14,
     slug: "yuval-noah-harari",
     name: "Yuval Noah Harari",
-    image: "/authors/yuval-noah-harari.jpg",
     bio: {
       uz: "Isroillik tarixchi va professor. 'Sapiens' kitobi insoniyat tarixini yangicha nuqtai nazardan yoritib bergan.",
       en: "Israeli historian and professor at the Hebrew University of Jerusalem. His book Sapiens became an international bestseller.",
@@ -159,7 +155,6 @@ export const authors: readonly Author[] = [
     id: 15,
     slug: "eckhart-tolle",
     name: "Eckhart Tolle",
-    image: "/authors/eckhart-tolle.jpg",
     bio: {
       uz: "Nemis-kanadalik ma'naviy muallif. 'Hozirgi lahzaning kuchi' kitobi ruhiy o'zgarishning yo'lini ko'rsatadi.",
       en: "German-born Canadian spiritual author and public speaker. The Power of Now has sold millions of copies worldwide.",
@@ -170,7 +165,6 @@ export const authors: readonly Author[] = [
     id: 16,
     slug: "j-k-rowling",
     name: "J.K. Rowling",
-    image: "/authors/j-k-rowling.jpg",
     bio: {
       uz: "Ingliz yozuvchisi. Garri Potter seriyasi 80 dan ortiq tilga tarjima qilinib, 500 milliondan ortiq nusxada sotilgan.",
       en: "British author, best known for the Harry Potter fantasy series, which has sold over 500 million copies worldwide.",
@@ -181,7 +175,6 @@ export const authors: readonly Author[] = [
     id: 17,
     slug: "j-r-r-tolkien",
     name: "J.R.R. Tolkien",
-    image: "/authors/j-r-r-tolkien.jpg",
     bio: {
       uz: "Ingliz yozuvchi va filolog. 'Uzuklar hukmdori' va 'Xobbit' asarlari bilan zamonaviy fantastika janrini yaratgan.",
       en: "English writer and philologist, creator of Middle-earth. The Lord of the Rings and The Hobbit are among the best-selling novels ever written.",
@@ -192,7 +185,6 @@ export const authors: readonly Author[] = [
     id: 18,
     slug: "aldous-huxley",
     name: "Aldous Huxley",
-    image: "/authors/aldous-huxley.jpg",
     bio: {
       uz: "Ingliz yozuvchi va faylasuf. 'Jasur yangi dunyo' dystopik romani XX asrning eng muhim asarlaridan biri.",
       en: "English writer and philosopher. Brave New World is one of the most influential dystopian novels of the 20th century.",
@@ -203,7 +195,6 @@ export const authors: readonly Author[] = [
     id: 19,
     slug: "leo-tolstoy",
     name: "Leo Tolstoy",
-    image: "/authors/leo-tolstoy.jpg",
     bio: {
       uz: "Rus yozuvchisi. 'Anna Karenina' va 'Urush va tinchlik' asarlari bilan jahon adabiyotining eng buyuk namoyandalaridan biri.",
       en: "Russian novelist, often cited as one of the greatest authors of all time, known for War and Peace and Anna Karenina.",
@@ -214,7 +205,6 @@ export const authors: readonly Author[] = [
     id: 20,
     slug: "sun-tzu",
     name: "Sun Tzu",
-    image: "/authors/sun-tzu.jpg",
     bio: {
       uz: "Qadimgi xitoy harbiy strategi va faylasuf. 'Urush san'ati' asari 2500 yildan beri o'z ahamiyatini yo'qotmagan.",
       en: "Ancient Chinese military general, strategist, and philosopher. The Art of War has influenced military and business strategy for over 2,500 years.",

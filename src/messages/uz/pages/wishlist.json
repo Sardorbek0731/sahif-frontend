@@ -1,5 +1,10 @@
 {
   "metadata": {
     "description": "Sevimli kitoblaringiz bir joyda — xohlagan vaqtda savatchaga qo'shing."
-  }
+  },
+  "title": "Sevimlilar",
+  "empty": "Sevimlilar bo'sh",
+  "loading": "Yuklanmoqda...",
+  "moveToCart": "Savatchaga o'tkazish",
+  "clearAll": "Hammasini o'chirish"
 }

@@ -5,7 +5,10 @@
 
   "hero": {
     "author": "Author",
-    "details": "Details"
+    "details": "Details",
+    "carousel": "Featured books carousel",
+    "slideLabel": "Slide {current} of {total}",
+    "currentSlide": "Now showing: {title}"
   },
 
   "popular": {

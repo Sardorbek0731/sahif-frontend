@@ -5,5 +5,10 @@
     "paperback": "Yumshoq muqova",
     "ebook": "Elektron kitob",
     "audio": "Audio kitob"
-  }
+  },
+  "publishLanguage": "Nashr tili",
+  "outOfStock": "Tugagan",
+  "publisher": "Nashriyot",
+  "pageCount": "Sahifalar",
+  "cover": "Muqova"
 }

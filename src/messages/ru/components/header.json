@@ -3,5 +3,10 @@
   "searchRegion": "Поиск региона...",
   "yourLocation": "Ваш регион",
   "yesCorrect": "Да, верно",
-  "change": "Изменить"
+  "change": "Изменить",
+  "theme": {
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "system": "Системная"
+  }
 }

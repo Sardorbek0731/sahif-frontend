@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const allPaths = [...staticPaths, ...bookPaths, ...authorPaths];
 
-  const staticLastModified = new Date("2025-01-01");
+  const staticLastModified = new Date();
 
   return allPaths.flatMap((path) => {
     return locales.map((locale) => {

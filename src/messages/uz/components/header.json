@@ -3,5 +3,10 @@
   "searchRegion": "Viloyatni qidirish...",
   "yourLocation": "Sizning hududingiz",
   "yesCorrect": "Ha, to'g'ri",
-  "change": "O'zgartirish"
+  "change": "O'zgartirish",
+  "theme": {
+    "light": "Kunduzgi",
+    "dark": "Tungi",
+    "system": "Tizim"
+  }
 }
