@@ -50,16 +50,22 @@ export function LanguageSwitcher() {
       )}
     >
       <div role="listbox" className="py-2">
-        {LANGUAGE_NAMES.filter((lang) => lang.code !== locale).map((lang) => (
-          <Button
+        {LANGUAGE_NAMES.map((lang) => (
+          <button
+            type="button"
             role="option"
             key={lang.code}
+            aria-selected={lang.code === locale}
             onClick={() => changeLanguage(lang.code)}
-            className="w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none"
+            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center ${
+              lang.code === locale
+                ? "bg-primary/10 text-primary font-medium"
+                : ""
+            }`}
           >
             <Icon name={lang.code} size={16} className="mr-2" />
             {lang.name}
-          </Button>
+          </button>
         ))}
       </div>
     </Dropdown>
@@ -94,7 +100,6 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
   const currentTheme = (isMounted ? theme : initialTheme) as ThemeMode;
   const activeIcon = THEME_ICONS[currentTheme] ?? "sun";
   const activeLabel = t(currentTheme);
-  const options = THEME_MODES.filter((m) => m !== currentTheme);
 
   const handleSelect = (value: ThemeMode) => {
     setOpen(false);
@@ -119,16 +124,22 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
       )}
     >
       <div role="listbox" className="py-2">
-        {options.map((value) => (
-          <Button
+        {THEME_MODES.map((value) => (
+          <button
+            type="button"
             role="option"
             key={value}
+            aria-selected={value === currentTheme}
             onClick={() => handleSelect(value)}
-            className="w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none"
+            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center ${
+              value === currentTheme
+                ? "bg-primary/10 text-primary font-medium"
+                : ""
+            }`}
           >
             <Icon name={THEME_ICONS[value]} size={16} className="mr-2" />
             {t(value)}
-          </Button>
+          </button>
         ))}
       </div>
     </Dropdown>
