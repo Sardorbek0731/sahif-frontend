@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Badge } from "@/components/ui/Badge";
 import { BOOK_LANGUAGES } from "@/constants";
 import { type BookFormat, BOOK_FORMATS } from "@/types/book";
 import { type CategorySlug, categoryGroups } from "@/data/categories";
@@ -32,6 +34,8 @@ interface FilterState {
   inStock: boolean;
 }
 
+// ─── CheckboxItem ─────────────────────────────────────────────────────────────
+
 function CheckboxItem({
   checked,
   onChange,
@@ -43,6 +47,9 @@ function CheckboxItem({
 }) {
   return (
     <button
+      type="button"
+      role="checkbox"
+      aria-checked={checked}
       onClick={onChange}
       className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm transition-all hover:bg-card-hover group min-w-0 cursor-pointer"
     >
@@ -52,6 +59,7 @@ function CheckboxItem({
             ? "bg-primary border-primary"
             : "border-border group-hover:border-muted-foreground"
         }`}
+        aria-hidden="true"
       >
         {checked && (
           <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
@@ -74,6 +82,8 @@ function CheckboxItem({
   );
 }
 
+// ─── Accordion ────────────────────────────────────────────────────────────────
+
 function Accordion({
   title,
   defaultOpen = false,
@@ -89,16 +99,14 @@ function Accordion({
   return (
     <div className="border-b border-border last:border-0">
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full row-between py-3 px-4 text-sm font-medium hover:bg-card-hover transition-all cursor-pointer"
+        aria-expanded={open}
+        className="w-full row-between py-3 px-4 text-sm font-medium hover:bg-card-hover transition-all cursor-pointer rounded-none"
       >
         <span className="flex items-center gap-2">
           {title}
-          {badge ? (
-            <span className="text-[10px] bg-primary text-white w-5 h-5 rounded-full row-center font-bold">
-              {badge}
-            </span>
-          ) : null}
+          {badge ? <Badge variant="count">{badge}</Badge> : null}
         </span>
         <Icon
           name="chevronDown"
@@ -110,6 +118,8 @@ function Accordion({
     </div>
   );
 }
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function toggleArr<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val];
@@ -125,6 +135,10 @@ function parsePrice(price?: string) {
 function setsEqual<T>(a: T[], b: T[]) {
   return a.length === b.length && a.every((v) => b.includes(v));
 }
+
+// ─── BooksFilter ──────────────────────────────────────────────────────────────
+// key prop orqali URL o'zgarganda komponent qayta mount qilinadi (react.dev/learn/you-might-not-need-an-effect)
+// Shuning uchun useEffect bilan props→state sinxronlash kerak emas.
 
 export default function BooksFilter({
   activeCategories = [],
@@ -144,11 +158,8 @@ export default function BooksFilter({
 
   const parsedPrice = parsePrice(activePrice);
 
-  const categoriesKey = activeCategories.join(",");
-  const formatsKey = activeFormats.join(",");
-  const langsKey = activeLangs.join(",");
-  const authorsKey = activeAuthors.join(",");
-
+  // useState initial value — key o'zgarganda komponent qayta mount bo'ladi,
+  // shuning uchun bu qiymatlar har safar props dan to'g'ri o'qiladi.
   const [local, setLocal] = useState<FilterState>({
     categories: activeCategories,
     formats: activeFormats,
@@ -158,27 +169,6 @@ export default function BooksFilter({
     maxPrice: parsedPrice.max,
     inStock: activeInStock ?? false,
   });
-
-  useEffect(() => {
-    const p = parsePrice(activePrice);
-    setLocal({
-      categories: activeCategories,
-      formats: activeFormats,
-      langs: activeLangs,
-      authors: activeAuthors,
-      minPrice: p.min,
-      maxPrice: p.max,
-      inStock: activeInStock ?? false,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    activePrice,
-    activeInStock,
-    categoriesKey,
-    formatsKey,
-    langsKey,
-    authorsKey,
-  ]);
 
   const set = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
     setLocal((prev) => ({ ...prev, [key]: value }));
@@ -242,7 +232,7 @@ export default function BooksFilter({
     local.inStock !== (activeInStock ?? false);
 
   return (
-    <aside className="w-64 shrink-0 mr-4">
+    <aside aria-label={tFilter("title")} className="w-64 shrink-0 mr-4">
       <div className="bg-card rounded-lg border border-border overflow-hidden sticky top-4">
         {/* Header */}
         <div className="row-between px-4 py-3 border-b border-border">
@@ -250,15 +240,15 @@ export default function BooksFilter({
             <Icon name="filter" size={16} />
             {tFilter("title")}
             {activeFiltersCount > 0 && (
-              <span className="text-[10px] bg-primary text-white w-5 h-5 rounded-full row-center">
-                {activeFiltersCount}
-              </span>
+              <Badge variant="count">{activeFiltersCount}</Badge>
             )}
           </span>
           {activeFiltersCount > 0 && (
             <Button
+              variant="outline"
+              size="sm"
               onClick={resetAll}
-              className="text-xs text-muted-foreground hover:text-foreground bg-card-hover px-3 py-1 border border-border"
+              className="text-xs text-muted-foreground hover:text-foreground"
             >
               {tFilter("reset")}
             </Button>
@@ -314,7 +304,7 @@ export default function BooksFilter({
                 <label className="text-xs text-muted-foreground mb-1 block">
                   {tFilter("priceFrom")}
                 </label>
-                <input
+                <Input
                   type="text"
                   inputMode="numeric"
                   placeholder="0"
@@ -322,14 +312,16 @@ export default function BooksFilter({
                   onChange={(e) =>
                     set("minPrice", e.target.value.replace(/\D/g, ""))
                   }
-                  className="w-full bg-card border border-border rounded-lg px-2.5 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-all"
+                  variant="default"
+                  size="sm"
+                  wrapperClassName="w-full"
                 />
               </div>
               <div className="flex-1">
                 <label className="text-xs text-muted-foreground mb-1 block">
                   {tFilter("priceTo")}
                 </label>
-                <input
+                <Input
                   type="text"
                   inputMode="numeric"
                   placeholder="∞"
@@ -338,7 +330,9 @@ export default function BooksFilter({
                     const val = e.target.value.replace(/\D/g, "");
                     if (val !== "0") set("maxPrice", val);
                   }}
-                  className="w-full bg-card border border-border rounded-lg px-2.5 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-all"
+                  variant="default"
+                  size="sm"
+                  wrapperClassName="w-full"
                 />
               </div>
             </div>
@@ -406,10 +400,11 @@ export default function BooksFilter({
           <Button
             onClick={applyFilters}
             disabled={!isDirty}
-            className={`w-full justify-center py-2 transition-all disabled:cursor-not-allowed ${
-              isDirty
-                ? "bg-primary text-white hover:bg-primary/90 active:scale-[0.98]"
-                : "bg-card-hover text-muted-foreground"
+            variant="primary"
+            className={`w-full justify-center transition-all ${
+              !isDirty
+                ? "bg-card-hover text-muted-foreground hover:bg-card-hover"
+                : ""
             }`}
           >
             {tFilter("apply")}

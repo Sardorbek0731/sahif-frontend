@@ -13,7 +13,7 @@ interface Props {
   bookTitle: string;
   bookImage: string;
   finalPrice: number;
-  priority?: boolean;
+  preload?: boolean;
 }
 
 export default function BookCard({
@@ -23,11 +23,11 @@ export default function BookCard({
   bookTitle,
   bookImage,
   finalPrice,
-  priority = false,
+  preload = false,
 }: Props) {
   const t = useTranslations("book");
   return (
-    <div className="flex flex-col bg-card rounded-lg hover:shadow-2xl transition-all duration-200 group p-3">
+    <article className="flex flex-col bg-card rounded-lg hover:shadow-2xl transition-all duration-200 group p-3">
       <Link
         href={`/books/${book.slug}/${variant.language}`}
         className="relative row-center bg-card pt-3 pr-3 pb-6 pl-3 border-b border-border mb-3"
@@ -38,7 +38,7 @@ export default function BookCard({
           width={160}
           height={230}
           className="h-44 w-auto"
-          priority={priority}
+          priority={preload}
         />
         <div className="absolute top-0 left-0">
           <BookBadge book={book} />
@@ -47,9 +47,9 @@ export default function BookCard({
 
       <div className="flex flex-col flex-1 justify-between">
         <Link href={`/books/${book.slug}/${variant.language}`}>
-          <h2 className="font-semibold leading-snug line-clamp-2 hover:text-primary transition-colors">
+          <h3 className="font-semibold leading-snug line-clamp-2 hover:text-primary transition-colors">
             {bookTitle}
-          </h2>
+          </h3>
         </Link>
         <Link
           href={`/authors/${book.authorSlug}`}
@@ -59,14 +59,17 @@ export default function BookCard({
         </Link>
 
         <div className="row-between gap-1 mt-3 text-xs text-muted-foreground">
-          <span className="text-amber-500">
+          <span
+            className="text-amber-500"
+            aria-label={`${book.stats.rating.toFixed(1)} yulduz`}
+          >
             ★ {book.stats.rating.toFixed(1)}
           </span>
-          <span>·</span>
+          <span aria-hidden="true">·</span>
           <span>
             {variant.pageCount} {t("pages")}
           </span>
-          <span>·</span>
+          <span aria-hidden="true">·</span>
           <span className="capitalize">{t(`formats.${variant.format}`)}</span>
         </div>
 
@@ -89,6 +92,6 @@ export default function BookCard({
           isOutOfStock={variant.stockCount === 0}
         />
       </div>
-    </div>
+    </article>
   );
 }

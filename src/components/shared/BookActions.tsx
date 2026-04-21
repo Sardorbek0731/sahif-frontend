@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/icons";
 import { useBookActions } from "@/hooks/useBookActions";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
@@ -40,28 +39,34 @@ export default function BookActions({
     <div className="flex items-center gap-3">
       {cartItem ? (
         <div className="flex-1 row-between bg-foreground/5 border border-border rounded-lg px-3 h-10">
-          <button
+          <Button
+            variant="ghost"
             onClick={decrement}
-            className="border-r border-border pr-3 mr-3 text-muted-foreground hover:text-foreground cursor-pointer transition-all"
-          >
-            <Icon name="minus" size={18} />
-          </button>
+            leftIcon="minus"
+            iconSize={18}
+            aria-label={t("decreaseQuantity")}
+            className="border-r border-border pr-3 mr-3 text-muted-foreground hover:text-foreground cursor-pointer h-full rounded-none"
+          />
           <span className="mx-2">{cartItem.quantity}</span>
-          <button
+          <Button
+            variant="ghost"
             onClick={increment}
-            className="border-l border-border pl-3 ml-3 text-muted-foreground hover:text-foreground cursor-pointer transition-all"
-          >
-            <Icon name="plus" size={18} />
-          </button>
+            leftIcon="plus"
+            iconSize={18}
+            aria-label={t("increaseQuantity")}
+            className="border-l border-border pl-3 ml-3 text-muted-foreground hover:text-foreground cursor-pointer h-full rounded-none"
+          />
         </div>
       ) : (
         <Button
-          onClick={isOutOfStock ? undefined : addToCart}
+          onClick={addToCart}
+          disabled={isOutOfStock}
           leftIcon="cart"
           iconSize={16}
+          aria-label={isOutOfStock ? t("outOfStock") : t("addToCart")}
           className={`flex-1 h-10 justify-center px-4 ${
             isOutOfStock
-              ? "bg-foreground/8 text-foreground/35 border border-border cursor-not-allowed!"
+              ? "bg-foreground/8 text-foreground/35 border border-border"
               : "bg-foreground text-background hover:opacity-90"
           }`}
         >
@@ -73,6 +78,7 @@ export default function BookActions({
         onClick={toggleWishlist}
         leftIcon="wishlist"
         iconSize={16}
+        aria-label={isInWishlist ? t("removeFromWishlist") : t("addToWishlist")}
         className={`w-10 h-10 justify-center border transition-all shrink-0 ${
           isInWishlist
             ? "border-primary bg-primary text-white"
