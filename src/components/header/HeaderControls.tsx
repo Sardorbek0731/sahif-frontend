@@ -57,14 +57,19 @@ export function LanguageSwitcher() {
             key={lang.code}
             aria-selected={lang.code === locale}
             onClick={() => changeLanguage(lang.code)}
-            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center ${
+            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center justify-between ${
               lang.code === locale
                 ? "bg-primary/10 text-primary font-medium"
                 : ""
             }`}
           >
-            <Icon name={lang.code} size={16} className="mr-2" />
-            {lang.name}
+            <div className="flex items-center">
+              <Icon name={lang.code} size={16} className="mr-2" />
+              {lang.name}
+            </div>
+            {lang.code === locale && (
+              <Icon name="check" size={16} className="text-primary ml-2" />
+            )}
           </button>
         ))}
       </div>
@@ -131,14 +136,19 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
             key={value}
             aria-selected={value === currentTheme}
             onClick={() => handleSelect(value)}
-            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center ${
+            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center justify-between ${
               value === currentTheme
                 ? "bg-primary/10 text-primary font-medium"
                 : ""
             }`}
           >
-            <Icon name={THEME_ICONS[value]} size={16} className="mr-2" />
-            {t(value)}
+            <div className="flex items-center">
+              <Icon name={THEME_ICONS[value]} size={16} className="mr-2" />
+              {t(value)}
+            </div>
+            {value === currentTheme && (
+              <Icon name="check" size={16} className="text-primary ml-2" />
+            )}
           </button>
         ))}
       </div>

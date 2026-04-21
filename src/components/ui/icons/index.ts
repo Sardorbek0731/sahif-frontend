@@ -29,6 +29,7 @@ import { UserIcon } from "./list/user";
 import { LogOutIcon } from "./list/log-out";
 import { MonitorIcon } from "./list/monitor";
 import { FilterIcon } from "./list/filter";
+import { CheckIcon } from "./list/check";
 
 export const ICON_LIST = {
   location: MapPinIcon,
@@ -60,6 +61,7 @@ export const ICON_LIST = {
   logout: LogOutIcon,
   monitor: MonitorIcon,
   filter: FilterIcon,
+  check: CheckIcon,
 } as const;
 
 export type IconName = keyof typeof ICON_LIST;
