@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import Categories from "./Categories";
 import Search from "./Search";
 import { Logo } from "@/components/ui/Logo";
-import NavLinks from "./NavLinks";
+import { NavLinks } from "./NavActions";
 import { SITE_NAME } from "@/constants";
 
 export default function Navbar() {

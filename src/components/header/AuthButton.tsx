@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import UserMenu from "@/components/navbar/UserMenu";
+import { UserMenu } from "@/components/navbar/NavActions";
 import LoginModal from "@/components/auth/LoginModal";
 
 export default function AuthButton({

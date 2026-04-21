@@ -5,7 +5,8 @@ import { useTranslations } from "next-intl";
 
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/icons/icon";
+import { Input } from "@/components/ui/Input";
+import { Icon } from "@/components/ui/icons";
 import { popularCategories } from "@/data/categories";
 import { useSearchStore } from "@/store/useSearchStore";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -64,19 +65,19 @@ export default function Search() {
           e.preventDefault();
           handleSearch(searchValue);
         }}
-        className="flex items-center bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4"
       >
-        <Icon name="search" size={16} className="mr-2" />
-        <input
+        <Input
           ref={inputRef}
+          variant="filled"
+          leftIcon="search"
           type="text"
           name="search-book"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder={t("search.searchBook")}
           autoComplete="off"
-          className="flex-1 h-full bg-transparent outline-none"
           onFocus={() => setIsFocused(true)}
+          wrapperClassName="h-10"
         />
       </form>
 
@@ -91,10 +92,11 @@ export default function Search() {
               </span>
               <div className="flex flex-col">
                 {safeHistory.map((item) => (
-                  <div
+                  <button
                     key={item}
+                    type="button"
                     onClick={() => handleSearch(item)}
-                    className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all"
+                    className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all text-left w-full"
                   >
                     <div className="flex items-center">
                       <Icon className="mr-2" name="search" size={16} />
@@ -103,9 +105,10 @@ export default function Search() {
                     <Button
                       leftIcon="x"
                       iconSize={18}
+                      aria-label={t("removeFromSearch")}
                       onClick={(e) => removeHistoryItem(e, item)}
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

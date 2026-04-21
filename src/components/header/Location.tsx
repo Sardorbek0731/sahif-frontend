@@ -5,7 +5,8 @@ import { useTranslations } from "next-intl";
 
 import { regions } from "@/data/regions";
 import { Button } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/icons/icon";
+import { Input } from "@/components/ui/Input";
+import { Icon } from "@/components/ui/icons";
 import { useLocationStore } from "@/store/useLocationStore";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import Modal from "@/components/ui/Modal";
@@ -67,7 +68,7 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-21 bg-card p-4 rounded-lg border border-border shadow-2xl">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg border border-border shadow-2xl">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}
@@ -78,7 +79,9 @@ export default function Location({
 
           <div className="flex items-center">
             <Button
-              className="bg-primary text-sm py-2 px-4 mr-2 text-nowrap text-background"
+              variant="primary"
+              size="sm"
+              className="mr-2 text-nowrap"
               onClick={() => {
                 confirmLocation();
                 setShowPrompt(false);
@@ -88,7 +91,8 @@ export default function Location({
             </Button>
 
             <Button
-              className="bg-background text-sm py-2 px-4"
+              variant="default"
+              size="sm"
               onClick={() => {
                 setShowPrompt(false);
                 setIsOpen(true);
@@ -103,24 +107,24 @@ export default function Location({
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        title={t("header.selectLocation")}
         maxWidth="max-w-90"
       >
         <div className="row-between mb-6">
           <h2 className="text-xl font-bold">{t("header.selectLocation")}</h2>
         </div>
 
-        <div className="flex items-center mb-6 bg-card h-10 rounded-lg hover:bg-card-hover focus-within:bg-card-hover transition-all px-4">
-          <Icon name="search" size={16} className="mr-2" />
-          <input
-            ref={inputRef}
-            type="text"
-            name="search-region"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t("header.searchRegion")}
-            className="flex-1 h-full bg-transparent outline-none"
-          />
-        </div>
+        <Input
+          ref={inputRef}
+          variant="filled"
+          leftIcon="search"
+          type="text"
+          name="search-region"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={t("header.searchRegion")}
+          wrapperClassName="mb-6 h-10"
+        />
 
         <div className="max-h-88 overflow-y-auto space-y-3 pr-3 custom-scrollbar">
           {filteredRegions.length > 0 ? (
