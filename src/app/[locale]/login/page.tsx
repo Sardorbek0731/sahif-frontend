@@ -6,8 +6,8 @@ import { generatePrivateMetadata } from "@/lib/metadata";
 import { type Locale } from "@/i18n/routing";
 import { redirect } from "@/i18n/navigation";
 
-import LoginRedirect from "@/components/auth/LoginRedirect";
-import LoginFormClient from "@/components/auth/LoginFormClient";
+import LoginRedirectGuard from "./LoginRedirectGuard";
+import LoginFormWrapper from "./LoginFormWrapper";
 
 export async function generateMetadata({
   params,
@@ -35,15 +35,17 @@ export default async function Login({
   const cookieStore = await cookies();
   const token = cookieStore.get("auth-token")?.value;
 
+  // Server-side redirect — token cookie bo'lsa
   if (token) {
     redirect({ href: "/", locale });
   }
 
   return (
     <main className="min-h-screen bg-background row-center">
-      <LoginRedirect />
+      {/* Client-side redirect — Zustand store uchun */}
+      <LoginRedirectGuard />
       <div className="max-w-90 p-6 rounded-lg">
-        <LoginFormClient />
+        <LoginFormWrapper />
       </div>
     </main>
   );

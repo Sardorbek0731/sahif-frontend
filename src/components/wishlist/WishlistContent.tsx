@@ -1,35 +1,29 @@
 "use client";
 
-import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useWishlistStore } from "@/store/useWishlistStore";
-import { useCartStore } from "@/store/useCartStore";
 import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
-import { Link } from "@/i18n/navigation";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
-
+import { Button } from "@/components/ui/Button";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import BookCard from "@/components/books/BookCard";
 
 export default function WishlistContent() {
   const isMounted = useIsMounted();
   const locale = useLocale() as Locale;
-  const { items, removeItem, clearWishlist } = useWishlistStore();
-  const addToCart = useCartStore((s) => s.addItem);
+  const t = useTranslations("wishlist");
+  const { items, clearWishlist } = useWishlistStore();
 
-  // 1. Gidratatsiya tugaguncha kutamiz
   if (!isMounted) {
-    return <div className="py-20 text-center">Yuklanmoqda...</div>;
+    return <div className="py-20 text-center">{t("loading")}</div>;
   }
 
-  // 2. Endi faqat haqiqiy (client-side) ma'lumot bilan ishlaymiz
   if (items.length === 0) {
     return (
-      <div className="py-20 text-center text-foreground/50">
-        {"Sevimlilar bo'sh"}
-      </div>
+      <div className="py-20 text-center text-foreground/50">{t("empty")}</div>
     );
   }
 
@@ -40,85 +34,49 @@ export default function WishlistContent() {
       const variant =
         book.variants.find((v) => v.language === item.language) ??
         book.variants[0];
-      const bookTitle = getBookTitle(book, locale, item.language);
-      const bookImage = variant.variantImage ?? book.images.cover;
-      const finalPrice =
-        variant.price.amount - (variant.price.discountAmount ?? 0);
-      const authorName = getAuthorName(book.authorSlug);
       return {
         book,
         variant,
-        item,
-        bookTitle,
-        bookImage,
-        finalPrice,
-        authorName,
+        authorName: getAuthorName(book.authorSlug),
+        bookTitle: getBookTitle(book, locale, item.language),
+        bookImage: variant.variantImage ?? book.images.cover,
+        finalPrice: variant.price.amount - (variant.price.discountAmount ?? 0),
       };
     })
     .filter((b): b is NonNullable<typeof b> => b !== null);
 
   return (
-    <div className="flex flex-col gap-4">
-      {wishlistBooks.map((b) => {
-        return (
-          <div
-            key={`${b.item.bookId}-${b.item.language}`}
-            className="flex items-center gap-4 p-4 bg-card rounded-lg"
-          >
-            <Link href={`/books/${b.book.slug}/${b.item.language}`}>
-              <Image
-                src={b.bookImage}
-                alt={b.bookTitle}
-                width={60}
-                height={90}
-                className="h-auto rounded-lg"
-              />
-            </Link>
-            <div className="flex-1">
-              <Link href={`/books/${b.book.slug}/${b.item.language}`}>
-                <p className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                  {b.bookTitle}
-                </p>
-              </Link>
-              <p className="text-xs text-muted-foreground">{b.authorName}</p>
-              <p className="text-sm font-medium mt-1">
-                {b.finalPrice.toLocaleString()} UZS
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  if (b.variant.stockCount === 0) return;
-                  addToCart({
-                    bookId: b.item.bookId,
-                    slug: b.book.slug,
-                    language: b.item.language,
-                  });
-                  removeItem(b.item.bookId, b.item.language);
-                }}
-                disabled={b.variant.stockCount === 0}
-                className="text-xs px-3 py-2 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                {"Cartga o'tkazish"}
-              </button>
-              <button
-                onClick={() => removeItem(b.item.bookId, b.item.language)}
-                className="text-muted-foreground hover:text-foreground text-lg"
-              >
-                ×
-              </button>
-            </div>
-          </div>
-        );
-      })}
-
-      <div className="flex justify-end pt-4 border-t border-border">
+    <div className="py-6">
+      <div className="row-between mb-6">
+        <h1 className="text-2xl font-bold">
+          {t("title")}
+          <span className="text-base font-normal text-muted-foreground ml-2">
+            ({items.length})
+          </span>
+        </h1>
         <button
+          type="button"
           onClick={clearWishlist}
-          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
         >
-          {"Hammasini o'chirish"}
+          {t("clearAll")}
         </button>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {wishlistBooks.map(
+          ({ book, variant, authorName, bookTitle, bookImage, finalPrice }) => (
+            <BookCard
+              key={`${book.id}-${variant.language}`}
+              book={book}
+              variant={variant}
+              authorName={authorName}
+              bookTitle={bookTitle}
+              bookImage={bookImage}
+              finalPrice={finalPrice}
+            />
+          ),
+        )}
       </div>
     </div>
   );

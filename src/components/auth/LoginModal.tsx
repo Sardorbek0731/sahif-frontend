@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import Modal from "@/components/ui/Modal";
 import LoginForm from "@/components/auth/LoginForm";
@@ -17,6 +18,7 @@ export default function LoginModal({
   onClose,
   onSuccess,
 }: LoginModalProps) {
+  const t = useTranslations("pages");
   const [step, setStep] = useState<Step>("phone");
 
   const handleClose = () => {
@@ -35,6 +37,7 @@ export default function LoginModal({
       isOpen={isOpen}
       onClose={handleClose}
       showCloseButton={step !== "name"}
+      title={t("login")}
       maxWidth="max-w-90"
     >
       <LoginForm

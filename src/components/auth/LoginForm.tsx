@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
+import { Input, OTPInput } from "@/components/ui/Input";
 import Spinner from "../ui/Spinner";
 import { type Step, useAuth } from "@/hooks/useAuth";
 
@@ -26,34 +27,41 @@ function PhoneStep({
   };
 
   return (
-    <div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <h2 className="text-xl font-bold text-foreground mb-3">{t("title")}</h2>
       <p className="text-muted-foreground mb-6">{t("description")}</p>
 
-      <label className="text-muted-foreground mb-2 block">{t("label")}:</label>
-      <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all">
-        <span className="text-foreground select-none">+998</span>
-        <input
-          type="tel"
-          inputMode="numeric"
-          maxLength={9}
-          value={value}
-          onChange={(e) => setValue(e.target.value.replace(/\D/g, ""))}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-          placeholder="__ ___ __ __"
-          className="flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground"
-          autoFocus
-        />
-      </div>
+      <label htmlFor="phone-input" className="text-muted-foreground mb-2 block">
+        {t("label")}:
+      </label>
+      <Input
+        id="phone-input"
+        type="tel"
+        inputMode="numeric"
+        maxLength={9}
+        value={value}
+        onChange={(e) => setValue(e.target.value.replace(/\D/g, ""))}
+        placeholder="__ ___ __ __"
+        prefix="+998"
+        autoFocus
+      />
+
+      {error && <p className="text-rose-500 text-sm mt-3">{error}</p>}
 
       <Button
-        onClick={handleSubmit}
+        type="submit"
+        variant="primary"
         disabled={value.replace(/\D/g, "").length !== 9 || isLoading}
-        className="w-full justify-center bg-primary text-foreground py-3 mt-6 hover:bg-primary/90 disabled:bg-primary/40 disabled:text-foreground/40 disabled:cursor-not-allowed"
+        className="w-full justify-center py-3 mt-6"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
-    </div>
+    </form>
   );
 }
 
@@ -72,42 +80,9 @@ function OtpStep({
   error: string;
 }) {
   const t = useTranslations("auth.login.otp");
-  const [values, setValues] = useState(["", "", "", "", "", ""]);
 
-  const handleChange = (index: number, val: string) => {
-    if (isLoading) return;
-    if (!/^\d*$/.test(val)) return;
-    const next = [...values];
-    next[index] = val.slice(-1);
-    setValues(next);
-
-    if (val && index < 5) {
-      document.getElementById(`otp-${index + 1}`)?.focus();
-    }
-
-    if (next.every((v) => v !== "") && val) {
-      onSubmit(next.join(""));
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !values[index] && index > 0) {
-      document.getElementById(`otp-${index - 1}`)?.focus();
-    }
-  };
-
-  const handlePaste = (e: React.ClipboardEvent) => {
-    e.preventDefault();
-    if (isLoading) return;
-    const pasted = e.clipboardData
-      .getData("text")
-      .replace(/\D/g, "")
-      .slice(0, 6);
-    if (pasted.length === 6) {
-      setValues(pasted.split(""));
-      onSubmit(pasted);
-    }
-  };
+  // "invalidCode" key bo'lsa tarjima qilamiz, boshqa xatolar to'g'ridan-to'g'ri
+  const errorMessage = error === "invalidCode" ? t("invalidCode") : error;
 
   return (
     <div>
@@ -125,26 +100,11 @@ function OtpStep({
         {t("description")} <span className="text-foreground">{phone}</span>
       </p>
 
-      <div className="flex gap-2" onPaste={handlePaste}>
-        {values.map((v, i) => (
-          <input
-            key={i}
-            id={`otp-${i}`}
-            type="tel"
-            inputMode="numeric"
-            maxLength={1}
-            value={v}
-            onChange={(e) => handleChange(i, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(i, e)}
-            className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-lg outline-none focus:border-primary transition-colors"
-            autoFocus={i === 0}
-          />
-        ))}
-      </div>
+      <OTPInput onComplete={onSubmit} isLoading={isLoading} />
 
-      {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
-
-      {isLoading && <Spinner className="w-8 h-8 border-2 mt-6" />}
+      {errorMessage && (
+        <p className="text-rose-500 text-sm mt-3">{errorMessage}</p>
+      )}
     </div>
   );
 }
@@ -170,49 +130,59 @@ function NameStep({
   };
 
   return (
-    <div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <h2 className="text-xl font-bold text-foreground mb-3">{t("title")}</h2>
       <p className="text-muted-foreground mb-6">{t("description")}</p>
 
-      <label className="text-muted-foreground mb-2 block">
+      <label
+        htmlFor="first-name-input"
+        className="text-muted-foreground mb-2 block"
+      >
         {t("firstNameLabel")}:
       </label>
-      <input
+      <Input
+        id="first-name-input"
         type="text"
         value={firstName}
         maxLength={20}
         onChange={(e) => setFirstName(e.target.value)}
-        onKeyDown={(e) =>
-          e.key === "Enter" &&
-          document.getElementById("last-name-input")?.focus()
-        }
         placeholder={t("firstNamePlaceholder")}
-        className="w-full text-foreground outline-none placeholder:text-muted-foreground rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all mb-6"
+        wrapperClassName="mb-6"
         autoFocus
       />
 
-      <label className="text-muted-foreground mb-2 block">
+      <label
+        htmlFor="last-name-input"
+        className="text-muted-foreground mb-2 block"
+      >
         {t("lastNameLabel")}:
       </label>
-      <input
+      <Input
         id="last-name-input"
         type="text"
         value={lastName}
         maxLength={20}
         onChange={(e) => setLastName(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         placeholder={t("lastNamePlaceholder")}
-        className="w-full text-foreground outline-none placeholder:text-muted-foreground rounded-lg border border-border bg-card px-4 py-3 focus-within:border-primary transition-all mb-6"
+        wrapperClassName="mb-6"
       />
 
+      {error && <p className="text-rose-500 text-sm mt-1 mb-3">{error}</p>}
+
       <Button
-        onClick={handleSubmit}
+        type="submit"
+        variant="primary"
         disabled={!isValid || isLoading}
-        className="w-full justify-center bg-primary text-foreground py-3 hover:bg-primary/90 disabled:bg-primary/40 disabled:text-foreground/40 disabled:cursor-not-allowed"
+        className="w-full justify-center py-3"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
-    </div>
+    </form>
   );
 }
 

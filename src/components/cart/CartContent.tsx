@@ -1,33 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useCartStore, selectTotalItems } from "@/store/useCartStore";
 import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
-
+import { Button } from "@/components/ui/Button";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function CartContent() {
   const isMounted = useIsMounted();
   const locale = useLocale() as Locale;
+  const t = useTranslations("cart");
+  const tCommon = useTranslations();
   const { items, removeItem, updateQuantity, clearCart } = useCartStore();
   const totalQuantity = useCartStore(selectTotalItems);
 
-  // 1. Gidratatsiya tugaguncha kutamiz
   if (!isMounted) {
-    return <div className="py-20 text-center">Yuklanmoqda...</div>;
+    return <div className="py-20 text-center">{t("loading")}</div>;
   }
 
-  // 2. Endi faqat haqiqiy (client-side) ma'lumot bilan ishlaymiz
   if (items.length === 0) {
     return (
-      <div className="py-20 text-center text-foreground/50">
-        {"Savatcha bo'sh"}
-      </div>
+      <div className="py-20 text-center text-foreground/50">{t("empty")}</div>
     );
   }
 
@@ -62,23 +61,27 @@ export default function CartContent() {
 
   return (
     <div className="flex flex-col gap-4">
-      {cartBooks.map((b) => {
-        return (
-          <div
+      <ul className="flex flex-col gap-4">
+        {cartBooks.map((b) => (
+          <li
             key={`${b.item.bookId}-${b.item.language}`}
             className="flex items-center gap-4 p-4 bg-card rounded-lg"
           >
-            <Image
-              src={b.bookImage}
-              alt={b.bookTitle}
-              width={60}
-              height={90}
-              className="h-auto rounded-lg"
-            />
+            <Link href={`/books/${b.book.slug}/${b.item.language}`}>
+              <Image
+                src={b.bookImage}
+                alt={b.bookTitle}
+                width={60}
+                height={90}
+                className="h-auto rounded-lg"
+              />
+            </Link>
             <div className="flex-1">
-              <p className="text-sm font-medium text-foreground">
-                {b.bookTitle}
-              </p>
+              <Link href={`/books/${b.book.slug}/${b.item.language}`}>
+                <p className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  {b.bookTitle}
+                </p>
+              </Link>
               <p className="text-xs text-muted-foreground">{b.authorName}</p>
               <p className="text-xs text-muted-foreground">
                 {b.variant.language}
@@ -86,6 +89,7 @@ export default function CartContent() {
             </div>
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={() =>
                   updateQuantity(
                     b.item.bookId,
@@ -93,12 +97,14 @@ export default function CartContent() {
                     b.item.quantity - 1,
                   )
                 }
-                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm"
+                aria-label={tCommon("decreaseQuantity")}
+                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm hover:bg-card-hover transition-colors"
               >
                 −
               </button>
               <span className="text-sm w-4 text-center">{b.item.quantity}</span>
               <button
+                type="button"
                 onClick={() => {
                   if (b.item.quantity < b.variant.stockCount) {
                     updateQuantity(
@@ -109,7 +115,8 @@ export default function CartContent() {
                   }
                 }}
                 disabled={b.item.quantity >= b.variant.stockCount}
-                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label={tCommon("increaseQuantity")}
+                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm hover:bg-card-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 +
               </button>
@@ -120,25 +127,28 @@ export default function CartContent() {
               </p>
             </div>
             <button
+              type="button"
+              aria-label={tCommon("removeItem")}
               onClick={() => removeItem(b.item.bookId, b.item.language)}
-              className="text-muted-foreground hover:text-foreground text-lg ml-2"
+              className="text-muted-foreground hover:text-foreground text-lg ml-2 p-1 transition-colors"
             >
               ×
             </button>
-          </div>
-        );
-      })}
+          </li>
+        ))}
+      </ul>
 
       <div className="row-between pt-4 border-t border-border">
         <button
+          type="button"
           onClick={clearCart}
-          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+          className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
         >
-          Savatni tozalash
+          {t("clear")}
         </button>
         <div className="text-right">
           <p className="text-xs text-muted-foreground">
-            Jami ({totalQuantity} ta)
+            {t("total", { count: totalQuantity })}
           </p>
           <p className="text-lg font-medium">{total.toLocaleString()} UZS</p>
         </div>
