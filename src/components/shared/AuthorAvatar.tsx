@@ -14,7 +14,6 @@ export default function AuthorAvatar({
   size = 80,
   className = "",
 }: AuthorAvatarProps) {
-  // Initials ni hisoblash
   const initials = name
     .split(" ")
     .filter((n) => !SKIP_WORDS.has(n.toLowerCase()))
@@ -29,7 +28,7 @@ export default function AuthorAvatar({
         alt={name}
         width={size}
         height={size}
-        className={`rounded-full object-cover ${className}`}
+        className={`rounded-full object-cover aspect-square shrink-0 ${className}`}
       />
     );
   }

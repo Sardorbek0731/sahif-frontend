@@ -233,7 +233,7 @@ export default function BooksFilter({
 
   return (
     <aside aria-label={tFilter("title")} className="w-64 shrink-0 mr-4">
-      <div className="bg-card rounded-lg border border-border overflow-hidden sticky top-4">
+      <div className="bg-card rounded-lg border border-border overflow-hidden">
         {/* Header */}
         <div className="row-between px-4 py-3 border-b border-border">
           <span className="flex items-center gap-2 font-semibold">
@@ -401,11 +401,7 @@ export default function BooksFilter({
             onClick={applyFilters}
             disabled={!isDirty}
             variant="primary"
-            className={`w-full justify-center transition-all ${
-              !isDirty
-                ? "bg-card-hover text-muted-foreground hover:bg-card-hover"
-                : ""
-            }`}
+            className="w-full justify-center transition-all"
           >
             {tFilter("apply")}
           </Button>

@@ -9,17 +9,24 @@ export type ButtonVariant =
   | "primary"
   | "ghost"
   | "danger"
-  | "outline";
+  | "outline"
+  | "solid"
+  | "selected"
+  | "primaryGhost";
 export type ButtonSize = "sm" | "md";
 
 // ─── Style Maps ──────────────────────────────────────────────────────────────
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
-  default: "bg-card hover:bg-card-hover",
-  primary: "bg-primary text-background hover:bg-primary/90",
-  ghost: "hover:bg-card-hover",
-  outline: "border border-border bg-card hover:bg-card-hover",
-  danger: "text-rose-500 hover:bg-rose-500/5",
+  default: "bg-card enabled:hover:bg-card-hover",
+  primary: "bg-primary text-background enabled:hover:bg-primary/80",
+  ghost: "bg-transparent enabled:hover:bg-card-hover",
+  outline: "border border-border bg-card enabled:hover:bg-card-hover",
+  danger: "text-rose-500 enabled:hover:bg-rose-500/5",
+  solid: "bg-foreground text-background enabled:hover:bg-foreground/80",
+  selected: "bg-primary/15 text-primary hover:bg-primary/20",
+  primaryGhost:
+    "bg-primary/5 text-primary border border-primary/15 hover:bg-primary/10",
 };
 
 // Text bor holat uchun
@@ -77,14 +84,12 @@ export const Button = <T extends React.ElementType = "button">({
   const Component = as ?? "button";
   const isIconOnly = !children && (!!leftIcon || !!rightIcon);
 
-  // Default type="button" agar <button> element bo'lsa (form ichida submit bo'lmaslik uchun)
   const defaultProps =
     Component === "button" && !props.type ? { type: "button" as const } : {};
 
   const classes = cn(
     "flex items-center rounded-lg transition-all cursor-pointer",
-    "disabled:opacity-40 disabled:cursor-not-allowed",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
     VARIANT_STYLES[variant],
     isIconOnly ? ICON_SIZE_STYLES[size] : SIZE_STYLES[size],
     className,

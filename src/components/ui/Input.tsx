@@ -18,8 +18,8 @@ const VARIANT_WRAPPER: Record<InputVariant, string> = {
 };
 
 const SIZE_WRAPPER: Record<InputSize, string> = {
-  sm: "px-2.5 py-1.5 text-sm",
-  md: "px-4 py-3",
+  sm: "px-2 text-sm",
+  md: "px-4",
 };
 
 // ─── Input Props ─────────────────────────────────────────────────────────────

@@ -49,6 +49,7 @@ function PhoneStep({
         placeholder="__ ___ __ __"
         prefix="+998"
         autoFocus
+        className="h-10"
       />
 
       {error && <p className="text-rose-500 text-sm mt-3">{error}</p>}
@@ -57,7 +58,7 @@ function PhoneStep({
         type="submit"
         variant="primary"
         disabled={value.replace(/\D/g, "").length !== 9 || isLoading}
-        className="w-full justify-center py-3 mt-6"
+        className="w-full justify-center mt-6"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
@@ -81,7 +82,6 @@ function OtpStep({
 }) {
   const t = useTranslations("auth.login.otp");
 
-  // "invalidCode" key bo'lsa tarjima qilamiz, boshqa xatolar to'g'ridan-to'g'ri
   const errorMessage = error === "invalidCode" ? t("invalidCode") : error;
 
   return (
@@ -153,6 +153,7 @@ function NameStep({
         onChange={(e) => setFirstName(e.target.value)}
         placeholder={t("firstNamePlaceholder")}
         wrapperClassName="mb-6"
+        className="h-10"
         autoFocus
       />
 
@@ -170,6 +171,7 @@ function NameStep({
         onChange={(e) => setLastName(e.target.value)}
         placeholder={t("lastNamePlaceholder")}
         wrapperClassName="mb-6"
+        className="h-10"
       />
 
       {error && <p className="text-rose-500 text-sm mt-1 mb-3">{error}</p>}

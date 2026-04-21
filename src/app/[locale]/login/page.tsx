@@ -35,14 +35,12 @@ export default async function Login({
   const cookieStore = await cookies();
   const token = cookieStore.get("auth-token")?.value;
 
-  // Server-side redirect — token cookie bo'lsa
   if (token) {
     redirect({ href: "/", locale });
   }
 
   return (
     <main className="min-h-screen bg-background row-center">
-      {/* Client-side redirect — Zustand store uchun */}
       <LoginRedirectGuard />
       <div className="max-w-90 p-6 rounded-lg">
         <LoginFormWrapper />

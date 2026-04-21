@@ -14,8 +14,6 @@ import { Icon } from "@/components/ui/icons";
 import { setCookie } from "@/lib/cookies";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
-// ─── LanguageSwitcher ─────────────────────────────────────────────────────────
-
 export function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -42,42 +40,36 @@ export function LanguageSwitcher() {
         <Button
           rightIcon="chevronDown"
           iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          className="justify-between px-4 h-10 bg-card hover:bg-card-hover"
+          className={`justify-between px-4 h-10 bg-card hover:bg-card-hover ${isOpen ? "bg-card-hover" : ""}`}
         >
           <Icon name={currentLanguage.code} size={16} className="mr-2" />
           {currentLanguage.name}
         </Button>
       )}
     >
-      <div role="listbox" className="py-2">
+      <div role="listbox" className="py-1">
         {LANGUAGE_NAMES.map((lang) => (
-          <button
-            type="button"
-            role="option"
+          <Button
             key={lang.code}
+            role="option"
             aria-selected={lang.code === locale}
             onClick={() => changeLanguage(lang.code)}
-            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center justify-between ${
-              lang.code === locale
-                ? "bg-primary/10 text-primary font-medium"
-                : ""
-            }`}
+            variant={lang.code === locale ? "selected" : "ghost"}
+            className="w-full mb-1 last:mb-0 px-4 h-10 rounded-none row-between"
           >
             <div className="flex items-center">
               <Icon name={lang.code} size={16} className="mr-2" />
               {lang.name}
             </div>
             {lang.code === locale && (
-              <Icon name="check" size={16} className="text-primary ml-2" />
+              <Icon name="check" size={16} className="text-primary ml-4" />
             )}
-          </button>
+          </Button>
         ))}
       </div>
     </Dropdown>
   );
 }
-
-// ─── ThemeToggle ──────────────────────────────────────────────────────────────
 
 type ThemeMode = "light" | "dark" | "system";
 
@@ -95,7 +87,6 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("header.theme");
 
-  // Cookie ga saqlash — hozirgi logika o'zgarishsiz
   useEffect(() => {
     if (!theme || !resolvedTheme) return;
     setCookie("theme", theme);
@@ -121,35 +112,31 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
         <Button
           rightIcon="chevronDown"
           iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          className="justify-between px-4 h-10 bg-card hover:bg-card-hover"
+          className={`justify-between px-4 h-10 bg-card hover:bg-card-hover ${isOpen ? "bg-card-hover" : ""}`}
         >
           <Icon name={activeIcon} size={16} className="mr-2" />
           {activeLabel}
         </Button>
       )}
     >
-      <div role="listbox" className="py-2">
+      <div role="listbox" className="py-1">
         {THEME_MODES.map((value) => (
-          <button
-            type="button"
-            role="option"
+          <Button
             key={value}
+            role="option"
             aria-selected={value === currentTheme}
             onClick={() => handleSelect(value)}
-            className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none flex items-center justify-between ${
-              value === currentTheme
-                ? "bg-primary/10 text-primary font-medium"
-                : ""
-            }`}
+            variant={value === currentTheme ? "selected" : "ghost"}
+            className="w-full mb-1 last:mb-0 px-4 h-10 rounded-none row-between"
           >
             <div className="flex items-center">
               <Icon name={THEME_ICONS[value]} size={16} className="mr-2" />
               {t(value)}
             </div>
             {value === currentTheme && (
-              <Icon name="check" size={16} className="text-primary ml-2" />
+              <Icon name="check" size={16} className="text-primary ml-4" />
             )}
-          </button>
+          </Button>
         ))}
       </div>
     </Dropdown>

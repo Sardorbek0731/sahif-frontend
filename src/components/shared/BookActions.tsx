@@ -38,23 +38,23 @@ export default function BookActions({
   return (
     <div className="flex items-center gap-3">
       {cartItem ? (
-        <div className="flex-1 row-between bg-foreground/5 border border-border rounded-lg px-3 h-10">
+        <div className="flex-1 row-between bg-foreground/5 border border-border rounded-lg h-10">
           <Button
             variant="ghost"
             onClick={decrement}
             leftIcon="minus"
             iconSize={18}
             aria-label={t("decreaseQuantity")}
-            className="border-r border-border pr-3 mr-3 text-muted-foreground hover:text-foreground cursor-pointer h-full rounded-none"
+            className="px-3 w-auto h-full rounded-none rounded-l-lg border-r border-border justify-center text-muted-foreground hover:text-foreground"
           />
-          <span className="mx-2">{cartItem.quantity}</span>
+          <span className="px-3 font-medium">{cartItem.quantity}</span>
           <Button
             variant="ghost"
             onClick={increment}
             leftIcon="plus"
             iconSize={18}
             aria-label={t("increaseQuantity")}
-            className="border-l border-border pl-3 ml-3 text-muted-foreground hover:text-foreground cursor-pointer h-full rounded-none"
+            className="px-3 w-auto h-full rounded-none rounded-r-lg border-l border-border justify-center text-muted-foreground hover:text-foreground"
           />
         </div>
       ) : (
@@ -64,10 +64,11 @@ export default function BookActions({
           leftIcon="cart"
           iconSize={16}
           aria-label={isOutOfStock ? t("outOfStock") : t("addToCart")}
+          variant={isOutOfStock ? "default" : "solid"}
           className={`flex-1 h-10 justify-center px-4 ${
             isOutOfStock
               ? "bg-foreground/8 text-foreground/35 border border-border"
-              : "bg-foreground text-background hover:opacity-90"
+              : ""
           }`}
         >
           {isOutOfStock ? t("outOfStock") : t("addToCart")}
@@ -79,11 +80,8 @@ export default function BookActions({
         leftIcon="wishlist"
         iconSize={16}
         aria-label={isInWishlist ? t("removeFromWishlist") : t("addToWishlist")}
-        className={`w-10 h-10 justify-center border transition-all shrink-0 ${
-          isInWishlist
-            ? "border-primary bg-primary text-white"
-            : "border-primary/15 bg-primary/5 hover:bg-primary/10 text-primary"
-        }`}
+        variant={isInWishlist ? "primary" : "primaryGhost"}
+        className="w-10 h-10 justify-center shrink-0"
       />
     </div>
   );

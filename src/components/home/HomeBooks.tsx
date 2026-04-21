@@ -52,7 +52,7 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
   const resolvedNew = resolveBooks(newBooks, locale);
 
   return (
-    <div className="space-y-10 my-4">
+    <div className="space-y-4 my-4">
       <section aria-labelledby="popular-books-heading">
         <SectionHeader
           id="popular-books-heading"

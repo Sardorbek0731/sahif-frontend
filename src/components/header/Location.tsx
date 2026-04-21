@@ -68,7 +68,7 @@ export default function Location({
       </Button>
 
       {showPrompt && !isOpen && (
-        <div className="flex flex-col absolute top-full left-0 mt-4 z-20 bg-card p-4 rounded-lg border border-border shadow-2xl">
+        <div className="flex flex-col absolute top-full left-0 mt-4 z-30 bg-card p-4 rounded-lg border border-border shadow-2xl">
           <div className="absolute -top-2 left-6 w-4 h-4 bg-card rotate-45 border-t border-l border-border" />
           <p className="text-sm text-nowrap mb-4">
             {t("header.yourLocation")}:{" "}
@@ -91,7 +91,7 @@ export default function Location({
             </Button>
 
             <Button
-              variant="default"
+              variant="solid"
               size="sm"
               onClick={() => {
                 setShowPrompt(false);
@@ -123,19 +123,17 @@ export default function Location({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t("header.searchRegion")}
-          wrapperClassName="mb-6 h-10"
+          wrapperClassName="mb-6 hover:bg-card-hover transition-all"
+          className="h-10"
         />
 
-        <div className="max-h-88 overflow-y-auto space-y-3 pr-3 custom-scrollbar">
+        <div className="max-h-90 overflow-y-auto space-y-3 pr-3">
           {filteredRegions.length > 0 ? (
             filteredRegions.map((region) => (
               <Button
                 key={region.id}
-                className={`w-full justify-between h-10 px-4 ${
-                  currentId === region.id
-                    ? "text-primary bg-card"
-                    : "hover:bg-card"
-                }`}
+                variant={currentId === region.id ? "selected" : "ghost"}
+                className="w-full justify-between h-10 px-4"
                 onClick={() => {
                   setSelectedId(region.id);
                   setIsOpen(false);

@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 import { Link, useRouter } from "@/i18n/navigation";
-import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Icon } from "@/components/ui/icons";
 import { popularCategories } from "@/data/categories";
@@ -102,12 +101,12 @@ export default function Search() {
                       <Icon className="mr-2" name="search" size={16} />
                       <span className="text-sm">{item}</span>
                     </div>
-                    <Button
-                      leftIcon="x"
-                      iconSize={18}
-                      aria-label={t("removeFromSearch")}
+                    <span
                       onClick={(e) => removeHistoryItem(e, item)}
-                    />
+                      className="cursor-pointer"
+                    >
+                      <Icon name="x" size={18} />
+                    </span>
                   </button>
                 ))}
               </div>
