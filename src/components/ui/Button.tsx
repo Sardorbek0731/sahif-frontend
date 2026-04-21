@@ -24,7 +24,7 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
   outline: "border border-border bg-card enabled:hover:bg-card-hover",
   danger: "text-rose-500 enabled:hover:bg-rose-500/5",
   solid: "bg-foreground text-background enabled:hover:bg-foreground/80",
-  selected: "bg-primary/15 text-primary hover:bg-primary/20",
+  selected: "bg-primary/15 text-primary",
   primaryGhost:
     "bg-primary/5 text-primary border border-primary/15 hover:bg-primary/10",
 };
