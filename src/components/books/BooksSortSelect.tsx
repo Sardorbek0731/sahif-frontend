@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { Dropdown } from "@/components/ui/Dropdown";
+import { Icon } from "@/components/ui/icons";
 import { type SortOption, SORT_OPTIONS } from "@/constants/sort";
 
 export type { SortOption };
@@ -64,20 +65,19 @@ export default function BooksSortSelect({
       >
         <div role="listbox" aria-label={t("label")} className="py-2 min-w-max">
           {SORT_OPTIONS.map((opt) => (
-            <button
-              type="button"
-              role="option"
+            <Button
               key={opt}
+              role="option"
               aria-selected={activeSort === opt}
               onClick={() => handleSelect(opt)}
-              className={`w-full mb-1 px-4 h-10 hover:bg-card-hover rounded-none whitespace-nowrap text-left ${
-                activeSort === opt
-                  ? "bg-primary/10 text-primary font-medium"
-                  : ""
-              }`}
+              variant={activeSort === opt ? "selected" : "ghost"}
+              className="w-full whitespace-nowrap rounded-lg mb-1 last:mb-0 px-4 h-10 row-between"
             >
-              {t(TRANSLATION_KEY[opt])}
-            </button>
+              <span>{t(TRANSLATION_KEY[opt])}</span>
+              {activeSort === opt && (
+                <Icon name="check" size={16} className="text-primary ml-4" />
+              )}
+            </Button>
           ))}
         </div>
       </Dropdown>
