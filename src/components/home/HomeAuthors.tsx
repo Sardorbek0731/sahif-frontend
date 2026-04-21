@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { authors } from "@/data/authors";
-import { Button } from "@/components/ui/Button";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 const featuredAuthors = authors.slice(0, 8);
 
@@ -12,10 +12,13 @@ export default async function HomeAuthors({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "home.authors" });
 
   return (
-    <section className="my-4">
-      <div className="row-between mb-4">
-        <h2 className="text-2xl font-bold">{t("title")}</h2>
-      </div>
+    <section aria-labelledby="authors-heading" className="my-4">
+      <SectionHeader
+        id="authors-heading"
+        title={t("title")}
+        href="/authors"
+        linkLabel={t("showMore")}
+      />
 
       <div className="flex gap-4 overflow-x-auto pb-2">
         {featuredAuthors.map((author) => (
@@ -30,6 +33,7 @@ export default async function HomeAuthors({ locale }: { locale: Locale }) {
                   src={author.image}
                   alt={author.name}
                   fill
+                  sizes="80px"
                   className="object-cover"
                 />
               ) : (
@@ -43,17 +47,6 @@ export default async function HomeAuthors({ locale }: { locale: Locale }) {
             </span>
           </Link>
         ))}
-      </div>
-
-      <div className="flex justify-center mt-6">
-        <Link href="/authors">
-          <Button
-            rightIcon="chevronRight"
-            className="bg-card hover:bg-card-hover border border-border h-10 px-6"
-          >
-            {t("showMore")}
-          </Button>
-        </Link>
       </div>
     </section>
   );

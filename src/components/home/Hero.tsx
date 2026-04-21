@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -31,42 +37,101 @@ export default function Hero() {
   const locale = useLocale() as Locale;
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const t = useTranslations("");
 
   const pillRef = useRef<HTMLDivElement>(null);
   const prevIndexRef = useRef(0);
 
+  const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const animationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pillAnimationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+
+  // Ref lar - stale closure muammosini hal qilish uchun
+  const currentRef = useRef(current);
+  const animatingRef = useRef(animating);
+  const isHoveredRef = useRef(isHovered);
+
+  // Ref larni sinxron saqlash
+  useLayoutEffect(() => {
+    currentRef.current = current;
+    animatingRef.current = animating;
+    isHoveredRef.current = isHovered;
+  });
+
+  // Barcha timerlarni tozalash funksiyasi
+  const clearAllTimers = () => {
+    if (autoAdvanceTimerRef.current) {
+      clearTimeout(autoAdvanceTimerRef.current);
+      autoAdvanceTimerRef.current = null;
+    }
+    if (animationTimerRef.current) {
+      clearTimeout(animationTimerRef.current);
+      animationTimerRef.current = null;
+    }
+  };
+
+  // Auto-advance timer ni boshlash
+  const startAutoAdvance = useCallback(() => {
+    if (heroBooks.length <= 1) return;
+
+    clearAllTimers();
+
+    autoAdvanceTimerRef.current = setTimeout(() => {
+      // Animatsiya yoki hover holatini tekshirish
+      if (animatingRef.current || isHoveredRef.current) return;
+
+      const nextIndex =
+        currentRef.current === heroBooks.length - 1
+          ? 0
+          : currentRef.current + 1;
+      setAnimating(true);
+
+      animationTimerRef.current = setTimeout(() => {
+        setCurrent(nextIndex);
+        setAnimating(false);
+      }, 200);
+    }, 10000);
+  }, []); // heroBooks.length constant, clearAllTimers stable
+
+  // current yoki isHovered o'zgarganda timer ni qayta boshlash
+  useEffect(() => {
+    startAutoAdvance();
+    return clearAllTimers;
+  }, [current, isHovered, startAutoAdvance]);
+
+  // Slaydga o'tish funksiyasi
   const go = useCallback((index: number) => {
     if (heroBooks.length <= 1) {
       setCurrent(index);
       return;
     }
+    if (animatingRef.current) return;
 
+    clearAllTimers();
     setAnimating(true);
-    setTimeout(() => {
+
+    animationTimerRef.current = setTimeout(() => {
       setCurrent(index);
       setAnimating(false);
     }, 200);
-  }, []);
+  }, []); // heroBooks.length constant, animatingRef va clearAllTimers stable
 
-  const prev = useCallback(() => {
+  const prev = () => {
     if (heroBooks.length <= 1) return;
     go(current === 0 ? heroBooks.length - 1 : current - 1);
-  }, [current, go]);
+  };
 
-  const next = useCallback(() => {
+  const next = () => {
     if (heroBooks.length <= 1) return;
     go(current === heroBooks.length - 1 ? 0 : current + 1);
-  }, [current, go]);
+  };
 
-  useEffect(() => {
-    if (heroBooks.length <= 1) return;
-    const timer = setInterval(next, 10000);
-    return () => clearInterval(timer);
-  }, [next]);
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  // Pill animation effect
   useEffect(() => {
     if (heroBooks.length <= 1) return;
 
@@ -76,7 +141,10 @@ export default function Hero() {
     const pill = pillRef.current;
     if (!pill || prevIndex === current) return;
 
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (pillAnimationTimerRef.current) {
+      clearTimeout(pillAnimationTimerRef.current);
+      pillAnimationTimerRef.current = null;
+    }
 
     const prevLeft = getLeft(prevIndex);
     const currLeft = getLeft(current);
@@ -95,7 +163,7 @@ export default function Hero() {
     if (current > prevIndex) {
       pill.style.transition = "width 100ms cubic-bezier(.4,0,.2,1)";
       pill.style.width = `${currLeft - prevLeft + DOT_SIZE}px`;
-      timeoutRef.current = setTimeout(() => {
+      pillAnimationTimerRef.current = setTimeout(() => {
         pill.style.transition =
           "left 100ms cubic-bezier(.4,0,.2,1), width 100ms cubic-bezier(.4,0,.2,1)";
         pill.style.left = `${currLeft}px`;
@@ -106,16 +174,61 @@ export default function Hero() {
         "left 100ms cubic-bezier(.4,0,.2,1), width 100ms cubic-bezier(.4,0,.2,1)";
       pill.style.left = `${currLeft}px`;
       pill.style.width = `${prevLeft - currLeft + DOT_SIZE}px`;
-      timeoutRef.current = setTimeout(() => {
+      pillAnimationTimerRef.current = setTimeout(() => {
         pill.style.transition = "width 100ms cubic-bezier(.4,0,.2,1)";
         pill.style.width = `${DOT_SIZE}px`;
       }, 100);
     }
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (pillAnimationTimerRef.current) {
+        clearTimeout(pillAnimationTimerRef.current);
+        pillAnimationTimerRef.current = null;
+      }
     };
   }, [current]);
+
+  // Keyboard navigation - stale closure muammosini hal qilish
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Agar input/textarea focus bo'lsa, ignore qilish
+      const activeElement = document.activeElement;
+      if (
+        activeElement?.tagName === "INPUT" ||
+        activeElement?.tagName === "TEXTAREA" ||
+        activeElement?.getAttribute("contenteditable") === "true"
+      ) {
+        return;
+      }
+
+      // Animatsiya yoki pause holatini tekshirish
+      if (animatingRef.current || heroBooks.length <= 1) return;
+
+      const currentIndex = currentRef.current;
+
+      switch (e.key) {
+        case "ArrowLeft":
+          e.preventDefault();
+          go(currentIndex === 0 ? heroBooks.length - 1 : currentIndex - 1);
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          go(currentIndex === heroBooks.length - 1 ? 0 : currentIndex + 1);
+          break;
+        case "Home":
+          e.preventDefault();
+          go(0);
+          break;
+        case "End":
+          e.preventDefault();
+          go(heroBooks.length - 1);
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [go]); // go funksiyasi dependency arrayda
 
   if (heroBooks.length === 0) return null;
 
@@ -138,8 +251,23 @@ export default function Hero() {
     .join("");
 
   return (
-    <section className="relative w-full bg-card rounded-lg row-between p-6 h-100">
+    <section
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={t("home.hero.carousel")}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      className="relative w-full bg-card rounded-lg row-between p-6 h-100"
+    >
       <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label={t("home.hero.slideLabel", {
+          current: current + 1,
+          total: heroBooks.length,
+        })}
         className={`w-[60%] flex flex-col items-start h-full justify-between transition-all duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
         <BookBadge className="mb-3" book={book} />
@@ -210,13 +338,20 @@ export default function Hero() {
         <div className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-primary rounded-tl-lg" />
         <div className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-primary rounded-br-lg" />
         <Link href={`/books/${book.slug}/${activeVariant.language}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={bookImage}
             alt={bookTitle}
-            className="relative h-full w-auto rounded-lg"
+            width={400}
+            height={600}
+            sizes="(max-width: 768px) 50vw, 300px"
+            className="h-full w-auto rounded-lg"
           />
         </Link>
+      </div>
+
+      {/* Live region for screen readers */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {t("home.hero.currentSlide", { title: bookTitle })}
       </div>
 
       {heroBooks.length > 1 && (
@@ -226,6 +361,9 @@ export default function Hero() {
             leftIcon="chevronLeft"
             iconSize={18}
             iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
+            aria-label={t("goToSlide", {
+              index: current === 0 ? heroBooks.length : current,
+            })}
             className="group transition-all w-8 h-8 border border-border justify-center bg-background mr-3 hover:border-foreground"
           />
 
@@ -240,6 +378,7 @@ export default function Hero() {
               <button
                 key={i}
                 onClick={() => go(i)}
+                aria-label={t("goToSlide", { index: i + 1 })}
                 className="absolute h-2 w-2 rounded-full bg-foreground/15 hover:bg-foreground/30 transition-colors cursor-pointer"
                 style={{ left: getLeft(i) }}
               />
@@ -260,6 +399,9 @@ export default function Hero() {
             leftIcon="chevronRight"
             iconSize={18}
             iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
+            aria-label={t("goToSlide", {
+              index: current === heroBooks.length - 1 ? 1 : current + 2,
+            })}
             className="group transition-all w-8 h-8 border border-border justify-center bg-background ml-3 hover:border-foreground"
           />
         </div>

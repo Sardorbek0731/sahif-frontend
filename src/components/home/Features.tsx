@@ -88,7 +88,7 @@ export default function Features() {
   const t = useTranslations("home.features");
 
   return (
-    <section className="my-4">
+    <section aria-labelledby="features-heading" className="my-4">
       <div className="mb-4 text-center">
         <div className="row-center mb-1">
           <div className="h-px w-6 bg-foreground/20" />
@@ -97,13 +97,16 @@ export default function Features() {
           </span>
           <div className="h-px w-6 bg-foreground/20" />
         </div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">
+        <h2
+          id="features-heading"
+          className="text-3xl font-bold text-foreground mb-2"
+        >
           {t("heading")}
         </h2>
         <p className="text-sm text-foreground/50">{t("subheading")}</p>
       </div>
 
-      <div className="grid gap-4 grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURE_KEYS.map((key, i) => (
           <FeatureCard
             key={key}
