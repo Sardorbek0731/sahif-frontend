@@ -11,6 +11,7 @@ import { authors } from "@/data/authors";
 import { getBookTitle } from "@/lib/book";
 import { getBooksByAuthor } from "@/lib/author";
 import BookCard from "@/components/books/BookCard";
+import AuthorAvatar from "@/components/shared/AuthorAvatar";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -91,20 +92,8 @@ export default async function AuthorPage({
       </Link>
 
       <div className="flex items-start gap-8 mb-10">
-        <div className="shrink-0">
-          {author.image ? (
-            <Image
-              src={author.image}
-              alt={author.name}
-              width={140}
-              height={140}
-              className="w-36 h-36 rounded-full object-cover border-2 border-border"
-            />
-          ) : (
-            <div className="w-36 h-36 rounded-full bg-muted row-center text-4xl font-bold text-muted-foreground border-2 border-border">
-              {author.name[0]}
-            </div>
-          )}
+        <div className="shrink-0 border-2 border-border rounded-full">
+          <AuthorAvatar name={author.name} image={author.image} size={144} />
         </div>
 
         <div className="flex-1">

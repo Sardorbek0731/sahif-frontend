@@ -8,6 +8,7 @@ import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
 import { authors } from "@/data/authors";
 import { books } from "@/data/books";
+import AuthorAvatar from "@/components/shared/AuthorAvatar";
 
 export async function generateMetadata({
   params,
@@ -66,19 +67,12 @@ export default async function AuthorsPage({
             href={`/authors/${author.slug}`}
             className="flex flex-col items-center text-center group"
           >
-            <div className="relative w-28 h-28 mb-3 rounded-full overflow-hidden border-2 border-border group-hover:border-primary transition-colors">
-              {author.image ? (
-                <Image
-                  src={author.image}
-                  alt={author.name}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-muted row-center text-2xl font-bold text-muted-foreground">
-                  {author.name[0]}
-                </div>
-              )}
+            <div className="mb-3 border-2 border-border group-hover:border-primary transition-colors rounded-full">
+              <AuthorAvatar
+                name={author.name}
+                image={author.image}
+                size={112}
+              />
             </div>
             <p className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2 mb-1">
               {author.name}

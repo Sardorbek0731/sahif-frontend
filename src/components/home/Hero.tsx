@@ -18,10 +18,10 @@ import { getBookTitle, getBookDescription } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 import { type Book } from "@/types/book";
 import { Button } from "../ui/Button";
-import { SKIP_WORDS } from "@/constants";
 
 import BookActions from "../shared/BookActions";
 import BookBadge from "../shared/BookBadge";
+import AuthorAvatar from "../shared/AuthorAvatar";
 
 const heroBooks = books
   .filter((book) => book.heroOrder !== undefined)
@@ -243,12 +243,6 @@ export default function Hero() {
 
   const author = getAuthor(book.authorSlug);
   const authorName = author?.name ?? book.authorSlug;
-  const authorInitials = authorName
-    .split(" ")
-    .filter((n) => !SKIP_WORDS.has(n.toLowerCase()))
-    .map((n) => n[0])
-    .slice(0, 2)
-    .join("");
 
   return (
     <section
@@ -289,19 +283,12 @@ export default function Hero() {
           href={`/authors/${book.authorSlug}`}
           className="flex items-center mb-3 group"
         >
-          {author?.image ? (
-            <Image
-              src={author.image}
-              alt={author.name}
-              width={44}
-              height={44}
-              className="w-12 h-12 rounded-full object-cover mr-3"
-            />
-          ) : (
-            <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/50 row-center text-primary font-bold text-sm mr-3">
-              {authorInitials}
-            </div>
-          )}
+          <AuthorAvatar
+            name={authorName}
+            image={author?.image}
+            size={48}
+            className="mr-3"
+          />
           <span>
             <p className="group-hover:text-primary transition-colors">
               {authorName}
