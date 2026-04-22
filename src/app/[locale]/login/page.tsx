@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 
-import { generatePrivateMetadata } from "@/lib/metadata";
+import { generatePrivateMetadata } from "@/lib/seo";
 import { type Locale } from "@/i18n/routing";
 import { redirect } from "@/i18n/navigation";
 

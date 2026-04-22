@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { SITE_URL, OG_LOCALES, SITE_NAME, BOOK_LANGUAGES } from "@/constants";
+import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
+import { BOOK_LANGUAGES } from "@/constants/books";
 import { type Locale } from "@/i18n/routing";
 import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
 import { getAuthorName } from "@/lib/author";

@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
-import { BOOK_LANGUAGES } from "@/constants";
+import { BOOK_LANGUAGES } from "@/constants/books";
 import { type BookFormat, BOOK_FORMATS } from "@/types/book";
 import { type CategorySlug, categoryGroups } from "@/data/categories";
 import { authors } from "@/data/authors";

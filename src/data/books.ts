@@ -1633,3 +1633,20 @@ export const books: readonly Book[] = [
     createdAt: "2025-01-16T10:00:00Z",
   },
 ];
+
+// ─── Derived collections ──────────────────────────────────────────────────────
+
+export const heroBooks = books
+  .filter((book) => book.heroOrder !== undefined)
+  .sort((a, b) => a.heroOrder! - b.heroOrder!)
+  .slice(0, 10);
+
+export const nonHeroBooks = books.filter((b) => b.heroOrder === undefined);
+
+export const popularBooks = [...nonHeroBooks]
+  .sort(
+    (a, b) =>
+      b.stats.rating * b.stats.reviewCount -
+      a.stats.rating * a.stats.reviewCount,
+  )
+  .slice(0, 5);

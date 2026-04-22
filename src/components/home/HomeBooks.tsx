@@ -1,22 +1,12 @@
 import { getTranslations } from "next-intl/server";
 
 import { type Locale } from "@/i18n/routing";
-import { books } from "@/data/books";
+import { nonHeroBooks, popularBooks } from "@/data/books";
 import { getAuthorName } from "@/lib/author";
 import { getBookTitle, isNewBook } from "@/lib/book";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import BookCard from "@/components/books/BookCard";
 import { type Book } from "@/types/book";
-
-const nonHeroBooks = books.filter((b) => b.heroOrder === undefined);
-
-const popularBooks = [...nonHeroBooks]
-  .sort(
-    (a, b) =>
-      b.stats.rating * b.stats.reviewCount -
-      a.stats.rating * a.stats.reviewCount,
-  )
-  .slice(0, 5);
 
 function resolveBooks(list: Book[], locale: Locale) {
   return list.map((book) => {

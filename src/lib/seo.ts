@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { type Locale, routing } from "@/i18n/routing";
-import { SITE_URL, SITE_NAME, HREFLANG_LOCALES } from "@/constants";
+import { SITE_URL, SITE_NAME, HREFLANG_LOCALES, OG_LOCALES } from "@/constants";
 
 export function generateAlternates(
   locale: Locale,
@@ -65,4 +65,44 @@ export function getPriceValidUntil(): string {
   const d = new Date();
   d.setFullYear(d.getFullYear() + 1);
   return d.toISOString().slice(0, 10);
+}
+
+export function generatePrivateMetadata({
+  title,
+  description,
+  locale,
+  path,
+}: {
+  title: string;
+  description: string;
+  locale: Locale;
+  path: string;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}${path}`,
+    },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: `${SITE_URL}/${locale}${path}`,
+      siteName: SITE_NAME,
+      locale: OG_LOCALES[locale],
+      type: "website",
+      images: [LOGO_OG_IMAGE],
+    },
+    twitter: {
+      card: "summary",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      images: [LOGO_OG_IMAGE.url],
+    },
+  };
 }

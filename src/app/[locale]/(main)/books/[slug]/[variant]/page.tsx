@@ -7,8 +7,12 @@ import { Link } from "@/i18n/navigation";
 import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { generateAlternates, getPriceValidUntil } from "@/lib/seo";
 import { getAuthor } from "@/lib/author";
-import { formatISBN } from "@/lib/formatters";
-import { getBookTitle, getBookDescription, getActiveVariant } from "@/lib/book";
+import {
+  formatISBN,
+  getBookTitle,
+  getBookDescription,
+  getActiveVariant,
+} from "@/lib/book";
 import { books } from "@/data/books";
 import { type BookFormat } from "@/types/book";
 

@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 
 import { type Locale } from "@/i18n/routing";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { LANGUAGE_NAMES } from "@/constants/index";
+import { LANGUAGE_NAMES } from "@/constants/books";
 import { Button } from "@/components/ui/Button";
 import { Dropdown } from "@/components/ui/Dropdown";
 import { Icon } from "@/components/ui/icons";

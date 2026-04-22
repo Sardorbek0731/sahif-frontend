@@ -13,7 +13,7 @@ import Image from "next/image";
 
 import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import { books } from "@/data/books";
+import { heroBooks } from "@/data/books";
 import { getBookTitle, getBookDescription } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 import { type Book } from "@/types/book";
@@ -22,11 +22,6 @@ import { Button } from "../ui/Button";
 import BookActions from "../shared/BookActions";
 import BookBadge from "../shared/BookBadge";
 import AuthorAvatar from "../shared/AuthorAvatar";
-
-const heroBooks = books
-  .filter((book) => book.heroOrder !== undefined)
-  .sort((a, b) => a.heroOrder! - b.heroOrder!)
-  .slice(0, 10);
 
 const DOT_SIZE = 8;
 const DOT_MARGIN = 3;
