@@ -50,22 +50,22 @@
   }
 }
 
-@layer utilities {
-  .row-center {
-    @apply flex items-center justify-center;
-  }
-  .row-between {
-    @apply flex items-center justify-between;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+@utility row-center {
+  @apply flex items-center justify-center;
+}
+
+@utility row-between {
+  @apply flex items-center justify-between;
+}
+
+@utility sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

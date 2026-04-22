@@ -301,10 +301,14 @@ export default function BooksFilter({
           >
             <div className="flex gap-2 px-2">
               <div className="flex-1 min-w-0">
-                <label className="text-xs text-muted-foreground mb-1 block">
+                <label
+                  htmlFor="price-from"
+                  className="text-xs text-muted-foreground mb-1 block"
+                >
                   {tFilter("priceFrom")}
                 </label>
                 <Input
+                  id="price-from"
                   type="text"
                   inputMode="numeric"
                   placeholder="0"
@@ -317,10 +321,14 @@ export default function BooksFilter({
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <label className="text-xs text-muted-foreground mb-1 block">
+                <label
+                  htmlFor="price-to"
+                  className="text-xs text-muted-foreground mb-1 block"
+                >
                   {tFilter("priceTo")}
                 </label>
                 <Input
+                  id="price-to"
                   type="text"
                   inputMode="numeric"
                   placeholder="∞"
@@ -399,7 +407,8 @@ export default function BooksFilter({
             onClick={applyFilters}
             disabled={!isDirty}
             variant="primary"
-            className="w-full justify-center transition-all"
+            center
+            className="w-full transition-all"
           >
             {tFilter("apply")}
           </Button>

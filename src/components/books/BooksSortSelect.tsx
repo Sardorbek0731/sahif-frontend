@@ -57,7 +57,7 @@ export default function BooksSortSelect({
           <Button
             rightIcon="chevronDown"
             iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-            className="px-4 h-10 bg-card hover:bg-card-hover"
+            className="px-4 h-10"
           >
             {activeLabel}
           </Button>
@@ -87,9 +87,9 @@ export default function BooksSortSelect({
         <Button
           onClick={() => handleSelect("")}
           leftIcon="x"
-          iconSize={16}
+          iconSize={18}
+          size="md"
           aria-label={tCommon("clearSort")}
-          className="h-10 w-10 row-center bg-card hover:bg-card-hover"
         />
       )}
     </div>

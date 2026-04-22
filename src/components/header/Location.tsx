@@ -58,7 +58,7 @@ export default function Location({
     <div className="relative mr-4">
       <Button
         leftIcon="location"
-        className="bg-card hover:bg-card-hover h-10 px-4"
+        className="h-10 px-4"
         onClick={() => {
           setIsOpen(true);
           setShowPrompt(false);
@@ -110,9 +110,7 @@ export default function Location({
         title={t("header.selectLocation")}
         maxWidth="max-w-90"
       >
-        <div className="row-between mb-6">
-          <h2 className="text-xl font-bold">{t("header.selectLocation")}</h2>
-        </div>
+        <h2 className="text-xl font-bold mb-6">{t("header.selectLocation")}</h2>
 
         <Input
           ref={inputRef}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, forwardRef } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { useTranslations } from "next-intl";
 import { Icon, IconName } from "./icons";
@@ -28,6 +28,7 @@ export interface InputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "size"
 > {
+  ref?: React.Ref<HTMLInputElement>;
   variant?: InputVariant;
   size?: InputSize;
   leftIcon?: IconName;
@@ -42,23 +43,22 @@ export interface InputProps extends Omit<
 
 // ─── Input Component ─────────────────────────────────────────────────────────
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {
-    variant = "default",
-    size = "md",
-    leftIcon,
-    rightIcon,
-    prefix,
-    label,
-    error,
-    containerClassName,
-    wrapperClassName,
-    className,
-    id,
-    ...rest
-  },
+// React 19: ref oddiy prop sifatida uzatiladi, forwardRef kerak emas
+export function Input({
   ref,
-) {
+  variant = "default",
+  size = "md",
+  leftIcon,
+  rightIcon,
+  prefix,
+  label,
+  error,
+  containerClassName,
+  wrapperClassName,
+  className,
+  id,
+  ...rest
+}: InputProps) {
   const errorId = id ? `${id}-error` : undefined;
 
   return (
@@ -119,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       )}
     </div>
   );
-});
+}
 
 // ─── OTPInput Props ───────────────────────────────────────────────────────────
 

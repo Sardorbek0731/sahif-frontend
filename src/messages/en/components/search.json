@@ -1,5 +1,6 @@
 {
   "searchBook": "Search by book title, author, or genre...",
   "recentSearches": "Recent searches",
+  "removeFromHistory": "Remove from search history",
   "noResults": "No results found!"
 }

@@ -45,7 +45,7 @@ export default function BookActions({
             leftIcon="minus"
             iconSize={18}
             aria-label={t("decreaseQuantity")}
-            className="px-3 w-auto h-full rounded-none rounded-l-lg border-r border-border justify-center text-muted-foreground hover:text-foreground"
+            className="px-3 w-auto h-full rounded-none rounded-l-lg border-r border-border text-muted-foreground hover:text-foreground"
           />
           <span className="px-3 font-medium">{cartItem.quantity}</span>
           <Button
@@ -54,7 +54,7 @@ export default function BookActions({
             leftIcon="plus"
             iconSize={18}
             aria-label={t("increaseQuantity")}
-            className="px-3 w-auto h-full rounded-none rounded-r-lg border-l border-border justify-center text-muted-foreground hover:text-foreground"
+            className="px-3 w-auto h-full rounded-none rounded-r-lg border-l border-border text-muted-foreground hover:text-foreground"
           />
         </div>
       ) : (
@@ -63,9 +63,9 @@ export default function BookActions({
           disabled={isOutOfStock}
           leftIcon="cart"
           iconSize={16}
-          aria-label={isOutOfStock ? t("outOfStock") : t("addToCart")}
           variant={isOutOfStock ? "default" : "solid"}
-          className={`flex-1 h-10 justify-center px-4 ${
+          center
+          className={`flex-1 h-10 px-4 ${
             isOutOfStock
               ? "bg-foreground/8 text-foreground/35 border border-border"
               : ""
@@ -81,7 +81,7 @@ export default function BookActions({
         iconSize={16}
         aria-label={isInWishlist ? t("removeFromWishlist") : t("addToWishlist")}
         variant={isInWishlist ? "primary" : "primaryGhost"}
-        className="w-10 h-10 justify-center shrink-0"
+        className="w-10 h-10 shrink-0"
       />
     </div>
   );

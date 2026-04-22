@@ -351,7 +351,7 @@ export default function Hero() {
             aria-label={t("goToSlide", {
               index: current === 0 ? heroBooks.length : current,
             })}
-            className="group transition-all w-8 h-8 border border-border justify-center bg-background mr-3 hover:border-foreground"
+            className="group transition-all w-8 h-8 border border-border bg-background mr-3 hover:border-foreground"
           />
 
           <div
@@ -389,7 +389,7 @@ export default function Hero() {
             aria-label={t("goToSlide", {
               index: current === heroBooks.length - 1 ? 1 : current + 2,
             })}
-            className="group transition-all w-8 h-8 border border-border justify-center bg-background ml-3 hover:border-foreground"
+            className="group transition-all w-8 h-8 border border-border bg-background ml-3 hover:border-foreground"
           />
         </div>
       )}

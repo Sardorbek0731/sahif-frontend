@@ -1,32 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { Dropdown } from "@/components/ui/Dropdown";
+import { Icon } from "@/components/ui/icons";
 import { categoryGroups } from "@/data/categories";
 
 export default function Categories() {
   const t = useTranslations("categories");
-  const [open, setOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams.get("category");
 
   return (
     <Dropdown
       arrowPosition="left"
-      isOpen={open}
-      onToggle={setOpen}
       role="menu"
       className="w-180 p-6"
-      trigger={
+      trigger={(isOpen) => (
         <Button
-          leftIcon={open ? "x" : "categories"}
-          className="bg-card hover:bg-card-hover h-10 px-4 mr-4"
+          rightIcon="chevronDown"
+          iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className="h-10 px-4 mr-4"
         >
+          <Icon name="categories" size={16} className="mr-2" />
           {t("title")}
         </Button>
-      }
+      )}
     >
       <div className="grid grid-cols-3 gap-6">
         {categoryGroups.map((group) => (
@@ -42,8 +44,11 @@ export default function Categories() {
                       pathname: "/books",
                       query: { category: sub.slug },
                     }}
-                    className="text-muted-foreground hover:text-foreground transition-all"
-                    onClick={() => setOpen(false)}
+                    className={`transition-all ${
+                      activeCategory === sub.slug
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     <span>{t(`items.${sub.slug}.name`)}</span>
                   </Link>

@@ -19,16 +19,13 @@ export default function NotFound() {
 
       <div className="flex items-center">
         <Link href="/" className="mr-4">
-          <Button leftIcon="home" className="bg-primary h-10 px-4">
+          <Button variant="primary" leftIcon="home" className="h-10 px-4">
             {t("goHome")}
           </Button>
         </Link>
 
         <Link href="/books">
-          <Button
-            leftIcon="search"
-            className="bg-card hover:bg-card-hover h-10 px-4"
-          >
+          <Button leftIcon="search" className="h-10 px-4">
             {t("searchSomething")}
           </Button>
         </Link>

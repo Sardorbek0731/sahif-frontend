@@ -26,7 +26,7 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
   solid: "bg-foreground text-background enabled:hover:bg-foreground/80",
   selected: "bg-primary/15 text-primary",
   primaryGhost:
-    "bg-primary/5 text-primary border border-primary/15 hover:bg-primary/10",
+    "bg-primary/5 text-primary border border-primary/15 enabled:hover:bg-primary/10",
 };
 
 // Text bor holat uchun
@@ -50,6 +50,7 @@ type ButtonBaseProps = {
   rightIcon?: IconName;
   iconSize?: number;
   iconStyle?: string;
+  center?: boolean;
 };
 
 // Icon-only: aria-label majburiy (accessibility uchun)
@@ -77,6 +78,7 @@ export const Button = <T extends React.ElementType = "button">({
   rightIcon,
   iconSize = 16,
   iconStyle = "",
+  center = false,
   children,
   className,
   ...props
@@ -90,6 +92,7 @@ export const Button = <T extends React.ElementType = "button">({
   const classes = cn(
     "flex items-center rounded-lg transition-all cursor-pointer",
     "disabled:opacity-50 disabled:cursor-not-allowed",
+    (isIconOnly || center) && "justify-center",
     VARIANT_STYLES[variant],
     isIconOnly ? ICON_SIZE_STYLES[size] : SIZE_STYLES[size],
     className,
@@ -101,7 +104,7 @@ export const Button = <T extends React.ElementType = "button">({
         <Icon
           name={leftIcon}
           size={iconSize}
-          className={cn(iconStyle, !isIconOnly && children && "mr-2")}
+          className={cn(iconStyle, children && "mr-2")}
         />
       )}
       {children}
@@ -109,7 +112,7 @@ export const Button = <T extends React.ElementType = "button">({
         <Icon
           name={rightIcon}
           size={iconSize}
-          className={cn(iconStyle, !isIconOnly && children && "ml-2")}
+          className={cn(iconStyle, children && "ml-2")}
         />
       )}
     </Component>

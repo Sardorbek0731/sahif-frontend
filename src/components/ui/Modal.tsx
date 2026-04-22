@@ -4,6 +4,7 @@ import { useEffect, useId, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 
 type ModalProps = {
   isOpen: boolean;
@@ -74,8 +75,11 @@ export default function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}
-        aria-label={!title ? t("close") : undefined}
-        className={`relative w-full ${maxWidth} rounded-lg bg-background p-6 ${className}`}
+        className={cn(
+          "relative w-full rounded-lg bg-background p-6",
+          maxWidth,
+          className,
+        )}
       >
         {/* Yashirin title — faqat screen reader uchun, agar tashqaridan title berilmagan bo'lsa */}
         {title && (
@@ -86,11 +90,12 @@ export default function Modal({
 
         {showCloseButton && (
           <Button
+            size="sm"
             onClick={onClose}
             leftIcon="x"
             iconSize={18}
             aria-label={t("close")}
-            className="absolute right-6 top-6 w-8 h-8 justify-center bg-card hover:bg-card-hover"
+            className="absolute right-6 top-6"
           />
         )}
         {children}

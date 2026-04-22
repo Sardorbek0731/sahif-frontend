@@ -57,7 +57,8 @@ function PhoneStep({
         type="submit"
         variant="primary"
         disabled={value.replace(/\D/g, "").length !== 9 || isLoading}
-        className="w-full justify-center mt-6"
+        center
+        className="w-full mt-6"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>
@@ -89,7 +90,7 @@ function OtpStep({
         onClick={onBack}
         leftIcon="chevronLeft"
         iconSize={18}
-        className="justify-center h-8 px-2 bg-card hover:bg-card-hover mb-6"
+        className="h-8 px-2 mb-6"
       >
         {t("back")}
       </Button>
@@ -177,7 +178,8 @@ function NameStep({
         type="submit"
         variant="primary"
         disabled={!isValid || isLoading}
-        className="w-full justify-center py-3"
+        center
+        className="w-full py-3"
       >
         {isLoading ? <Spinner className="w-6 h-6 border-2" /> : t("submit")}
       </Button>

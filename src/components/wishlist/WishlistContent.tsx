@@ -7,7 +7,6 @@ import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
-import { Button } from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import BookCard from "@/components/books/BookCard";

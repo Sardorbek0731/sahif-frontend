@@ -31,7 +31,7 @@ export default function AuthButton({
       <Button
         leftIcon="login"
         onClick={() => setLoginOpen(true)}
-        className="bg-card hover:bg-card-hover h-10 px-4"
+        className="h-10 px-4"
       >
         {t("pages.login")}
       </Button>

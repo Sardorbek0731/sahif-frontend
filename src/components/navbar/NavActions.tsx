@@ -55,7 +55,7 @@ export function NavLinks() {
           key={href}
           href={href}
           leftIcon={icon}
-          className={`relative bg-card hover:bg-card-hover h-10 px-4 ${mr ? "mr-4" : ""}`}
+          className={`relative h-10 px-4 ${mr ? "mr-4" : ""}`}
         >
           {label}
           {typeof count === "number" && count > 0 && (
@@ -117,10 +117,7 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
       isOpen={open}
       onToggle={setOpen}
       trigger={
-        <Button
-          leftIcon="user"
-          className="bg-card hover:bg-card-hover h-10 px-4"
-        >
+        <Button leftIcon="user" className="h-10 px-4">
           {displayName}
         </Button>
       }
@@ -143,9 +140,10 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
         <Button
           variant="danger"
           onClick={handleLogout}
-          className="w-full justify-start gap-3 px-4 py-3 text-sm rounded-none h-auto"
+          leftIcon="logout"
+          iconSize={16}
+          className="w-full justify-start px-4 py-3 text-sm rounded-none h-auto"
         >
-          <Icon name="logout" size={16} />
           {t("auth.logout")}
         </Button>
       </div>

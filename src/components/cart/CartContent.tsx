@@ -91,8 +91,8 @@ export default function CartContent() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 onClick={() =>
                   updateQuantity(
                     b.item.bookId,
@@ -101,13 +101,14 @@ export default function CartContent() {
                   )
                 }
                 aria-label={tCommon("decreaseQuantity")}
-                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm hover:bg-card-hover transition-colors"
+                center
+                className="w-7 h-7 bg-background border border-border text-foreground text-sm hover:bg-card-hover"
               >
                 −
-              </button>
+              </Button>
               <span className="text-sm w-4 text-center">{b.item.quantity}</span>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 onClick={() => {
                   if (b.item.quantity < b.variant.stockCount) {
                     updateQuantity(
@@ -119,24 +120,25 @@ export default function CartContent() {
                 }}
                 disabled={b.item.quantity >= b.variant.stockCount}
                 aria-label={tCommon("increaseQuantity")}
-                className="w-7 h-7 rounded-lg bg-background border border-border text-foreground text-sm hover:bg-card-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                center
+                className="w-7 h-7 bg-background border border-border text-foreground text-sm hover:bg-card-hover"
               >
                 +
-              </button>
+              </Button>
             </div>
             <div className="text-right min-w-24">
               <p className="text-sm font-medium">
                 {(b.finalPrice * b.item.quantity).toLocaleString()} UZS
               </p>
             </div>
-            <button
-              type="button"
+            <Button
               aria-label={tCommon("removeItem")}
               onClick={() => removeItem(b.item.bookId, b.item.language)}
-              className="text-muted-foreground hover:text-foreground text-lg ml-2 p-1 transition-colors"
+              variant="ghost"
+              className="text-muted-foreground hover:text-foreground text-lg ml-2 p-1 w-auto h-auto"
             >
               ×
-            </button>
+            </Button>
           </li>
         ))}
       </ul>

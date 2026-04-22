@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { Link, useRouter } from "@/i18n/navigation";
 import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/icons";
 import { popularCategories } from "@/data/categories";
 import { useSearchStore } from "@/store/useSearchStore";
@@ -90,23 +91,26 @@ export default function Search() {
               </span>
               <div className="flex flex-col">
                 {safeHistory.map((item) => (
-                  <button
+                  <div
                     key={item}
-                    type="button"
                     onClick={() => handleSearch(item)}
-                    className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all text-left w-full"
+                    className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all w-full"
                   >
                     <div className="flex items-center">
                       <Icon className="mr-2" name="search" size={16} />
                       <span className="text-sm">{item}</span>
                     </div>
-                    <span
-                      onClick={(e) => removeHistoryItem(e, item)}
-                      className="cursor-pointer"
-                    >
-                      <Icon name="x" size={18} />
-                    </span>
-                  </button>
+                    <Button
+                      size="sm"
+                      leftIcon="x"
+                      iconSize={18}
+                      onClick={(e: React.MouseEvent) =>
+                        removeHistoryItem(e, item)
+                      }
+                      aria-label={t("search.removeFromHistory")}
+                      className="shrink-0"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
