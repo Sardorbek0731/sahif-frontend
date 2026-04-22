@@ -19,7 +19,7 @@ export type ButtonSize = "sm" | "md";
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
   default: "bg-card enabled:hover:bg-card-hover",
-  primary: "bg-primary text-background enabled:hover:bg-primary/80",
+  primary: "bg-primary enabled:hover:bg-primary/80",
   ghost: "bg-transparent enabled:hover:bg-card-hover",
   outline: "border border-border bg-card enabled:hover:bg-card-hover",
   danger: "text-rose-500 enabled:hover:bg-rose-500/5",

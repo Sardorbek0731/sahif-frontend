@@ -8,6 +8,7 @@ import { type Locale } from "@/i18n/routing";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
 import { Button } from "@/components/ui/Button";
+import Spinner from "@/components/ui/Spinner";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import BookCard from "@/components/books/BookCard";
 
@@ -15,10 +16,13 @@ export default function WishlistContent() {
   const isMounted = useIsMounted();
   const locale = useLocale() as Locale;
   const t = useTranslations("wishlist");
+  const tCommon = useTranslations();
   const { items, clearWishlist } = useWishlistStore();
 
   if (!isMounted) {
-    return <div className="py-20 text-center">{t("loading")}</div>;
+    return (
+      <Spinner className="w-8 h-8 border-2 my-20" label={tCommon("loading")} />
+    );
   }
 
   if (items.length === 0) {
@@ -49,7 +53,7 @@ export default function WishlistContent() {
     <div className="py-6">
       <div className="row-between mb-6">
         <h1 className="text-2xl font-bold">
-          {t("title")}
+          {tCommon("pages.wishlist")}
           <span className="text-base font-normal text-muted-foreground ml-2">
             ({items.length})
           </span>

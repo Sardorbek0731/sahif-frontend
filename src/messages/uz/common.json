@@ -46,7 +46,7 @@
   "clearSort": "Saralashni tozalash",
   "goToSlide": "{index}-slaydga o'tish",
   "viewImage": "{index}-rasmni ko'rish",
-  "loading": "Yuklanmoqda",
+  "loading": "Yuklanmoqda...",
 
   "footer": {
     "catalog": "Katalog",

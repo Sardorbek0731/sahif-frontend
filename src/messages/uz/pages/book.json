@@ -1,5 +1,5 @@
 {
-  "pages": "bet",
+  "pagesSuffix": "bet",
   "formats": {
     "hardcover": "Qattiq muqova",
     "paperback": "Yumshoq muqova",
@@ -7,7 +7,6 @@
     "audio": "Audio kitob"
   },
   "publishLanguage": "Nashr tili",
-  "outOfStock": "Tugagan",
   "publisher": "Nashriyot",
   "pageCount": "Sahifalar",
   "cover": "Muqova"

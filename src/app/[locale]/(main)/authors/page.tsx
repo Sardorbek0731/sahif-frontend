@@ -19,11 +19,11 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "authors" });
 
   return {
-    title: t("metadata.title"),
+    title: t("title"),
     description: t("metadata.description"),
     alternates: generateAlternates(locale, "/authors"),
     openGraph: {
-      title: `${t("metadata.title")} | ${SITE_NAME}`,
+      title: `${t("title")} | ${SITE_NAME}`,
       description: t("metadata.description"),
       url: `${SITE_URL}/${locale}/authors`,
       siteName: SITE_NAME,
@@ -33,7 +33,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary",
-      title: `${t("metadata.title")} | ${SITE_NAME}`,
+      title: `${t("title")} | ${SITE_NAME}`,
       description: t("metadata.description"),
       images: [LOGO_OG_IMAGE.url],
     },

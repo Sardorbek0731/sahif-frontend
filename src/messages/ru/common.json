@@ -46,7 +46,7 @@
   "clearSort": "Сбросить сортировку",
   "goToSlide": "Перейти к слайду {index}",
   "viewImage": "Просмотреть изображение {index}",
-  "loading": "Загрузка",
+  "loading": "Загрузка...",
 
   "footer": {
     "catalog": "Каталог",

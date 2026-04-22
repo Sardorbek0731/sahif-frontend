@@ -10,6 +10,7 @@ import { Link } from "@/i18n/navigation";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
 import { Button } from "@/components/ui/Button";
+import Spinner from "@/components/ui/Spinner";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function CartContent() {
@@ -21,7 +22,9 @@ export default function CartContent() {
   const totalQuantity = useCartStore(selectTotalItems);
 
   if (!isMounted) {
-    return <div className="py-20 text-center">{t("loading")}</div>;
+    return (
+      <Spinner className="w-8 h-8 border-2 my-20" label={tCommon("loading")} />
+    );
   }
 
   if (items.length === 0) {

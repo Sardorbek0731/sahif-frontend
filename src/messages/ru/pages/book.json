@@ -1,5 +1,5 @@
 {
-  "pages": "стр.",
+  "pagesSuffix": "стр.",
   "formats": {
     "hardcover": "Твёрдая обложка",
     "paperback": "Мягкая обложка",
@@ -7,7 +7,6 @@
     "audio": "Аудиокнига"
   },
   "publishLanguage": "Язык издания",
-  "outOfStock": "Нет в наличии",
   "publisher": "Издательство",
   "pageCount": "Страниц",
   "cover": "Обложка"

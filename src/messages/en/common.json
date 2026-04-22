@@ -46,7 +46,7 @@
   "clearSort": "Clear sort",
   "goToSlide": "Go to slide {index}",
   "viewImage": "View image {index}",
-  "loading": "Loading",
+  "loading": "Loading...",
 
   "footer": {
     "catalog": "Catalog",

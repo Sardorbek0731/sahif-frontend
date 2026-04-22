@@ -1,5 +1,5 @@
 {
-  "pages": "pages",
+  "pagesSuffix": "pages",
   "formats": {
     "hardcover": "Hardcover",
     "paperback": "Paperback",
@@ -7,7 +7,6 @@
     "audio": "Audiobook"
   },
   "publishLanguage": "Edition language",
-  "outOfStock": "Out of stock",
   "publisher": "Publisher",
   "pageCount": "Pages",
   "cover": "Cover"

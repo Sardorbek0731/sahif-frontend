@@ -89,6 +89,7 @@ export default async function BookPage({
   if (!book) notFound();
 
   const t = await getTranslations({ locale, namespace: "book" });
+  const tCommon = await getTranslations({ locale });
 
   const author = getAuthor(book.authorSlug);
   const authorName = author?.name ?? book.authorSlug;
@@ -196,7 +197,7 @@ export default async function BookPage({
                     } ${variant.stockCount === 0 ? "opacity-50 grayscale pointer-events-none" : ""}`}
                   >
                     {variant.language.toUpperCase()}
-                    {variant.stockCount === 0 && ` (${t("outOfStock")})`}
+                    {variant.stockCount === 0 && ` (${tCommon("outOfStock")})`}
                   </Link>
                 ))}
               </div>

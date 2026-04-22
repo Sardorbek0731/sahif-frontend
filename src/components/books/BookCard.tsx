@@ -67,7 +67,7 @@ export default function BookCard({
           </span>
           <span aria-hidden="true">·</span>
           <span>
-            {variant.pageCount} {t("pages")}
+            {variant.pageCount} {t("pagesSuffix")}
           </span>
           <span aria-hidden="true">·</span>
           <span className="capitalize">{t(`formats.${variant.format}`)}</span>
