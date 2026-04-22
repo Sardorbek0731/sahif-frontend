@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
@@ -13,11 +14,14 @@ export default function Categories() {
   const t = useTranslations("categories");
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category");
+  const [open, setOpen] = useState(false);
 
   return (
     <Dropdown
       arrowPosition="left"
       role="menu"
+      isOpen={open}
+      onToggle={setOpen}
       className="w-180 p-6"
       trigger={(isOpen) => (
         <Button
@@ -44,6 +48,7 @@ export default function Categories() {
                       pathname: "/books",
                       query: { category: sub.slug },
                     }}
+                    onClick={() => setOpen(false)}
                     className={`transition-all ${
                       activeCategory === sub.slug
                         ? "text-primary"
