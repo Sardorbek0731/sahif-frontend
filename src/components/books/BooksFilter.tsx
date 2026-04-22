@@ -233,7 +233,7 @@ export default function BooksFilter({
 
   return (
     <aside aria-label={tFilter("title")} className="w-64 shrink-0 mr-4">
-      <div className="bg-card rounded-lg border border-border overflow-hidden">
+      <div className="bg-card rounded-lg border border-border overflow-clip">
         {/* Header */}
         <div className="row-between px-4 py-3 border-b border-border">
           <span className="flex items-center gap-2 font-semibold">
@@ -272,7 +272,7 @@ export default function BooksFilter({
             defaultOpen={!!local.categories.length}
             badge={local.categories.length || undefined}
           >
-            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+            <div className="overflow-y-auto overflow-x-clip max-h-56">
               {categoryGroups.map((group) => (
                 <div key={group.name} className="mb-1">
                   <span className="text-xs font-semibold text-muted-foreground px-2 pt-2 pb-1 block">
@@ -366,7 +366,7 @@ export default function BooksFilter({
             defaultOpen={!!local.langs.length}
             badge={local.langs.length || undefined}
           >
-            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+            <div className="overflow-y-auto overflow-x-clip max-h-56">
               {BOOK_LANGUAGES.map((lang) => (
                 <CheckboxItem
                   key={lang.code}
@@ -386,7 +386,7 @@ export default function BooksFilter({
             defaultOpen={!!local.authors.length}
             badge={local.authors.length || undefined}
           >
-            <div className="overflow-y-auto max-h-48 custom-scrollbar">
+            <div className="overflow-y-auto overflow-x-clip max-h-56">
               {authors.map((author) => (
                 <CheckboxItem
                   key={author.slug}
