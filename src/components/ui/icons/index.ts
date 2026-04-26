@@ -1,5 +1,6 @@
 export * from "./icon-base";
 export * from "./icon";
+export * from "./icon-sizes";
 import { MapPinIcon } from "./list/map-pin";
 import { SearchIcon } from "./list/search";
 import { SunIcon } from "./list/sun";

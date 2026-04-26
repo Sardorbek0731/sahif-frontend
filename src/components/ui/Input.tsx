@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { useTranslations } from "next-intl";
-import { Icon, IconName } from "./icons";
+import { Icon, IconName, ICON_SIZES } from "./icons";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -20,6 +20,12 @@ const VARIANT_WRAPPER: Record<InputVariant, string> = {
 const SIZE_WRAPPER: Record<InputSize, string> = {
   sm: "h-8 px-2 text-sm",
   md: "h-10 px-4",
+};
+
+// Input size'ga mos icon o'lchami
+const INPUT_ICON_SIZES: Record<InputSize, number> = {
+  sm: ICON_SIZES.sm, // 14px
+  md: ICON_SIZES.md, // 16px
 };
 
 // ─── Input Props ─────────────────────────────────────────────────────────────
@@ -89,7 +95,7 @@ export function Input({
         {leftIcon && (
           <Icon
             name={leftIcon}
-            size={16}
+            size={INPUT_ICON_SIZES[size]}
             className="shrink-0 text-muted-foreground"
           />
         )}
@@ -107,7 +113,7 @@ export function Input({
         {rightIcon && (
           <Icon
             name={rightIcon}
-            size={16}
+            size={INPUT_ICON_SIZES[size]}
             className="shrink-0 text-muted-foreground"
           />
         )}

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { Icon, IconName } from "./icons";
+import { Icon, IconName, IconSize, ICON_SIZES } from "./icons";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -41,6 +41,12 @@ const ICON_SIZE_STYLES: Record<ButtonSize, string> = {
   md: "h-10 w-10 p-0",
 };
 
+// Button size'ga mos icon o'lchami
+const BUTTON_ICON_SIZES: Record<ButtonSize, number> = {
+  sm: ICON_SIZES.sm, // 14px
+  md: ICON_SIZES.md, // 16px
+};
+
 // ─── Props ───────────────────────────────────────────────────────────────────
 
 type ButtonBaseProps = {
@@ -48,7 +54,7 @@ type ButtonBaseProps = {
   size?: ButtonSize;
   leftIcon?: IconName;
   rightIcon?: IconName;
-  iconSize?: number;
+  iconSize?: IconSize | number; // Custom icon size (ixtiyoriy)
   iconStyle?: string;
   center?: boolean;
 };
@@ -76,7 +82,7 @@ export const Button = <T extends React.ElementType = "button">({
   size = "md",
   leftIcon,
   rightIcon,
-  iconSize = 16,
+  iconSize, // Agar berilmasa, size'ga qarab avtomatik
   iconStyle = "",
   center = false,
   children,
@@ -85,6 +91,9 @@ export const Button = <T extends React.ElementType = "button">({
 }: ButtonProps<T>) => {
   const Component = as ?? "button";
   const isIconOnly = !children && (!!leftIcon || !!rightIcon);
+
+  // Icon size: custom yoki button size'ga mos
+  const resolvedIconSize = iconSize ?? BUTTON_ICON_SIZES[size];
 
   const defaultProps =
     Component === "button" && !props.type ? { type: "button" as const } : {};
@@ -103,7 +112,7 @@ export const Button = <T extends React.ElementType = "button">({
       {leftIcon && (
         <Icon
           name={leftIcon}
-          size={iconSize}
+          size={resolvedIconSize}
           className={cn(iconStyle, children && "mr-2")}
         />
       )}
@@ -111,7 +120,7 @@ export const Button = <T extends React.ElementType = "button">({
       {rightIcon && (
         <Icon
           name={rightIcon}
-          size={iconSize}
+          size={resolvedIconSize}
           className={cn(iconStyle, children && "ml-2")}
         />
       )}

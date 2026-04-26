@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/cn";
-import { Icon, IconName } from "./icons";
+import { Icon, IconName, ICON_SIZES } from "./icons";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -19,8 +19,8 @@ export interface IconChipProps {
 
 const SIZE_STYLES: Record<IconChipSize, { wrapper: string; iconSize: number }> =
   {
-    sm: { wrapper: "w-7 h-7", iconSize: 14 },
-    md: { wrapper: "w-10 h-10", iconSize: 18 },
+    sm: { wrapper: "w-7 h-7", iconSize: ICON_SIZES.sm }, // 14px
+    md: { wrapper: "w-10 h-10", iconSize: ICON_SIZES.lg }, // 18px
   };
 
 const COLOR_STYLES: Record<IconChipColor, string> = {
