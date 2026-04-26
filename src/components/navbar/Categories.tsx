@@ -29,7 +29,7 @@ export default function Categories() {
           iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
           className="h-10 px-4 mr-4"
         >
-          <Icon name="categories" size={16} className="mr-2" />
+          <Icon name="categories" size="md" className="mr-2" />
           {t("title")}
         </Button>
       )}

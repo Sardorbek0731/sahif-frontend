@@ -45,7 +45,7 @@
 
 @layer components {
   .my-container {
-    @apply px-4 sm:px-6 lg:px-10 xl:px-16 mx-auto w-full;
+    @apply px-4 mx-auto w-full;
     max-width: var(--container);
   }
 }

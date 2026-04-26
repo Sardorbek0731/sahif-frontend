@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -122,7 +121,7 @@ export default async function AuthorPage({
             {t("noBooks")}
           </p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-5 gap-4">
             {resolvedBooks.map(
               (
                 { book, variant, authorName, bookTitle, bookImage, finalPrice },
@@ -136,7 +135,7 @@ export default async function AuthorPage({
                   bookTitle={bookTitle}
                   bookImage={bookImage}
                   finalPrice={finalPrice}
-                  preload={index < 5}
+                  priority={index < 3}
                 />
               ),
             )}

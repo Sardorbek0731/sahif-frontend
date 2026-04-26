@@ -2,14 +2,14 @@
 
 import { useLocale, useTranslations } from "next-intl";
 
-import { useWishlistStore } from "@/store/useWishlistStore";
-import { books } from "@/data/books";
 import { type Locale } from "@/i18n/routing";
+import { books } from "@/data/books";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
-import Spinner from "@/components/ui/Spinner";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import BookCard from "@/components/books/BookCard";
+import Spinner from "@/components/ui/Spinner";
+import { useWishlistStore } from "@/store/useWishlistStore";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function WishlistContent() {
   const isMounted = useIsMounted();
@@ -66,7 +66,7 @@ export default function WishlistContent() {
         </button>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {wishlistBooks.map(
           ({ book, variant, authorName, bookTitle, bookImage, finalPrice }) => (
             <BookCard

@@ -357,7 +357,7 @@ export default async function Books({
             }}
           />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {resolvedBooks.map(
             (
               { book, variant, authorName, bookTitle, bookImage, finalPrice },
@@ -371,7 +371,7 @@ export default async function Books({
                 bookTitle={bookTitle}
                 bookImage={bookImage}
                 finalPrice={finalPrice}
-                preload={index < 4}
+                priority={index < 4}
               />
             ),
           )}

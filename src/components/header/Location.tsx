@@ -139,7 +139,7 @@ export default function Location({
                 }}
               >
                 <span>{t(`regions.${region.key}`)}</span>
-                {currentId === region.id && <Icon name="location" size={18} />}
+                {currentId === region.id && <Icon name="location" size="lg" />}
               </Button>
             ))
           ) : (

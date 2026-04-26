@@ -42,7 +42,7 @@ export function LanguageSwitcher() {
           iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
           className={`justify-between px-4 h-10 bg-card hover:bg-card-hover ${isOpen ? "bg-card-hover" : ""}`}
         >
-          <Icon name={currentLanguage.code} size={16} className="mr-2" />
+          <Icon name={currentLanguage.code} size="md" className="mr-2" />
           {currentLanguage.name}
         </Button>
       )}
@@ -58,11 +58,11 @@ export function LanguageSwitcher() {
             className="w-full mb-1 last:mb-0 px-4 h-10 rounded-none row-between"
           >
             <div className="flex items-center">
-              <Icon name={lang.code} size={16} className="mr-2" />
+              <Icon name={lang.code} size="md" className="mr-2" />
               {lang.name}
             </div>
             {lang.code === locale && (
-              <Icon name="check" size={16} className="text-primary ml-4" />
+              <Icon name="check" size="md" className="text-primary ml-4" />
             )}
           </Button>
         ))}
@@ -114,7 +114,7 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
           iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
           className={`justify-between px-4 h-10 bg-card hover:bg-card-hover ${isOpen ? "bg-card-hover" : ""}`}
         >
-          <Icon name={activeIcon} size={16} className="mr-2" />
+          <Icon name={activeIcon} size="md" className="mr-2" />
           {activeLabel}
         </Button>
       )}
@@ -130,11 +130,11 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
             className="w-full mb-1 last:mb-0 px-4 h-10 rounded-none row-between"
           >
             <div className="flex items-center">
-              <Icon name={THEME_ICONS[value]} size={16} className="mr-2" />
+              <Icon name={THEME_ICONS[value]} size="md" className="mr-2" />
               {t(value)}
             </div>
             {value === currentTheme && (
-              <Icon name="check" size={16} className="text-primary ml-4" />
+              <Icon name="check" size="md" className="text-primary ml-4" />
             )}
           </Button>
         ))}

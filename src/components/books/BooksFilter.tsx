@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { Icon } from "@/components/ui/icons";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
 import { BOOK_LANGUAGES } from "@/constants/books";
-import { type BookFormat, BOOK_FORMATS } from "@/types/book";
-import { type CategorySlug, categoryGroups } from "@/data/categories";
 import { authors } from "@/data/authors";
+import { type CategorySlug, categoryGroups } from "@/data/categories";
+import { type BookFormat, BOOK_FORMATS } from "@/types/book";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/icons";
+import { Input } from "@/components/ui/Input";
 
 interface Props {
   activeCategories?: CategorySlug[];
@@ -110,7 +110,7 @@ function Accordion({
         </span>
         <Icon
           name="chevronDown"
-          size={14}
+          size="sm"
           className={`text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
@@ -237,7 +237,7 @@ export default function BooksFilter({
         {/* Header */}
         <div className="row-between px-4 py-3 border-b border-border">
           <span className="flex items-center gap-2 font-semibold">
-            <Icon name="filter" size={16} />
+            <Icon name="filter" size="md" />
             {tFilter("title")}
             {activeFiltersCount > 0 && (
               <Badge variant="count">{activeFiltersCount}</Badge>

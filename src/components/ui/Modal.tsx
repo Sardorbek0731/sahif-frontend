@@ -93,7 +93,7 @@ export default function Modal({
             size="sm"
             onClick={onClose}
             leftIcon="x"
-            iconSize={18}
+            iconSize="lg"
             aria-label={t("close")}
             className="absolute right-6 top-6"
           />

@@ -169,7 +169,7 @@ export default async function BookPage({
       />
 
       <main className="my-container py-10">
-        <div className="flex flex-col md:flex-row gap-10">
+        <div className="flex flex-row gap-10">
           <Gallery
             cover={bookImage}
             gallery={book.images.gallery}

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { OG_LOCALES, SITE_NAME, SITE_URL } from "@/constants";
@@ -60,7 +59,7 @@ export default async function AuthorsPage({
         <p className="text-muted-foreground">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {authorsWithCount.map((author) => (
           <Link
             key={author.slug}

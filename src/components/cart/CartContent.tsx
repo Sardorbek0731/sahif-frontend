@@ -3,14 +3,14 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
-import { useCartStore, selectTotalItems } from "@/store/useCartStore";
-import { books } from "@/data/books";
-import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
+import { type Locale } from "@/i18n/routing";
+import { books } from "@/data/books";
 import { getBookTitle } from "@/lib/book";
 import { getAuthorName } from "@/lib/author";
 import { Button } from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
+import { useCartStore, selectTotalItems } from "@/store/useCartStore";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
 export default function CartContent() {
@@ -76,7 +76,8 @@ export default function CartContent() {
                 alt={b.bookTitle}
                 width={60}
                 height={90}
-                className="h-auto rounded-lg"
+                loading="lazy"
+                className="h-auto w-auto rounded-lg"
               />
             </Link>
             <div className="flex-1">

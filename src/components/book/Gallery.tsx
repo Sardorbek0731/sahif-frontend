@@ -16,16 +16,15 @@ export function Gallery({ cover, gallery, alt }: BookGalleryProps) {
   const t = useTranslations();
 
   return (
-    <div className="w-full md:w-80 shrink-0">
+    <div className="w-80 shrink-0">
       {/* Asosiy rasm */}
       <Image
         src={activeImage}
         alt={alt}
         width={320}
         height={480}
-        sizes="(max-width: 768px) 100vw, 320px"
+        priority
         className="w-full h-auto rounded-lg"
-        preload={true}
       />
 
       {/* Gallery thumbnails */}
@@ -52,8 +51,8 @@ export function Gallery({ cover, gallery, alt }: BookGalleryProps) {
                 src={img}
                 alt={`${alt} — ${index + 1}`}
                 fill
+                loading="lazy"
                 className="object-cover"
-                sizes="80px"
               />
             </button>
           ))}

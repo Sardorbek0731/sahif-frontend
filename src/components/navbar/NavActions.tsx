@@ -55,7 +55,7 @@ export function NavLinks() {
           key={href}
           href={href}
           leftIcon={icon}
-          className={`relative h-10 px-4 ${mr ? "mr-4" : ""}`}
+          className={`relative h-10 px-4 hover:bg-card-hover transition-colors ${mr ? "mr-4" : ""}`}
         >
           {label}
           {typeof count === "number" && count > 0 && (
@@ -130,7 +130,7 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
             onClick={() => setOpen(false)}
             className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
           >
-            <Icon name={icon} size={16} />
+            <Icon name={icon} size="md" />
             {label}
           </Link>
         ))}
@@ -141,7 +141,6 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
           variant="danger"
           onClick={handleLogout}
           leftIcon="logout"
-          iconSize={16}
           className="w-full justify-start px-4 py-3 text-sm rounded-none h-auto"
         >
           {t("auth.logout")}

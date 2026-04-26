@@ -50,7 +50,7 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
           href="/books?sort=popular"
           linkLabel={tPopular("showMore")}
         />
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-5 gap-4">
           {resolvedPopular.map(
             (
               { book, variant, authorName, bookTitle, bookImage, finalPrice },
@@ -64,7 +64,7 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
                 bookTitle={bookTitle}
                 bookImage={bookImage}
                 finalPrice={finalPrice}
-                preload={index < 5}
+                priority={index < 3}
               />
             ),
           )}
@@ -78,7 +78,7 @@ export default async function HomeBooks({ locale }: { locale: Locale }) {
           href="/books?sort=new"
           linkLabel={tNew("showMore")}
         />
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-5 gap-4">
           {resolvedNew.map(
             ({
               book,

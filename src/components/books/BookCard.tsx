@@ -13,7 +13,7 @@ interface Props {
   bookTitle: string;
   bookImage: string;
   finalPrice: number;
-  preload?: boolean;
+  priority?: boolean;
 }
 
 export default function BookCard({
@@ -23,7 +23,7 @@ export default function BookCard({
   bookTitle,
   bookImage,
   finalPrice,
-  preload = false,
+  priority = false,
 }: Props) {
   const t = useTranslations("book");
   return (
@@ -36,9 +36,9 @@ export default function BookCard({
           src={bookImage}
           alt={bookTitle}
           width={160}
-          height={230}
+          height={240}
+          priority={priority}
           className="h-44 w-auto"
-          priority={preload}
         />
         <div className="absolute top-0 left-0">
           <BookBadge book={book} />

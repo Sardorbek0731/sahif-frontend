@@ -7,18 +7,16 @@ import {
   useRef,
   useCallback,
 } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
-import Image from "next/image";
-
-import { type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
+import { type Locale } from "@/i18n/routing";
 import { heroBooks } from "@/data/books";
 import { getBookTitle, getBookDescription } from "@/lib/book";
 import { getAuthor } from "@/lib/author";
 import { type Book } from "@/types/book";
 import { Button } from "../ui/Button";
-
 import BookActions from "../shared/BookActions";
 import BookBadge from "../shared/BookBadge";
 import AuthorAvatar from "../shared/AuthorAvatar";
@@ -325,7 +323,7 @@ export default function Hero() {
             alt={bookTitle}
             width={400}
             height={600}
-            sizes="(max-width: 768px) 50vw, 300px"
+            priority
             className="h-full w-auto rounded-lg"
           />
         </Link>
@@ -341,7 +339,7 @@ export default function Hero() {
           <Button
             onClick={prev}
             leftIcon="chevronLeft"
-            iconSize={18}
+            iconSize="lg"
             iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
             aria-label={t("goToSlide", {
               index: current === 0 ? heroBooks.length : current,
@@ -379,7 +377,7 @@ export default function Hero() {
           <Button
             onClick={next}
             leftIcon="chevronRight"
-            iconSize={18}
+            iconSize="lg"
             iconStyle="transition-all text-muted-foreground group-hover:text-foreground"
             aria-label={t("goToSlide", {
               index: current === heroBooks.length - 1 ? 1 : current + 2,

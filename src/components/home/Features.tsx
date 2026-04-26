@@ -75,7 +75,7 @@ function FeatureCard({
       <div
         className={`mb-6 row-center w-11 h-11 rounded-lg ${accent.bg} ${accent.icon}`}
       >
-        <Icon name={FEATURE_ICONS[index]} size={22} />
+        <Icon name={FEATURE_ICONS[index]} size="xl" />
       </div>
 
       <h3 className="mb-2 font-semibold text-foreground">{title}</h3>
@@ -106,7 +106,7 @@ export default function Features() {
         <p className="text-sm text-foreground/50">{t("subheading")}</p>
       </div>
 
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-3">
         {FEATURE_KEYS.map((key, i) => (
           <FeatureCard
             key={key}

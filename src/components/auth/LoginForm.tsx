@@ -89,7 +89,7 @@ function OtpStep({
       <Button
         onClick={onBack}
         leftIcon="chevronLeft"
-        iconSize={18}
+        iconSize="lg"
         className="h-8 px-2 mb-6"
       >
         {t("back")}

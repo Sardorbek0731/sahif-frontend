@@ -43,7 +43,7 @@ export default function BookActions({
             variant="ghost"
             onClick={decrement}
             leftIcon="minus"
-            iconSize={18}
+            iconSize="lg"
             aria-label={t("decreaseQuantity")}
             className="px-3 w-auto h-full rounded-none rounded-l-lg border-r border-border text-muted-foreground hover:text-foreground"
           />
@@ -52,7 +52,7 @@ export default function BookActions({
             variant="ghost"
             onClick={increment}
             leftIcon="plus"
-            iconSize={18}
+            iconSize="lg"
             aria-label={t("increaseQuantity")}
             className="px-3 w-auto h-full rounded-none rounded-r-lg border-l border-border text-muted-foreground hover:text-foreground"
           />
@@ -62,7 +62,6 @@ export default function BookActions({
           onClick={addToCart}
           disabled={isOutOfStock}
           leftIcon="cart"
-          iconSize={16}
           variant={isOutOfStock ? "default" : "solid"}
           center
           className={`flex-1 h-10 px-4 ${
@@ -78,7 +77,6 @@ export default function BookActions({
       <Button
         onClick={toggleWishlist}
         leftIcon="wishlist"
-        iconSize={16}
         aria-label={isInWishlist ? t("removeFromWishlist") : t("addToWishlist")}
         variant={isInWishlist ? "primary" : "primaryGhost"}
         className="w-10 h-10 shrink-0"

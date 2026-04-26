@@ -28,6 +28,7 @@ export default function AuthorAvatar({
         alt={name}
         width={size}
         height={size}
+        loading="lazy"
         className={`rounded-full object-cover aspect-square shrink-0 ${className}`}
       />
     );

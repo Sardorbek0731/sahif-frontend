@@ -86,7 +86,7 @@ export default function Search() {
           {safeHistory.length > 0 && (
             <div className="mb-2">
               <span className="flex items-center mb-3 opacity-50">
-                <Icon name="clock" size={16} className="mr-2 text-primary" />
+                <Icon name="clock" size="md" className="mr-2 text-primary" />
                 {t("search.recentSearches")}
               </span>
               <div className="flex flex-col">
@@ -97,13 +97,13 @@ export default function Search() {
                     className="row-between cursor-pointer hover:bg-background h-10 px-4 rounded-lg mb-2 transition-all w-full"
                   >
                     <div className="flex items-center">
-                      <Icon className="mr-2" name="search" size={16} />
+                      <Icon className="mr-2" name="search" size="md" />
                       <span className="text-sm">{item}</span>
                     </div>
                     <Button
                       size="sm"
                       leftIcon="x"
-                      iconSize={18}
+                      iconSize="lg"
                       onClick={(e: React.MouseEvent) =>
                         removeHistoryItem(e, item)
                       }
@@ -117,7 +117,7 @@ export default function Search() {
           )}
 
           <span className="flex items-center mb-3 opacity-50">
-            <Icon name="flame" size={16} className="mr-2 text-primary" />
+            <Icon name="flame" size="md" className="mr-2 text-primary" />
             {t("categories.popular")}
           </span>
 

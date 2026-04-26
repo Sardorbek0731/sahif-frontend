@@ -75,7 +75,7 @@ export default function BooksSortSelect({
             >
               <span>{t(TRANSLATION_KEY[opt])}</span>
               {activeSort === opt && (
-                <Icon name="check" size={16} className="text-primary ml-4" />
+                <Icon name="check" size="md" className="text-primary ml-4" />
               )}
             </Button>
           ))}
@@ -87,7 +87,7 @@ export default function BooksSortSelect({
         <Button
           onClick={() => handleSelect("")}
           leftIcon="x"
-          iconSize={18}
+          iconSize="lg"
           size="md"
           aria-label={tCommon("clearSort")}
         />
