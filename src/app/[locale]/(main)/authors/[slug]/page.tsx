@@ -24,8 +24,7 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
-  const author = authors.find((a) => a.slug === decodedSlug);
+  const author = authors.find((a) => a.slug === slug);
   if (!author) notFound();
 
   const description = author.bio[locale];
@@ -60,14 +59,13 @@ export default async function AuthorPage({
   params: Promise<{ locale: Locale; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
 
-  const author = authors.find((a) => a.slug === decodedSlug);
+  const author = authors.find((a) => a.slug === slug);
   if (!author) notFound();
 
   const t = await getTranslations({ locale, namespace: "authors" });
 
-  const authorBooks = getBooksByAuthor(decodedSlug);
+  const authorBooks = getBooksByAuthor(slug);
 
   const resolvedBooks = authorBooks.map((book) => {
     const variant =

@@ -37,9 +37,8 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale; slug: string; variant: string }>;
 }): Promise<Metadata> {
   const { locale, slug, variant: variantParam } = await params;
-  const decodedSlug = decodeURIComponent(slug);
 
-  const book = books.find((b) => b.slug === decodedSlug);
+  const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
   const title = getBookTitle(book, locale, variantParam);
@@ -89,9 +88,8 @@ export default async function BookPage({
   params: Promise<{ locale: Locale; slug: string; variant: string }>;
 }) {
   const { locale, slug, variant: variantParam } = await params;
-  const decodedSlug = decodeURIComponent(slug);
 
-  const book = books.find((b) => b.slug === decodedSlug);
+  const book = books.find((b) => b.slug === slug);
   if (!book) notFound();
 
   const t = await getTranslations({ locale, namespace: "book" });

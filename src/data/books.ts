@@ -70,7 +70,7 @@ export const books: readonly Book[] = [
   {
     id: 2,
     slug: "le-petit-prince",
-    authorSlug: "antoine-de-saint-exupéry",
+    authorSlug: "antoine-de-saint-exupery",
     categorySlugs: [
       "classic-literature",
       "fairy-tales",

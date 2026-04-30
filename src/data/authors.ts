@@ -14,9 +14,9 @@ export const authors: readonly Author[] = [
   },
   {
     id: 2,
-    slug: "antoine-de-saint-exupéry",
+    slug: "antoine-de-saint-exupery",
     name: "Antoine de Saint-Exupéry",
-    image: "/authors/antoine-de-saint-exupéry.jpg",
+    image: "/authors/antoine-de-saint-exupery.jpg",
     bio: {
       uz: "Fransuz yozuvchisi va uchuvchi. Uning 'Kichik shahzoda' asari dunyo bo'ylab 500 dan ortiq tilga tarjima qilingan.",
       en: "French writer and aviator, best known for his novella The Little Prince, translated into over 500 languages worldwide.",
