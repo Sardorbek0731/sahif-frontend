@@ -23,7 +23,15 @@ export async function generateMetadata({
   });
 }
 
-export default function Cart() {
+export default async function Cart() {
+  // ✅ Guest users can use cart (stored in localStorage via zustand)
+  // TODO: Backend integration:
+  // - Get user with getOptionalAuth()
+  // - Fetch user cart from database
+  // - Pass user and userCart to CartContent
+  // - Merge localStorage cart with database cart
+  // - Sync merged cart back to database
+
   return (
     <main className="my-container">
       <CartContent />

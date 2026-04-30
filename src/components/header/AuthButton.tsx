@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useTranslations } from "next-intl";
-import { useIsMounted } from "@/hooks/useIsMounted";
 import { UserMenu } from "@/components/navbar/NavActions";
 import LoginModal from "@/components/auth/LoginModal";
 
@@ -16,13 +14,11 @@ export default function AuthButton({
   serverUserName: string;
 }) {
   const t = useTranslations("");
-  const isMounted = useIsMounted();
-  const { isAuthenticated: clientAuthenticated } = useAuthStore();
   const [loginOpen, setLoginOpen] = useState(false);
 
-  const isAuthenticated = isMounted ? clientAuthenticated : serverAuthenticated;
-
-  if (isAuthenticated) {
+  // ✅ Use server-side authentication state
+  // No client-side store needed
+  if (serverAuthenticated) {
     return <UserMenu serverUserName={serverUserName} />;
   }
 

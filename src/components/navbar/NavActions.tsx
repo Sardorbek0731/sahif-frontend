@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
+import { logout } from "@/app/actions/auth";
 
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -10,7 +11,6 @@ import { Dropdown } from "@/components/ui/Dropdown";
 import { Icon, IconName } from "@/components/ui/icons";
 import { useCartStore, selectTotalUniqueItems } from "@/store/useCartStore";
 import { useWishlistStore, selectTotalItems } from "@/store/useWishlistStore";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useIsMounted } from "@/hooks/useIsMounted";
 
 // ─── NavLinks ─────────────────────────────────────────────────────────────────
@@ -71,39 +71,28 @@ export function NavLinks() {
 
 // ─── UserMenu ─────────────────────────────────────────────────────────────────
 
-const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
-
 export function UserMenu({ serverUserName }: { serverUserName: string }) {
   const t = useTranslations("");
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const { users, activeUserId, logout } = useAuthStore();
-  const user = users.find((u) => u.id === activeUserId) ?? null;
-
+  // ✅ Use server-provided user name
   const displayName = (() => {
-    const firstName = user?.firstName || "";
-    const lastName = user?.lastName || "";
-
-    if (firstName && lastName)
-      return `${capitalize(firstName)} ${capitalize(lastName)[0]}.`;
-    if (firstName) return capitalize(firstName);
-
     if (serverUserName) {
       const [first, last] = serverUserName.split(" ");
+      const capitalize = (str: string) =>
+        str.charAt(0).toUpperCase() + str.slice(1);
       return last
         ? `${capitalize(first)} ${capitalize(last)[0]}.`
         : capitalize(first);
     }
-
     return "";
   })();
 
-  const handleLogout = () => {
-    setOpen(false); // avval yopamiz
-    logout();
-    router.push("/");
-    router.refresh();
+  const handleLogout = async () => {
+    setOpen(false);
+    // ✅ Server Action - xavfsiz logout
+    await logout();
+    // Router automatically redirects (logout action has redirect)
   };
 
   const menuItems = [

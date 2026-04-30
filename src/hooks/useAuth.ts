@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
+import { sendOTP, verifyOTP, register } from "@/app/actions/auth";
 
 export type Step = "phone" | "otp" | "name";
 
-const MOCK_OTP = "123456";
-
+/**
+ * Authentication hook
+ * Server Actions bilan ishlaydi - client-side validation yo'q
+ */
 export function useAuth(
   initialStep: Step = "phone",
   initialPhone = "",
   ignoreSession = false,
 ) {
-  const { users, addOrActivateUser, setToken } = useAuthStore();
-
   const [step, setStep] = useState<Step>(() => {
     if (typeof window === "undefined" || ignoreSession) return initialStep;
     const saved = sessionStorage.getItem("auth-step") as Step;
@@ -37,54 +37,65 @@ export function useAuth(
     setStep(s);
   };
 
-  const sendOtp = async (phoneNumber: string) => {
+  const handleSendOtp = async (phoneNumber: string) => {
     setIsLoading(true);
     setError("");
-    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    // ✅ Server Action - xavfsiz
+    const result = await sendOTP(phoneNumber);
+
+    if (!result.success) {
+      setError(result.error);
+      setIsLoading(false);
+      return;
+    }
+
     setPhone(phoneNumber);
     updateStep("otp", phoneNumber);
     setIsLoading(false);
   };
 
-  const verifyOtp = async (code: string) => {
+  const handleVerifyOtp = async (code: string) => {
     setIsLoading(true);
     setError("");
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    if (code !== MOCK_OTP) {
-      setError("invalidCode");
+    // ✅ Server Action - xavfsiz
+    const result = await verifyOTP(phone, code);
+
+    if (!result.success) {
+      setError(result.error);
       setIsLoading(false);
       return false;
     }
 
-    const existingUser = users.find((u) => u.phone === phone);
-    if (!existingUser) {
+    if (result.data?.needsRegistration) {
       updateStep("name");
       setIsLoading(false);
       return false;
     } else {
+      // Login successful
       sessionStorage.removeItem("auth-step");
       sessionStorage.removeItem("auth-phone");
-      addOrActivateUser(existingUser);
-      setToken("mock-token-123");
       setIsLoading(false);
       return true;
     }
   };
 
-  const submitName = async (firstName: string, lastName: string) => {
+  const handleSubmitName = async (firstName: string, lastName: string) => {
     setIsLoading(true);
     setError("");
-    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    // ✅ Server Action - xavfsiz
+    const result = await register(phone, firstName, lastName);
+
+    if (!result.success) {
+      setError(result.error);
+      setIsLoading(false);
+      return;
+    }
+
     sessionStorage.removeItem("auth-step");
     sessionStorage.removeItem("auth-phone");
-    addOrActivateUser({
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-      phone,
-      firstName,
-      lastName,
-    });
-    setToken("mock-token-123");
     setIsLoading(false);
   };
 
@@ -98,9 +109,9 @@ export function useAuth(
     phone,
     isLoading,
     error,
-    sendOtp,
-    verifyOtp,
-    submitName,
+    sendOtp: handleSendOtp,
+    verifyOtp: handleVerifyOtp,
+    submitName: handleSubmitName,
     back,
   };
 }

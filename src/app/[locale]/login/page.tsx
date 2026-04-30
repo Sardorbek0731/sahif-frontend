@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import { isAuthenticated } from "@/lib/auth";
 
 import { generatePrivateMetadata } from "@/lib/seo";
 import { type Locale } from "@/i18n/routing";
 import { redirect } from "@/i18n/navigation";
 
-import LoginRedirectGuard from "./LoginRedirectGuard";
 import LoginFormWrapper from "./LoginFormWrapper";
 
 export async function generateMetadata({
@@ -32,16 +31,16 @@ export default async function Login({
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
-  const cookieStore = await cookies();
-  const token = cookieStore.get("auth-token")?.value;
 
-  if (token) {
+  // ✅ Check authentication (better pattern)
+  const authenticated = await isAuthenticated();
+
+  if (authenticated) {
     redirect({ href: "/", locale });
   }
 
   return (
     <main className="min-h-screen bg-background row-center">
-      <LoginRedirectGuard />
       <div className="max-w-90 p-6 rounded-lg">
         <LoginFormWrapper />
       </div>

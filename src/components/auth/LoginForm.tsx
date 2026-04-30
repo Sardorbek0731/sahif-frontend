@@ -1,7 +1,6 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/Button";
 import { Input, OTPInput } from "@/components/ui/Input";
@@ -149,7 +148,7 @@ function NameStep({
         id="first-name-input"
         type="text"
         value={firstName}
-        maxLength={20}
+        maxLength={50}
         onChange={(e) => setFirstName(e.target.value)}
         placeholder={t("firstNamePlaceholder")}
         containerClassName="mb-6"
@@ -166,7 +165,7 @@ function NameStep({
         id="last-name-input"
         type="text"
         value={lastName}
-        maxLength={20}
+        maxLength={50}
         onChange={(e) => setLastName(e.target.value)}
         placeholder={t("lastNamePlaceholder")}
         containerClassName="mb-6"
@@ -201,6 +200,7 @@ export default function LoginForm({
   initialPhone?: string;
   ignoreSession?: boolean;
 }) {
+  const router = useRouter();
   const {
     step,
     phone,
@@ -225,6 +225,8 @@ export default function LoginForm({
 
   const handleSubmitName = async (firstName: string, lastName: string) => {
     await submitName(firstName, lastName);
+    // ✅ Router refresh - server components'ni yangilash
+    router.refresh();
     onSuccess?.();
   };
 
@@ -238,7 +240,10 @@ export default function LoginForm({
           phone={phone}
           onSubmit={async (code) => {
             const success = await verifyOtp(code);
-            if (success) onSuccess?.();
+            if (success) {
+              router.refresh(); // ✅ Refresh server components
+              onSuccess?.();
+            }
           }}
           onBack={back}
           isLoading={isLoading}

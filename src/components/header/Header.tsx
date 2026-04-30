@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { getOptionalAuth } from "@/lib/auth";
 import Location from "@/components/header/Location";
 import {
   LanguageSwitcher,
@@ -15,9 +15,10 @@ export default async function Header({
   initialLocationId: string;
   initialConfirmed: boolean;
 }) {
-  const cookieStore = await cookies();
-  const hasToken = cookieStore.has("auth-token");
-  const userName = cookieStore.get("user-name")?.value || "";
+  // ✅ Get optional authentication (better pattern)
+  const user = await getOptionalAuth();
+  const isAuthenticated = !!user;
+  const userName = user ? `${user.firstName} ${user.lastName}` : "";
 
   return (
     <header className="my-container row-between py-4">
@@ -32,8 +33,8 @@ export default async function Header({
         <ThemeToggle initialTheme={initialTheme} />
         <LanguageSwitcher />
         <AuthButton
-          serverAuthenticated={hasToken}
-          serverUserName={decodeURIComponent(userName)}
+          serverAuthenticated={isAuthenticated}
+          serverUserName={userName}
         />
       </div>
     </header>
