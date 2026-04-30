@@ -62,7 +62,7 @@ export function LanguageSwitcher() {
               {lang.name}
             </div>
             {lang.code === locale && (
-              <Icon name="check" size="md" className="text-primary ml-4" />
+              <Icon name="check" size="md" className="text-primary ml-8" />
             )}
           </Button>
         ))}
@@ -134,7 +134,7 @@ export function ThemeToggle({ initialTheme }: { initialTheme: string }) {
               {t(value)}
             </div>
             {value === currentTheme && (
-              <Icon name="check" size="md" className="text-primary ml-4" />
+              <Icon name="check" size="md" className="text-primary ml-8" />
             )}
           </Button>
         ))}

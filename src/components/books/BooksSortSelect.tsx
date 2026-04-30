@@ -75,7 +75,7 @@ export default function BooksSortSelect({
             >
               <span>{t(TRANSLATION_KEY[opt])}</span>
               {activeSort === opt && (
-                <Icon name="check" size="md" className="text-primary ml-4" />
+                <Icon name="check" size="md" className="text-primary ml-8" />
               )}
             </Button>
           ))}

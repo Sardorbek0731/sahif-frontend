@@ -95,9 +95,9 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
     // Router automatically redirects (logout action has redirect)
   };
 
-  const menuItems = [
-    { href: "/profile", icon: "user", label: t("pages.profile") },
-  ] as const;
+  const handleProfileClick = () => {
+    setOpen(false);
+  };
 
   return (
     <Dropdown
@@ -105,34 +105,44 @@ export function UserMenu({ serverUserName }: { serverUserName: string }) {
       align="right"
       isOpen={open}
       onToggle={setOpen}
-      trigger={
-        <Button leftIcon="user" className="h-10 px-4">
+      trigger={(isOpen) => (
+        <Button
+          leftIcon="user"
+          rightIcon="chevronDown"
+          iconStyle={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className={`justify-between px-4 h-10 bg-card hover:bg-card-hover ${isOpen ? "bg-card-hover" : ""}`}
+        >
           {displayName}
         </Button>
-      }
+      )}
     >
-      <div className="w-48 overflow-hidden">
-        {menuItems.map(({ href, icon, label }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
-          >
-            <Icon name={icon} size="md" />
-            {label}
-          </Link>
-        ))}
+      <div role="listbox" className="py-1">
+        <Button
+          as={Link}
+          href="/profile"
+          role="option"
+          onClick={handleProfileClick}
+          variant="ghost"
+          className="w-full mb-1 px-4 h-10 rounded-none hover:bg-card-hover"
+        >
+          <div className="flex items-center">
+            <Icon name="user" size="md" className="mr-2" />
+            {t("pages.profile")}
+          </div>
+        </Button>
 
-        <div className="border-t border-border" />
+        <div className="border-t border-border my-1" />
 
         <Button
-          variant="danger"
+          role="option"
           onClick={handleLogout}
-          leftIcon="logout"
-          className="w-full justify-start px-4 py-3 text-sm rounded-none h-auto"
+          variant="danger"
+          className="w-full px-4 h-10 rounded-none hover:bg-rose-500/5"
         >
-          {t("auth.logout")}
+          <div className="flex items-center">
+            <Icon name="logout" size="md" className="mr-2" />
+            {t("auth.logout")}
+          </div>
         </Button>
       </div>
     </Dropdown>
