@@ -18,8 +18,14 @@ const VARIANT_WRAPPER: Record<InputVariant, string> = {
 };
 
 const SIZE_WRAPPER: Record<InputSize, string> = {
-  sm: "h-8 px-2 text-sm",
-  md: "h-10 px-4",
+  sm: "px-2 text-sm",
+  md: "px-4",
+};
+
+// Input size'ga mos balandlik
+const INPUT_HEIGHT: Record<InputSize, string> = {
+  sm: "h-8",
+  md: "h-10",
 };
 
 // Input size'ga mos icon o'lchami
@@ -104,6 +110,7 @@ export function Input({
           id={id}
           className={cn(
             "flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground",
+            INPUT_HEIGHT[size],
             className,
           )}
           aria-invalid={error ? "true" : undefined}
