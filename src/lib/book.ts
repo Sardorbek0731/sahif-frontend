@@ -8,6 +8,13 @@ export function isNewBook(createdAt: string): boolean {
   return ms / 86_400_000 <= NEW_BOOK_DAYS;
 }
 
+export function calculateDiscountPercentage(
+  amount: number,
+  discountAmount: number,
+): number {
+  return Math.round((discountAmount / amount) * 100);
+}
+
 export function getBookTitle(
   book: Book,
   locale: Locale,

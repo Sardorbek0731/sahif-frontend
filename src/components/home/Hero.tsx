@@ -257,7 +257,7 @@ export default function Hero() {
         })}
         className={`w-[60%] flex flex-col items-start h-full justify-between transition-all duration-200 ${animating ? "opacity-0" : "opacity-100"}`}
       >
-        <BookBadge className="mb-3" book={book} />
+        <BookBadge className="mb-3" book={book} variant={activeVariant} />
 
         <div>
           <Link

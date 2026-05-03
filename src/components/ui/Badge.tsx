@@ -7,6 +7,7 @@ export type BadgeVariant =
   | "new"
   | "trending"
   | "bestseller"
+  | "discount"
   | "primary"
   | "count";
 
@@ -26,6 +27,8 @@ const BADGE_STYLES: Record<BadgeVariant, string> = {
   trending:
     "border border-orange-500 bg-orange-500/15 text-orange-500 py-1 px-3 rounded-lg text-sm",
   bestseller: PRIMARY_BADGE_STYLE,
+  discount:
+    "border border-red-500 bg-red-500/15 text-red-500 py-1 px-3 rounded-lg text-sm font-semibold",
   primary: PRIMARY_BADGE_STYLE,
   count:
     "bg-primary text-white rounded-full h-5 min-w-5 px-1 row-center text-[10px] font-bold",
