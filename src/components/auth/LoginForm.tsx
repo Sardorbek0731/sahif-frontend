@@ -48,6 +48,7 @@ function PhoneStep({
         placeholder="__ ___ __ __"
         prefix="+998"
         autoFocus
+        wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
       />
 
       {error && <p className="text-rose-500 text-sm mt-3">{error}</p>}
@@ -153,6 +154,7 @@ function NameStep({
         placeholder={t("firstNamePlaceholder")}
         containerClassName="mb-6"
         autoFocus
+        wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
       />
 
       <label
@@ -169,6 +171,7 @@ function NameStep({
         onChange={(e) => setLastName(e.target.value)}
         placeholder={t("lastNamePlaceholder")}
         containerClassName="mb-6"
+        wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
       />
 
       {error && <p className="text-rose-500 text-sm mt-1 mb-3">{error}</p>}

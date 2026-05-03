@@ -318,6 +318,7 @@ export default function BooksFilter({
                   }
                   variant="default"
                   size="sm"
+                  wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
                 />
               </div>
               <div className="flex-1 min-w-0">
@@ -339,6 +340,7 @@ export default function BooksFilter({
                   }}
                   variant="default"
                   size="sm"
+                  wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
                 />
               </div>
             </div>

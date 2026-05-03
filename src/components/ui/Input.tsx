@@ -80,7 +80,7 @@ export function Input({
       <div
         className={cn(
           "rounded-lg flex items-center gap-2 transition-all",
-          "focus-within:border-primary",
+          variant === "default" && "focus-within:border-primary",
           error && "border-rose-500",
           VARIANT_WRAPPER[variant],
           SIZE_WRAPPER[size],
@@ -193,7 +193,7 @@ export function OTPInput({ onComplete, isLoading, className }: OTPInputProps) {
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           aria-label={t("digitLabel", { index: i + 1 })}
-          className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-lg outline-none focus:border-primary transition-colors disabled:opacity-50"
+          className="w-full aspect-square text-center text-lg font-bold text-foreground bg-card border border-border rounded-lg outline-none focus:border-primary hover:bg-card-hover focus:bg-card-hover transition-all disabled:opacity-50"
           autoFocus={i === 0}
         />
       ))}

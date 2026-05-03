@@ -77,6 +77,7 @@ export default function Search() {
           placeholder={t("search.searchBook")}
           autoComplete="off"
           onFocus={() => setIsFocused(true)}
+          wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
         />
       </form>
 

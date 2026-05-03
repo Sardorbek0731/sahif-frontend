@@ -121,7 +121,7 @@ export default function Location({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t("header.searchRegion")}
-          wrapperClassName="hover:bg-card-hover transition-all"
+          wrapperClassName="hover:bg-card-hover focus-within:bg-card-hover transition-all"
           containerClassName="mb-6"
         />
 
