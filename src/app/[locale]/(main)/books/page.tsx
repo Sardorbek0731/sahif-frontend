@@ -337,7 +337,7 @@ export default async function Books({
       />
 
       <div className="flex-1 content-start">
-        <div className="row-between mb-4">
+        <div className="flex justify-between mb-4">
           <h1 className="text-xl font-bold">
             {pageTitle}
             <span className="text-base font-normal text-muted-foreground ml-2">

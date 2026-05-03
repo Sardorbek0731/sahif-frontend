@@ -211,4 +211,94 @@ export const authors: readonly Author[] = [
       ru: "Древнекитайский военный стратег и философ. «Искусство войны» на протяжении 2500 лет остаётся одним из самых влиятельных трактатов о стратегии.",
     },
   },
+  {
+    id: 21,
+    slug: "j-d-salinger",
+    name: "J.D. Salinger",
+    bio: {
+      uz: "Amerikalik yozuvchi. 'The Catcher in the Rye' romani bilan mashhur bo'lgan va XX asr amerikan adabiyotining eng muhim asarlaridan birini yaratgan.",
+      en: "American writer best known for his novel The Catcher in the Rye, one of the most influential works of 20th-century American literature.",
+      ru: "Американский писатель, наиболее известный романом «Над пропастью во ржи», одним из самых влиятельных произведений американской литературы XX века.",
+    },
+  },
+  {
+    id: 22,
+    slug: "mark-manson",
+    name: "Mark Manson",
+    bio: {
+      uz: "Amerikalik muallif va blogger. Uning 'Ahamiyat bermaslik san'ati' kitobi 10 milliondan ortiq nusxada sotilgan va 65 tilga tarjima qilingan.",
+      en: "American author and blogger. His book The Subtle Art of Not Giving a F*ck has sold over 10 million copies and been translated into 65 languages.",
+      ru: "Американский автор и блогер. Его книга «Тонкое искусство пофигизма» продана тиражом более 10 миллионов экземпляров и переведена на 65 языков.",
+    },
+  },
+  {
+    id: 23,
+    slug: "tara-westover",
+    name: "Tara Westover",
+    bio: {
+      uz: "Amerikalik muallif va tarixchi. 'Educated' memuarlari bilan mashhur bo'lib, kitob New York Times bestseller ro'yxatida 2 yildan ortiq turgan.",
+      en: "American author and historian. Her memoir Educated was a New York Times bestseller for over two years and has been translated into 45 languages.",
+      ru: "Американская писательница и историк. Её мемуары «Образование» были бестселлером New York Times более двух лет и переведены на 45 языков.",
+    },
+  },
+  {
+    id: 24,
+    slug: "marcus-aurelius",
+    name: "Marcus Aurelius",
+    bio: {
+      uz: "Rim imperatori va stoik faylasuf. Uning 'Meditatsiyalar' asari shaxsiy falsafiy fikrlaridan iborat bo'lib, 2000 yildan beri o'qilmoqda.",
+      en: "Roman Emperor and Stoic philosopher. His Meditations, a series of personal writings on Stoic philosophy, has been read for nearly 2,000 years.",
+      ru: "Римский император и философ-стоик. Его «Размышления» — личные записи о стоической философии — читаются уже почти 2000 лет.",
+    },
+  },
+  {
+    id: 25,
+    slug: "robert-greene",
+    name: "Robert Greene",
+    bio: {
+      uz: "Amerikalik muallif. 'Hokimiyatning 48 qonuni' va boshqa kitoblari strategiya va insoniy tabiat haqida chuqur tushunchalar beradi.",
+      en: "American author known for his books on strategy, power, and seduction. The 48 Laws of Power has sold millions of copies worldwide.",
+      ru: "Американский автор, известный книгами о стратегии, власти и соблазнении. «48 законов власти» продана миллионными тиражами по всему миру.",
+    },
+  },
+  {
+    id: 26,
+    slug: "viktor-frankl",
+    name: "Viktor Frankl",
+    bio: {
+      uz: "Avstriyalik nevroloq, psixiatr va Holokost omon qolgani. 'Insonning ma'no izlashi' kitobi 12 milliondan ortiq nusxada sotilgan.",
+      en: "Austrian neurologist, psychiatrist, and Holocaust survivor. His book Man's Search for Meaning has sold over 12 million copies worldwide.",
+      ru: "Австрийский невролог, психиатр и узник концлагеря. Его книга «Человек в поисках смысла» продана тиражом более 12 миллионов экземпляров.",
+    },
+  },
+  {
+    id: 27,
+    slug: "eric-ries",
+    name: "Eric Ries",
+    bio: {
+      uz: "Amerikalik tadbirkor va muallif. 'The Lean Startup' kitobi startaplar va innovatsiyalar sohasida inqilob yaratgan.",
+      en: "American entrepreneur and author. The Lean Startup revolutionized how startups are built and how new products are launched.",
+      ru: "Американский предприниматель и автор. «Бизнес с нуля» произвёл революцию в подходе к созданию стартапов и запуску новых продуктов.",
+    },
+  },
+  {
+    id: 28,
+    slug: "daniel-kahneman",
+    name: "Daniel Kahneman",
+    bio: {
+      uz: "Isroil-amerikalik psixolog va Nobel mukofoti laureati. 'Tez va sekin fikrlash' kitobi inson qaror qabul qilish jarayonini o'rganadi.",
+      en: "Israeli-American psychologist and Nobel Prize laureate. Thinking, Fast and Slow explores the two systems that drive the way we think.",
+      ru: "Израильско-американский психолог, лауреат Нобелевской премии. «Думай медленно... решай быстро» исследует две системы мышления человека.",
+    },
+  },
+  {
+    id: 29,
+    slug: "don-miguel-ruiz",
+    name: "Don Miguel Ruiz",
+    bio: {
+      uz: "Meksikalik muallif va shamanism ustozi. 'To'rtta kelishuv' kitobi 10 milliondan ortiq nusxada sotilgan va shaxsiy erkinlik yo'lini ko'rsatadi.",
+      en: "Mexican author and shaman. The Four Agreements has sold over 10 million copies and offers a code of conduct for personal freedom.",
+      ru: "Мексиканский автор и шаман. «Четыре соглашения» продана тиражом более 10 миллионов экземпляров и предлагает кодекс личной свободы.",
+    },
+  },
 ];
