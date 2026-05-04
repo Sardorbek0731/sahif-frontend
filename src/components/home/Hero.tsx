@@ -229,7 +229,7 @@ export default function Hero() {
   const activeVariant =
     book.variants.find((v) => v.language.startsWith(locale)) ??
     book.variants[0];
-  const bookTitle = getBookTitle(book, locale);
+  const bookTitle = getBookTitle(book, locale, activeVariant.language);
   const bookImage = activeVariant.variantImage ?? book.images.cover;
   const finalPrice =
     activeVariant.price.amount - (activeVariant.price.discountAmount ?? 0);

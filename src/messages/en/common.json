@@ -18,7 +18,8 @@
   "badges": {
     "new": "New",
     "bestseller": "Bestseller",
-    "trending": "Trending"
+    "trending": "Trending",
+    "discount": "Discount"
   },
 
   "regions": {

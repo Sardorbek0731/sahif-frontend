@@ -21,6 +21,16 @@
     "showMore": "Barchasini ko'rish"
   },
 
+  "discount": {
+    "title": "Chegirma",
+    "showMore": "Barchasini ko'rish"
+  },
+
+  "bestseller": {
+    "title": "Bestseller",
+    "showMore": "Barchasini ko'rish"
+  },
+
   "authors": {
     "title": "Mualliflar",
     "showMore": "Barchasini ko'rish"

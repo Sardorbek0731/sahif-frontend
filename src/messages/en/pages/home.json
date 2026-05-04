@@ -21,6 +21,16 @@
     "showMore": "View all"
   },
 
+  "discount": {
+    "title": "Discount",
+    "showMore": "View all"
+  },
+
+  "bestseller": {
+    "title": "Bestseller",
+    "showMore": "View all"
+  },
+
   "authors": {
     "title": "Authors",
     "showMore": "View all"

@@ -22,6 +22,9 @@ interface Props {
   activeAuthors?: string[];
   activeSort?: string;
   activeSearch?: string;
+  activeDiscount?: boolean;
+  activeBestseller?: boolean;
+  activeTrending?: boolean;
 }
 
 interface FilterState {
@@ -32,6 +35,9 @@ interface FilterState {
   minPrice: string;
   maxPrice: string;
   inStock: boolean;
+  discount: boolean;
+  bestseller: boolean;
+  trending: boolean;
 }
 
 // ─── CheckboxItem ─────────────────────────────────────────────────────────────
@@ -149,12 +155,16 @@ export default function BooksFilter({
   activeAuthors = [],
   activeSort,
   activeSearch,
+  activeDiscount,
+  activeBestseller,
+  activeTrending,
 }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("categories");
   const tBook = useTranslations("book");
   const tFilter = useTranslations("books.filter");
+  const tCommon = useTranslations();
 
   const parsedPrice = parsePrice(activePrice);
 
@@ -168,6 +178,9 @@ export default function BooksFilter({
     minPrice: parsedPrice.min,
     maxPrice: parsedPrice.max,
     inStock: activeInStock ?? false,
+    discount: activeDiscount ?? false,
+    bestseller: activeBestseller ?? false,
+    trending: activeTrending ?? false,
   });
 
   const set = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
@@ -183,6 +196,9 @@ export default function BooksFilter({
     if (state.langs.length) params.set("lang", state.langs.join(","));
     if (state.authors.length) params.set("author", state.authors.join(","));
     if (state.inStock) params.set("inStock", "true");
+    if (state.discount) params.set("discount", "true");
+    if (state.bestseller) params.set("bestseller", "true");
+    if (state.trending) params.set("trending", "true");
     if (state.minPrice || state.maxPrice) {
       params.set(
         "price",
@@ -208,6 +224,9 @@ export default function BooksFilter({
       minPrice: "",
       maxPrice: "",
       inStock: false,
+      discount: false,
+      bestseller: false,
+      trending: false,
     };
     setLocal(empty);
     const query = buildParams(empty);
@@ -220,7 +239,10 @@ export default function BooksFilter({
     local.langs.length +
     local.authors.length +
     (local.minPrice || local.maxPrice ? 1 : 0) +
-    (local.inStock ? 1 : 0);
+    (local.inStock ? 1 : 0) +
+    (local.discount ? 1 : 0) +
+    (local.bestseller ? 1 : 0) +
+    (local.trending ? 1 : 0);
 
   const isDirty =
     !setsEqual(local.categories, activeCategories) ||
@@ -229,7 +251,10 @@ export default function BooksFilter({
     !setsEqual(local.authors, activeAuthors) ||
     local.minPrice !== parsedPrice.min ||
     local.maxPrice !== parsedPrice.max ||
-    local.inStock !== (activeInStock ?? false);
+    local.inStock !== (activeInStock ?? false) ||
+    local.discount !== (activeDiscount ?? false) ||
+    local.bestseller !== (activeBestseller ?? false) ||
+    local.trending !== (activeTrending ?? false);
 
   return (
     <aside aria-label={tFilter("title")} className="w-64 shrink-0 mr-4">
@@ -263,6 +288,33 @@ export default function BooksFilter({
               checked={local.inStock}
               onChange={() => set("inStock", !local.inStock)}
               label={tFilter("inStock")}
+            />
+          </div>
+
+          {/* Discount */}
+          <div className="p-2 border-b border-border">
+            <CheckboxItem
+              checked={local.discount}
+              onChange={() => set("discount", !local.discount)}
+              label={tFilter("discount")}
+            />
+          </div>
+
+          {/* Bestseller */}
+          <div className="p-2 border-b border-border">
+            <CheckboxItem
+              checked={local.bestseller}
+              onChange={() => set("bestseller", !local.bestseller)}
+              label={tCommon("badges.bestseller")}
+            />
+          </div>
+
+          {/* Trending */}
+          <div className="p-2 border-b border-border">
+            <CheckboxItem
+              checked={local.trending}
+              onChange={() => set("trending", !local.trending)}
+              label={tCommon("badges.trending")}
             />
           </div>
 

@@ -74,7 +74,7 @@ export default async function AuthorPage({
       book,
       variant,
       authorName: author.name,
-      bookTitle: getBookTitle(book, locale),
+      bookTitle: getBookTitle(book, locale, variant.language),
       bookImage: variant.variantImage || book.images.cover,
       finalPrice: variant.price.amount - (variant.price.discountAmount ?? 0),
     };

@@ -18,7 +18,8 @@
   "badges": {
     "new": "Новинка",
     "bestseller": "Бестселлер",
-    "trending": "Тренд"
+    "trending": "Тренд",
+    "discount": "Скидка"
   },
 
   "regions": {

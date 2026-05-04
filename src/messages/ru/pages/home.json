@@ -21,6 +21,16 @@
     "showMore": "Смотреть все"
   },
 
+  "discount": {
+    "title": "Скидка",
+    "showMore": "Смотреть все"
+  },
+
+  "bestseller": {
+    "title": "Бестселлер",
+    "showMore": "Смотреть все"
+  },
+
   "authors": {
     "title": "Авторы",
     "showMore": "Смотреть все"

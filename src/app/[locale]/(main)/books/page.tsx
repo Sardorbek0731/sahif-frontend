@@ -26,6 +26,9 @@ type SearchParams = {
   inStock?: string;
   author?: string;
   sort?: string;
+  discount?: string;
+  bestseller?: string;
+  trending?: string;
 };
 
 export async function generateMetadata({
@@ -104,6 +107,9 @@ export default async function Books({
     inStock,
     author: authorParam,
     sort: sortParam,
+    discount,
+    bestseller,
+    trending,
   } = await searchParams;
 
   const sort = SORT_OPTIONS.includes(sortParam as SortOption)
@@ -128,6 +134,9 @@ export default async function Books({
     ? category.split(",").filter(isValidCategory)
     : [];
   const activeInStock = inStock === "true";
+  const activeDiscount = discount === "true";
+  const activeBestseller = bestseller === "true";
+  const activeTrending = trending === "true";
   const searchQuery = search?.toLowerCase();
 
   const [minPrice, maxPrice] = (() => {
@@ -141,6 +150,10 @@ export default async function Books({
     if (activeLangs.length && !activeLangs.includes(v.language)) return false;
     if (activeFormats.length && !activeFormats.includes(v.format)) return false;
     if (activeInStock && v.stockCount === 0) return false;
+
+    // Discount filter - variant darajasida
+    if (activeDiscount && !v.price.discountAmount) return false;
+
     const fp = v.price.amount - (v.price.discountAmount ?? 0);
     if (minPrice !== null && fp < minPrice) return false;
     if (maxPrice !== null && fp > maxPrice) return false;
@@ -172,6 +185,14 @@ export default async function Books({
     if (activeAuthors.length && !activeAuthors.includes(book.authorSlug))
       return false;
 
+    // Bestseller filter - book darajasida
+    if (activeBestseller && !book.isBestseller) return false;
+
+    // Trending filter - book darajasida
+    if (activeTrending && !book.isTrending) return false;
+
+    // Discount filter - variant darajasida (matchesVariantFilters da tekshiriladi)
+    // Kamida bitta variant filterga mos kelishi kerak
     return book.variants.some(matchesVariantFilters);
   });
 
@@ -326,6 +347,9 @@ export default async function Books({
           price ?? "",
           inStock ?? "",
           authorParam ?? "",
+          discount ?? "",
+          bestseller ?? "",
+          trending ?? "",
         ].join("|")}
         activeCategories={activeCategories}
         activeFormats={activeFormats}
@@ -335,6 +359,9 @@ export default async function Books({
         activeAuthors={activeAuthors}
         activeSort={sort}
         activeSearch={search}
+        activeDiscount={activeDiscount}
+        activeBestseller={activeBestseller}
+        activeTrending={activeTrending}
       />
 
       <div className="flex-1 content-start">

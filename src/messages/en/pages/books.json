@@ -19,6 +19,8 @@
     "reset": "Clear",
     "apply": "Apply",
     "inStock": "In stock only",
+    "discount": "Discounted only",
+    "badge": "Badge",
     "category": "Category",
     "price": "Price (UZS)",
     "priceFrom": "From",
