@@ -46,6 +46,7 @@ export default async function AuthorsPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "authors" });
+  const tCommon = await getTranslations({ locale });
 
   const authorsWithCount = authors.map((author) => ({
     ...author,
@@ -53,32 +54,32 @@ export default async function AuthorsPage({
   }));
 
   return (
-    <main className="my-container py-6">
-      <div className="mb-8">
+    <main className="my-container">
+      {/* Header */}
+      <div className="mb-4">
         <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
         <p className="text-muted-foreground">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
+      {/* Authors Grid */}
+      <div className="grid grid-cols-6 gap-4">
         {authorsWithCount.map((author) => (
           <Link
             key={author.slug}
             href={`/authors/${author.slug}`}
-            className="flex flex-col items-center text-center group"
+            className="flex flex-col items-center bg-card rounded-lg hover:shadow-2xl transition-all duration-200 group p-5"
           >
-            <div className="mb-3 border-2 border-border group-hover:border-primary transition-colors rounded-full">
-              <AuthorAvatar
-                name={author.name}
-                image={author.image}
-                size={112}
-              />
+            <div className="mb-4 border-2 border-border group-hover:border-primary transition-colors duration-200 rounded-full">
+              <AuthorAvatar name={author.name} image={author.image} size={96} />
             </div>
-            <p className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2 mb-1">
+
+            <h3 className="text-sm font-semibold text-center leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-200 mb-2">
               {author.name}
-            </p>
+            </h3>
+
             {author.bookCount > 0 && (
               <p className="text-xs text-muted-foreground">
-                {t("booksCount", { count: author.bookCount })}
+                {tCommon("count.books", { count: author.bookCount })}
               </p>
             )}
           </Link>

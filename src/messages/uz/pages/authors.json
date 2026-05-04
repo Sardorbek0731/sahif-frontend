@@ -3,10 +3,6 @@
     "description": "Muallif haqida ma'lumot va uning barcha kitoblari — bir sahifada tanishing."
   },
   "title": "Mualliflar",
-  "subtitle": "Eng sevimli mualliflaringiz bilan tanishing",
-  "booksCount": "{count} ta kitob",
-  "bio": "Muallif haqida",
-  "noBooks": "Bu muallifning kitoblari hozircha mavjud emas",
-  "backToAuthors": "Mualliflar ro'yxatiga",
-  "allBooks": "Barcha kitoblar"
+  "subtitle": "Sevimli mualliflaringiz bilan tanishing va ularning barcha asarlarini bir joyda ko'ring",
+  "noBooks": "Bu muallifning kitoblari hozircha mavjud emas"
 }

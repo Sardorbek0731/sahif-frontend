@@ -12,12 +12,12 @@
   },
 
   "popular": {
-    "title": "Popular Books",
+    "title": "Popular",
     "showMore": "View all"
   },
 
   "new": {
-    "title": "New Arrivals",
+    "title": "New arrivals",
     "showMore": "View all"
   },
 

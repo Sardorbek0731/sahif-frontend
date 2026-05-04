@@ -11,6 +11,10 @@
     "login": "Kirish"
   },
 
+  "count": {
+    "books": "{count, plural, one {# kitob} other {# ta kitob}}"
+  },
+
   "badges": {
     "new": "Yangi",
     "bestseller": "Bestseller",

@@ -2,6 +2,10 @@
   "metadata": {
     "description": "Minglab kitob bir joyda — janr, muallif yoki mavzu bo'yicha filtrlang va o'zingizga mosini toping."
   },
+  "title": {
+    "default": "Kitoblar",
+    "searchResults": "\"{query}\" bo'yicha qidiruv natijalari"
+  },
   "sort": {
     "label": "Saralash",
     "popular": "Mashhurlari",
@@ -21,7 +25,6 @@
     "priceTo": "Gacha",
     "format": "Muqova turi",
     "language": "Kitob tili",
-    "author": "Muallif",
-    "count": "{count} ta"
+    "author": "Muallif"
   }
 }

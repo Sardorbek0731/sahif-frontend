@@ -11,6 +11,10 @@
     "login": "Войти"
   },
 
+  "count": {
+    "books": "{count, plural, one {# книга} few {# книги} many {# книг} other {# книг}}"
+  },
+
   "badges": {
     "new": "Новинка",
     "bestseller": "Бестселлер",

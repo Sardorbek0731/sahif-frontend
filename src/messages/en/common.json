@@ -11,6 +11,10 @@
     "login": "Sign in"
   },
 
+  "count": {
+    "books": "{count, plural, one {# book} other {# books}}"
+  },
+
   "badges": {
     "new": "New",
     "bestseller": "Bestseller",

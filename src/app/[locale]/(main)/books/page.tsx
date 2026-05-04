@@ -256,15 +256,16 @@ export default async function Books({
   });
 
   const t = await getTranslations({ locale });
+  const tBooks = await getTranslations({ locale, namespace: "books" });
 
   let pageTitle: string;
   if (search) {
-    pageTitle = `"${search}"`;
+    pageTitle = tBooks("title.searchResults", { query: search });
   } else if (hasCategory) {
     const tCat = await getTranslations({ locale, namespace: "categories" });
     pageTitle = tCat(`items.${activeCategories[0]}.name`);
   } else {
-    pageTitle = t("pages.books");
+    pageTitle = tBooks("title.default");
   }
 
   const pageUrl = `${SITE_URL}/${locale}/books${hasCategory ? `?category=${activeCategories[0]}` : ""}`;
@@ -341,7 +342,7 @@ export default async function Books({
           <h1 className="text-xl font-bold">
             {pageTitle}
             <span className="text-base font-normal text-muted-foreground ml-2">
-              ({t("books.filter.count", { count: filtered.length })})
+              ({t("count.books", { count: filtered.length })})
             </span>
           </h1>
           <BooksSortSelect

@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { SITE_URL, OG_LOCALES, SITE_NAME } from "@/constants";
 import { type Locale, routing } from "@/i18n/routing";
 import { generateAlternates, LOGO_OG_IMAGE } from "@/lib/seo";
-import { Link } from "@/i18n/navigation";
 import { authors } from "@/data/authors";
 import { getBookTitle } from "@/lib/book";
 import { getBooksByAuthor } from "@/lib/author";
@@ -63,7 +62,7 @@ export default async function AuthorPage({
   const author = authors.find((a) => a.slug === slug);
   if (!author) notFound();
 
-  const t = await getTranslations({ locale, namespace: "authors" });
+  const t = await getTranslations({ locale });
 
   const authorBooks = getBooksByAuthor(slug);
 
@@ -82,43 +81,33 @@ export default async function AuthorPage({
   });
 
   return (
-    <main className="my-container py-6">
-      <Link
-        href="/authors"
-        className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
-      >
-        ← {t("backToAuthors")}
-      </Link>
+    <main className="my-container">
+      {/* Author Info Card */}
+      <div className="bg-card rounded-lg p-8 mb-4">
+        <div className="flex items-start gap-8">
+          <div className="shrink-0 border-2 border-border rounded-full">
+            <AuthorAvatar name={author.name} image={author.image} size={144} />
+          </div>
 
-      <div className="flex items-start gap-8 mb-10">
-        <div className="shrink-0 border-2 border-border rounded-full">
-          <AuthorAvatar name={author.name} image={author.image} size={144} />
-        </div>
-
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold mb-3">{author.name}</h1>
-          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-            {t("bio")}
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            {author.bio[locale]}
-          </p>
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold mb-2">{author.name}</h1>
+            <p className="text-muted-foreground">{author.bio[locale]}</p>
+          </div>
         </div>
       </div>
 
+      {/* Books Section */}
       <div>
-        <div className="row-between mb-4">
-          <h2 className="text-xl font-bold">
-            {t("allBooks")}
-            <span className="text-base font-normal text-muted-foreground ml-2">
-              ({resolvedBooks.length})
-            </span>
-          </h2>
-        </div>
+        <h2 className="text-xl font-bold mb-4">
+          {t("pages.books")}
+          <span className="text-base font-normal text-muted-foreground ml-2">
+            ({t("count.books", { count: resolvedBooks.length })})
+          </span>
+        </h2>
 
         {resolvedBooks.length === 0 ? (
           <p className="text-muted-foreground py-10 text-center">
-            {t("noBooks")}
+            {t("authors.noBooks")}
           </p>
         ) : (
           <div className="grid grid-cols-5 gap-4">

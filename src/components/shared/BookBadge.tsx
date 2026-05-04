@@ -44,7 +44,7 @@ export default function BookBadge({
   const containerClass =
     layout === "spread"
       ? "flex items-start justify-between w-full"
-      : "flex items-start gap-2";
+      : "flex items-start gap-3";
 
   return (
     <div className={containerClass}>

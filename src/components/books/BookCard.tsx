@@ -40,7 +40,7 @@ export default function BookCard({
           priority={priority}
           className="h-44 w-auto"
         />
-        <div className="absolute top-0 left-0 right-0 px-3">
+        <div className="absolute top-0 left-0 right-0">
           <BookBadge book={book} variant={variant} layout="spread" />
         </div>
       </Link>

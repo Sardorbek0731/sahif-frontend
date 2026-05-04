@@ -2,6 +2,10 @@
   "metadata": {
     "description": "Thousands of books in one place — filter by genre, author or topic and find your perfect read."
   },
+  "title": {
+    "default": "Books",
+    "searchResults": "Search results for \"{query}\""
+  },
   "sort": {
     "label": "Sort by",
     "popular": "Most popular",
@@ -21,7 +25,6 @@
     "priceTo": "To",
     "format": "Cover type",
     "language": "Language",
-    "author": "Author",
-    "count": "{count} items"
+    "author": "Author"
   }
 }
